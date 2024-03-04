@@ -1,0 +1,45 @@
+@import 'src/scss/colors';
+@import 'src/scss/borders';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+
+.ui-recently-view {
+  @extend .py-8;
+  @extend .px-60;
+
+  @media (max-width: map-get($grid-breakpoints, 'lg')) {
+    padding-left:  32px;
+    padding-right: 32px;
+  }
+
+  @media (max-width: map-get($grid-breakpoints, 'sm')) {
+    padding: 24px 16px;
+  }
+
+  ::ng-deep .carousel-cells {
+    @extend .mt-8;
+  }
+
+  ::ng-deep carousel {
+    z-index: 0;
+  }
+
+  ::ng-deep .carousel-arrows {
+
+    .carousel-arrow {
+      top: -12px;
+      background-color: transparent;
+      box-shadow: unset;
+    }
+    .carousel-arrow-prev {
+      left: unset;
+      right: 36px;
+      background-image: url('/assets/icons/button-small-left.svg');
+    }
+
+    .carousel-arrow-next {
+      right: 0;
+      background-image: url('/assets/icons/button-small-right.svg');
+    }
+  }
+}

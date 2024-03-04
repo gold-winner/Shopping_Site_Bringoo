@@ -1,0 +1,45 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input nz-input formControlName="search" placeholder="Search"
+               nzTooltipPlacement="topLeft"
+               nz-tooltip="Search by Name"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-32 mr-0">
+    <nz-form-control labelForErrorTip="Start date">
+      <nz-form-label>Start date</nz-form-label>
+      <app-date-control
+        [dateFormat]="dateFormat"
+        formControlName="dateStart"
+        placeHolder="Date start"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-32">
+    <nz-form-control labelForErrorTip="End date">
+      <nz-form-label>End date</nz-form-label>
+      <app-date-control
+        [dateFormat]="dateFormat"
+        formControlName="dateEnd"
+        placeHolder="Date end"
+        [disableBefore]="form.controls.dateStart.value"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-32 mr-0">
+    <nz-form-control>
+      <nz-form-label>Status</nz-form-label>
+      <nz-select formControlName="isActive" [nzAllowClear]="false">
+        <nz-option *ngFor="let status of statuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

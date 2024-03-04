@@ -1,0 +1,213 @@
+html {
+  font-size: 16px;
+  line-height: 1.5em;
+}
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  color: $color_darkgrey;
+  font-size: 16px;
+  line-height: 1.5em;
+  font-weight: 300;
+
+  @media (min-width: 576px) {
+    font-size: 20px;
+    line-height: 32px;
+  }
+}
+
+$sizes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 50;
+
+@each $size in $sizes {
+  .f-#{$size} {
+    font-size: $size*4px;
+    line-height: 1.5*$size*4px;
+  }
+}
+
+
+h1, .h1 {
+  font-size: 44px;
+  line-height: 44px;
+  padding: 0;
+  margin: 0 0 44px 0;
+
+
+  @media (min-width: map-get($grid-breakpoints, 'sm')) {
+    font-size: 80px;
+    line-height: 80px;
+    margin: 0 0 80px 0;
+  }
+}
+
+h2, .h2 {
+  font-size: 32px;
+  line-height: 40px;
+  padding: 0;
+  margin: 0 0 40px 0;
+  font-weight: bold;
+
+  @media (min-width: 576px) {
+    font-size: 64px;
+    line-height: 64px;
+    margin: 0 0 64px 0;
+  }
+}
+
+h3, .h3 {
+  font-size: 19px;
+  line-height: 32px;
+  padding: 0;
+  margin: 0 0 32px 0;
+  font-weight: bold;
+  @media (min-width: 576px) {
+    font-size: 32px;
+    line-height: 40px;
+    margin: 0 0 40px 0;
+  }
+}
+
+h4, .h4, h5, .h5, h6, .h6 {
+  font-size: 1em;
+  line-height: 1.5em;
+  padding: 0;
+  margin: 0;
+  font-weight: 700;
+  display: block;
+}
+
+p {
+  display: block;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+
+ul {
+  list-style: none;
+  margin: 0 0 1em 0;
+  padding-left: 1em;
+}
+
+ol {
+  li {
+    margin-bottom: 1em;
+  }
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.text-large {
+  font-size: 18px;
+  line-height: 24px;
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+.text-medium {
+  font-size: 13px;
+  line-height: 20px;
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+.text-small {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.text-tiny {
+  font-size: 11.5px;
+  line-height: 16px;
+}
+
+.text-notification {
+  font-size: 12px;
+  font-weight: bold;
+  position:absolute;
+  top: -7px;
+  left: 32px;
+}
+
+.text-middle-line {
+  text-decoration-line: line-through;
+}
+
+b, strong, .text-bold {
+  font-weight: 700;
+}
+
+.text-semi-bold {
+  font-weight: 600;
+}
+
+.text-tiny-bold {
+  font-weight: 400;
+}
+
+.text-height-normal {
+  line-height: normal;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+a {
+  color: $color_green;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.category-cover::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color:#bbbbbb; /* or add it to the track */
+}
+
+.category-cover::-webkit-scrollbar-thumb {
+  background:#2cc84d;
+}
+
+.ng-sidebar__backdrop {
+  z-index: 2 !important;
+}
+
+.only-desktop {
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    display: none;
+  }
+}
+
+.only-mobile {
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
+    display: none;
+  }
+}
+
+.ng-sidebar__content {
+  overflow: visible !important;
+}
+
+.carousel-dots .carousel-dot-active {
+  background-color: #776e6e !important;
+}
+
+.carousel-dots .carousel-dot {
+  border: 2px solid #bcafaf !important;
+}

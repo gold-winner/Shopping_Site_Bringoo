@@ -1,0 +1,79 @@
+<form nz-form [formGroup]='form' class="filter-form row">
+  <nz-form-item class="col pr-0">
+    <nz-form-control labelForErrorTip="Start date">
+      <nz-form-label>Start date</nz-form-label>
+      <app-date-control
+        [dateFormat]="dateFormat"
+        formControlName="dateStart"
+        placeHolder="Date start"
+        [isRequired]="true"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="col pl-0">
+    <nz-form-control labelForErrorTip="End date">
+      <nz-form-label>End date</nz-form-label>
+      <app-date-control
+        [dateFormat]="dateFormat"
+        formControlName="dateEnd"
+        placeHolder="Date end"
+        [disableBefore]="form.controls.dateStart.value"
+        [isRequired]="true"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item  class="col">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <input nz-input formControlName="search" placeholder="Search"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-store-select
+    class="col"
+    label="Store filter"
+    formControlName="storeId"
+  ></app-filter-store-select>
+
+  <nz-form-item class="col">
+    <nz-form-control>
+      <nz-form-label>Total Revenue filter</nz-form-label>
+      <nz-input-group [nzSuffix]="defaultCurrency" [nzAddOnBefore]="orderedTotal">
+        <input nz-input type="number" formControlName="totalRevenue" placeholder="Total Revenue">
+      </nz-input-group>
+
+      <ng-template #orderedTotal>
+        <nz-select formControlName='totalRevenueOrder' nzShowSearch>
+          <nz-option nzValue="eq" nzLabel="="></nz-option>
+          <nz-option nzValue="ne" nzLabel="!="></nz-option>
+          <nz-option nzValue="gt" nzLabel=">"></nz-option>
+          <nz-option nzValue="lt" nzLabel="<"></nz-option>
+          <nz-option nzValue="gte" nzLabel=">="></nz-option>
+          <nz-option nzValue="lte" nzLabel="<="></nz-option>
+        </nz-select>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="col">
+    <nz-form-control>
+      <nz-form-label>Items Purchased filter</nz-form-label>
+      <nz-input-group nzSuffix="unit" [nzAddOnBefore]="orderedItems">
+        <input nz-input type="number" formControlName="itemsPurchased" placeholder="Items Purchased">
+      </nz-input-group>
+
+      <ng-template #orderedItems>
+        <nz-select formControlName='itemsPurchasedOrder' nzShowSearch>
+          <nz-option nzValue="eq" nzLabel="="></nz-option>
+          <nz-option nzValue="ne" nzLabel="!="></nz-option>
+          <nz-option nzValue="gt" nzLabel=">"></nz-option>
+          <nz-option nzValue="lt" nzLabel="<"></nz-option>
+          <nz-option nzValue="gte" nzLabel=">="></nz-option>
+          <nz-option nzValue="lte" nzLabel="<="></nz-option>
+        </nz-select>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>

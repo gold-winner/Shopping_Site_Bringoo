@@ -1,0 +1,58 @@
+<ui-header></ui-header>
+<div class="container">
+  <div class="mt-10">
+    <ui-table 
+      header="Nährwertinformation pro 100 g"
+      [data]="tableData"
+    ></ui-table>
+  </div>
+  <div class="mt-12">
+      <ui-accordion title="About">
+        <span class="text-medium">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. 
+          Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Brand">
+        <span class="text-medium">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. 
+          Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Details">
+        <span class="text-medium">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. 
+          Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Ingredients">
+        <span class="text-medium">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. 
+          Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Nutritional values">
+        <div>
+          <ui-table 
+            header="Nährwertinformation pro 100 g"
+            [data]="tableData"
+          ></ui-table>
+        </div>
+      </ui-accordion>
+  </div>
+  <div class="mt-12">
+    <ui-total [hasBackground]="false"></ui-total>
+  </div>
+  <div class="mt-12">
+    <ui-shop-detail></ui-shop-detail>
+  </div>
+  <div class="d-flex flex-column mt-12">
+    <ui-order></ui-order>
+    <ui-order status='delivered' class="my-6"></ui-order>
+    <ui-order status='not_submit'></ui-order>
+    <ui-order [selected]="true" class="mt-6 mb-12"></ui-order>
+    <ui-total class="mt-12"></ui-total>
+    <ui-total class="my-12" [hasVoucher]="true"></ui-total>
+  </div>
+</div>
+<ui-footer></ui-footer>

@@ -1,0 +1,4 @@
+<div class="step-item" [ngClass]="{'step-item--unselected': step > currentStep }" (click)="onClick()">
+  <span *ngIf="step==currentStep">Step {{step}}</span>
+  <span *ngIf="step!=currentStep">{{step}}</span>
+</div>

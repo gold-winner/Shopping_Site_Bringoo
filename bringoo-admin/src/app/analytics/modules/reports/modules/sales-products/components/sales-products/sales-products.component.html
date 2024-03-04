@@ -1,0 +1,58 @@
+<div class="mx-8 mt-8 mb-8">
+  <div class="d-flex justify-content-between">
+    <a class="d-flex align-items-center" routerLink='../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>Sales by product</h3></a>
+    <div>
+      <button nz-button nzType="text">Print <i nz-icon nzType="printer"></i></button>
+      <button nz-button nzType="text">Export <i nz-icon nzType="export"></i></button>
+      <button nz-button nzType="primary" nzShape="round">Create order</button>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <app-sales-products-filter-form (salesFilter)="filterPatch($event)"></app-sales-products-filter-form>
+
+    <nz-table
+      nzShowSizeChanger
+      nzShowPagination
+      [nzData]="items"
+      [nzFrontPagination]="false"
+      [nzLoading]="isLoading$|async"
+      [nzTotal]="total"
+      [nzPageIndex]="page"
+      (nzPageIndexChange)="checkedPage = false"
+      [nzShowTotal]="rangeTemplate"
+      [nzPageSizeOptions]="nzPageSizeOptions"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '250px' }"
+    >
+      <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="checkedPage" (nzCheckedChange)='onAllChecked($event)' [nzWidth]="'50px'"></th>
+          <th [nzSortFn]="true" [nzColumnKey]="'name_i18n'">Product Name</th>
+          <th [nzSortFn]="true" [nzColumnKey]="'category_name_i18n'">Product Category</th>
+          <th [nzSortFn]="true" [nzColumnKey]="'subcategory_name_i18n'">Product SubCategory</th>
+          <th [nzSortFn]="true" [nzColumnKey]="'salesCount'" class='text-align-right'>Sales Count</th>
+          <th [nzSortFn]="true" [nzColumnKey]="'totalPrice'" class='text-align-right'>Sales Revenue in EUR</th>
+          <th [nzSortFn]="true" [nzColumnKey]="'lastSales'">Last Sale (Date)</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items; let index = index">
+        <th nzShowCheckbox [nzChecked]="setOfChecked.has(item.productId!)" (nzCheckedChange)="onItemChecked(item.productId!, $event)"></th>
+        <td class="text-bold">{{item.name_i18n}}</td>
+        <td class="text-bold">{{item.category_name_i18n}} ({{item.vendorCategoryCode}})</td>
+        <td class="text-bold">{{item.subcategory_name_i18n}}</td>
+        <td class='text-align-right nowrap text-bold'>{{item.salesCount}}</td>
+        <td class='text-align-right nowrap text-bold'>{{item.totalPrice|formatPrice}}</td>
+        <td class="text-bold">{{item.lastSales | date : dateTimeFormat}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total }} items
+      <div *ngIf='setOfChecked.size'>Selected {{setOfChecked.size}}</div>
+    </ng-template>
+  </div>
+</div>

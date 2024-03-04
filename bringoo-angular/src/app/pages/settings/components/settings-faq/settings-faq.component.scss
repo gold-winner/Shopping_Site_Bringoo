@@ -1,0 +1,16 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+.content {
+  @extend .mx-8;
+  @extend .mt-6;
+  @extend .w-70p;
+
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    width: 85%;
+  }
+}
+.border {
+  border-bottom: 1px solid rgba($color_beige, 0.2);
+}

@@ -1,0 +1,28 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Order temperature</nz-form-label>
+    <nz-form-control labelForErrorTip="Order temperature">
+      <input
+        nz-input
+        type="number"
+        step="1"
+        formControlName='temperature'
+        placeholder='input temperature'
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Image</nz-form-label>
+    <nz-form-control labelForErrorTip="Image">
+      <app-file-upload formControlName="imageUrl" [multiple]="false" [path]="'orderTemperature'" [isRequired]='true'></app-file-upload>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Comment</nz-form-label>
+    <nz-form-control labelForErrorTip="Comment">
+      <input nz-input type='text' formControlName='comment' placeholder='Add comment'>
+    </nz-form-control>
+  </nz-form-item>
+</form>

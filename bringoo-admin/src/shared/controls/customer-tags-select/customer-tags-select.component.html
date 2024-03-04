@@ -1,0 +1,9 @@
+<nz-form-item class="w-32 mr-4 mb-0">
+  <nz-form-control>
+    <nz-form-label nzFor="tags">{{label}}</nz-form-label>
+    <nz-select nzMode="tags" [formControl]="control" [nzPlaceHolder]="placeHolder" class="w-100p" >
+      <nz-option *ngFor="let tag of tags$ | async" [nzLabel]="tag.tag +' ('+tag.count+')'"
+                 [nzValue]="tag.tag"></nz-option>
+    </nz-select>
+  </nz-form-control>
+</nz-form-item>

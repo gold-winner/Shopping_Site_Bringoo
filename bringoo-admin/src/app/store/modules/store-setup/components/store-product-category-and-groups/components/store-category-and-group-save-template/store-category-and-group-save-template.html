@@ -1,0 +1,18 @@
+<nz-modal
+  [(nzVisible)]="showModal"
+
+  nzTitle="Save Category and Group Template"
+  nzOkText="Save"
+  nzCancelText="Cancel"
+  (nzOnOk)="onSaveTemplate()"
+  (nzOnCancel)="onClosePanel()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="form" nzLayout="vertical">
+      <app-lang-controller>
+        <app-multi-lang-v2-input required label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+        <app-multi-lang-v2-input label="Description" type="textarea" formControlName="description_i18n"></app-multi-lang-v2-input>
+      </app-lang-controller>
+    </form>
+  </ng-container>
+</nz-modal>

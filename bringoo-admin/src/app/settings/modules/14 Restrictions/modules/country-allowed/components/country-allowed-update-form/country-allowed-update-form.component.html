@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Phone Country Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Phone Country Code">
+      <input nz-input type='text' formControlName='phoneCountryCode' placeholder='Input phone country code'>
+    </nz-form-control>
+  </nz-form-item>
+</form>

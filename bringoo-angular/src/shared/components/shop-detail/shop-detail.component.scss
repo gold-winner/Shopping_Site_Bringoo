@@ -1,0 +1,42 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-shop-detail {
+  &__header {
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-start;
+
+    &--logo {
+      @extend .w-20;
+      @extend .h-20;  
+      @extend .border-radius-md;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    &--title {
+      @extend .d-flex;
+      @extend .flex-column;
+    }
+  }
+
+  &__body {
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .text-bold;
+    @extend .py-4;
+    @extend .pb-6;
+    border-bottom: 1px solid rgba($color_beige, 0.4);
+  }
+
+  &__footer {
+    @extend .d-flex;
+    @extend .justify-content-between;
+    @extend .align-items-center;
+    @extend .text-medium;
+    @extend .mt-6;
+  }
+}

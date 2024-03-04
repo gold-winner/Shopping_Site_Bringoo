@@ -1,0 +1,85 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form>
+  <nz-upload
+    nzType="drag"
+    [(nzFileList)]="fileList"
+    [nzBeforeUpload]="beforeUpload"
+  >
+    <p class="ant-upload-drag-icon">
+      <i nz-icon nzType="inbox"></i>
+    </p>
+    <p class="ant-upload-text">Click or drag file to this area to upload</p>
+    <p class="ant-upload-hint">
+      Upload excel file with data.
+    </p>
+  </nz-upload>
+</form>
+<div class="w-100p position-relative mt-4" style="height: 80%">
+  <ng-container *ngIf="importDto">
+    <div class="mb-4 mt-4">
+      <nz-tag [nzColor]="'blue'">Total: {{importDto.totalCount}} line(s)</nz-tag>
+      <nz-tag [nzColor]="'green'">Success: {{importDto.successCount}} line(s)</nz-tag>
+      <nz-tag [nzColor]="'red'">Error: {{importDto.errorCount}} line(s)</nz-tag>
+    </div>
+
+    <nz-table
+      #table
+      nzShowSizeChanger
+      nzShowPagination
+      [(nzPageIndex)]="pageIndex"
+      [nzPageSize]='20'
+      [nzTotal]="importDto.errorCount"
+      [nzData]="importDto.errors"
+      [nzShowTotal]="rangeTemplate"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: importDto.keys.length * 100 +'px', y: '450px' }"
+    >
+      <thead>
+      <tr>
+        <th class="text-align-right">Index</th>
+        <th *ngFor="let key of importDto.keys">{{key}}</th>
+      </tr>
+      </thead>
+      <tbody class="w-100p">
+      <tr *ngFor="let row of table.data; let index=index">
+        <td class="text-align-right">
+          {{index + 1}}
+          <i class="color-danger cursor-pointer" [nz-tooltip]="errorsFields" nz-icon nzType="warning" nzTheme="outline"></i>
+          <ng-template #errorsFields>
+            <div class="bg-danger-20">
+              {{row|importErrorsFields|arrayJoin : ', '}}
+            </div>
+          </ng-template>
+        </td>
+        <td *ngFor="let key of importDto.keys">
+          <span
+            *ngIf="(row | importErrors:key).length > 0; else fieldWithoutError"
+            [nz-tooltip]="tooltip"
+            nz-button
+            class="color-danger bg-danger-20"
+          > {{getField((row['target']|objectValue:key), key)}}</span>
+          <ng-template #fieldWithoutError>
+            <span
+              nz-button
+            > {{getField((row['target']|objectValue:key), key)}}</span>
+          </ng-template>
+          <ng-template #tooltip>
+            <div *ngFor="let error of (row | importErrors:key)">
+              Error: "{{error}}"
+            </div>
+          </ng-template>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total }} items
+    </ng-template>
+
+    <nz-collapse>
+      <nz-collapse-panel nzHeader="Server errors response">
+        <div style="white-space: pre;">{{(importDto.errors|arrayObjectMap :'errors')|json}}</div>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </ng-container>
+
+</div>

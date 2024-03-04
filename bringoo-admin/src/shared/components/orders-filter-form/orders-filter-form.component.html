@@ -1,0 +1,85 @@
+<form nz-form [formGroup]='form' class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input nz-input formControlName="search" placeholder="Search"
+                 nz-tooltip="Search by Order ID, Mollie ID and Store Name"
+                 nzTooltipPlacement="topLeft"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="d-flex dates" *ngIf="!this.route.snapshot.data.dashboard">
+      <nz-form-item class="w-32">
+        <nz-form-control labelForErrorTip="Start date">
+          <nz-form-label>Start date</nz-form-label>
+          <app-date-control
+            [dateFormat]="dateFormat"
+            formControlName="dateStart"
+            placeHolder="Date start"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="w-32">
+        <nz-form-control labelForErrorTip="End date">
+          <nz-form-label>End date</nz-form-label>
+          <app-date-control
+            [dateFormat]="dateFormat"
+            formControlName="dateEnd"
+            placeHolder="Date end"
+            [disableBefore]="form.controls.dateStart.value"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <app-filter-store-select
+      *ngIf="!this.route.snapshot.data.storePerformance"
+      class="col"
+      formControlName="storeId"
+      label="Store"
+      [onlyActive]="true"
+    ></app-filter-store-select>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Replacement</nz-form-label>
+        <nz-select formControlName="hasReplacement" [nzAllowClear]="false">
+          <nz-option *ngFor="let status of hasReplacementStatuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-store-region-select
+      class="col pr-0"
+      formControlName="storeRegionCode"
+      label="Store Region"
+      type="multiple"
+    ></app-filter-store-region-select>
+
+    <app-filter-list-select
+      class="col pr-0"
+      label="Order status"
+      placeHolder="Order status"
+      [items]="orderStatusItems"
+      type="multiple"
+      formControlName="orderStatus"
+    ></app-filter-list-select>
+
+    <nz-form-item class="col w-40">
+      <nz-form-control>
+        <nz-form-label>Tags</nz-form-label>
+        <nz-select
+          nzPlaceHolder="Tags filter"
+          nzMode="tags"
+          [nzDropdownStyle]="{ display: 'none' }"
+          formControlName="tags"
+        ></nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

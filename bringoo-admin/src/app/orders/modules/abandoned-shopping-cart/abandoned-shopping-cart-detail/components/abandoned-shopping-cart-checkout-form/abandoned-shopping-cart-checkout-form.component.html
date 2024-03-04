@@ -1,0 +1,168 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label nzRequired>Delivery Address:</nz-form-label>
+      <app-select
+        [options]="deliveryAddressSelect"
+        placeHolder="Delivery Address select"
+        formControlName="deliveryAddressId"
+      >
+      </app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label nzRequired>Billing Address:</nz-form-label>
+      <app-select
+        [options]="billingAddressSelect"
+        placeHolder="Billing Address select"
+        formControlName="billingAddressId"
+      >
+      </app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzRequired nzFor="phoneCountryCode">
+      Phone Country Code:
+    </nz-form-label>
+    <nz-form-control>
+      <input
+        formControlName="phoneCountryCode"
+        nz-input
+        name="phoneCountryCode"
+        placeholder="Phone Country Code"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzRequired nzFor="phoneNumber">
+      Phone Number:
+    </nz-form-label>
+    <nz-form-control>
+      <input
+        nz-input
+        formControlName="phoneNumber"
+        name="phoneNumber"
+        placeholder="Phome Number"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Delivery Destination:</nz-form-label>
+    <nz-form-control>
+      <nz-select formControlName="deliveryDestination" nzAllowClear nzShowSearch nzPlaceHolder="Delivery Destination">
+        <nz-option *ngFor="let deliveryDestination of deliveryDestinations" [nzValue]="deliveryDestination" [nzLabel]="deliveryDestination"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <nz-radio-group formControlName="deliveryType">
+        <label nz-radio class="d-block" [nzValue]="DeliveryTypeEnum.instant">
+          Instant Checkout
+        </label><br/>
+        <label nz-radio class="d-block" [nzValue]="DeliveryTypeEnum.preorder">
+          Delivery Slot
+        </label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <ng-container *ngIf="scheduleDays$ | async as scheduleDays">
+    <nz-form-item *ngIf="form.get('deliveryType')?.value === DeliveryTypeEnum.preorder">
+      <nz-form-label nzRequired>Delivery Slot Date:</nz-form-label>
+      <nz-form-control>
+        <nz-select nzPlaceHolder="Delivery Slot Date" class="w-100p" [formControl]="deliveryDate">
+          <ng-container *ngFor="let scheduleDay of scheduleDays">
+            <ng-container *ngIf="scheduleDay.slots|availableSlotsNumber as availableSlots">
+              <nz-option
+                *ngIf="availableSlots > 0"
+                nzLabel="{{scheduleDay.date}} ({{availableSlots}})"
+                [nzValue]="scheduleDay.date"
+              ></nz-option>
+            </ng-container>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+  <ng-container *ngIf="deliverySlots$ | async as deliverySlots">
+    <nz-form-item *ngIf="form.get('deliveryType')?.value === DeliveryTypeEnum.preorder && deliveryDate.value">
+      <nz-form-label nzRequired>Delivery Slot Time:</nz-form-label>
+      <nz-form-control *ngIf="deliverySlots|getSlotForDate :deliveryDate.value as slots">
+        <nz-select formControlName="deliveryDate" nzPlaceHolder="Delivery Slot Time" class="w-100p">
+          <ng-container *ngFor="let deliverySlot of slots">
+            <nz-option
+              *ngIf="deliverySlot?.available && deliverySlot.available > 0"
+              nzLabel="{{deliverySlot.time}} ({{deliverySlot.available}}) {{deliverySlot.deliveryFee}}"
+              [nzValue]="deliverySlot.date+' '+deliverySlot.time">
+            </nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="deliveryComment">
+      Delivery Comment:
+    </nz-form-label>
+    <nz-form-control>
+      <input
+        nz-input
+        formControlName="deliveryComment"
+        name="deliveryComment"
+        placeholder="Delivery Comment"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="messageForShopper">
+      Message For Shopper:
+    </nz-form-label>
+    <nz-form-control>
+      <input
+        nz-input
+        formControlName="messageForShopper"
+        name="messageForShopper"
+        placeholder="Message For Shoppe"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('deliveryDontRing')"
+    (change) = "checkboxClick('deliveryDontRing')"
+    [nzIndeterminate]="!checkboxesClicked.deliveryDontRing"
+    formControlName='deliveryDontRing'>
+    Delivery Dont Ring
+  </label><br/>
+
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('deliveryCallMe')"
+    (change) = "checkboxClick('deliveryCallMe')"
+    [nzIndeterminate]="!checkboxesClicked.deliveryCallMe"
+    formControlName='deliveryCallMe'>
+    Delivery Call Me
+  </label><br/>
+
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('deliveryLeaveAtTheDoor')"
+    (change) = "checkboxClick('deliveryLeaveAtTheDoor')"
+    [nzIndeterminate]="!checkboxesClicked.deliveryLeaveAtTheDoor"
+    formControlName='deliveryLeaveAtTheDoor'>
+    Delivery Leave At TheDoor
+  </label>
+</form>

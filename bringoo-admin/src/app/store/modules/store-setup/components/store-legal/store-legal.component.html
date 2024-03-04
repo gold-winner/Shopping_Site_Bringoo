@@ -1,0 +1,323 @@
+<form nz-form [formGroup]='form' nzLayout='vertical' class="form scroll-y">
+  <div class='container px-4'>
+    <h3 class='mt-4'>Legal</h3>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">Business name</nz-form-label>
+        <nz-form-control labelForErrorTip="Business name">
+          <input nz-input type='text' formControlName='businessName' placeholder='Business name'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">Legal form</nz-form-label>
+        <nz-form-control labelForErrorTip="Legal form">
+          <input nz-input type='text' formControlName='legalForm' placeholder='Legal form'/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">HRB (Handelsregister Nummer)</nz-form-label>
+        <nz-form-control labelForErrorTip="HRB (Handelsregister Nummer)">
+          <input nz-input type='text' formControlName='hrb' placeholder='Handelsregister Nummer'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">Please select the registration office</nz-form-label>
+        <nz-form-control labelForErrorTip="Please select the registration office">
+          <input nz-input type='text' formControlName='registrationOffice' placeholder='Registration office'/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <h3 class='mt-4'>Business address</h3>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">Address</nz-form-label>
+        <nz-form-control labelForErrorTip="Address">
+          <input nz-input type='text' formControlName='address' placeholder='Address'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">Postal code</nz-form-label>
+        <nz-form-control labelForErrorTip="Postal code">
+          <input nz-input type='text' formControlName='postalCode' placeholder='Postal code'/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">City</nz-form-label>
+        <nz-form-control labelForErrorTip="City">
+          <input nz-input type='text' formControlName='City' placeholder='City'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label nzFor="isActive">Business location</nz-form-label>
+        <nz-form-control labelForErrorTip="Business location">
+          <input nz-input type='text' formControlName='businessLocation' placeholder='Business location'/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <label nz-checkbox>Use a different billing address</label>
+    <h3 class='mt-4 mb-0'>Billing address</h3>
+    <p class='mb-4 f-4'>Used for invoicing purposes.</p>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>Business name (optional)</nz-form-label>
+        <nz-form-control labelForErrorTip="Business name (optional)">
+          <input nz-input type='text' placeholder='Business name'/>
+        </nz-form-control>
+
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>To the attentional of (optional)</nz-form-label>
+        <nz-form-control labelForErrorTip="To the attentional of (optional)">
+          <input nz-input type='text' formControlName='attentional' placeholder='To the attentional of'/>
+        </nz-form-control>
+
+      </nz-form-item>
+    </div>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>Address or PO box</nz-form-label>
+        <nz-form-control labelForErrorTip="Address or PO box">
+          <input nz-input type='text' placeholder='Address or PO box'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>Postal code</nz-form-label>
+        <nz-form-control labelForErrorTip="Postal code">
+          <input nz-input type='text' placeholder='Postal code'/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>City</nz-form-label>
+        <nz-form-control labelForErrorTip="City">
+          <input nz-input type='text' placeholder='City'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>Country</nz-form-label>
+        <nz-form-control labelForErrorTip="Country">
+          <input nz-input type='text' placeholder='Country'/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <h3 class='mt-4'>VAT info</h3>
+    <nz-form-item>
+      <nz-form-label>VAT number</nz-form-label>
+      <nz-form-control labelForErrorTip="VAT number">
+        <input nz-input type='text' placeholder='VAT number'/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Applicable VAT regulation</nz-form-label>
+      <nz-form-control labelForErrorTip="Applicable VAT regulation">
+        <nz-radio-group class='w-100p horizontal'>
+          <label nz-radio nzValue="A">
+            Shifted VAT (VAT number required)
+            <p class='color-text-2 mb-0'>Do not apply VAT to my invoices. I will handle VAT declaration with my local tax authority.</p>
+          </label><br/>
+          <label nz-radio nzValue="B">
+            Dutch VAT(VAT number optional)
+            <p class='color-text-2 mb-0'>Apply 21% Dutch VAT to my invoices (e.g. for small business schemes)</p>
+          </label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <h3 class='mt-4'>Legal representative</h3>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>First name</nz-form-label>
+        <nz-form-control labelForErrorTip="First name">
+          <input nz-input type='text' placeholder='First name'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>Last name</nz-form-label>
+        <nz-form-control labelForErrorTip="Last name">
+          <input nz-input type='text' placeholder='Last name'/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>Country of birth</nz-form-label>
+        <nz-form-control labelForErrorTip="Country of birth">
+          <input nz-input type='text' placeholder='Country of birth'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>Date of birth</nz-form-label>
+        <nz-form-control labelForErrorTip="Date of birth">
+          <nz-date-picker class='w-100p' [nzPlaceHolder]="'Date of birth'"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>Nationality</nz-form-label>
+        <nz-form-control labelForErrorTip="Nationality">
+          <input nz-input type='text' placeholder='Nationality'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>Country of residence</nz-form-label>
+        <nz-form-control labelForErrorTip="Country of residence">
+          <app-list-select placeHolder='Country of residence'></app-list-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <nz-form-item>
+      <nz-form-label>Is this person an ultimate beneficial owner?</nz-form-label>
+      <nz-form-control labelForErrorTip="Is this person an ultimate beneficial owner?">
+        <nz-radio-group>
+          <label nz-radio nzValue="A">Yes</label>
+          <label nz-radio nzValue="B">No</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <h3 class='mt-4 mb-0'>Identity document</h3>
+    <p class='mb-4 f-4'>
+      When changing your legal representative to a different person,
+      a new identity document is also required.
+      If you re just fixing a spelling mistake, you can skip this step.
+    </p>
+    <nz-form-item>
+      <nz-form-label>Document type (optional)</nz-form-label>
+      <nz-form-control labelForErrorTip="Document type (optional)">
+        <app-list-select placeHolder='Document type'></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+    <h3 class='mt-4 mb-0'>Ultimate beneficial owners</h3>
+    <p class='mb-4 f-4'>
+      We are legally obligated to request the personal information of the ulimate benefical owner(s)
+      (UBO) of Bringoo GmbH. An UBO is a person who owns or controls thw company.
+      For instance through holding more than 25% (direct or indirect) of the stocks,
+      voting rights or ownership interest, or by exercising effective control through other means.
+      If no UBO can be appointed according to these criteria, the company executiveswill be considered as the UBO.
+    </p>
+    <nz-table
+      #ownersTable
+      [nzData]='owners'
+      [nzShowPagination]='owners.length > 6'
+      [nzPageSize]='6'
+    >
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Place of birth</th>
+          <th>Date of birth</th>
+          <th>Citizenship</th>
+          <th>Country of Residence</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let owner of owners'>
+          <td>{{owner.name}}</td>
+          <td>{{owner.placeOfBirth}}</td>
+          <td>{{owner.dateOfBirth}}</td>
+          <td>{{owner.citizenShip}}</td>
+          <td>{{owner.countryOfResidence}}</td>
+          <td>
+            <button nz-button nzType="link" nzSize="small">
+              <i nz-icon nzType="edit" nzTheme="outline" (click)='onDeleteOwner(owner.id)'></i>
+            </button>
+            <button nz-button nzDanger nzType="link" nzSize="small">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class='d-flex flex-row-reverse'>
+      <button class='mt-3' nz-button nzType='primary' nzShape='round' (click)='openPanel = true'>Add new contact</button>
+    </div>
+    <h3 class='mt-4 mb-0'>Financial contact</h3>
+    <p class='mb-4 f-4'>Please provide the details of your financial contact.</p>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>Name  (optional)</nz-form-label>
+        <nz-form-control labelForErrorTip="Name  (optional)">
+          <input nz-input type='text' placeholder='Name'/>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>Email  (optional)</nz-form-label>
+        <nz-form-control labelForErrorTip="Email  (optional)">
+          <nz-select nzPlaceHolder="Write email" nzMode="tags" [nzDropdownStyle]="{ display: 'none' }"></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <h3 class='mt-4 mb-0'>Technical contact</h3>
+    <p class='mb-4 f-4'>Please provide the details of your technical contact.</p>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-label>Name  (optional)</nz-form-label>
+        <nz-form-control labelForErrorTip="Name  (optional)">
+          <input nz-input type='text' placeholder='Name'/>
+        </nz-form-control>
+        <div>The <a>User Agreement</a> has been accepted on 9 October 2020.</div>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-label>Email  (optional)</nz-form-label>
+        <nz-form-control labelForErrorTip="Email  (optional)">
+          <nz-select nzPlaceHolder="Write email" nzMode="tags" [nzDropdownStyle]="{ display: 'none' }"></nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<div class='p-4'>
+  <button
+    (click)='onSubmit()'
+    [nzType]="'primary'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Update</button>
+  <button
+    (click)='onSubmit()'
+    [nzType]="'link'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Cancel</button>
+</div>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="700"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Add new contact"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='openPanel = false'
+>
+  <ng-template nzDrawerContent>
+    <form nz-form [formGroup]='addContactForm' nzLayout='vertical' >
+      <nz-form-item class='col'>
+        <nz-form-label>Name</nz-form-label>
+        <nz-form-control labelForErrorTip="Name">
+          <input nz-input type='text' placeholder='Name'/>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onAddNewContact()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='openPanel = false'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

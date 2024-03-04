@@ -1,0 +1,23 @@
+<form nz-form [formGroup]='filterForm' class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input nz-input formControlName="search" placeholder="Search"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-staff-with-avatars
+      class="mr-4"
+      formControlName="staffIds"
+    ></app-filter-staff-with-avatars>
+
+    <app-filter-store-select
+      class="col"
+      formControlName="storeIds"
+      type="multiple"
+    ></app-filter-store-select>
+  </div>
+</form>

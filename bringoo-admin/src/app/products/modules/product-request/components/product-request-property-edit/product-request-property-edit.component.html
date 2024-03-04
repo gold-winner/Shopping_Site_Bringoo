@@ -1,0 +1,94 @@
+<nz-form-item class="mt-6" *ngIf="productField.view === 'inputNumber'">
+  <nz-form-control labelForErrorTip="errorTpl">
+    <nz-input-number
+      nzPlaceHolder="{{productField.key}}"
+      formControlName="{{productField.key}}"
+      class="w-100p"
+      [nzMin]="0">
+    </nz-input-number>
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item class="mt-6" *ngIf="productField.view === 'inputString'">
+  <nz-form-control labelForErrorTip="errorTpl">
+    <input
+    *ngIf="!productField.type || productField.type === 'text'"
+      nz-input
+      appCodeInput
+      formControlName="{{productField.key}}"
+      placeholder="{{productField.key}}"
+    />
+    <textarea
+      *ngIf="productField.type === 'textarea'"
+      nz-input
+      formControlName="{{productField.key}}"
+      placeholder="{{productField.key}}"
+    ></textarea>
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item *ngIf="productField.view === 'pickerDate'">
+  <nz-form-control labelForErrorTip="Please enter {{productField.key}}">
+    <nz-date-picker
+      [nzShowTime]="{ nzFormat: 'HH:mm' }"
+      nzFormat="yyyy-MM-dd HH:mm"
+      formControlName="{{productField.key}}">
+    </nz-date-picker>
+  </nz-form-control>
+</nz-form-item>
+<ng-container *ngIf="productField.view === 'checkboxBoolean'">
+  <label class="ml-0" nz-checkbox formControlName="{{productField.key}}"></label>
+</ng-container>
+<ng-container *ngIf="productField.view === 'selectList'">
+  <app-list-select [list]="productField.list" formControlName="{{productField.key}}">
+  </app-list-select>
+</ng-container>
+<app-lang-controller *ngIf="productField.view === 'inputMultiLanguage'">
+  <app-multi-lang-v2-input
+    [type]="productField.type ? productField.type : 'text'"
+    formControlName="{{productField.key}}">
+  </app-multi-lang-v2-input>
+</app-lang-controller>
+<nz-form-item *ngIf="productField.view === 'jsonOneToMany'">
+  <nz-form-control>
+    <app-jsonb-one-to-many-input
+      [keysList]="productField.keysList"
+      formControlName="{{productField.key}}">
+    </app-jsonb-one-to-many-input>
+  </nz-form-control>
+</nz-form-item>
+<nz-form-item *ngIf="productField.view === 'file'">
+  <nz-form-control labelForErrorTip="Please load file">
+    <app-file-upload
+      [multiple]="productField.multiple ? true : false"
+      formControlName="{{productField.key}}"
+      [path]="productField.path">
+    </app-file-upload>
+  </nz-form-control>
+</nz-form-item>
+<ng-container *ngIf="productField.view === 'customComponent'">
+  <app-vat-select
+    *ngIf="productField.customType === 'vatCode'"
+    formControlName="{{productField.key}}"
+    placeHolder="Vat Code">
+  </app-vat-select>
+  <app-filter-category-select
+    *ngIf="productField.customType === 'productCategoryCode'"
+    formControlName="{{productField.key}}">
+  </app-filter-category-select>
+  <app-filter-subcategory-select
+    *ngIf="productField.customType === 'productSubcategoryCode'"
+    [categoryCode]="form.get('productCategoryCode')?.value"
+    formControlName="{{productField.key}}">
+  </app-filter-subcategory-select>
+  <app-filter-brand-select
+    *ngIf="productField.customType === 'productBrandCode'"
+    formControlName="{{productField.key}}">
+  </app-filter-brand-select>
+  <app-nutritional-data-edit
+    *ngIf="productField.customType === 'nutritional_data'"
+    [form]="form">
+  </app-nutritional-data-edit>
+  <app-deposit-edit
+    *ngIf="productField.customType === 'deposit'"
+    [form]="form">
+  </app-deposit-edit>
+</ng-container>

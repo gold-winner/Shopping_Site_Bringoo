@@ -1,0 +1,54 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input nz-input formControlName="search" placeholder="Search"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Category filter</nz-form-label>
+      <app-select
+        placeHolder='Category'
+        [options]='categorySelect'
+        formControlName='category'
+      ></app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Sub-Category filter</nz-form-label>
+      <app-select
+        placeHolder='Sub-Category'
+        [options]='subCategorySelect'
+        formControlName='subCategory'
+      ></app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Brand filter</nz-form-label>
+      <app-select
+        placeHolder='Brand'
+        [options]='brandSelect'
+        formControlName='brand'
+      ></app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Deposit filter</nz-form-label>
+      <app-list-select
+        class="d-block"
+        formControlName="isDeposit"
+        [list]="isDepositFilterStates"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

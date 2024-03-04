@@ -1,0 +1,74 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Country">
+      <nz-form-label nzRequired>Country</nz-form-label>
+      <app-select [options]="countrySelect" placeHolder="Country select" formControlName="countryCode"
+                  [required]="true"></app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label nzRequired>Start date</nz-form-label>
+      <nz-form-control labelForErrorTip="Start date">
+        <app-date-control
+          formControlName="dateStart"
+          placeHolder="Date start"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col pl-0">
+      <nz-form-label nzRequired>End date</nz-form-label>
+      <nz-form-control labelForErrorTip="End date">
+        <app-date-control
+          formControlName="dateEnd"
+          placeHolder="Date end"
+          [disableBefore]="form.controls.dateStart.value"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Delivery Time in minutes">
+      <nz-form-label nzRequired>Delivery Time in minutes</nz-form-label>
+      <nz-input-number nzPlaceHolder="deliveryTime" formControlName="deliveryTime" [nzMin]="0"
+                       class="w-100p"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Zip codes</nz-form-label>
+    <app-zip-code-picker
+      [center]="mapCenter"
+      [postalCodes]="form?.get('zipCodes')?.valueChanges|async"
+      (zipCodesChange)="updateZipCodesFromMap($event)"
+    ></app-zip-code-picker>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Please enter zip code">
+      <nz-select nzMode="tags" nzPlaceHolder="ZipCodes" formControlName="zipCodes" ></nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Default Delivery Fee</nz-form-label>
+    <nz-form-control labelForErrorTip="Default Delivery Fee">
+      <input nz-input type="number" min="0" formControlName="defaultFee" placeholder="Fee value">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="isInstantDelivery">Instant Delivery</nz-form-label>
+    <nz-form-control labelForErrorTip="Instant Delivery">
+      <app-status-switch formControlName="isInstantDelivery"></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="isPublicDisplay">Is Public Display</nz-form-label>
+    <nz-form-control labelForErrorTip="Is Public Display">
+      <app-status-switch formControlName='isPublicDisplay'></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>

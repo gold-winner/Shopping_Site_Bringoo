@@ -1,0 +1,34 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="700"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Store receipt images "
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+<!--todo selected pictures-->
+    <nz-radio-group [(ngModel)]="selectImageIndex" class='w-100p'>
+      <carousel *ngIf='openPanel'>
+        <div *ngFor='let src of images; let ind = index' class='carousel-cell'>
+          <label nz-radio [nzValue]="ind" style='position: absolute'></label>
+          <img src="{{src}}" [alt]="'receipt-'+ind">
+        </div>
+      </carousel>
+    </nz-radio-group>
+
+  </ng-template>
+</nz-drawer>
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit();'>Add to order</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

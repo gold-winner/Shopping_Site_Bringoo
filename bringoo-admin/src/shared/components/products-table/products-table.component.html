@@ -1,0 +1,47 @@
+<nz-table
+  #rowSelectionTable
+  [nzData]="listOfData"
+  [nzShowPagination]='false'
+  [nzPageSize]='limit'
+>
+  <thead>
+  <tr>
+    <th
+      [nzChecked]="checked"
+      [nzIndeterminate]="indeterminate"
+      (nzCheckedChange)="onAllChecked($event)"
+      class="checkedbox color-text-2"
+    >Showing {{total}} products</th>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of listOfData">
+    <td
+      class="checkedbox"
+      [nzChecked]="setOfCheckedId.has(data.id!)"
+      (nzCheckedChange)="onItemChecked(data.id!, $event)"
+    ></td>
+    <td>{{ data.name_i18n }}</td>
+    <td>{{ data.code }}</td>
+    <td><app-status [value]="data.isActive"></app-status></td>
+    <td>
+      <i
+        class="actionIcons"
+        nz-icon nzType="edit"
+        nzTheme="outline"
+        (click)='onEdit(data.id!)'
+      ></i>
+      <i
+        class="actionIcons"
+        nz-icon
+        nzType="delete"
+        nzTheme="outline"
+      ></i>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

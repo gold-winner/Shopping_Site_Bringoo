@@ -1,0 +1,27 @@
+<form nz-form [formGroup]='form' class="filter-form">
+  <div class="container-fluid">
+    <div class="row pr-4">
+
+      <nz-form-item class="col col-sm-24 col-md-auto w-70 pr-0">
+        <nz-form-control>
+          <nz-form-label>Search</nz-form-label>
+          <nz-input-group [nzPrefixIcon]="'search'">
+            <input nz-input formControlName="search" placeholder="Search"
+                   nzTooltipPlacement="topLeft"
+                   nz-tooltip="Search by Name and Code"
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="col pr-0">
+        <nz-form-control>
+          <nz-form-label>Status</nz-form-label>
+          <nz-select formControlName="isActive" [nzAllowClear]="false">
+            <nz-option *ngFor="let status of statuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

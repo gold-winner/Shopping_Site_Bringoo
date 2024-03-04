@@ -1,0 +1,52 @@
+@import "src/scss/colors";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+@import "src/scss/borders";
+@import "src/scss/shadows";
+
+.border {
+  border: 1px solid rgba($color_beige, 0.2);
+}
+
+.cards {
+  @extend .d-flex;
+  @extend .justify-content-start;
+  @extend .flex-wrap;
+  @extend .mt-5;
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    justify-content: center;
+  }
+}
+
+.d-sm-none {
+  @media (max-width: map-get($grid-breakpoints, "sm")) {
+    display: none;
+  }
+}
+
+.email_verify {
+  background: rgba(255, 16, 59, 0.1);
+  border: 1px solid #ff103b;
+  box-sizing: border-box;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.profile_section {
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    box-shadow: 0px 4px 14px #b9b4ae;
+    background: white;
+    padding: 16px 12px;
+    border-radius: 8px;
+  }
+  @media (min-width: map-get($grid-breakpoints, "md")) {
+    display: none;
+  }
+}
+
+.profile {
+  @extend .ml-2;
+  &:hover {
+    color: $color-green;
+  }
+}

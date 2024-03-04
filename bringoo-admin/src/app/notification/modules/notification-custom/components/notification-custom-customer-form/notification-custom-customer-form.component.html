@@ -1,0 +1,64 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzFor="title" nzRequired>Title</nz-form-label>
+    <nz-form-control labelForErrorTip="Title">
+      <input formControlName="title" id="title" nz-input type="text" placeholder='Title'  [maxLength]="titleMaxLength"/>
+      <span class="input-max-length">{{this.form.get('title')?.value?.length || 0}}/{{titleMaxLength}}</span>
+      <ng-template #maxLengthError let-control>
+        <ng-container *ngIf="control.hasError('maxlength')">Maximum character count {{titleMaxLength}}!</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Input notification message!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Message</nz-form-label>
+    <nz-form-control labelForErrorTip="Message">
+      <nz-textarea-count [nzMaxCharacterCount]="240">
+        <textarea nz-input rows='3' formControlName='body' placeholder='Message...' [maxLength]="bodyMaxLength"></textarea>
+      </nz-textarea-count>
+      <ng-template #maxLengthError let-control>
+        <ng-container *ngIf="control.hasError('required')">Input notification message!</ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">Maximum character count {{titleMaxLength}}!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="tags">Customer Tags for filter</nz-form-label>
+    <nz-form-control>
+      <nz-select nzMode="tags" formControlName='tags' nzPlaceHolder='Tags'>
+        <nz-option *ngFor="let tag of tags$ | async" [nzLabel]="tag.tag +' ('+tag.count+')'"
+                   [nzValue]="tag.tag"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="sendDate">Send date</nz-form-label>
+    <nz-form-control labelForErrorTip="Send date">
+      <nz-date-picker [nzShowTime]="true" formControlName='sendDate'></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Customer Sign-in date min</nz-form-label>
+    <nz-form-control labelForErrorTip="Customer Sign-in date min">
+      <app-date-control formControlName="signDateMin" placeHolder="Sign Date Min"></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Customer Sign-in date max</nz-form-label>
+    <nz-form-control labelForErrorTip="Customer Sign-in date max">
+      <app-date-control formControlName="signDateMax" placeHolder="Sign Date Max"></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <br><br>
+  <div nz-row>
+    <div nz-col [nzSpan]="15" [nzPush]="9">
+      <button type="submit" [disabled]="form?.invalid" nz-button nzBlock nzType="primary">Send notification</button>
+    </div>
+  </div>
+</form>

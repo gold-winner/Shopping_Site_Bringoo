@@ -1,0 +1,19 @@
+<div class="ui-card-recently">
+  <div 
+    class="ui-card-recently__badge" 
+    [ngClass]="{'bg-blue': productType==='new', 'bg-red': productType==='sale'}"
+    [hidden]="!productType"
+  >
+    <span *ngIf="productType==='new'">New</span>
+    <span *ngIf="productType==='sale'">0,57 € off</span>
+  </div>
+  <img src="assets/img/products/sause.svg">
+  <div class="ui-card-recently__content">
+    <div *ngIf="productType==='sale'" class="d-flex">
+      <span class="text-bold mr-2 text-medium mt-1 text-middle-line">3,50 €</span>
+      <span class="text-bold text-red">1,17 €</span>
+    </div>
+    <span *ngIf="productType!=='sale'" class="text-bold">1,17 €</span>
+    <span class="text-tiny text-lightblue">250ml (100 ml = 0,47 €)</span>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="header">
+  <p class="f-6 text-bold">Choose how you want to receive</p>
+  <div *ngIf="isGuest" class="text-small">
+    <span class="text-semi-bold">Are you already registered?</span>
+    <span class="text-green cursor-pointer ml-2 text-semi-bold text-medium"><a href="/login">Log in</a></span>
+  </div>
+  <div class="header_delivery-type">
+    <span *ngFor="let type of deliveryTypes; index as i" 
+      (click)="onDeliveryTypeClick(type)" 
+      [ngClass]="{'header_delivery-type--selected': type===selectedDeliveryType, 'mx-5': i===1}">
+      {{ type }} 
+    </span>
+  </div>
+</div>
+<div class="content" [ngClass]="{'city1' : isCity, 'city2' : !isCity}">
+  <div *ngIf="!mapOpened" class="content__header">
+    <icon name="pin" class="text-green cursor-pointer" (click)="onLocationClick()"></icon>
+    <span class="text-lightblue text-medium ml-1"> City:</span>
+    <ui-dropdown-button 
+      defaultValue="Hamburg"
+      [items]="cities"
+      [background]="false"
+      class="delivery-dropdown"
+      (onClickMode)="onClickMode($event)"
+      (onToggleLocation)="onToggleLocation($event)"></ui-dropdown-button>
+  </div>
+  <div [ngClass]="!mapOpened? 'd-none' : ''">
+    <div class="content__header flex-column">
+      <span class="text-small text-semi-bold">Enter your delivery address to see available shops</span>
+      <div class="d-flex w-100p mt-2">
+        <div class="search-box">
+          <icon name="search" class="search-box--icon search-box--icon__search"></icon>
+          <input 
+            #mapSearchField
+            type="text"
+            placeholder="Ferdinandstraße 32, Hamburg"
+            [value]="addressInfo"
+            (keyup)="onAddressChange($event)"
+          />
+          <icon *ngIf="addressInfo!=''" name="close-x" class="search-box--icon search-box--icon__close" (click)="onAddressDelete()"></icon>
+        </div>
+        <ui-button class="ml-3" (onClick)="onAddressSearch()">Search</ui-button>
+      </div>
+      <span *ngIf="inAccurate" class="w-100p text-red text-small text-semi-bold pt-3">Inaccurate address</span>
+    </div>
+    <div *ngIf="mapLoaded" class="map">
+      <google-map 
+        [options]="options" 
+        (mapClick)="moveMap($event)" 
+        height="400px" 
+        width="100%" 
+      >
+        <map-marker
+          [position]="markerPosition"
+          [options]="markerOptions">
+        </map-marker>
+      </google-map>
+    </div>
+  </div>
+  <div *ngIf="!mapOpened && deliveryStores">
+    <div *ngFor="let store of deliveryStores.data" class="pb-4">
+      <ui-address 
+        [store]="store" 
+        [deliverySlots]="deliverySlots"
+        [selectedStore]="selectedStore"
+        (onSelectStore)="onSelectStore($event)" 
+        (onSelectSlot)="onSelectSlot()" 
+        ></ui-address>
+    </div>
+  </div>
+</div>

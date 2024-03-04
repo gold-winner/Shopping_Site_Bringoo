@@ -1,0 +1,11 @@
+<nz-form-item class="mr-0 mb-0">
+  <nz-form-control>
+    <nz-form-label [nzRequired]="isRequired">{{label}}</nz-form-label>
+    <app-select
+      [placeHolder]="placeHolder"
+      [options]="languageSelect"
+      [type]="type"
+      [formControl]="control"
+    ></app-select>
+  </nz-form-control>
+</nz-form-item>

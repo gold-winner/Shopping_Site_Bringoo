@@ -1,0 +1,12 @@
+<div class="ui-faqs">
+  <div class="ui-faqs__main" (click)="onExpandFaq()">
+    <strong class="text-medium">{{title}}</strong>
+    <icon *ngIf="expanded" name="chevron-up" class="offset-3" ></icon>
+    <icon *ngIf="!expanded" name="chevron-down" class="unselected offset-3" ></icon>
+  </div>
+  <div *ngIf="expanded" class="ui-faqs__expanded-list">
+    <div class="mt-3 text-small text-medium-bold">
+      {{content}}
+    </div>
+  </div>
+</div>

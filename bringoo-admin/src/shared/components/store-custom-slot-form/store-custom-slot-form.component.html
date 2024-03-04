@@ -1,0 +1,114 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Slot capacity</nz-form-label>
+    <nz-form-control labelForErrorTip="Slot capacity">
+      <input nz-input type="number" min='1' formControlName='slotCapacity' placeholder='Slot capacity'>
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="isActive">Status</nz-form-label>
+    <nz-form-control labelForErrorTip="Status">
+      <app-status-switch formControlName='isActive' falseValue='Slot Inactive'
+                         trueValue='Slot Active'></app-status-switch>
+    </nz-form-control>
+
+  </nz-form-item>
+  <br>
+  <ng-container
+    *ngIf="reservations"
+  >
+    <p>Temporary Reservation</p>
+
+    <nz-table
+      nzShowPagination
+      nzShowSizeChanger
+      #reservationsTable
+      [nzData]="reservations"
+      [nzShowTotal]="rangeTemplate"
+      [nzPageSizeOptions]="pageSizeOptions"
+    >
+      <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Date Create</th>
+        <th>Date Update</th>
+        <th>Delivery date</th>
+        <th [nzWidth]="'75px'" nzAlign="center">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let reservation of reservationsTable.data">
+        <td>
+          <a
+            routerLink="/users/customers/details/{{reservation.customerId}}"
+          >{{reservation.customer?.settings?.firstName}} {{reservation.customer?.settings?.lastName}}</a>
+        </td>
+        <td>
+          <app-status [value]="reservation.isActive" trueText="Active" falseText="Inactive"></app-status>
+        </td>
+        <td>{{reservation.create_date|date:'short'}}</td>
+        <td>{{reservation.update_date|date:'short'}}</td>
+        <td *ngIf="reservation?.deliveryDate as deliveryDate">
+          <app-local-date [date]="deliveryDate" [tz]="tz"></app-local-date>
+        </td>
+        <td nzAlign="center">
+          <button
+            (click)="onDeleteReservation(reservation.id)"
+            type="button"
+            nz-tooltip nzTooltipTitle="Delete reservation"
+            nzSize="small" nz-button nzDanger nzType="link"><i nz-icon nzType="delete"></i></button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+
+  <br>
+
+  <ng-container
+    *ngIf="orders"
+  >
+    <p>Active orders</p>
+
+    <nz-table
+      nzShowPagination
+      nzShowSizeChanger
+      #ordersTable
+      [nzData]="orders"
+      [nzShowTotal]="rangeTemplate"
+      [nzPageSizeOptions]="pageSizeOptions"
+    >
+      <thead>
+      <tr>
+        <th>Order</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Date Create</th>
+        <th>Date Update</th>
+        <th>Delivery date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of ordersTable.data">
+        <td><a routerLink="/orders/all/detail/{{order.id}}">{{order?.orderNumber}}</a></td>
+        <td><a
+          routerLink="/users/customers/details/{{order?.customerId}}">{{order?.orderBillingAddress?.firstName}} {{order?.orderBillingAddress?.lastName}}</a>
+        </td>
+        <td>{{order.orderStatus}}</td>
+        <td>{{order.create_date|date:'short'}}</td>
+        <td>{{order?.update_date|date:'short'}}</td>
+        <td *ngIf="order?.deliveryDateTimeFrom as deliveryDate">
+          <app-local-date [date]="deliveryDate" [tz]="tz"></app-local-date>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  </ng-template>
+</form>

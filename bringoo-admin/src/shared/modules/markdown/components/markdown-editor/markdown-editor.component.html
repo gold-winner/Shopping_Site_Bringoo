@@ -1,0 +1,14 @@
+<input
+  nz-input
+  class="mt-2"
+  placeholder="Add comment..."
+  (focus)="onFocus()"
+  [class.d-none]="isFocus"
+>
+<div [class.d-none]="!isFocus">
+  <div #editor_container class="mb-4"></div>
+  <ng-container *ngIf="showButtons">
+    <button nz-button nzType="primary" (click)="onSave()">Save</button>
+    <button nz-button nzType="text" (click)="onCancel()">Cancel</button>
+  </ng-container>
+</div>

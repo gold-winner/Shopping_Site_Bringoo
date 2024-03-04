@@ -1,0 +1,356 @@
+@use "sass:map";
+
+@import 'src/scss/sizes';
+@import 'src/scss/colors';
+
+$colors: (
+  "primary": (
+    "fill":(
+      "bg":$color_green,
+      "text":$color_white,
+      "bg-hover":$color_darkgreen,
+      "text-hover":$color_white,
+      "bg-active":$color_darkgreen,
+      "text-active":$color_white,
+    ),
+    "outline":(
+      "border":$color_green,
+      "text":$color_green,
+      "border-hover":$color_green,
+      "text-hover":$color_white,
+      "border-active":$color_darkgreen,
+      "text-active":$color_white,
+    ),
+    "transparent":(
+      "text":$color_green,
+      "text-hover":$color_darkgreen,
+      "text-active":$color_darkgreen,
+    ),
+  ),
+  "secondary": (
+    "fill":(
+      "bg":$color_blue,
+      "text":$color_white,
+      "bg-hover":$color_green,
+      "text-hover":$color_white,
+      "bg-active":$color_green,
+      "text-active":$color_white,
+    ),
+    "outline":(
+      "border":$color_blue,
+      "text":$color_blue,
+      "border-hover":$color_blue,
+      "text-hover":$color_white,
+      "border-active":$color_blue,
+      "text-active":$color_white,
+    ),
+    "transparent":(
+      "text":$color_blue,
+      "text-hover":$color_green,
+      "text-active":$color_green,
+    ),
+  ),
+  "dark": (
+    "fill":(
+      "bg":$color_darkgreen,
+      "text":$color_white,
+      "bg-hover":$color_blue,
+      "text-hover":$color_white,
+      "bg-active":$color_blue,
+      "text-active":$color_white,
+    ),
+    "outline":(
+      "border":$color_darkgreen,
+      "text":$color_darkgreen,
+      "border-hover":$color_darkgreen,
+      "text-hover":$color_white,
+      "border-active":$color_darkgreen,
+      "text-active":$color_white,
+    ),
+    "transparent":(
+      "text":$color_darkgreen,
+      "text-hover":$color_darkgreen,
+      "text-active":$color_darkgreen,
+    ),
+  ),
+  "white": (
+    "fill":(
+      "bg":$color_white,
+      "text-hover":$color_blue,
+    ),
+    "outline":(
+      "border":$color_white,
+      "text":$color_white,
+      "text-hover":$color_grey,
+    ),
+    "transparent":(
+      "text":$color_darkgreen,
+      "text-hover":$color_darkgreen,
+      "text-active":$color_darkgreen,
+    ),
+  ),
+  "grey": (
+    "fill":(
+      "bg":$color_grey,
+      "text":$color_dark,
+      "bg-hover":$color_green,
+      "text-hover":$color_white,
+      "bg-active":$color_green,
+      "text-active":$color_white,
+    ),
+    "outline":(
+      "border":$color_grey,
+      "text":$color_dark,
+      "text-hover":$color_grey,
+    ),
+    "transparent":(
+      "text":$color_darkgreen,
+      "text-hover":$color_darkgreen,
+      "text-active":$color_darkgreen,
+    ),
+  ),
+  "red": (
+    "fill":(
+      "bg":$color_red,
+      "text":$color_white,
+      "bg-hover":$color_darkred,
+      "text-hover":$color_white,
+      "bg-active":$color_red,
+      "text-active":$color_white,
+    ),
+    "outline":(
+      "border":$color_red,
+      "text":$color_red,
+      "border-hover":$color_red,
+      "text-hover":$color_white,
+      "border-active":$color_red,
+      "text-active":$color_white,
+    ),
+    "transparent":(
+      "text":$color_red,
+      "text-hover":$color_red,
+      "text-active":$color_red,
+    ),
+  ),
+  "cart": (
+    "fill":(
+      "bg":$color_green,
+      "text":$color_white,
+      "bg-hover":$color_green,
+      "text-hover":$color_white,
+      "bg-active":$color_green,
+      "text-active":$color_white,
+    ),
+    "outline":(
+      "border":$color_green,
+      "text":$color_green,
+      "border-hover":$color_green,
+      "text-hover":$color_white,
+      "border-active":$color_darkgreen,
+      "text-active":$color_white,
+    ),
+    "transparent":(
+      "text":$color_green,
+      "text-hover":$color_darkgreen,
+      "text-active":$color_darkgreen,
+    ),
+  ),
+  "blue": (
+    "fill":(
+      "bg":$color_blue,
+      "text":$color_white,
+      "bg-hover":$color_blue,
+      "text-hover":$color_white,
+      "bg-active":$color_green,
+      "text-active":$color_white,
+    ),
+    "outline":(
+      "border":$color_blue,
+      "text":$color_blue,
+      "border-hover":$color_blue,
+      "text-hover":$color_white,
+      "border-active":$color_blue,
+      "text-active":$color_white,
+    ),
+    "transparent":(
+      "text":$color_blue,
+      "text-hover":$color_green,
+      "text-active":$color_green,
+    ),
+  ),
+);
+
+%button {
+  margin: 0;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  text-align: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  display: inline-flex;
+  justify-items: center;
+  align-items: center;
+}
+
+
+.ui-btn {
+  @extend %button;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: none;
+    pointer-events: none;
+  }
+
+  &_sm {
+    &-full {
+      @extend .h-6;
+      @extend .px-2;
+      @extend .py-0;
+
+      font-size: 12px;
+      line-height: 16px;
+      width: 100%;
+    }
+
+    &-inline {
+      @extend .h-6;
+      @extend .px-2;
+      @extend .py-0;
+      font-size: 12px;
+      line-height: 16px;
+      width: auto;
+    }
+
+    &-square {
+      @extend .h-6;
+      @extend .w-6;
+      @extend .p-0;
+      font-size: 12px;
+      line-height: 16px;
+      overflow: hidden;
+    }
+  }
+
+  &_md {
+    &-full {
+      @extend .h-9;
+      @extend .px-4;
+      @extend .py-0;
+      font-size: 16px;
+      line-height: 22px;
+      width: 100%;
+    }
+
+    &-inline {
+      @extend .h-9;
+      @extend .px-4;
+      @extend .py-0;
+      font-size: 16px;
+      line-height: 22px;
+      width: auto;
+    }
+
+    &-square {
+      @extend .h-9;
+      @extend .w-9;
+      @extend .p-0;
+      font-size: 16px;
+      line-height: 22px;
+      overflow: hidden;
+    }
+  }
+
+  &_lg {
+    &-full {
+      @extend .h-15;
+      @extend .px-5;
+      @extend .py-0;
+      font-size: 20px;
+      line-height: 22px;
+      width: 100%;
+    }
+
+    &-inline {
+      @extend .h-15;
+      @extend .px-5;
+      @extend .py-0;
+      font-size: 20px;
+      line-height: 22px;
+      width: auto;
+    }
+
+    &-square {
+      @extend .h-15;
+      @extend .w-15;
+      @extend .py-0;
+      font-size: 20px;
+      line-height: 22px;
+      overflow: hidden;
+    }
+  }
+
+  @each $name, $scheme in $colors {
+    &_#{$name} {
+      &.fill {
+        background-color: map.get(map.get($scheme, "fill"), "bg");
+        color: map.get(map.get($scheme, "fill"), "text");
+
+        &:hover {
+          background-color: map.get(map.get($scheme, "fill"), "bg-hover");
+          color: map.get(map.get($scheme, "fill"), "text-hover");
+          box-shadow: 0px 0px 10px 0px rgb(180, 178, 178);
+          transition: all 0.3s ease-in-out;
+        }
+
+        &:active, .active {
+          background-color: map.get(map.get($scheme, "fill"), "bg-active");
+          color: map.get(map.get($scheme, "fill"), "text-active");
+        }
+      }
+
+      &.outline {
+        background: transparent;
+        border: solid 1px map.get(map.get($scheme, "outline"), "border");
+        color: map.get(map.get($scheme, "outline"), "text");
+
+        &:hover {
+          background: map.get(map.get($scheme, "outline"), "border-hover");
+          border: solid 1px map.get(map.get($scheme, "outline"), "border-hover");
+          color: map.get(map.get($scheme, "outline"), "text-hover");
+          box-shadow: 0px 0px 10px 0px rgb(180, 178, 178);
+          transition: all 0.3s ease-in-out;
+        }
+
+        &:active, .active {
+          background: map.get(map.get($scheme, "outline"), "border-active");
+          border: solid 1px map.get(map.get($scheme, "outline"), "border-active");
+          color: map.get(map.get($scheme, "outline"), "text-active");
+        }
+      }
+
+      &.transparent {
+        background: transparent;
+        border: none;
+
+        color: map.get(map.get($scheme, "transparent"), "text");
+
+        &:hover {
+          color: map.get(map.get($scheme, "transparent"), "text-hover");
+          box-shadow: 0px 0px 10px 0px rgb(180, 178, 178);
+          transition: all 0.3s ease-in-out;
+        }
+
+        &:active, .active {
+          color: map.get(map.get($scheme, "transparent"), "text-active");
+        }
+      }
+    }
+  }
+
+
+}

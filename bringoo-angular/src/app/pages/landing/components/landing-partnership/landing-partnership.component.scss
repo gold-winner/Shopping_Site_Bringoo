@@ -1,0 +1,25 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+
+.payment-form {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .flex-wrap;
+  @extend .w-60p;
+  @extend .my-20;
+
+  @media (max-width: map-get($grid-breakpoints, 'sm')) {
+    width: 100%;
+  }
+
+  .submit-btn {
+    @extend .mt-12;
+    
+    @media (max-width: map-get($grid-breakpoints, 'sm')) {
+      text-align: center;
+    }
+  }
+}

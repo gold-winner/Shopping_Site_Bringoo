@@ -1,0 +1,40 @@
+<nz-layout class="layout-default" style="height: 100%">
+  <nz-sider
+    [nzTrigger]="null"
+    nzBreakpoint="md"
+    nzCollapsible
+    nzWidth="270px"
+    class="layout-sidebar scroll-hidden bg-component settings-sidebar"
+    [(nzCollapsed)]="collapsed"
+  >
+    <ul nz-menu nzMode="inline" class='scroll-y h-100p' >
+      <ng-container *ngFor="let card of sitemap">
+        <li
+          nz-submenu
+          class="f-4"
+          [nzTitle]="Title"
+        >
+          <ul>
+            <li *ngFor="let link of card.links" nz-menu-item class="ml-6" nzMatchRouter>
+              <a [routerLink]="[card.path, link.path]">{{link.title}}</a>
+            </li>
+          </ul>
+        </li>
+        <ng-template #Title>
+          <ng-container *ngIf="collapsed; else titleText"><i nz-icon [nzType]="card.icon" nzTheme="outline"></i></ng-container>
+          <ng-template #titleText>{{card.title}}</ng-template>
+        </ng-template>
+      </ng-container>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-content class="d-flex flex-column scroll-hidden ml-5">
+      <div class="bg-component px-5 pt-5 pb-4 mb-6">
+        <app-breadcrumbs></app-breadcrumbs>
+      </div>
+      <div class="flex-grow-1 position-relative scroll-hidden">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

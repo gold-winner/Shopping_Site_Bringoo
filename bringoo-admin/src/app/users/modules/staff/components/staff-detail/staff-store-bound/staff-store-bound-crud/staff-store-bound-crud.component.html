@@ -1,0 +1,40 @@
+<app-crud
+  [config]="config"
+  [service]="service"
+  [filterForm]='filterForm'
+  [columns]="columns"
+  [fields]="fields"
+  [join]="join"
+  [reloadData]="reloadData"
+></app-crud>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="800"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Select Staff"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <app-staff-store-bound-create-form
+      (formSubmit)="updateCrudData()"
+      [submit]="submitSymbol"
+      [showItems]="openPanel">
+    </app-staff-store-bound-create-form>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

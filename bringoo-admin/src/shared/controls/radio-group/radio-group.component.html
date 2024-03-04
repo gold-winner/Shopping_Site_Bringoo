@@ -1,0 +1,7 @@
+<h4 *ngIf="size === 'md'">{{label}}</h4>
+<h3 *ngIf="size === 'lg'">{{label}}</h3>
+<nz-radio-group [formControl]='formControl'>
+  <ng-container *ngFor='let radio of list'>
+    <label nz-radio [nzValue]='radio.value'>{{radio.label}}</label><br *ngIf="type === 'block'"/>
+  </ng-container>
+</nz-radio-group>

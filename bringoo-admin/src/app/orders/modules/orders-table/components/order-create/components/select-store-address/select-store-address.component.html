@@ -1,0 +1,36 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="700"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Select store address"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <app-crud
+      *ngIf='openPanel'
+      [config]="config"
+      [service]="service"
+      [filterForm]='filterForm'
+      [columns]="columns"
+      [fields]='fields'
+      [join]='join'
+      (checkboxes)='checkbox($event)'
+      [isSingleSelect]='true'
+    ></app-crud>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

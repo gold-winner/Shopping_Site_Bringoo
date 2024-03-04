@@ -1,0 +1,55 @@
+<div class="text-bold mt-5">Filters</div>
+<ui-accordion title="Sort by" [primary]="false">
+  <div class="text-small">
+    <div class="filter-item">Subcategory <ui-checkbox></ui-checkbox></div>
+    <div class="filter-item">Price <ui-checkbox></ui-checkbox></div>
+  </div>
+</ui-accordion>
+<ui-accordion title="Price range" [primary]="false">
+</ui-accordion>
+<ui-accordion title="Brand" [primary]="false">
+  <ui-input
+    placeholder="Search Brand Name"
+    icon="search"
+    [leftIcon]="true"
+    size="sm"
+    (valueChange)="searchName=$event"
+    [value]="searchName"
+    (keyup)="onEnter($event)"
+  ></ui-input>
+  <div class="text-small">
+    <div class="filter-item">Knorr <ui-checkbox></ui-checkbox></div>
+    <div class="filter-item">Maggi<ui-checkbox></ui-checkbox></div>
+    <div class="filter-item">Zauber der Gewürze <ui-checkbox></ui-checkbox></div>
+    <div class="filter-item">Gülcan<ui-checkbox></ui-checkbox></div>
+    <div class="filter-item">Baladna <ui-checkbox></ui-checkbox></div>
+    <div class="filter-item">Just Spices<ui-checkbox></ui-checkbox></div>
+    <div class="filter-item">Classic Ayurveda<ui-checkbox></ui-checkbox></div>
+  </div>
+</ui-accordion>
+<ui-accordion title="Properties" [primary]="false">
+</ui-accordion>
+<ui-accordion title="Exclude Brands" [primary]="false">
+</ui-accordion>
+<ui-accordion title="Exclude Products" [primary]="false">
+</ui-accordion>
+<ui-accordion title="Exclude Nutrition Types" [primary]="false">
+</ui-accordion>
+<ui-accordion title="Brand" [primary]="false">
+</ui-accordion>
+<div class="text-small">
+  <div class="filter-item">
+    <span class="text-bold opacity-4">
+      Only Fairtrade
+    </span> 
+    <ui-checkbox></ui-checkbox>
+  </div>
+  <div class="filter-item">
+    <span class="text-bold opacity-4">Only Bio</span> 
+    <ui-checkbox></ui-checkbox>
+  </div>
+  <div class="filter-item">
+    <span class="text-bold opacity-4">Only Reginal</span>
+    <ui-checkbox></ui-checkbox>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<nz-collapse [nzBordered]="false" *ngIf="details$|async as details">
+  <nz-collapse-panel
+    [nzHeader]="header"
+    [nzActive]="expanded"
+    [nzExtra]="extra"
+    (nzActiveChange)="onLoadItems($event)"
+  >
+    <div *ngIf="route?.driverAssigned as driver" class="mb-4">
+      <nz-avatar
+        [nzSrc]="driver.photoUrl"
+        class="bg-primary-green mr-1"
+        nzText="{{driver.firstName[0]}} {{driver.lastName[0]}}"
+      ></nz-avatar>
+      <a routerLink="/users/staff/details/{{driver.id}}">{{driver.firstName}} {{driver.lastName}} ({{driver.staffNumber}})</a>
+    </div>
+    <app-route-key-point-list
+      *ngIf="loadItems$|async as items"
+      [items]="items"
+      [isLoading]="isLoading$"
+      [containerId]="route.id"
+      [connectToContainers]="routeIds|getContainerIds :route.id"
+      (onRemove)="onRemoveKeyPoint($event)"
+      (onFlagged)="onFlagged($event)"
+      (dropToOtherContainer)="onDropToOtherContainer($event)"
+      (updateQueue)="onUpdateQueue($event)"
+      (onActionMoveToRoute)="onActionMoveToRoute($event)"
+      (onDropOrderToRoute)="onDropOrderToRoute($event)"
+      [filterItems]="filterItems"
+    ></app-route-key-point-list>
+    <button
+      class="mt-2"
+      nz-button
+      nzSize="small"
+      (click)="keyPointCreateForm.onShow()"
+    ><span nz-icon nzType="plus" nzTheme="outline"></span> Create</button>
+  </nz-collapse-panel>
+
+  <ng-template #header>
+    <h5 class="mr-1">{{details.name}}</h5> {{route.dateTimeStart|date :'d MMM hh:mm'}} – {{route.dateTimeEnd|date :'d MMM hh:mm'}} ({{details.code}})
+    <nz-tag *ngIf="details.isComplete" nzColor="red">Completed</nz-tag>
+  </ng-template>
+
+  <ng-template #extra>
+    <div class="extra d-flex justify-content-center">
+      <div class="story-point" nz-tooltip="Total points" *ngIf="details.totalPoints">
+        <span class="story-point">{{details.totalPoints}}</span>
+      </div>
+      <div class="story-point point-drop" nz-tooltip="Total drop points" *ngIf="details.totalDropOff">
+        <span class="story-point">{{details.totalDropOff}}</span>
+      </div>
+      <div class="story-point point-pick-up" nz-tooltip="Total pick up points" *ngIf="details.totalPickUp">
+        <span class="story-point">{{details.totalPickUp}}</span>
+      </div>
+      <div class="story-point point-refuel" nz-tooltip="Total refuel points" *ngIf="details.totalRefuel">
+        <span class="story-point">{{details.totalRefuel}}</span>
+      </div>
+      <div class="story-point point-breaks"  nz-tooltip="Total break points" *ngIf="details.totalBreaks">
+        <span class="story-point">{{details.totalBreaks}}</span>
+      </div>
+
+      <button
+        *ngIf="!details.isComplete; else reopen"
+        nz-button
+        nzSize="small"
+        nzType="dashed"
+        (click)="onCompleteRoute($event)"
+      >Complete Route</button>
+      <ng-template #reopen>
+        <button
+          nz-button
+          nzSize="small"
+          nzType="dashed"
+          (click)="onReopenRoute($event)"
+          nzDanger
+        >Reopen Route</button>
+      </ng-template>
+
+      <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzSize="small" nzType="default" (click)="$event.stopPropagation()">...</button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu nzMode="inline">
+          <li nz-menu-item (click)="onEdit()">Edit Route</li>
+          <li nz-menu-item (click)="onDelete()">Delete Route</li>
+          <li
+            *ngIf="showAssignDriverButton$|async"
+            nz-menu-item (click)="onAssignDriver()"
+          >Assign {{route.driverAssigned?.firstName}} {{route.driverAssigned?.lastName}} to all orders</li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </ng-template>
+</nz-collapse>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="800"
+  [nzVisible]="createPointDrawer === 'show'"
+  nzPlacement="right"
+  nzTitle="Add Key Point"
+  [nzFooter]="footer"
+  (nzOnClose)='keyPointCreateForm.onHideDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <ng-template
+      [ngComponentOutlet]="keyPointCreateForm.form"
+      [ndcDynamicInputs]="keyPointCreateForm.formInputs"
+      [ndcDynamicOutputs]="keyPointCreateForm.formOutputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='keyPointCreateForm.onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='keyPointCreateForm.onHideDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

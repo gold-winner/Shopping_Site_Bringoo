@@ -1,0 +1,80 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-dropdown-button {
+  @extend .position-relative;
+  @extend .cursor-pointer;
+  min-width: 140px;
+  
+  &__body {
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-between;
+    @extend .border-radius-md;
+    @extend .text-white;
+    @extend .text-medium;
+    @extend .text-bold;
+    @extend .h-9;
+    @extend .px-3;
+      
+    &--primary {
+      @extend .bg-lightblue;
+
+      &-white {
+        @extend .text-lightblue;
+        background: transparent;
+      }
+    }
+
+    &--secondary {
+      @extend .bg-blue;
+
+      @media (max-width: map-get($grid-breakpoints, 'md')) {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      img {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  &__list {
+    @extend .border-radius-md;
+    @extend .text-small;
+    @extend .text-lightblue;
+    @extend .mt-1;
+    @extend .bg-white;
+    @extend .position-absolute;
+    @extend .w-100p;
+    z-index: 9999;
+
+    &--item {
+      @extend .px-2;
+      @extend .py-1; 
+
+      &:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+
+      &:hover {
+        @extend .bg-grey;
+      }
+    }
+  }
+
+  .border-radius-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0; 
+  }
+}

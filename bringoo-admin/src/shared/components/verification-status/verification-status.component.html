@@ -1,0 +1,9 @@
+<i
+  nz-icon
+  [nzType]="isVerified ? 'check-circle' : 'stop'"
+  [class.color-danger]="!isVerified"
+  [class.color-primary]="isVerified"
+  nzTheme="outline"
+  nz-tooltip="{{isVerified ? '' : 'Not'}} Verified"
+  nzTooltipPlacement="topLeft"
+></i>

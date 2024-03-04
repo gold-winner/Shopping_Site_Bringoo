@@ -1,0 +1,31 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+
+.ui-link {
+  @extend .d-inline-block;
+  @extend .w-100p;
+  border-bottom: 1px solid $color_lightblue;
+
+  &__header {
+    @extend .d-flex;
+    @extend .align-items-center;
+
+    span {
+      @extend .text-medium;
+      @extend .ml-2;
+      @extend .text-darkgrey;
+    }
+  }
+
+  &__content {
+    @extend .text-medium;
+    @extend .pl-7;
+    @extend .py-3;
+    @extend .d-flex;
+    @extend .justify-content-between;
+    @extend .align-items-center;
+    color: $color_lightblue;
+    font-weight: normal;
+  }
+}

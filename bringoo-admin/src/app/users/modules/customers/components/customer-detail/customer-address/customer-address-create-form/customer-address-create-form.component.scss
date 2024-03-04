@@ -1,0 +1,120 @@
+::ng-deep .gm-style {
+  font: 400 11px Roboto, Arial, sans-serif;
+  text-decoration: none;
+
+  .place-card-large, .place-desc-large {
+    display: inline-block;
+  }
+
+  .place-desc-large {
+    width: 200px;
+  }
+
+  .place-card-large {
+    padding: 9px 4px 9px 11px;
+  }
+
+  .place-card .place-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    font-size: 14px;
+    color: black;
+  }
+
+  .place-card .address {
+    margin-top: 6px;
+  }
+
+  .place-card div, .location {
+    color: #5b5b5b;
+    font-size: 12px;
+    user-select: text;
+  }
+
+  .navigate {
+    display: inline-block;
+    vertical-align: top;
+    height: 43px;
+    padding: 0 7px;
+  }
+  .place-card .navigate-text, .google-maps-link > a {
+    margin-top: 5px;
+    text-align: center;
+    color: #1a73e8 !important;
+    font-size: 12px;
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .place-card .navigate-text:hover, .google-maps-link:hover {
+    text-decoration: underline;
+  }
+  .google-maps-link:hover {
+    cursor: pointer;
+  }
+
+  .navigate-icon-exp:hover {
+    background-position: -46px -1px
+  }
+  .navigate:hover .navigate-icon-exp {
+    background-position: -2px -1px
+  }
+
+  .navigate:hover .icon {
+    background-position: -22px 0;
+  }
+  .icon {
+    background-image: url(https://maps.gstatic.com/mapfiles/embed/images/entity11.png);
+    background-size: 70px 210px;
+    height: 22px;
+    width: 22px;
+    margin: 0 auto;
+  }
+
+  .google-maps-link {
+    padding-top: 10px;
+  }
+
+  .place-card-handler {
+    position: absolute; left: 0; bottom: 0;
+    z-index: 10000000;
+    &>div {
+      margin: 10px; padding: 1px;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0 1px 4px -1px;
+      box-shadow: rgba(0, 0, 0, 0.298039) 0 1px 4px -1px;
+      border-radius: 2px;
+      background-color: white;
+    }
+  }
+  .place-card-handler > div > .close-button {
+      content: '';
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      cursor: pointer;
+    &:before, &:after {
+      content: '';
+      border-right: 2px solid #8a8a8a;
+      height: 16px;
+      position: absolute;
+      right: 50%;
+      top:50%;
+    }
+    &:before {
+      transform: translate(50%, -50%) rotateZ(45deg);
+    }
+    &:after {
+      transform: translate(50%, -50%) rotateZ(-45deg);
+    }
+    &:hover {
+      &:before, &:after {
+        border-color: #4b4b4b;
+      }
+    }
+  }
+}

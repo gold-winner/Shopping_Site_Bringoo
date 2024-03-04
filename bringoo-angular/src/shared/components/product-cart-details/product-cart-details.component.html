@@ -1,0 +1,26 @@
+<div class="ui-product-cart-details">
+  <img [src]="'/assets/img/products/' + product.imageUrls[0]" class="w-20"/>
+  <div class="d-flex justify-content-between align-items-center flex-grow-1 ml-1">
+    <div class="d-flex flex-column ">
+      <div class="text-bold text-medium w-56">{{product.name_i18n}}</div>
+      <span class="text-tiny text-lightblue">{{product.productSize}} ({{product.baseSize}} = {{product.basePrice}})</span>
+      <div class="d-flex align-items-center mt-2">
+        <span class="text-bold">{{product.salePrice}}</span> 
+        <icon name="close-x"></icon> 
+        {{product.inCart}}
+      </div>
+      <span class="text-tiny">Regular price = {{product.regularPrice}}</span>
+      <span class="text-tiny">Voucher -10% = 0,29 €</span>
+    </div>
+    <div class="text-bold mr-0">
+      = {{product.price}}
+    </div>
+  </div>
+  <div>
+    <span *ngIf="replaced" class="badge-replace bg-green">Product replaced</span>
+    <div *ngIf="replaced" class="exchange">
+      <img src="/assets/img/exchange.svg" class="w-6">
+    </div>
+    <span *ngIf="!available" class="badge-available bg-whitered">Product not available</span>
+  </div>
+</div>

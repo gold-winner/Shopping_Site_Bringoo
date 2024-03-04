@@ -1,0 +1,152 @@
+<a class="d-flex align-items-center mx-4 mt-4 mb-4" [routerLink]='backPage'>
+  <i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>Store Performance</h3>
+</a>
+
+<form
+  class="mx-4 mt-4 p-4 bg-component border-round-sm"
+  nz-form
+  [nzLayout]="'inline'"
+  [formGroup]="form"
+>
+  <app-filter-store-select
+    class="w-40 mr-4"
+    label="Store Filter"
+    placeHolder="Store Filter"
+    formControlName="storeId"
+    [required]="true"
+  ></app-filter-store-select>
+</form>
+
+
+<ng-container *ngIf="store$|async as store">
+  <div class="chart-area p-4">
+    <app-performance-store-information
+      class="store-information h-100p"
+      [store]="store"
+    ></app-performance-store-information>
+    <nz-card
+      class="totals border-round-sm h-100p"
+      *ngIf="performanceTotals$|async as performanceTotals"
+      [nzBordered]="false"
+    >
+      <div class="d-flex justify-content-between align-items-center h-100p">
+        <div class="text-center">
+          <h5 class="color-text-2">Total Orders:</h5>
+          <h4>{{performanceTotals.totalOrders}}</h4>
+        </div>
+
+        <span class="w-4 border-darkvanilla"></span>
+
+        <div class="text-center">
+          <h5 class="color-text-2">Total Revenue:</h5>
+          <h4>{{performanceTotals.totalRevenue|formatPrice}}</h4>
+        </div>
+
+        <span class="w-4 border-darkvanilla"></span>
+
+        <div class="text-center">
+          <h5 class="color-text-2">Average Order Value:</h5>
+          <h4>{{performanceTotals.averageOrderValue|formatPrice}}</h4>
+        </div>
+
+        <span class="w-4 border-darkvanilla"></span>
+
+        <div class="text-center">
+          <h5 class="color-text-2">Average Order time:</h5>
+          <h4>{{performanceTotals.averageOrderTime}}</h4>
+        </div>
+      </div>
+    </nz-card>
+    <nz-card class="order-history border-round-sm" [nzBordered]="false">
+      <h5 class="f-5">Orders History</h5>
+      <ng-container
+        *ngIf="ordersHistory$|async as history"
+      >
+        <app-heat-map-chart
+          [label]="'Orders: '+history.count"
+          class="d-block"
+          [calendarData]="history.data"
+          [count]="history.count"
+          noDataText="-Orders not found-"
+        ></app-heat-map-chart>
+      </ng-container>
+    </nz-card>
+    <nz-card
+      class="wordCloud border-round-sm h-100p"
+      [nzBordered]="false"
+    >
+      <div class="word-cloud d-flex flex-column h-100p">
+        <span class="chart-data flex-grow-1">
+          <app-popular-search
+            [storeId]="storeId"
+            [useDateLimits]="true"
+            [daysLimit]="2"
+          ></app-popular-search>
+        </span>
+      </div>
+    </nz-card>
+  </div>
+
+  <nz-card
+    class="mx-4 border-round-sm mb-4" [nzBordered]="false"
+    *ngIf="ordersByHours$|async as ordersByHours"
+  >
+    <h5 class="f-5">Order by hours</h5>
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="form">
+      <div class="d-flex">
+        <nz-form-item class="w-32 mr-0">
+          <nz-form-label>Date Start:</nz-form-label>
+          <nz-form-control labelForErrorTip="Date Start:">
+            <app-date-control
+              formControlName="dateStart"
+              placeHolder="Date start"
+            ></app-date-control>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="w-32 mr-0">
+          <nz-form-label>Date End:</nz-form-label>
+          <nz-form-control labelForErrorTip="Date End:">
+            <app-date-control
+              formControlName="dateEnd"
+              placeHolder="Date end"
+              [disableBefore]="form.controls?.dateStart?.valueChanges|async"
+            ></app-date-control>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </form>
+
+    <ng-container
+      *ngIf="isLoaded$|async"
+    >
+      <app-bar-chart
+        [chartData]="ordersByHours|barChartToDataLabelsFormat"
+        [chartHeight]="280"
+        [indexAxios]="'x'"
+      ></app-bar-chart>
+    </ng-container>
+
+  </nz-card>
+
+  <nz-card
+    *ngIf="storeProductCategoryPurchase$|async as data"
+    class="mx-4 mb-4 border-round-sm"
+    [nzBordered]="false"
+  >
+    <h5 class="f-5">Product Category Purchase</h5>
+    <ng-container
+      *ngIf="isLoaded$|async"
+    >
+      <app-bar-chart
+        class="px-4 mb--4"
+        [chartData]="data|barChartToDataLabelsFormat"
+        indexAxios="y"
+      ></app-bar-chart>
+    </ng-container>
+  </nz-card>
+
+  <app-orders-crud></app-orders-crud>
+</ng-container>
+
+

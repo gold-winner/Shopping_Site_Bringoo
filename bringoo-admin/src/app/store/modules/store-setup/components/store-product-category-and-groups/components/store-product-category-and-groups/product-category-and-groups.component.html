@@ -1,0 +1,130 @@
+<div class='px-8 pt-8 bg-component fixed-header'>
+  <div class='pt-4 mb-6 d-flex justify-content-between bg-component fixed-header'>
+    <h5>Product Category and Groups</h5>
+    <div class='d-flex flex-wrap-reverse justify-content-end'>
+      <button
+        class="ml-auto mr-8" nz-button nzType="text" (click)="onShowImportForm()">
+        Import
+        <i nz-icon nzType="cloud-upload"></i>
+      </button>
+      <button
+        nz-button nz-dropdown nzType="default" nzSize="large" class="mr-8"
+        [nzDropdownMenu]="menuExport" [nzPlacement]="'bottomCenter'">Actions
+      </button>
+      <nz-dropdown-menu #menuExport="nzDropdownMenu">
+        <ul nz-menu>
+          <ng-container>
+            <li nz-menu-item (click)="openPanel = 'loadTemplate'">Load template</li>
+            <li nz-menu-item (click)="onExport('xlsx')">Export All as Excel</li>
+            <li nz-menu-item (click)="onExport('ods')">Export All as ODS</li>
+            <li nz-menu-item (click)="onExport('json')">Export All as JSON</li>
+          </ng-container>
+        </ul>
+      </nz-dropdown-menu>
+      <button nz-button nzType="primary" nzSize="large" class="mr-8" (click)="openPanel = 'saveTemplate'">Save as Template</button>
+    </div>
+  </div>
+
+  <app-product-category-and-groups-filter (filters)="onChangeFilters($event)"></app-product-category-and-groups-filter>
+</div>
+<nz-tree
+  class="pl-4 scroll-y"
+  #nzTreeComponent
+  nzCheckable
+  nzShowIcon
+  [nzCheckedKeys]="defaultCheckedKeys"
+  [nzData]="(nodes$ | async) || []"
+  [nzSearchValue]="(searchValue$ | async)  ?? ''"
+  [nzSearchFunc]="searchFunc"
+  [nzHideUnMatched]="true"
+></nz-tree>
+
+<div class='p-4'>
+  <button
+    [nzLoading]="isLoading$ | async"
+    (click)='onSubmit()'
+    [nzType]="'primary'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Update</button>
+  <button
+    [nzLoading]="isLoading$ | async"
+    (click)='onCancel()'
+    [nzType]="'link'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Reload</button>
+</div>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="'90%'"
+  [nzVisible]="openPanel === 'import'"
+  nzPlacement="right"
+  nzTitle="Import Categories and Subcategories"
+  [nzFooter]="importPanelFooter"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <app-import-form
+      (formSubmit)="onImport($event)"
+      [startImport]="startImport"
+      [response]="importDto"
+    ></app-import-form>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #importPanelFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawerAndReload()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onImportButtonClick()" nzBlock nz-button nzType="primary">
+          Import
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-store-category-and-group-save-template
+  (closePanel)="onCloseDrawer()"
+  [showModal]="openPanel === 'saveTemplate'"
+  [treeNode]="nzTreeComponent?.getCheckedNodeList()"
+></app-store-category-and-group-save-template>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="'90%'"
+  [nzVisible]="openPanel === 'loadTemplate'"
+  nzPlacement="right"
+  nzTitle="Load Template"
+  [nzFooter]="loadTemplate"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <app-load-template-crud
+      *ngIf="openPanel === 'loadTemplate'"
+      (templateId)="changeTemplateId($event)"
+    ></app-load-template-crud>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #loadTemplate>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onLoadTemplate()" nzBlock nz-button nzType="primary">
+          Load
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

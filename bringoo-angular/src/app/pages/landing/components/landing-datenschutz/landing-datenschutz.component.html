@@ -1,0 +1,826 @@
+<div>
+  <div class="header">
+    <div class="header-body">
+      <div class="header-logo">
+        <a routerLink="/login" class="cursor-pointer"><img src="/assets/img/logo.svg"></a>
+      </div>
+      <div class="header-main">
+        <div class="d-flex flex-column align-items-end">
+          <span class="phone">+7 800 222-11-00</span>
+          <span class="clock">Around the clock</span>
+        </div>
+        <ui-button (click)="SignIn()" class="ml-6" color="primary" width="full" radius="md" size="md">
+          Log in
+        </ui-button>
+        <ui-button (click)="SignUp()" class="ml-3" color="secondary" width="full" radius="md" size="md">
+          Sign up
+        </ui-button>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="d-flex">
+      <div class="pt-10">
+        <span class="title">Datenschutz</span>
+        <div class="description">Mit dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen
+          Daten wir über unsere App „Bringoo“ erheben und für welche Zwecke wir diese Daten verwenden.</div>
+        <div>
+          <div class="sub-title">1. Verantwortlicher und Kontakt</div>
+          <div class="sub-description">Bringoo GmbH vertreten durch Hasib Khan, Geschäftsführer Jenfelder Straße 2,
+            22045 Hamburg Wenn Sie Fragen oder Anregungen zum Thema Datenschutz haben, können Sie sich gerne per E-Mail
+            an folgende Adresse wenden: datenschutz@bringoo.de Unseren Datenschutzbeauftragten erreichen Sie unter
+            folgender E-Mail-Adresse: datenschutz@bringoo.de</div>
+
+          <div class="sub-title">2. Gegenstand des Datenschutzes</div>
+          <div class="sub-description">Gegenstand des Datenschutzes sind personenbezogene Daten. Nach Art. 4 Nr. 1 DSGVO
+            sind personenbezogene Daten alle Informationen über eine identifizierte oder identifizierbare natürliche
+            Person; dazu gehören beispielsweise der Name oder Identifikationsnummern.</div>
+
+          <div class="sub-title">3. Datenerfassung auf dieser Website</div>
+          <div class="sub-description">Wie erfassen wir Ihre Daten?</div>
+          <div class="sub-description mt-2">Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen.
+            Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben.</div>
+          <div class="sub-description mt-2">Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der
+            Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser,
+            Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie
+            diese Website betreten.</div>
+
+          <div class="sub-title">4. Wofür nutzen wir Ihre Daten?</div>
+          <div class="sub-description">Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website
+            zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.</div>
+
+          <div class="sub-title">5. Welche Rechte haben Sie bezüglich Ihrer Daten?</div>
+          <div class="sub-description">Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger
+            und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die
+            Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung
+            erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das
+            Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu
+            verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.</div>
+          <div class="sub-description mt-2">Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich
+            jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</div>
+
+          <div class="sub-title">6. Analyse-Tools und Tools von Dritt­anbietern</div>
+          <div class="sub-description">Beim Besuch dieser Website kann Ihr Surf-Verhalten statistisch ausgewertet
+            werden. Das geschieht vor allem mit sogenannten Analyseprogrammen.</div>
+          <div class="sub-description mt-2">Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich
+            jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</div>
+
+          <div class="sub-title">7. Hosting und Content Delivery Networks (CDN)</div>
+          <div class="sub_title">1. Externes Hosting</div>
+          <div class="sub-description">Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die
+            personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters
+            gespeichert. Hierbei kann es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten,
+            Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten, die über eine Website generiert
+            werden, handeln.</div>
+          <div class="sub-description mt-2">Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserfüllung gegenüber
+            unseren potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO) und im Interesse einer sicheren,
+            schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art.
+            6 Abs. 1 lit. f DSGVO).</div>
+          <div class="sub-description mt-2">Unser Hoster wird Ihre Daten nur insoweit verarbeiten, wie dies zur
+            Erfüllung seiner Leistungspflichten erforderlich ist und unsere Weisungen in Bezug auf diese Daten befolgen.
+          </div>
+          <div class="sub-description mt-2">Wir setzen folgenden Hoster ein:</div>
+          <div class="sub-description mt-2">Digital Ocean <span class="sub-url">(www.digitalocean.com)</span></div>
+
+          <div class="sub-title">8. Allgemeine Hinweise und Pflicht­informationen</div>
+          <div class="sub_title">1. Datenschutz</div>
+          <div class="sub-description">Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr
+            ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen
+            Datenschutzvorschriften sowie dieser Datenschutzerklärung.</div>
+          <div class="sub-description mt-2">Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten
+            erhoben. Personenbezogene Daten sind Daten, mit denen Sie persönlich identifiziert werden können. Die
+            vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben und wofür wir sie nutzen. Sie erläutert
+            auch, wie und zu welchem Zweck das geschieht.</div>
+          <div class="sub-description mt-2">Wir weisen darauf hin, dass die Datenübertragung im Internet (z. B. bei der
+            Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff
+            durch Dritte ist nicht möglich.</div>
+          <div class="sub_title mt-2">2. Hinweis zur verantwortlichen Stelle</div>
+          <div class="sub-description">Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
+          </div>
+          <div class="sub-description mt-2">Bringoo GmbH</div>
+          <div class="sub-description mt-2">Telefon: +49 40 6685870 00</div>
+          <div class="sub-description mt-2">E-Mail: datenschutz@bringoo.de</div>
+          <div class="sub-description mt-2">Verantwortliche Stelle ist die natürliche oder juristische Person, die
+            allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten
+            (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.</div>
+          <div class="sub_title mt-2">3. Speicherdauer</div>
+          <div class="sub-description">Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer
+            genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung
+            entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur
+            Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keinen anderen rechtlich zulässigen
+            Gründe für die Speicherung Ihrer personenbezogenen Daten haben (z.B. steuer- oder handelsrechtliche
+            Aufbewahrungsfristen); im letztgenannten Fall erfolgt die Löschung nach Fortfall dieser Gründe.</div>
+          <div class="sub_title mt-2">4. Hinweis zur Datenweitergabe in die USA</div>
+          <div class="sub-description">Auf unserer Website sind unter anderem Tools von Unternehmen mit Sitz in den USA
+            eingebunden. Wenn diese Tools aktiv sind, können Ihre personenbezogenen Daten an die US-Server der
+            jeweiligen Unternehmen weitergegeben werden. Wir weisen darauf hin, dass die USA kein sicherer Drittstaat im
+            Sinne des EU-Datenschutzrechts sind. US-Unternehmen sind dazu verpflichtet, personenbezogene Daten an
+            Sicherheitsbehörden herauszugeben, ohne dass Sie als Betroffener hiergegen gerichtlich vorgehen könnten. Es
+            kann daher nicht ausgeschlossen werden, dass US-Behörden (z.B. Geheimdienste) Ihre auf US-Servern
+            befindlichen Daten zu Überwachungszwecken verarbeiten, auswerten und dauerhaft speichern. Wir haben auf
+            diese Verarbeitungstätigkeiten keinen Einfluss.</div>
+          <div class="sub_title mt-2">5. Widerruf Ihrer Einwilligung zur Datenverarbeitung</div>
+          <div class="sub-description">Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung
+            möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum
+            Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</div>
+          <div class="sub_title mt-2"> 6. Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen
+            Direktwerbung (Art. 21 DSGVO)</div>
+          <div class="sub-description">WENN DIE DATENVERARBEITUNG AUF GRUNDLAGE VON ART. 6 ABS. 1 LIT. E ODER F DSGVO
+            ERFOLGT, HABEN SIE JEDERZEIT DAS RECHT, AUS GRÜNDEN, DIE SICH AUS IHRER BESONDEREN SITUATION ERGEBEN, GEGEN
+            DIE VERARBEITUNG IHRER PERSONENBEZOGENEN DATEN WIDERSPRUCH EINZULEGEN; DIES GILT AUCH FÜR EIN AUF DIESE
+            BESTIMMUNGEN GESTÜTZTES PROFILING. DIE JEWEILIGE RECHTSGRUNDLAGE, AUF DENEN EINE VERARBEITUNG BERUHT,
+            ENTNEHMEN SIE DIESER DATENSCHUTZERKLÄRUNG. WENN SIE WIDERSPRUCH EINLEGEN, WERDEN WIR IHRE BETROFFENEN
+            PERSONENBEZOGENEN DATEN NICHT MEHR VERARBEITEN, ES SEI DENN, WIR KÖNNEN ZWINGENDE SCHUTZWÜRDIGE GRÜNDE FÜR
+            DIE VERARBEITUNG NACHWEISEN, DIE IHRE INTERESSEN, RECHTE UND FREIHEITEN ÜBERWIEGEN ODER DIE VERARBEITUNG
+            DIENT DER GELTENDMACHUNG, AUSÜBUNG ODER VERTEIDIGUNG VON RECHTSANSPRÜCHEN (WIDERSPRUCH NACH ART. 21 ABS. 1
+            DSGVO).</div>
+          <div class="sub-description mt-2">WERDEN IHRE PERSONENBEZOGENEN DATEN VERARBEITET, UM DIREKTWERBUNG ZU
+            BETREIBEN, SO HABEN SIE DAS RECHT, JEDERZEIT WIDERSPRUCH GEGEN DIE VERARBEITUNG SIE BETREFFENDER
+            PERSONENBEZOGENER DATEN ZUM ZWECKE DERARTIGER WERBUNG EINZULEGEN; DIES GILT AUCH FÜR DAS PROFILING, SOWEIT
+            ES MIT SOLCHER DIREKTWERBUNG IN VERBINDUNG STEHT. WENN SIE WIDERSPRECHEN, WERDEN IHRE PERSONENBEZOGENEN
+            DATEN ANSCHLIESSEND NICHT MEHR ZUM ZWECKE DER DIREKTWERBUNG VERWENDET (WIDERSPRUCH NACH ART. 21 ABS. 2
+            DSGVO).</div>
+          <div class="sub_title mt-2"> 7. Beschwerde­recht bei der zuständigen Aufsichts­behörde</div>
+          <div class="sub-description">Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht
+            bei einer Aufsichtsbehörde, insbesondere in dem Mitgliedstaat ihres gewöhnlichen Aufenthalts, ihres
+            Arbeitsplatzes oder des Orts des mutmaßlichen Verstoßes zu. Das Beschwerderecht besteht unbeschadet
+            anderweitiger verwaltungsrechtlicher oder gerichtlicher Rechtsbehelfe.</div>
+          <div class="sub_title mt-2">8. Recht auf Daten­übertrag­barkeit</div>
+          <div class="sub-description">Sie haben das Recht, Daten, die wir auf Grundlage Ihrer Einwilligung oder in
+            Erfüllung eines Vertrags automatisiert verarbeiten, an sich oder an einen Dritten in einem gängigen,
+            maschinenlesbaren Format aushändigen zu lassen. Sofern Sie die direkte Übertragung der Daten an einen
+            anderen Verantwortlichen verlangen, erfolgt dies nur, soweit es technisch machbar ist.</div>
+          <div class="sub_title mt-2">9. SSL- bzw. TLS-Verschlüsselung</div>
+          <div class="sub-description">Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung
+            vertraulicher Inhalte, wie zum Beispiel Bestellungen oder Anfragen, die Sie an uns als Seitenbetreiber
+            senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die
+            Adresszeile des Browsers von „http://“ auf „https://“ wechselt und an dem Schloss-Symbol in Ihrer
+            Browserzeile.</div>
+          <div class="sub-description mt-2">Wenn die SSL- bzw. TLS-Verschlüsselung aktiviert ist, können die Daten, die
+            Sie an uns übermitteln, nicht von Dritten mitgelesen werden.</div>
+          <div class="sub_title mt-2">10. Verschlüsselter Zahlungsverkehr auf dieser Website und in der App</div>
+          <div class="sub-description">Besteht nach dem Abschluss eines kostenpflichtigen Vertrags eine Verpflichtung,
+            uns Ihre Zahlungsdaten (z. B. Kontonummer bei Einzugsermächtigung) zu übermitteln, werden diese Daten zur
+            Zahlungsabwicklung benötigt.</div>
+          <div class="sub-description mt-2">Der Zahlungsverkehr über die gängigen Zahlungsmittel (Visa/MasterCard,
+            Lastschriftverfahren) erfolgt ausschließlich über eine verschlüsselte SSL- bzw. TLS-Verbindung. Eine
+            verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://“ auf „https://“
+            wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</div>
+          <div class="sub-description mt-2">Bei verschlüsselter Kommunikation können Ihre Zahlungsdaten, die Sie an uns
+            übermitteln, nicht von Dritten mitgelesen werden.</div>
+          <div class="sub_title mt-2">11. Auskunft, Löschung und Berichtigung</div>
+          <div class="sub-description">Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht
+            auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger
+            und den Zweck der Datenverarbeitung und ggf. ein Recht auf Berichtigung oder Löschung dieser Daten. Hierzu
+            sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit unter der im Impressum
+            angegebenen Adresse an uns wenden.</div>
+          <div class="sub_title mt-2">12. Recht auf Einschränkung der Verarbeitung</div>
+          <div class="sub-description">Sie haben das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen
+            Daten zu verlangen. Hierzu können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns
+            wenden. Das Recht auf Einschränkung der Verarbeitung besteht in folgenden Fällen:· Wenn Sie die Richtigkeit
+            Ihrer bei uns gespeicherten personenbezogenen Daten bestreiten, benötigen wir in der Regel Zeit, um dies zu
+            überprüfen. Für die Dauer der Prüfung haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer
+            personenbezogenen Daten zu verlangen.· Wenn die Verarbeitung Ihrer personenbezogenen Daten unrechtmäßig
+            geschah/geschieht, können Sie statt der Löschung die Einschränkung der Datenverarbeitung verlangen.· Wenn
+            die Verarbeitung Ihrer personenbezogenen Daten unrechtmäßig geschah/geschieht, können Sie statt der Löschung
+            die Einschränkung der Datenverarbeitung verlangen.· Wenn wir Ihre personenbezogenen Daten nicht mehr
+            benötigen, Sie sie jedoch zur Ausübung, Verteidigung oder Geltendmachung von Rechtsansprüchen benötigen,
+            haben Sie das Recht, statt der Löschung die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu
+            verlangen.· Wenn Sie einen Widerspruch nach Art. 21 Abs. 1 DSGVO eingelegt haben, muss eine Abwägung
+            zwischen Ihren und unseren Interessen vorgenommen werden. Solange noch nicht feststeht, wessen Interessen
+            überwiegen, haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu
+            verlangen.Wenn Sie die Verarbeitung Ihrer personenbezogenen Daten eingeschränkt haben, dürfen diese Daten –
+            von ihrer Speicherung abgesehen – nur mit Ihrer Einwilligung oder zur Geltendmachung, Ausübung oder
+            Verteidigung von Rechtsansprüchen oder zum Schutz der Rechte einer anderen natürlichen oder juristischen
+            Person oder aus Gründen eines wichtigen öffentlichen Interesses der Europäischen Union oder eines
+            Mitgliedstaats verarbeitet werden.</div>
+          <div class="sub_title mt-2">13. Widerspruch gegen Werbe-E-Mails</div>
+          <div class="sub-description">Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten zur
+            Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit
+            widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der
+            unverlangten Zusendung von Werbeinformationen, etwa durch Spam-E-Mails, vor.</div>
+
+          <div class="sub-title">9. Datenerfassung auf dieser Website</div>
+          <div class="sub_title mt-2">1. Kontaktformular</div>
+          <div class="sub-description">Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben
+            aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage
+            und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung
+            weiter.</div>
+          <div class="sub-description mt-2">Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b
+            DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung
+            vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem
+            berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f
+            DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde.</div>
+          <div class="sub-description mt-2">Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis
+            Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die
+            Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche
+            Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</div>
+          <div class="sub_title mt-2">2. Anfrage per E-Mail, Telefon oder Telefax</div>
+          <div class="sub-description">Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage
+            inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung
+            Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung
+            weiter.</div>
+          <div class="sub-description mt-2">Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b
+            DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung
+            vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem
+            berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f
+            DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde.</div>
+          <div class="sub-description mt-2">Die von Ihnen an uns per Kontaktanfragen übersandten Daten verbleiben bei
+            uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für
+            die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihres Anliegens). Zwingende
+            gesetzliche Bestimmungen – insbesondere gesetzliche Aufbewahrungsfristen – bleiben unberührt.</div>
+          <div class="sub_title mt-2">3. Kommunikation via WhatsApp</div>
+          <div class="sub-description">Für die Kommunikation mit unseren Kunden und sonstigen Dritten nutzen wir unter
+            anderem den Instant-Messaging-Dienst WhatsApp. Anbieter ist die WhatsApp Ireland Limited, 4 Grand Canal
+            Square, Grand Canal Harbour, Dublin 2, Irland.</div>
+          <div class="sub-description mt-2">Die Kommunikation erfolgt über eine Ende-zu-Ende-Verschlüsselung
+            (Peer-to-Peer), die verhindert, dass WhatsApp oder sonstige Dritte Zugriff auf die Kommunikationsinhalte
+            erlangen können. WhatsApp erhält jedoch Zugriff auf Metadaten, die im Zuge des Kommunikationsvorgangs
+            entstehen (z.B. Absender, Empfänger und Zeitpunkt). Wir weisen ferner darauf hin, dass WhatsApp nach eigener
+            Aussage, personenbezogene Daten seiner Nutzer mit seiner in den USA ansässigen Konzernmutter Facebook teilt.
+            Weitere Details zur Datenverarbeitung finden Sie in der Datenschutzrichtlinie von WhatsApp unter: <span
+              class="sub-green-url">https://www.whatsapp.com/legal/#privacy-policy.</span></div>
+          <div class="sub-description mt-2">Der Einsatz von WhatsApp erfolgt auf Grundlage unseres berechtigten
+            Interesses an einer möglichst schnellen und effektiven Kommunikation mit Kunden, Interessenten und sonstigen
+            Geschäfts- und Vertragspartnern (Art. 6 Abs. 1 S. 1 lit. f DSGVO). Sofern eine entsprechende Einwilligung
+            abgefragt wurde, erfolgt die Datenverarbeitung ausschließlich auf Grundlage der Einwilligung; diese ist
+            jederzeit mit Wirkung für die Zukunft widerrufbar.</div>
+          <div class="sub-description mt-2">Die zwischen und auf WhatsApp ausgetauschten Kommunikationsinhalte
+            verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder
+            der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage).
+            Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</div>
+          <div class="sub-description mt-2">Wir nutzen WhatsApp in der Variante „WhatsApp Business“.</div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://www.whatsapp.com/legal/business-data-processing-terms?lang=de.</span></div>
+          <div class="sub_title mt-2">4. Registrierung mit Google</div>
+          <div class="sub-description">Statt einer direkten Registrierung auf dieser Website können Sie sich mit Google
+            registrieren. Anbieter dieses Dienstes ist die Google Ireland Limited („Google”), Gordon House, Barrow
+            Street, Dublin 4, Irland.</div>
+          <div class="sub-description mt-2">Um sich mit Google zu registrieren, müssen Sie ausschließlich Ihre
+            Google-Namen und Ihr Passwort eingeben. Google wird Sie identifizieren und unserer Website Ihre Identität
+            bestätigen.</div>
+          <div class="sub-description mt-2">Wenn Sie sich mit Google anmelden ist es uns ggf. möglich bestimmte
+            Informationen auf Ihrem Konto zu nutzen, um Ihr Profil bei uns zu vervollständigen. Ob und welche
+            Informationen das sind entscheiden Sie im Rahmen Ihrer Google-Sicherheitseinstellungen, die Sie hier finden:
+            <span class="sub-green-url">https://myaccount.google.com/security</span> und <span
+              class="sub-green-url">https://myaccount.google.com/permissions.</span></div>
+          <div class="sub-description mt-2">Die Datenverarbeitung, die mit der Google-Registrierung einhergeht beruht
+            auf unserem berechtigten Interesse, unseren Nutzern einen möglichst einfachen Registrierungsprozess zu
+            ermöglichen (Art. 6 Abs. 1 lit. f DSGVO). Da die Nutzung der Registrierungsfunktion freiwillig ist und die
+            Nutzer selbst über die jeweiligen Zugriffsmöglichkeiten entscheiden können, sind keine entgegenstehenden
+            überwiegenden Rechte der Betroffenen ersichtlich.</div>
+
+          <div class="sub-title">10. Analyse-Tools und Werbung</div>
+          <div class="sub_title mt-2">1. Google Tag Manager</div>
+          <div class="sub-description">Wir setzen den Google Tag Manager ein. Anbieter ist die Google Ireland Limited,
+            Gordon House, Barrow Street, Dublin 4, Irland.</div>
+          <div class="sub-description mt-2">Der Google Tag Manager ist ein Tool, mit dessen Hilfe wir Tracking- oder
+            Statistik-Tools und andere Technologien auf unserer Website einbinden können. Der Google Tag Manager selbst
+            erstellt keine Nutzerprofile, speichert keine Cookies und nimmt keine eigenständigen Analysen vor. Er dient
+            lediglich der Verwaltung und Ausspielung der über ihn eingebundenen Tools. Der Google Tag Manager erfasst
+            jedoch Ihre IP-Adresse, die auch an das Mutterunternehmen von Google in die Vereinigten Staaten übertragen
+            werden kann.</div>
+          <div class="sub-description mt-2">Der Einsatz des Google Tag Managers erfolgt auf Grundlage von Art. 6 Abs. 1
+            lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an einer schnellen und unkomplizierten
+            Einbindung und Verwaltung verschiedener Tools auf seiner Website. Sofern eine entsprechende Einwilligung
+            abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die
+            Einwilligung ist jederzeit widerrufbar.</div>
+          <div class="sub_title mt-2">2. Google Analytics</div>
+          <div class="sub-description">Diese Website nutzt Funktionen des Webanalysedienstes Google Analytics. Anbieter
+            ist die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.</div>
+          <div class="sub-description mt-2">Google Analytics ermöglicht es dem Websitebetreiber, das Verhalten der
+            Websitebesucher zu analysieren. Hierbei erhält der Websitebetreiber verschiedene Nutzungsdaten, wie z.B.
+            Seitenaufrufe, Verweildauer, verwendete Betriebssysteme und Herkunft des Nutzers. Diese Daten werden von
+            Google ggf. in einem Profil zusammengefasst, das dem jeweiligen Nutzer bzw. dessen Endgerät zugeordnet ist.
+          </div>
+          <div class="sub-description mt-2">Google Analytics verwendet Technologien, die die Wiedererkennung des Nutzers
+            zum Zwecke der Analyse des Nutzerverhaltens ermöglichen (z.B. Cookies oder Device-Fingerprinting). Die von
+            Google erfassten Informationen über die Benutzung dieser Website werden in der Regel an einen Server von
+            Google in den USA übertragen und dort gespeichert.</div>
+          <div class="sub-description mt-2">Die Nutzung dieses Analyse-Tools erfolgt auf Grundlage von Art. 6 Abs. 1
+            lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der Analyse des Nutzerverhaltens, um
+            sowohl sein Webangebot als auch seine Werbung zu optimieren. Sofern eine entsprechende Einwilligung
+            abgefragt wurde (z. B. eine Einwilligung zur Speicherung von Cookies), erfolgt die Verarbeitung
+            ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar.
+          </div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://privacy.google.com/businesses/controllerterms/mccs/.</span></div>
+          <div class="sub_title mt-2">3. IP Anonymisierung</div>
+          <div class="sub-description">Wir haben auf dieser Website die Funktion IP-Anonymisierung aktiviert. Dadurch
+            wird Ihre IP-Adresse von Google innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen
+            Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum vor der Übermittlung in die USA gekürzt.
+            Nur in Ausnahmefällen wird die volle IP-Adresse an einen Server von Google in den USA übertragen und dort
+            gekürzt. Im Auftrag des Betreibers dieser Website wird Google diese Informationen benutzen, um Ihre Nutzung
+            der Website auszuwerten, um Reports über die Websiteaktivitäten zusammenzustellen und um weitere mit der
+            Websitenutzung und der Internetnutzung verbundene Dienstleistungen gegenüber dem Websitebetreiber zu
+            erbringen. Die im Rahmen von Google Analytics von Ihrem Browser übermittelte IP-Adresse wird nicht mit
+            anderen Daten von Google zusammengeführt.</div>
+          <div class="sub_title mt-2">4. Browser Plugin</div>
+          <div class="sub-description">Sie können die Erfassung und Verarbeitung Ihrer Daten durch Google verhindern,
+            indem Sie das unter dem folgenden Link verfügbare Browser-Plugin herunterladen und installieren: <span
+              class="sub-green-url">https://tools.google.com/dlpage/gaoptout?hl=de.</span></div>
+          <div class="sub-description mt-2">Mehr Informationen zum Umgang mit Nutzerdaten bei Google Analytics finden
+            Sie in der Datenschutzerklärung von Google: <span
+              class="sub-green-url">https://support.google.com/analytics/answer/6004245?hl=de.</span></div>
+          <div class="sub_title mt-2">5. Auftragsverarbeitung</div>
+          <div class="sub-description">Wir haben mit Google einen Vertrag zur Auftragsverarbeitung abgeschlossen und
+            setzen die strengen Vorgaben der deutschen Datenschutzbehörden bei der Nutzung von Google Analytics
+            vollständig um.</div>
+          <div class="sub_title mt-2">6. Demografische Merkmale bei Google Analytics</div>
+          <div class="sub-description">Diese Website nutzt die Funktion „demografische Merkmale“ von Google Analytics,
+            um den Websitebesuchern passende Werbeanzeigen innerhalb des Google-Werbenetzwerks anzeigen zu können.
+            Dadurch können Berichte erstellt werden, die Aussagen zu Alter, Geschlecht und Interessen der Seitenbesucher
+            enthalten. Diese Daten stammen aus interessenbezogener Werbung von Google sowie aus Besucherdaten von
+            Drittanbietern. Diese Daten können keiner bestimmten Person zugeordnet werden. Sie können diese Funktion
+            jederzeit über die Anzeigeneinstellungen in Ihrem Google-Konto deaktivieren oder die Erfassung Ihrer Daten
+            durch Google Analytics wie im Punkt „Widerspruch gegen Datenerfassung“ dargestellt generell untersagen.
+          </div>
+          <div class="sub_title mt-2">7. Google Analytics E-Commerce-Tracking</div>
+          <div class="sub-description">Diese Website nutzt die Funktion „E-Commerce-Tracking“ von Google Analytics. Mit
+            Hilfe von E-Commerce-Tracking kann der Websitebetreiber das Kaufverhalten der Websitebesucher zur
+            Verbesserung seiner Online-Marketing-Kampagnen analysieren. Hierbei werden Informationen, wie zum Beispiel
+            die getätigten Bestellungen, durchschnittliche Bestellwerte, Versandkosten und die Zeit von der Ansicht bis
+            zum Kauf eines Produktes erfasst. Diese Daten können von Google unter einer Transaktions-ID zusammengefasst
+            werden, die dem jeweiligen Nutzer bzw. dessen Gerät zugeordnet ist.</div>
+          <div class="sub_title mt-2">8. Speicherdauer</div>
+          <div class="sub-description">Bei Google gespeicherte Daten auf Nutzer- und Ereignisebene, die mit Cookies,
+            Nutzerkennungen (z. B. User ID) oder Werbe-IDs (z. B. DoubleClick-Cookies, Android-Werbe-ID) verknüpft sind,
+            werden nach 14 Monaten anonymisiert bzw. gelöscht. Details hierzu ersehen Sie unter folgendem Link: <span
+              class="sub-green-url">https://support.google.com/analytics/answer/7667196?hl=de</span></div>
+          <div class="sub_title mt-2">9. Google Ads</div>
+          <div class="sub-description">Der Websitebetreiber verwendet Google Ads. Google Ads ist ein
+            Online-Werbeprogramm der Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.
+          </div>
+          <div class="sub-description mt-2">Google Ads ermöglicht es uns Werbeanzeigen in der Google-Suchmaschine oder
+            auf Drittwebseiten auszuspielen, wenn der Nutzer bestimmte Suchbegriffe bei Google eingibt
+            (Keyword-Targeting). Ferner können zielgerichtete Werbeanzeigen anhand der bei Google vorhandenen
+            Nutzerdaten (z.B. Standortdaten und Interessen) ausgespielt werden (Zielgruppen-Targeting). Wir als
+            Websitebetreiber können diese Daten quantitativ auswerten, indem wir beispielsweise analysieren, welche
+            Suchbegriffe zur Ausspielung unserer Werbeanzeigen geführt haben und wie viele Anzeigen zu entsprechenden
+            Klicks geführt haben.</div>
+          <div class="sub-description mt-2">Die Nutzung von Google Ads erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f
+            DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an einer möglichst effektiven Vermarktung seiner
+            Dienstleistung Produkte.</div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://privacy.google.com/businesses/controllerterms/mccs/.</span></div>
+          <div class="sub_title mt-2">10. Google Remarketing</div>
+          <div class="sub-description">Diese Website nutzt die Funktionen von Google Analytics Remarketing. Anbieter ist
+            die Google Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.</div>
+          <div class="sub-description mt-2">Google Remarketing analysiert Ihr Nutzerverhalten auf unserer Website (z.B.
+            Klick auf bestimmte Produkte), um Sie in bestimmte Werbe-Zielgruppen einzuordnen und Ihnen anschließend beim
+            Besuch von anderen Onlineangeboten passende Webebotschaften auszuspielen (Remarketing bzw. Retargeting).
+          </div>
+          <div class="sub-description mt-2">Des Weiteren können die mit Google Remarketing erstellten Werbe-Zielgruppen
+            mit den geräteübergreifenden Funktionen von Google verknüpft werden. Auf diese Weise können
+            interessenbezogene, personalisierte Werbebotschaften, die in Abhängigkeit Ihres früheren Nutzungs- und
+            Surfverhaltens auf einem Endgerät (z. B. Handy) an Sie angepasst wurden auch auf einem anderen Ihrer
+            Endgeräte (z. B. Tablet oder PC) angezeigt werden.</div>
+          <div class="sub-description mt-2">Wenn Sie über einen Google-Account verfügen, können Sie der personalisierten
+            Werbung unter folgendem Link widersprechen: https://www.google.com/settings/ads/onweb/.</div>
+          <div class="sub-description mt-2">Die Nutzung von Google Remarketing erfolgt auf Grundlage von Art. 6 Abs. 1
+            lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an einer möglichst effektiven Vermarktung
+            seiner Produkte. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung
+            ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar.
+          </div>
+          <div class="sub-description mt-2">Weitergehende Informationen und die Datenschutzbestimmungen finden Sie in
+            der Datenschutzerklärung von Google unter: <span
+              class="sub-green-url">https://policies.google.com/technologies/ads?hl=de.</span></div>
+          <div class="sub_title mt-2">11. Zielgruppenbildung mit Kundenabgleich</div>
+          <div class="sub-description">Zur Zielgruppenbildung verwenden wir unter anderem den Kundenabgleich von Google
+            Remarketing. Hierbei übergeben wir bestimmte Kundendaten (z.B. E-Mail-Adressen) aus unseren Kundenlisten an
+            Google. Sind die betreffenden Kunden Google-Nutzer und in ihrem Google-Konto eingeloggt, werden ihnen
+            passende Werbebotschaften innerhalb des Google-Netzwerks (z.B. bei YouTube, Gmail oder in der Suchmaschine)
+            angezeigt.</div>
+          <div class="sub_title mt-2">12. Google Conversion-Tracking</div>
+          <div class="sub-description">Diese Website nutzt Google Conversion Tracking. Anbieter ist die Google Ireland
+            Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.</div>
+          <div class="sub-description mt-2">Mit Hilfe von Google-Conversion-Tracking können Google und wir erkennen, ob
+            der Nutzer bestimmte Aktionen durchgeführt hat. So können wir beispielsweise auswerten, welche Buttons auf
+            unserer Website wie häufig geklickt und welche Produkte besonders häufig angesehen oder gekauft wurden.
+            Diese Informationen dienen dazu, Conversion-Statistiken zu erstellen. Wir erfahren die Gesamtanzahl der
+            Nutzer, die auf unsere Anzeigen geklickt haben und welche Aktionen sie durchgeführt haben. Wir erhalten
+            keine Informationen, mit denen wir den Nutzer persönlich identifizieren können. Google selbst nutzt zur
+            Identifikation Cookies oder vergleichbare Wiedererkennungstechnologien.</div>
+          <div class="sub-description mt-2">Die Nutzung von Google Conversion-Tracking erfolgt auf Grundlage von Art. 6
+            Abs. 1 lit. f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an der Analyse des
+            Nutzerverhaltens, um sowohl sein Webangebot als auch seine Werbung zu optimieren. Sofern eine entsprechende
+            Einwilligung abgefragt wurde (z. B. eine Einwilligung zur Speicherung von Cookies), erfolgt die Verarbeitung
+            ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar.
+          </div>
+          <div class="sub-description mt-2">Mehr Informationen zu Google Conversion-Tracking finden Sie in den
+            Datenschutzbestimmungen von Google: <span
+              class="sub-green-url">https://policies.google.com/privacy?hl=de.</span></div>
+          <div class="sub_title mt-2">13. Facebook Pixel</div>
+          <div class="sub-description">Diese Website nutzt zur Konversionsmessung der Besucheraktions-Pixel von
+            Facebook. Anbieter dieses Dienstes ist die Facebook Ireland Limited, 4 Grand Canal Square, Dublin 2, Irland.
+            Die erfassten Daten werden nach Aussage von Facebook jedoch auch in die USA und in andere Drittländer
+            übertragen.</div>
+          <div class="sub-description mt-2">So kann das Verhalten der Seitenbesucher nachverfolgt werden, nachdem diese
+            durch Klick auf eine Facebook-Werbeanzeige auf die Website des Anbieters weitergeleitet wurden. Dadurch
+            können die Wirksamkeit der Facebook-Werbeanzeigen für statistische und Marktforschungszwecke ausgewertet
+            werden und zukünftige Werbemaßnahmen optimiert werden.</div>
+          <div class="sub-description mt-2">Die erhobenen Daten sind für uns als Betreiber dieser Website anonym, wir
+            können keine Rückschlüsse auf die Identität der Nutzer ziehen. Die Daten werden aber von Facebook
+            gespeichert und verarbeitet, sodass eine Verbindung zum jeweiligen Nutzerprofil möglich ist und Facebook die
+            Daten für eigene Werbezwecke, entsprechend der Facebook-Datenverwendungsrichtlinie verwenden kann. Dadurch
+            kann Facebook das Schalten von Werbeanzeigen auf Seiten von Facebook sowie außerhalb von Facebook
+            ermöglichen. Diese Verwendung der Daten kann von uns als Seitenbetreiber nicht beeinflusst werden.</div>
+          <div class="sub-description mt-2">Die Nutzung von Facebook-Pixel erfolgt auf Grundlage von Art. 6 Abs. 1 lit.
+            f DSGVO. Der Websitebetreiber hat ein berechtigtes Interesse an effektiven Werbemaßnahmen unter Einschluss
+            der sozialen Medien. Sofern eine entsprechende Einwilligung abgefragt wurde (z. B. eine Einwilligung zur
+            Speicherung von Cookies), erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a
+            DSGVO; die Einwilligung ist jederzeit widerrufbar.</div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://www.facebook.com/legal/EU_data_transfer_addendum</span> und <span
+              class="sub-green-url">https://de-de.facebook.com/help/566994660333381.</span></div>
+          <div class="sub-description mt-2">In den Datenschutzhinweisen von Facebook finden Sie weitere Hinweise zum
+            Schutz Ihrer Privatsphäre: <span class="sub-green-url">https://de-de.facebook.com/about/privacy/.</span>
+          </div>
+          <div class="sub-description mt-2">Sie können außerdem die Remarketing-Funktion „Custom Audiences“ im Bereich
+            Einstellungen für Werbeanzeigen unter <span
+              class="sub-green-url">https://www.facebook.com/ads/preferences/?entry_product=ad_settings_screen</span>
+            deaktivieren. Dazu müssen Sie bei Facebook angemeldet sein.</div>
+          <div class="sub-description mt-2">Wenn Sie kein Facebook Konto besitzen, können Sie nutzungsbasierte Werbung
+            von Facebook auf der Website der European Interactive Digital Advertising Alliance deaktivieren: <span
+              class="sub-green-url">http://www.youronlinechoices.com/de/praferenzmanagement/.</span></div>
+
+          <div class="sub-title">11. Newsletter</div>
+          <div class="sub_title mt-2">1. Newsletter­daten</div>
+          <div class="sub-description">Wenn Sie den auf der Website angebotenen Newsletter beziehen möchten, benötigen
+            wir von Ihnen eine E-Mail-Adresse sowie Informationen, welche uns die Überprüfung gestatten, dass Sie der
+            Inhaber der angegebenen E-Mail-Adresse sind und mit dem Empfang des Newsletters einverstanden sind. Weitere
+            Daten werden nicht bzw. nur auf freiwilliger Basis erhoben. Diese Daten verwenden wir ausschließlich für den
+            Versand der angeforderten Informationen und geben diese nicht an Dritte weiter.</div>
+          <div class="sub-description mt-2">Die Verarbeitung der in das Newsletteranmeldeformular eingegebenen Daten
+            erfolgt ausschließlich auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Die erteilte
+            Einwilligung zur Speicherung der Daten, der E-Mail-Adresse sowie deren Nutzung zum Versand des Newsletters
+            können Sie jederzeit widerrufen, etwa über den „Austragen“-Link im Newsletter. Die Rechtmäßigkeit der
+            bereits erfolgten Datenverarbeitungsvorgänge bleibt vom Widerruf unberührt.</div>
+          <div class="sub-description mt-2">Die von Ihnen zum Zwecke des Newsletter-Bezugs bei uns hinterlegten Daten
+            werden von uns bis zu Ihrer Austragung aus dem Newsletter bei uns bzw. dem Newsletterdiensteanbieter
+            gespeichert und nach der Abbestellung des Newsletters oder nach Zweckfortfall aus der
+            Newsletterverteilerliste gelöscht. Wir behalten uns vor, E-Mail-Adressen aus unserem Newsletterverteiler
+            nach eigenem Ermessen im Rahmen unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO zu löschen
+            oder zu sperren.</div>
+          <div class="sub-description mt-2">Nach Ihrer Austragung aus der Newsletterverteilerliste wird Ihre
+            E-Mail-Adresse bei uns bzw. dem Newsletterdiensteanbieter ggf. in einer Blacklist gespeichert, um künftige
+            Mailings zu verhindern. Die Daten aus der Blacklist werden nur für diesen Zweck verwendet und nicht mit
+            anderen Daten zusammengeführt. Dies dient sowohl Ihrem Interesse als auch unserem Interesse an der
+            Einhaltung der gesetzlichen Vorgaben beim Versand von Newslettern (berechtigtes Interesse im Sinne des Art.
+            6 Abs. 1 lit. f DSGVO). Die Speicherung in der Blacklist ist zeitlich nicht befristet. <span
+              class="sub-bold">Sie können der Speicherung widersprechen, sofern Ihre Interessen unser berechtigtes
+              Interesse überwiegen.</span></div>
+          <div class="sub_title mt-2">2. MailChimp mit deaktivierter Erfolgsmessung</div>
+          <div class="sub-description">Diese Website nutzt die Dienste von MailChimp für den Versand von Newslettern.
+            Anbieter ist die Rocket Science Group LLC, 675 Ponce De Leon Ave NE, Suite 5000, Atlanta, GA 30308, USA.
+          </div>
+          <div class="sub-description mt-2">MailChimp ist ein Dienst, mit dem u.a. der Versand von Newslettern
+            organisiert werden kann. Wenn Sie Daten zum Zwecke des Newsletterbezugs eingeben (z. B. E-Mail-Adresse),
+            werden diese auf den Servern von MailChimp in den USA gespeichert. Wir haben die Erfolgsmessung bei
+            Mailchimp deaktiviert, sodass Mailchimp ihr Verhalten beim Öffnen unserer Newsletter nicht auswerten wird.
+          </div>
+          <div class="sub-description mt-2">Wenn Sie nicht möchten, dass Ihre Daten an Mailchimp übertragen werden,
+            müssen Sie den Newsletter abbestellen. Hierfür stellen wir in jeder Newsletternachricht einen entsprechenden
+            Link zur Verfügung. Des Weiteren können Sie den Newsletter auch direkt auf der Website abbestellen.</div>
+          <div class="sub-description mt-2">Die Datenverarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs.
+            1 lit. a DSGVO). Sie können diese Einwilligung jederzeit widerrufen, indem Sie den Newsletter abbestellen.
+            Die Rechtmäßigkeit der bereits erfolgten Datenverarbeitungsvorgänge bleibt vom Widerruf unberührt.</div>
+          <div class="sub-description mt-2">Die von Ihnen zum Zwecke des Newsletter-Bezugs bei uns hinterlegten Daten
+            werden von uns bis zu Ihrer Austragung aus dem Newsletter bei uns bzw. dem Newsletterdiensteanbieter
+            gespeichert und nach der Abbestellung des Newsletters aus der Newsletterverteilerliste gelöscht. Daten, die
+            zu anderen Zwecken bei uns gespeichert wurden bleiben hiervon unberührt.</div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://mailchimp.com/legal/data-processing-addendum/#9._Jurisdiction-Specific_Terms.</span>
+          </div>
+          <div class="sub-description mt-2">Nach Ihrer Austragung aus der Newsletterverteilerliste wird Ihre
+            E-Mail-Adresse bei uns bzw. dem Newsletterdiensteanbieter ggf. in einer Blacklist gespeichert, um künftige
+            Mailings zu verhindern. Die Daten aus der Blacklist werden nur für diesen Zweck verwendet und nicht mit
+            anderen Daten zusammengeführt. Dies dient sowohl Ihrem Interesse als auch unserem Interesse an der
+            Einhaltung der gesetzlichen Vorgaben beim Versand von Newslettern (berechtigtes Interesse im Sinne des Art.
+            6 Abs. 1 lit. f DSGVO). Die Speicherung in der Blacklist ist zeitlich nicht befristet. <span
+              class="sub-bold">Sie können der Speicherung widersprechen, sofern Ihre Interessen unser berechtigtes
+              Interesse überwiegen.</span></div>
+          <div class="sub-description mt-2">Näheres entnehmen Sie den Datenschutzbestimmungen von MailChimp unter: <span
+              class="sub-green-url">https://mailchimp.com/legal/terms/.</span></div>
+          <div class="sub_title mt-2">3. Abschluss eines Data-Processing-Agreements</div>
+          <div class="sub-description">Wir haben ein sog. „Data-Processing-Agreement“ mit MailChimp abgeschlossen, in
+            dem wir MailChimp verpflichten, die Daten unserer Kunden zu schützen und sie nicht an Dritte weiterzugeben.
+          </div>
+
+          <div class="sub-title">12. Newsletter</div>
+          <div class="sub_title mt-2">1. YouTube mit erweitertem Datenschutz</div>
+          <div class="sub-description">Diese Website bindet Videos der YouTube ein. Betreiber der Seiten ist die Google
+            Ireland Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.</div>
+          <div class="sub-description mt-2">Wir nutzen YouTube im erweiterten Datenschutzmodus. Dieser Modus bewirkt
+            laut YouTube, dass YouTube keine Informationen über die Besucher auf dieser Website speichert, bevor diese
+            sich das Video ansehen. Die Weitergabe von Daten an YouTube-Partner wird durch den erweiterten
+            Datenschutzmodus hingegen nicht zwingend ausgeschlossen. So stellt YouTube – unabhängig davon, ob Sie sich
+            ein Video ansehen – eine Verbindung zum Google DoubleClick-Netzwerk her.</div>
+          <div class="sub-description mt-2">Sobald Sie ein YouTube-Video auf dieser Website starten, wird eine
+            Verbindung zu den Servern von YouTube hergestellt. Dabei wird dem YouTube-Server mitgeteilt, welche unserer
+            Seiten Sie besucht haben. Wenn Sie in Ihrem YouTube-Account eingeloggt sind, ermöglichen Sie YouTube, Ihr
+            Surfverhalten direkt Ihrem persönlichen Profil zuzuordnen. Dies können Sie verhindern, indem Sie sich aus
+            Ihrem YouTube-Account ausloggen.</div>
+          <div class="sub-description mt-2">Des Weiteren kann YouTube nach Starten eines Videos verschiedene Cookies auf
+            Ihrem Endgerät speichern oder vergleichbare Wiedererkennungstechnologien (z.B. Device-Fingerprinting)
+            einsetzen. Auf diese Weise kann YouTube Informationen über Besucher dieser Website erhalten. Diese
+            Informationen werden u. a. verwendet, um Videostatistiken zu erfassen, die Anwenderfreundlichkeit zu
+            verbessern und Betrugsversuchen vorzubeugen.</div>
+          <div class="sub-description mt-2">Gegebenenfalls können nach dem Start eines YouTube-Videos weitere
+            Datenverarbeitungsvorgänge ausgelöst werden, auf die wir keinen Einfluss haben.</div>
+          <div class="sub-description mt-2">Die Nutzung von YouTube erfolgt im Interesse einer ansprechenden Darstellung
+            unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar.
+            Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf
+            Grundlage von Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar.</div>
+          <div class="sub-description mt-2">Weitere Informationen über Datenschutz bei YouTube finden Sie in deren
+            Datenschutzerklärung unter: <span class="sub-green-url">https://policies.google.com/privacy?hl=de.</span>
+          </div>
+          <div class="sub_title mt-2">2. Google Web Fonts (lokales Hosting)</div>
+          <div class="sub-description">Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Web
+            Fonts, die von Google bereitgestellt werden. Die Google Fonts sind lokal installiert. Eine Verbindung zu
+            Servern von Google findet dabei nicht statt.</div>
+          <div class="sub-description mt-2">Weitere Informationen zu Google Web Fonts finden Sie unter <span
+              class="sub-green-url">https://developers.google.com/fonts/faq</span> und in der Datenschutzerklärung von
+            Google: <span class="sub-green-url">https://policies.google.com/privacy?hl=de.</span></div>
+          <div class="sub_title mt-2">3. Font Awesome (lokales Hosting)</div>
+          <div class="sub-description">Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten Font Awesome.
+            Font Awesome ist lokal installiert. Eine Verbindung zu Servern von Fonticons, Inc. findet dabei nicht statt.
+          </div>
+          <div class="sub-description mt-2">Weitere Informationen zu Font Awesome finden Sie und in der
+            Datenschutzerklärung für Font Awesome unter: <span
+              class="sub-green-url">https://fontawesome.com/privacy.</span></div>
+          <div class="sub_title mt-2">4. Google Maps</div>
+          <div class="sub-description">Diese Seite nutzt den Kartendienst Google Maps. Anbieter ist die Google Ireland
+            Limited („Google“), Gordon House, Barrow Street, Dublin 4, Irland.</div>
+          <div class="sub-description mt-2">Zur Nutzung der Funktionen von Google Maps ist es notwendig, Ihre IP-Adresse
+            zu speichern. Diese Informationen werden in der Regel an einen Server von Google in den USA übertragen und
+            dort gespeichert. Der Anbieter dieser Seite hat keinen Einfluss auf diese Datenübertragung.</div>
+          <div class="sub-description mt-2">Die Nutzung von Google Maps erfolgt im Interesse einer ansprechenden
+            Darstellung unserer Online-Angebote und an einer leichten Auffindbarkeit der von uns auf der Website
+            angegebenen Orte. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar. Sofern
+            eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von
+            Art. 6 Abs. 1 lit. a DSGVO; die Einwilligung ist jederzeit widerrufbar.</div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://privacy.google.com/businesses/gdprcontrollerterms/</span> und <span
+              class="sub-green-url">https://privacy.google.com/businesses/gdprcontrollerterms/sccs/.</span></div>
+          <div class="sub-description mt-2">Mehr Informationen zum Umgang mit Nutzerdaten finden Sie in der
+            Datenschutzerklärung von Google: <span
+              class="sub-green-url">https://policies.google.com/privacy?hl=de.</span></div>
+
+          <div class="sub-title">13. eCommerce und Zahlungs­anbieter</div>
+          <div class="sub_title mt-2">1. Verarbeiten von Daten (Kunden- und Vertragsdaten)</div>
+          <div class="sub-description">Wir erheben, verarbeiten und nutzen personenbezogene Daten nur, soweit sie für
+            die Begründung, inhaltliche Ausgestaltung oder Änderung des Rechtsverhältnisses erforderlich sind
+            (Bestandsdaten). Dies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, der die Verarbeitung von Daten
+            zur Erfüllung eines Vertrags oder vorvertraglicher Maßnahmen gestattet. Personenbezogene Daten über die
+            Inanspruchnahme dieser Website (Nutzungsdaten) erheben, verarbeiten und nutzen wir nur, soweit dies
+            erforderlich ist, um dem Nutzer die Inanspruchnahme des Dienstes zu ermöglichen oder abzurechnen.</div>
+          <div class="sub-description mt-2">Die erhobenen Kundendaten werden nach Abschluss des Auftrags oder Beendigung
+            der Geschäftsbeziehung gelöscht. Gesetzliche Aufbewahrungsfristen bleiben unberührt.</div>
+          <div class="sub_title mt-2">2. Daten­übermittlung bei Vertragsschluss für Online-Shops, Händler und
+            Warenversand</div>
+          <div class="sub-description">Wir übermitteln personenbezogene Daten an Dritte nur dann, wenn dies im Rahmen
+            der Vertragsabwicklung notwendig ist, etwa an die mit der Lieferung der Ware betrauten Unternehmen oder das
+            mit der Zahlungsabwicklung beauftragte Kreditinstitut. Eine weitergehende Übermittlung der Daten erfolgt
+            nicht bzw. nur dann, wenn Sie der Übermittlung ausdrücklich zugestimmt haben. Eine Weitergabe Ihrer Daten an
+            Dritte ohne ausdrückliche Einwilligung, etwa zu Zwecken der Werbung, erfolgt nicht.</div>
+          <div class="sub-description mt-2">Grundlage für die Datenverarbeitung ist Art. 6 Abs. 1 lit. b DSGVO, der die
+            Verarbeitung von Daten zur Erfüllung eines Vertrags oder vorvertraglicher Maßnahmen gestattet.</div>
+          <div class="sub_title mt-2">3. Daten­übermittlung bei Vertragsschluss für Dienstleistungen und digitale
+            Inhalte</div>
+          <div class="sub-description">Wir übermitteln personenbezogene Daten an Dritte nur dann, wenn dies im Rahmen
+            der Vertragsabwicklung notwendig ist, etwa an das mit der Zahlungsabwicklung beauftragte Kreditinstitut.
+          </div>
+          <div class="sub-description mt-2">Eine weitergehende Übermittlung der Daten erfolgt nicht bzw. nur dann, wenn
+            Sie der Übermittlung ausdrücklich zugestimmt haben. Eine Weitergabe Ihrer Daten an Dritte ohne ausdrückliche
+            Einwilligung, etwa zu Zwecken der Werbung, erfolgt nicht.</div>
+          <div class="sub-description mt-2">Grundlage für die Datenverarbeitung ist Art. 6 Abs. 1 lit. b DSGVO, der die
+            Verarbeitung von Daten zur Erfüllung eines Vertrags oder vorvertraglicher Maßnahmen gestattet.</div>
+          <div class="sub_titlev">4. Zahlungsdienste</div>
+          <div class="sub-description">Wir binden Zahlungsdienste von Drittunternehmen auf unserer Website ein. Wenn Sie
+            einen Kauf bei uns tätigen, werden Ihre Zahlungsdaten (z.B. Name, Zahlungssumme, Kontoverbindung,
+            Kreditkartennummer) vom Zahlungsdienstleister zum Zwecke der Zahlungsabwicklung verarbeitet. Für diese
+            Transaktionen gelten die jeweiligen Vertrags- und Datenschutzbestimmungen der jeweiligen Anbieter. Der
+            Einsatz der Zahlungsdienstleister erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragsabwicklung)
+            sowie im Interesse eines möglichst reibungslosen, komfortablen und sicheren Zahlungsvorgangs (Art. 6 Abs. 1
+            lit. f DSGVO). Soweit für bestimmte Handlungen Ihre Einwilligung abgefragt wird, ist Art. 6 Abs. 1 lit. a
+            DSGVO Rechtsgrundlage der Datenverarbeitung; Einwilligungen sind jederzeit für die Zukunft widerrufbar.
+          </div>
+          <div class="sub-description mt-2">Folgende Zahlungsdienste / Zahlungsdienstleister setzen wir im Rahmen dieser
+            Website ein:</div>
+          <div class="sub_title mt-2">5. PayPal</div>
+          <div class="sub-description">Anbieter dieses Zahlungsdienstes ist PayPal (Europe) S.à.r.l. et Cie, S.C.A.,
+            22-24 Boulevard Royal, L-2449 Luxembourg (im Folgenden „PayPal“).</div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://www.paypal.com/de/webapps/mpp/ua/pocpsa-full.</span></div>
+          <div class="sub-description mt-2">Details entnehmen Sie der Datenschutzerklärung von PayPal: <span
+              class="sub-green-url">https://www.paypal.com/de/webapps/mpp/ua/privacy-full.</span></div>
+          <div class="sub_title mt-2">6. Apple Pay</div>
+          <div class="sub-description">Anbieter des Zahlungsdienstes ist Apple Inc., Infinite Loop, Cupertino, CA 95014,
+            USA. Die Datenschutzerklärung von Apple finden Sie unter: <span
+              class="sub-green-url">https://www.apple.com/legal/privacy/de-ww/.</span></div>
+          <div class="sub_title mt-2">7. Google Pay</div>
+          <div class="sub-description">Anbieter ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4,
+            Irland. Die Datenschutzerklärung von Google finden Sie hier: <span
+              class="sub-green-url">https://policies.google.com/privacy.</span></div>
+          <div class="sub_title mt-2">8. Stripe</div>
+          <div class="sub-description">Anbieter für Kunden innerhalb der EU ist die Stripe Payments Europe, Ltd.,1 Grand
+            Canal Street Lower, Grand Canal Dock, Dublin, Irland (im Folgenden „Stripe“).</div>
+          <div class="sub-description mt-2">Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+            EU-Kommission gestützt. Details finden Sie hier: <span
+              class="sub-green-url">https://stripe.com/de/privacy</span> und <span
+              class="sub-green-url">https://stripe.com/de/guides/general-data-protection-regulation.</span></div>
+          <div class="sub-description mt-2">Details hierzu können Sie in der Datenschutzerklärung von Stripe unter
+            folgendem Link nachlesen: <span class="sub-green-url">https://stripe.com/de/privacy.</span></div>
+          <div class="sub_title mt-2">9. Klarna</div>
+          <div class="sub-description">Anbieter ist die Klarna AB, Sveavägen 46, 111 34 Stockholm, Schweden (im
+            Folgenden „Klarna“). Klarna bietet verschiedene Zahlungsoptionen an (z. B. Ratenkauf). Wenn Sie sich für die
+            Bezahlung mit Klarna entscheiden (Klarna-Checkout-Lösung), wird Klarna verschiedene personenbezogene Daten
+            von Ihnen erheben. Klarna nutzt Cookies, um die Verwendung der Klarna-Checkout-Lösung zu optimieren. Details
+            zum Einsatz von Klarna-Cookies entnehmen Sie folgendem Link: <span
+              class="sub-green-url">https://cdn.klarna.com/1.0/shared/content/policy/cookie/de_de/checkout.pdf.</span>
+          </div>
+          <div class="sub-description mt-2">Details hierzu können Sie in der Datenschutzerklärung von Klarna unter
+            folgendem Link nachlesen: <span class="sub-green-url">https://www.klarna.com/de/datenschutz/.</span></div>
+          <div class="sub_title mt-2">10. Paydirekt</div>
+          <div class="sub-description">Anbieter dieses Zahlungsdienstes ist die Paydirekt GmbH, Hamburger Allee 26-28,
+            60486 Frankfurt am Main, Deutschland (im Folgenden „Paydirekt“). Wenn Sie die Bezahlung mittels Paydirekt
+            ausführen, erhebt Paydirekt verschiedene Transaktionsdaten und leitet diese an die Bank weiter, bei der Sie
+            mit Paydirekt registriert sind. Neben den für die Zahlung erforderlichen Daten erhebt Paydirekt im Rahmen
+            der Transaktionsabwicklung ggf. weitere Daten wie z. B. Lieferadresse oder einzelne Positionen im Warenkorb.
+            Paydirekt authentifiziert die Transaktion anschließend mit Hilfe des bei der Bank hierfür hinterlegten
+            Authentifizierungsverfahrens. Anschließend wird der Zahlbetrag von Ihrem Konto auf unser Konto überwiesen.
+            Weder wir noch Dritte haben Zugriff auf Ihre Kontodaten. Details zur Zahlung mit Paydirekt entnehmen Sie den
+            AGB und den Datenschutzbestimmungen von Paydirekt unter: <span
+              class="sub-green-url">https://www.paydirekt.de/agb/index.html.</span></div>
+          <div class="sub_title mt-2">11. Sofort­überweisung</div>
+          <div class="sub-description">Anbieter dieses Zahlungsdienstes ist die Sofort GmbH, Theresienhöhe 12, 80339
+            München (im Folgenden „Sofort GmbH“). Mit Hilfe des Verfahrens „Sofortüberweisung“ erhalten wir in Echtzeit
+            eine Zahlungsbestätigung von der Sofort GmbH und können unverzüglich mit der Erfüllung unserer
+            Verbindlichkeiten beginnen. Wenn Sie sich für die Zahlungsart „Sofortüberweisung“ entschieden haben,
+            übermitteln Sie die PIN und eine gültige TAN an die Sofort GmbH, mit der diese sich in Ihr
+            Online-Banking-Konto einloggen kann. Sofort GmbH überprüft nach dem Einloggen automatisch Ihren Kontostand
+            und führt die Überweisung an uns mit Hilfe der von Ihnen übermittelten TAN durch. Anschließend übermittelt
+            sie uns unverzüglich eine Transaktionsbestätigung. Nach dem Einloggen werden außerdem Ihre Umsätze, der
+            Kreditrahmen des Dispokredits und das Vorhandensein anderer Konten sowie deren Bestände automatisiert
+            geprüft. Neben der PIN und der TAN werden auch die von Ihnen eingegebenen Zahlungsdaten sowie Daten zu Ihrer
+            Person an die Sofort GmbH übermittelt. Bei den Daten zu Ihrer Person handelt es sich um Vor- und Nachnamen,
+            Adresse, Telefonnummer(n), E-Mail-Adresse, IP-Adresse und ggf. weitere zur Zahlungsabwicklung erforderliche
+            Daten. Die Übermittlung dieser Daten ist notwendig, um Ihre Identität zweifelsfrei zu festzustellen und
+            Betrugsversuchen vorzubeugen. Details zur Zahlung mit Sofortüberweisung entnehmen Sie folgenden Links: <span
+              class="sub-green-url">https://www.sofort.de/datenschutz.html</span> und <span
+              class="sub-green-url">https://www.klarna.com/sofort/.</span></div>
+          <div class="sub_title mt-2">12. Amazon Pay</div>
+          <div class="sub-description">Anbieter dieses Zahlungsdienstes ist die Amazon Payments Europe S.C.A., 38 avenue
+            J.F. Kennedy, L-1855 Luxemburg.</div>
+          <div class="sub-description mt-2">Details zum Umgang mit Ihren Daten können Sie in der Datenschutzerklärung
+            von Amazon Pay unter folgendem Link nachlesen: <span
+              class="sub-green-url">https://pay.amazon.de/help/201212490?ld=APDELPADirect.</span></div>
+
+          <div class="sub-title">14. Eigene Dienste</div>
+          <div class="sub_title mt-2">1. Umgang mit Bewerberdaten</div>
+          <div class="sub-description">Wir bieten Ihnen die Möglichkeit, sich bei uns zu bewerben (z. B. per E-Mail,
+            postalisch oder via Online-Bewerberformular). Im Folgenden informieren wir Sie über Umfang, Zweck und
+            Verwendung Ihrer im Rahmen des Bewerbungsprozesses erhobenen personenbezogenen Daten. Wir versichern, dass
+            die Erhebung, Verarbeitung und Nutzung Ihrer Daten in Übereinstimmung mit geltendem Datenschutzrecht und
+            allen weiteren gesetzlichen Bestimmungen erfolgt und Ihre Daten streng vertraulich behandelt werden.</div>
+          <div class="sub_title mt-2">2. Umfang und Zweck der Datenerhebung</div>
+          <div class="sub-description">Wenn Sie uns eine Bewerbung zukommen lassen, verarbeiten wir Ihre damit
+            verbundenen personenbezogenen Daten (z. B. Kontakt- und Kommunikationsdaten, Bewerbungsunterlagen, Notizen
+            im Rahmen von Bewerbungsgesprächen etc.), soweit dies zur Entscheidung über die Begründung eines
+            Beschäftigungsverhältnisses erforderlich ist. Rechtsgrundlage hierfür ist § 26 BDSG-neu nach deutschem Recht
+            (Anbahnung eines Beschäftigungsverhältnisses), Art. 6 Abs. 1 lit. b DSGVO (allgemeine Vertragsanbahnung) und
+            – sofern Sie eine Einwilligung erteilt haben – Art. 6 Abs. 1 lit. a DSGVO. Die Einwilligung ist jederzeit
+            widerrufbar. Ihre personenbezogenen Daten werden innerhalb unseres Unternehmens ausschließlich an Personen
+            weitergegeben, die an der Bearbeitung Ihrer Bewerbung beteiligt sind.</div>
+          <div class="sub-description mt-2">Sofern die Bewerbung erfolgreich ist, werden die von Ihnen eingereichten
+            Daten auf Grundlage von § 26 BDSG-neu und Art. 6 Abs. 1 lit. b DSGVO zum Zwecke der Durchführung des
+            Beschäftigungsverhältnisses in unseren Datenverarbeitungssystemen gespeichert.</div>
+          <div class="sub_title mt-2">3. Aufbewahrungsdauer der Daten</div>
+          <div class="sub-description">Sofern wir Ihnen kein Stellenangebot machen können, Sie ein Stellenangebot
+            ablehnen oder Ihre Bewerbung zurückziehen, behalten wir uns das Recht vor, die von Ihnen übermittelten Daten
+            auf Grundlage unserer berechtigten Interessen (Art. 6 Abs. 1 lit. f DSGVO) bis zu 6 Monate ab der Beendigung
+            des Bewerbungsverfahrens (Ablehnung oder Zurückziehung der Bewerbung) bei uns aufzubewahren. Anschließend
+            werden die Daten gelöscht und die physischen Bewerbungsunterlagen vernichtet. Die Aufbewahrung dient
+            insbesondere Nachweiszwecken im Falle eines Rechtsstreits. Sofern ersichtlich ist, dass die Daten nach
+            Ablauf der 6-Monatsfrist erforderlich sein werden (z.B. aufgrund eines drohenden oder anhängigen
+            Rechtsstreits), findet eine Löschung erst statt, wenn der Zweck für die weitergehende Aufbewahrung entfällt.
+          </div>
+          <div class="sub-description mt-2">Eine längere Aufbewahrung kann außerdem stattfinden, wenn Sie eine
+            entsprechende Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) erteilt haben oder wenn gesetzliche
+            Aufbewahrungspflichten der Löschung entgegenstehen.</div>
+          <div class="sub_title mt-2">4. Aufnahme in den Bewerber-Pool</div>
+          <div class="sub-description">Sofern wir Ihnen kein Stellenangebot machen, besteht ggf. die Möglichkeit, Sie in
+            unseren Bewerber-Pool aufzunehmen. Im Falle der Aufnahme werden alle Dokumente und Angaben aus der Bewerbung
+            in den Bewerber-Pool übernommen, um Sie im Falle von passenden Vakanzen zu kontaktieren.</div>
+          <div class="sub-description mt-2">Die Aufnahme in den Bewerber-Pool geschieht ausschließlich auf Grundlage
+            Ihrer ausdrücklichen Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Die Abgabe der Einwilligung ist freiwillig
+            und steht in keinem Bezug zum laufenden Bewerbungsverfahren. <span class="sub-bold">Der Betroffene kann
+              seine Einwilligung jederzeit widerrufen.</span> In diesem Falle werden die Daten aus dem Bewerber-Pool
+            unwiderruflich gelöscht, sofern keine gesetzlichen Aufbewahrungsgründe vorliegen.</div>
+          <div class="sub-description mt-2">Die Daten aus dem Bewerber-Pool werden spätestens zwei Jahre nach Erteilung
+            der Einwilligung unwiderruflich gelöscht.</div>
+          <div class="sub_title mt-2">5. Download der App</div>
+          <div class="sub-description">Bei Herunterladen der App werden die erforderlichen Informationen an einen
+            App-Store (Google Play Store oder Apple App Store) übertragen, also insbesondere Nutzername, E-Mail-Adresse
+            und Kundennummer Ihres Accounts, der Zeitpunkt des Downloads, die Zahlungsinformationen und die individuelle
+            Gerätekennziffer. Auf diese Datenerhebung haben wir keinen Einfluss und sind nicht dafür verantwortlich.
+          </div>
+
+          <div class="sub-title">15. App-Berechtigungen</div>
+          <div class="sub_title mt-2">Automatisierte Datenerfassung</div>
+          <div class="sub-description">Wenn Sie unsere App nutzen, überträgt Ihr Endgerät aus technischen Gründen
+            automatisch Daten. Die folgenden Daten werden in Protokolldateien getrennt von anderen Daten, die Sie uns
+            übermitteln können, gespeichert: </div>
+          <div class="sub-description mt-2">· IP-Adresse </div>
+          <div class="sub-description mt-2">· Abgerufene Inhalte</div>
+          <div class="sub-description mt-2">· Die Latenz der Netzwerkverbindung </div>
+          <div class="sub-description mt-2">· Datum und Uhrzeit</div>
+          <div class="sub-description mt-2">· Eindeutige Nummer des Endgerätes (IMEI = International Mobile Equipment
+            Identity) </div>
+          <div class="sub-description mt-2">· Eindeutige Nummer des Netzteilnehmers (IMSI = International Mobile
+            Subscriber Identity)</div>
+          <div class="sub-description mt-2">· Mobilfunknummer (MSISDN)</div>
+          <div class="sub-description mt-2">· MAC-Adresse für WLAN-Nutzung</div>
+          <div class="sub-description mt-2">· Name deines mobilen Endgerätes</div>
+          <div class="sub-description mt-2">· geöffnete Seite in der App und der anfragenden Applikation</div>
+          <div class="sub-description mt-2">· Angaben über das verwendete Endgerät und das Betriebssystem des Gerätes
+          </div>
+
+          <div class="sub-title">16. Ihre Option zum deaktivieren von Google Analytics Tracking</div>
+          <ui-button (onClick)="onClickAnalytics()">Google Analytics deaktivieren</ui-button>
+        </div>
+      </div>
+      <div class="ml-20 mr-50 pt-10">
+        <img src="assets/img/bringoo-vertical.svg" />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container pt-20 pb-10">
+      <div class="d-flex flex-wrap justify-content-between">
+        <div class="d-flex flex-column">
+          <div class="text-bold mb-8">
+            Rechtliches
+          </div>
+          <div class="f-4 text-semi-bold"><a href="/impressum"><span class="subtitle">Impressum</span></a></div>
+          <div class="f-4 text-semi-bold"><a href="/datenschutz"><span class="subtitle">Datenschutz</span></a></div>
+          <div class="f-4 text-semi-bold"><a href="#"><span class="subtitle">AGB's</span></a></div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="text-bold mb-8">
+            Kontakt
+          </div>
+          <div class="f-4 text-semi-bold"><a href="mailto:support@bringoo.de"><span
+                class="subtitle">support@bringoo.de</span></a></div>
+          <div class="f-4 text-semi-bold"><a href="#"><span class="subtitle">Presse</span></a></div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="text-bold mb-8">
+            Folge uns
+          </div>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/bringoo.de/">
+              <icon name="instagram" class="social"></icon>
+            </a>
+            <a href="https://www.facebook.com/bringoo.de/">
+              <icon name="facebook" class="social ml-8"></icon>
+            </a>
+            <a href="https://www.linkedin.com/company/bringoo/">
+              <icon name="linkedin" class="social ml-8"></icon>
+            </a>
+            <icon name="xing" class="social ml-8"></icon>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="Zahlungsarten text-bold mb-8">
+            Zahlungsarten
+          </div>
+          <div class="d-flex align-items-center">
+            <a href="#"><img class="card1" src="/assets/img/cards/visa.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/mastercard-color.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/amex.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/sofort.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/klama.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/giro-pay.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/paypal.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/apple-pay.svg"></a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-15 f-4 text-tiny-bold">
+        © {{year}} bringoo.de. All rights reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<ui-sign-modal [opened]="signModal" (onClose)="onSignModalClose()">
+  <ui-auth [modal]="true" [pageStatus]="pageStatus"></ui-auth>
+</ui-sign-modal>

@@ -1,0 +1,64 @@
+.global-loading{
+  position: fixed;
+  left: 0;
+  top: -12px;
+  width: 100%;
+  height: 4px;
+  z-index: 1000;
+}
+
+.logo {
+  display: block;
+  width: 122px;
+  height: 28px;
+  fill: currentColor;
+  margin-inline: auto;
+}
+
+.background-logo1 {
+  position: absolute;
+  width: 491px;
+  height: 496.26px;
+  bottom: -100px;
+  left: -150px;
+  background: url(/assets/auth-bg/logo-with-borders.svg);
+
+  transform: rotate(-24.59deg);
+}
+
+.background-logo2 {
+  position: absolute;
+  width: 207.12px; height: 209.33px;
+  right: -74px;
+  top: 208px;
+
+  transform: rotate(29.96deg);
+  background: url(/assets/auth-bg/logo-with-borders.svg);
+  background-size: 207.12px 209.33px;
+}
+
+.background-logo3 {
+  position: absolute;
+  width: 66.68px; height: 87.99px;
+  left: 76.6%;
+  right: 18.77%;
+  top: 78.94%;
+  bottom: 12.47%;
+
+  transform: rotate(-23.6deg);
+  background: url(/assets/auth-bg/logo-b.svg);
+  background-size: 66.68px 87.99px;
+}
+
+.background-logo4 {
+  position: absolute;
+  width: 31.3px; height: 41.31px;
+  left: 72.61%;
+  right: 25.22%;
+  top: 73.83%;
+  bottom: 22.14%;
+
+  background: url(/assets/auth-bg/logo-b.svg);
+  background-size: 31.3px 41.31px;
+  transform: rotate(29.83deg);
+}

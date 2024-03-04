@@ -1,0 +1,65 @@
+<div class="row px-4">
+  <div class="col pt-3 pb-2 border-1 border-round-sm border-darkvanilla">
+    <div>
+      <h6>Draft</h6>
+      <div class="pt-4" *ngIf="!(draftInvoice$ | async)">
+        <button
+          nz-button
+          nzType="primary"
+          nzShape="round"
+          [nzLoading]="isLoading$ | async"
+          (click)="submitInvoice(false)">
+          Create
+        </button>
+      </div>
+      <div *ngIf="draftInvoice$ | async as draftInvoice">
+        <div>Voucher ID: {{draftInvoice.accountingInvoiceId}}</div>
+        <div>Voucher Number: {{draftInvoice.accountingInvoiceNumber}}</div>
+        <div>Submit Date: {{draftInvoice.accountingInvoiceDate}}</div>
+        <div>System: {{draftInvoice.accountingSystem}}</div>
+        <div>
+          <a href='https://app.lexoffice.de/vouchers#!/VoucherView/Invoice/{{draftInvoice.accountingInvoiceId}}' target="_blank">
+            Accounting invoice
+          </a>
+        </div>
+        <div class="pt-4">
+          <button
+            nz-button
+            nzType="primary"
+            nzShape="round"
+            [nzLoading]="isLoading$ | async"
+            (click)="submitInvoice(false)">
+            Recreate
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class='w-4'></span>
+  <div class="col pt-3 pb-2 border-1 border-round-sm border-darkvanilla">
+    <div>
+      <h6>Finalized</h6>
+      <div class="pt-4" *ngIf="!(finalizedInvoice$ | async)">
+        <button
+          nz-button
+          nzType="primary"
+          nzShape="round"
+          [nzLoading]="isLoading$ | async"
+          (click)="submitInvoice(true)">
+          Create
+        </button>
+      </div>
+      <div *ngIf="finalizedInvoice$ | async as finalizedInvoice">
+        <div>Voucher ID: {{finalizedInvoice.accountingInvoiceId}}</div>
+        <div>Voucher Number: {{finalizedInvoice.accountingInvoiceNumber}}</div>
+        <div>Submit Date: {{finalizedInvoice.accountingInvoiceDate}}</div>
+        <div>System: {{finalizedInvoice.accountingSystem}}</div>
+        <div>
+          <a href='https://app.lexoffice.de/vouchers#!/VoucherView/Invoice/{{finalizedInvoice.accountingInvoiceId}}' target="_blank">
+            Accounting invoice
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

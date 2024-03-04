@@ -1,0 +1,24 @@
+<h5>{{title}}: {{control?.valueChanges|async}}</h5>
+<div
+  class="color-picker border-body-background-darken border-round-sm mx-0"
+  ngx-colors-trigger
+  [style.background]="control.valueChanges|async"
+  [formControl]="control"
+></div>
+
+<div class="colors mt-2">
+  <ng-container *ngFor="let index of maxColors">
+    <label
+      *ngIf="colors[index] as color; else empty"
+      class="border-round-sm border-body-background-darken hide-radio cursor-pointer"
+      [title]="color"
+      [ngStyle]="{ 'background': color}"
+      (click)="onClickColor(color)"
+    ></label>
+    <ng-template #empty>
+      <label
+        class="border-round-sm bg-body"
+      ></label>
+    </ng-template>
+  </ng-container>
+</div>

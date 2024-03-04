@@ -1,0 +1,40 @@
+<form nz-form [formGroup]='form' class="form mx-4">
+  <h3 class='mt-4'>Picker and Driver limitations</h3>
+  <nz-form-control>
+    <nz-form-label [nzRequired]="true">Picker Restriction</nz-form-label>
+    <app-list-select
+      formControlName="pickerRestriction"
+      [list]="storeStaffRestriction"
+      placeHolder="Picker Restriction"
+      [isRequired]="true"
+    ></app-list-select>
+  </nz-form-control>
+
+  <nz-form-control class='mt-4'>
+    <nz-form-label [nzRequired]="true">Driver Restriction</nz-form-label>
+    <app-list-select
+      formControlName="driverRestriction"
+      [list]="storeStaffRestriction"
+      placeHolder="Driver Restriction"
+      [isRequired]="true"
+    ></app-list-select>
+  </nz-form-control>
+</form>
+<div class='p-4'>
+  <button
+    [nzLoading]="isLoading$ | async"
+    (click)='onSubmit()'
+    [nzType]="'primary'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Update</button>
+  <button
+    [nzLoading]="isLoading$ | async"
+    (click)='onCancel()'
+    [nzType]="'link'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Cancel</button>
+</div>

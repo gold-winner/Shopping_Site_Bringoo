@@ -1,0 +1,16 @@
+<app-auth-header
+  title="Welcome to Bringoo"
+></app-auth-header>
+
+<nz-tabset nzCentered>
+  <nz-tab [nzTitle]="login">
+    <app-email-login></app-email-login>
+  </nz-tab>
+  <ng-template #login>
+    <div>Login</div>
+  </ng-template>
+<!--  todo add sign up-->
+  <nz-tab nzTitle="Sign up">
+    <app-email-signup></app-email-signup>
+  </nz-tab>
+</nz-tabset>

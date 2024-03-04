@@ -1,0 +1,22 @@
+<form nzLayout="vertical" nz-form [formGroup]='form'>
+  <form formGroupName='settings'>
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="firstName">Firstname</nz-form-label>
+      <nz-form-control labelForErrorTip="Firstname">
+        <input nz-input type='text' formControlName='firstName'>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="lastName">Lastname</nz-form-label>
+      <nz-form-control labelForErrorTip="Lastname">
+        <input nz-input type='text' formControlName='lastName'>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="Data of birth">Data of birth</nz-form-label>
+      <nz-form-control labelForErrorTip="Data of birth">
+        <nz-date-picker class='w-100p' formControlName='dateOfBirth' [nzAllowClear]="false"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</form>

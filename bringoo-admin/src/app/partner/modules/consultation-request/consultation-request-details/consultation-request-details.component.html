@@ -1,0 +1,108 @@
+<ng-container *ngIf="requestDetails$|async as requestDetails">
+  <div class="row">
+    <div class="col">
+      <h5>Customer</h5>
+      <a
+        routerLink="/users/customers/details/{{requestDetailsData.customerId}}"
+        target="_blank"
+      >{{requestDetails.customer?.settings?.firstName}} {{requestDetails.customer?.settings?.lastName}}</a>
+    </div>
+    <div class="col">
+      <h5>Customer Phone</h5>
+      <p>+{{requestDetailsData.customerPhoneCountryCode}} {{requestDetailsData.customerPhoneNumber}}</p>
+    </div>
+  </div>
+  <h5>Customer Email</h5>
+  <p>{{requestDetailsData.customerEmail}}</p>
+
+  <ng-container *ngIf="requestDetailsData.productConsultationType === 'FEEDBACK'">
+    <h5>Feedback Message</h5>
+    <p>{{requestDetailsData.customerFeedbackMessage}}</p>
+  </ng-container>
+
+  <hr class="mx--7">
+
+  <div class="row">
+    <div class="col">
+      <h5>Consultant</h5>
+      <a
+        routerLink="/store/stores/{{requestDetailsData.storeId}}/store-consultants"
+        [queryParams]="{ search: requestDetails.storeConsultant?.firstName + ' '+ requestDetails.storeConsultant?.lastName}"
+        target="_blank"
+      >{{requestDetails.storeConsultant?.firstName}} {{requestDetails.storeConsultant?.lastName}}</a>
+    </div>
+    <div class="col">
+      <h5>Consultant Phone</h5>
+      <p>+{{requestDetails.storeConsultant?.phoneCountryCode}} {{requestDetails.storeConsultant?.phoneNumber}}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h5>Consultant Email</h5>
+      <p>{{requestDetailsData.consultantEmail}}</p>
+    </div>
+    <div class="col">
+      <h5><span nz-icon nzType="mail" nzTheme="outline"></span> Email to Consultant</h5>
+      <p>
+        <ng-container *ngIf="requestDetailsData?.isSend; else notSend">Is Send</ng-container>
+        <ng-template #notSend>Not Send</ng-template>
+
+        <button
+          class="ml-2"
+          nz-button
+          nzType="link"
+          (click)="onResendMessageToConsultant()"
+          [nzLoading]="isLoading$|async"
+        ><span nz-icon nzType="reload" nzTheme="outline"></span> Resend
+        </button>
+      </p>
+    </div>
+  </div>
+
+  <hr class="mx--7">
+
+  <div class="row">
+    <div class="col">
+      <h5>Partner Store</h5>
+      <a
+        routerLink="/store/stores/{{requestDetailsData.storeId}}/basic-information"
+        target="_blank"
+      >{{requestDetails.store?.name_i18n}}</a>
+    </div>
+    <div class="col">
+      <h5>Product</h5>
+      <div>
+        <img
+          *ngIf="requestDetails?.product?.imageUrls?.length"
+          [src]="requestDetails?.product?.imageUrls![0]|imageMiniature"
+          (click)="onImagePreview(requestDetails?.product?.imageUrls![0])"
+          alt="product image"
+          class="product-image mr-2 cursor-pointer"
+        >
+        <a
+          routerLink="/products/all"
+          [queryParams]="{ edit_entity_id_products: requestDetailsData.productId }"
+          target="_blank"
+        >{{requestDetails.product?.name_i18n}}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h5>Request Consultation Type</h5>
+      <p>{{requestDetailsData.productConsultationType|titlecase}}</p>
+    </div>
+    <div class="col">
+      <h5>Date Submit</h5>
+      <p>{{requestDetailsData.create_date!|dateLocal :requestDetails.store?.timeZone! :dateTimeFormat}}</p>
+    </div>
+  </div>
+  <div *ngIf="requestDetailsData.productConsultationType === 'CALLBACK'">
+    <h5>Callback Date and Time</h5>
+    <p>{{requestDetailsData.callbackDateTime|dateLocal :requestDetails.store?.timeZone! :dateTimeFormat}}</p>
+  </div>
+
+</ng-container>
+

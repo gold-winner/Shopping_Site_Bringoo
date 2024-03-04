@@ -1,0 +1,146 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]="form" *ngIf="priceRequest$|async as priceRequest">
+  <div class='d-flex justify-content-between' *ngIf="priceRequest.status === 'PENDING'">
+    <div class="d-flex justify-content-start mb-2">
+      <button
+        nz-button
+        nzType="primary"
+        class="ml-auto mr-2"
+        [disabled]="isLoading$ | async"
+        (click)="updateRequest()">
+        Update
+      </button>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button
+        nz-button
+        nzType="primary"
+        class="ml-auto mr-2"
+        [disabled]="isLoading$ | async"
+        (click)="approveRequest()">
+        Approve
+      </button>
+      <button
+        nz-button
+        nzDanger
+        nzType="primary"
+        class="ml-auto mr-2"
+        [disabled]="isLoading$ | async"
+        (click)="rejectRequest()">
+        Reject
+      </button>
+    </div>
+  </div>
+
+  <nz-form-item>
+    <nz-form-label>Store Name</nz-form-label>
+    <nz-form-control labelForErrorTip="Store Name">
+      <h5>{{priceRequest?.productLink?.store?.name_i18n}}</h5>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Product Name</nz-form-label>
+    <nz-form-control labelForErrorTip="Product Name">
+      <h5>{{priceRequest?.productLink?.product?.name_i18n}}</h5>
+    </nz-form-control>
+  </nz-form-item>
+
+  <ng-container
+    *ngIf="oldPrice$|async as oldPrice"
+  >
+    <nz-form-item>
+      <nz-form-label>Old Price (Regular)</nz-form-label>
+      <nz-form-control labelForErrorTip="Old Price (Regular)">
+        <h5>{{oldPrice.regularPrice|formatPrice}}</h5>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>Old Price (Sale)</nz-form-label>
+      <nz-form-control labelForErrorTip="Old Price (Sale)">
+        <h5>{{oldPrice.salePrice|formatPrice}}</h5>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+
+  <div class="row">
+    <nz-form-item class="col pr-0">
+      <nz-form-label nzRequired>New Price</nz-form-label>
+      <nz-form-control labelForErrorTip="New Price">
+        <nz-input-number
+          nzPlaceHolder="Default Price"
+          formControlName="newPrice"
+          [nzMin]="0"
+          class="w-100p"
+          [disabled]="true"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col mr-0 mb-0 pr-0">
+      <nz-form-control labelForErrorTip="Start date">
+        <nz-form-label>Start date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateStart"
+          placeHolder="Date start"
+          [disabled]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col mb-0 pr-0">
+      <nz-form-control labelForErrorTip="End date">
+        <nz-form-label>End date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateEnd"
+          placeHolder="Date end"
+          [disableBefore]="form.controls.dateStart.value"
+          [disabled]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col mb-0">
+      <nz-form-label nzNoColon nzRequired nzFor="type">Type of Price</nz-form-label>
+      <nz-form-control labelForErrorTip="Type of Price">
+        <app-list-select
+          placeHolder="Type of Price"
+          formControlName="type"
+          [isRequired]="true"
+          [list]="typeOfPrice"
+        ></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item class="mt-4">
+    <nz-form-label>Date of request</nz-form-label>
+    <nz-form-control labelForErrorTip="Date of request">
+      <h5>{{priceRequest.create_date|date: dateFormat}}</h5>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>User requested</nz-form-label>
+    <nz-form-control labelForErrorTip="User requested">
+      <a routerLink="/users/staff/details/{{priceRequest.staffId}}">
+        {{priceRequest?.staff?.settings?.firstName}} {{priceRequest?.staff?.settings?.lastName}}
+      </a>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Photo proof</nz-form-label>
+    <nz-form-control class="w-100p">
+      <img
+        class="img-no-events w-100p"
+        nz-image
+        [src]="priceRequest?.imageUrl"
+        [nzSrc]="priceRequest?.imageUrl ?? ''"
+        alt="Photo proof"
+      >
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<!--todo add approve and decline actions-->

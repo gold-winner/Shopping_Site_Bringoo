@@ -1,0 +1,109 @@
+<div class="mx-8 mt-8 mb-8">
+  <div class="d-flex justify-content-between">
+    <a class="d-flex align-items-center" routerLink='../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>Order Per Store</h3></a>
+    <div>
+      <button nz-button nzType="text">Print <i nz-icon nzType="printer"></i></button>
+      <button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="export_type">
+        Export ({{setOfCheckedItems.size === 0 ? 'all' : setOfCheckedItems.size}})
+        <i nz-icon nzType="export"></i>
+      </button>
+      <nz-dropdown-menu #export_type="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item *ngFor="let format of fileFormats" (click)="exportFile(format)">
+            <a>{{format}}</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <form
+      class="bg-component p-4"
+      nz-form
+      [formGroup]="form"
+      [nzLayout]="'inline'"
+    >
+      <app-filter-store-select
+        class="w-40 pr-4"
+        formControlName="storeId"
+      ></app-filter-store-select>
+
+      <nz-form-item class="w-40 mr-0">
+        <nz-form-control labelForErrorTip="Start date">
+          <nz-form-label>Start date</nz-form-label>
+          <app-date-control
+            formControlName="dateStart"
+            [isRequired]="false"
+            placeHolder="Date start"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="w-40">
+        <nz-form-control labelForErrorTip="End date">
+          <nz-form-label>End date</nz-form-label>
+          <app-date-control
+            formControlName="dateEnd"
+            placeHolder="Date end"
+            [isRequired]="false"
+            [disableBefore]="form.controls.dateStart.value"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+
+    <nz-table
+      *ngIf="tableData$ | async as tableData"
+      class="text-bold"
+      nzShowSizeChanger
+      nzShowPagination
+      [nzData]="tableData.items"
+      [nzFrontPagination]="false"
+      [nzLoading]="isLoading$|async"
+      [nzTotal]="tableData.total"
+      [nzPageIndex]="tableData.page"
+      [nzPageSize]="filters.getValue().limit || 10"
+      [nzShowTotal]="rangeTemplate"
+      [nzPageSizeOptions]="nzPageSizeOptions"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzSize]="'small'"
+    >
+      <thead>
+      <tr>
+        <th nzShowCheckbox [nzWidth]="'50px'" (nzCheckedChange)="onCheckAllChange(tableData.items, $event)"></th>
+        <th>Store Name</th>
+        <th>Delivery Date</th>
+        <th class='text-align-right'>Order Count</th>
+        <th class='text-align-right'>Total Amount</th>
+        <th class='text-align-right'>Quantity Requested</th>
+        <th class='text-align-right'>Quantity Found</th>
+        <th class='text-align-right'>Quantity Refund</th>
+        <th class='text-align-right'>Grand Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of tableData.items; let index = index">
+        <th
+          nzShowCheckbox
+          [nzChecked]="setOfCheckedItems.has(item.rowIdentifier)"
+          (nzCheckedChange)="onCheckChange(item.rowIdentifier, $event)"
+        ></th>
+        <td><a routerLink="/store/stores/{{item.storeId}}/basic-information">{{item.storeName}}</a></td>
+        <td>{{item.deliveryDate}}</td>
+        <td class='text-align-right'>{{item.orderCount}}</td>
+        <td class='text-align-right'>{{item.totalAmount|formatPrice}}</td>
+        <td class='text-align-right'>{{item.orderQuantityRequested}}</td>
+        <td class='text-align-right'>{{item.orderQuantityFound}}</td>
+        <td class='text-align-right'>{{item.quantityRefund}}</td>
+        <td class='text-align-right'>{{item.grandTotal|formatPrice}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      <ng-container *ngIf='setOfCheckedItems.size'><i nz-icon nzType="check" nzTheme="outline"></i> {{setOfCheckedItems.size}}</ng-container>
+      {{ range[0] }}-{{ range[1] }} of {{ total }} items
+    </ng-template>
+  </div>
+</div>

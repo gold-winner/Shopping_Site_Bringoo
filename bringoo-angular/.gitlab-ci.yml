@@ -1,0 +1,101 @@
+stages:
+- test
+- build
+- migrate
+- deploy
+
+
+variables:
+  COMPOSE_DOCKER_CLI_BUILD: 1
+  DOCKER_BUILDKIT: 1
+
+
+build:
+  stage: build
+  image: docker
+  tags:
+  - build
+  before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+  - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f docker/Dockerfile .
+  - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+
+test:
+  stage: test
+  tags:
+  - dev
+  - de
+  image: node:lts-alpine
+  script:
+  - yarn
+  - yarn lint
+  allow_failure: false
+
+
+.deploy:
+  stage: deploy
+  image: docker
+  before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+  - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  - docker stop $CI_PROJECT_NAME || true
+  - docker rm $CI_PROJECT_NAME || true
+  - docker network create bringoo || true
+  - docker run -d
+    --env-file docker/${CI_ENVIRONMENT_NAME}.env
+    -v /etc/localtime:/etc/localtime
+    --restart unless-stopped
+    --name $CI_PROJECT_NAME
+    --hostname $CI_PROJECT_NAME
+    --network bringoo
+    --log-driver json-file
+    --log-opt max-size=10m
+    --log-opt max-file=3
+    --log-opt tag="{{.Name}}"
+    $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+deploy-dev:
+  extends: .deploy
+  tags:
+  - dev
+  - de
+  environment:
+    name: dev
+  rules:
+  - if: $CI_COMMIT_REF_NAME == "development"
+    when: on_success
+  - if: $CI_COMMIT_REF_NAME == "qa"
+    when: manual
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    when: never
+
+deploy-qa:
+  extends: .deploy
+  tags:
+  - qa
+  - de
+  environment:
+    name: qa
+  rules:
+  - if: $CI_COMMIT_REF_NAME == "qa"
+    when: manual
+  - if: $CI_COMMIT_REF_NAME == "development"
+    when: manual
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    when: never
+
+deploy-prod:
+  extends: .deploy
+  tags:
+  - prod
+  - de
+  environment:
+    name: prod
+  rules:
+  - if: $CI_COMMIT_REF_NAME == "production"
+    when: manual
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    when: never

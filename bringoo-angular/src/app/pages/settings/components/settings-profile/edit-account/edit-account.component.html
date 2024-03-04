@@ -1,0 +1,63 @@
+<div class="w-56p d-flex flex-column">
+  <ui-input
+    label="Name"
+    [leftIcon]="false"
+    icon="edit"
+    (valueChange)="first_name=$event"
+    [value]="first_name"
+    >
+  </ui-input>
+  <ui-input
+    label="Last Name"
+    [leftIcon]="false"
+    icon="edit"
+    class="my-8"
+    (valueChange)="last_name=$event"
+    [value]="last_name"
+  >
+  </ui-input>
+  <ui-input
+    label="Email"
+    [leftIcon]="false"
+    icon="edit"
+    (valueChange)="email=$event"
+    [value]="email"
+  >
+  </ui-input>
+  <ui-input
+    label="Telephone"
+    [leftIcon]="false"
+    icon="edit"
+    class="my-8"
+    (valueChange)="telephone=$event"
+    [value]="telephone"
+  >
+  </ui-input>
+  <ui-input
+    label="Date of Birth"
+    [leftIcon]="false"
+    icon="edit"
+    (valueChange)="birth=$event"
+    [value]="birth"
+  >
+  </ui-input>
+  <div class="text-medium text-bold mt-7">Language</div>
+  <div class="d-flex mt-4 mb-7">
+    <ui-option *ngFor="let option of options; index as i" 
+      [option]="option"
+      [selected]="selectedOption===option.id"
+      [ngClass]="{'mx-2': i===1}"
+      (optionSelect)="onChangeOption(option.id)">
+    </ui-option>
+  </div>
+  <div class="text-bold text-medium">Customer Number</div>
+  <div class="text-bold text-green">{{customer_no}}</div>
+</div>
+<div class="border"></div>
+<div class="w-50 position-relative">
+  <ui-button *ngIf="!loading" width="full" size="lg" (onClick)="onConfirm()">Confirm</ui-button>
+  <ui-button *ngIf="loading"width="full" size="lg" (onClick)="onConfirm()">
+    <span style="color: transparent;">Confirm</span>
+    <span id="loading"></span>
+  </ui-button>
+</div>

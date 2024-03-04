@@ -1,0 +1,137 @@
+$color_green: #2CC84D;
+$color_darkgreen: #275029;
+$color_yellow: #e6e34e;
+$color_beige: #E2D3C5;
+$color_blue: #244875;
+$color_lightblue: #677798;
+$color_darkblue: #2A407C;
+$color_darkgrey: #2B2D3A;
+$color_white: #ffffff;
+$color_red: #FF103B;
+$color_darkred: #be1534;
+$color_whitered: #e2b7bf;
+$color_vanilla: #F9F6F3;
+$color_darkvanilla: #e2d3c5;
+$color_lightgrey: #f7f8f9;
+$color_grey: #C4C4C4;
+$color_dark: black;
+$color_trans: rgba(255, 255, 255, 0);
+
+.bg-green {
+  background-color: $color_green;
+}
+
+.bg-green-10 {
+  background-color: rgba($color_green, 0.1);
+}
+
+.bg-darkgreen {
+  background-color: $color_darkgreen;
+}
+
+.bg-vanilla {
+  background-color: $color_vanilla;
+}
+
+.bg-darkvanilla {
+  background-color: $color_darkvanilla;
+}
+
+.bg-beige {
+  background-color: $color_beige;
+}
+
+.bg-beige-40 {
+  background-color: rgba($color_beige, 0.4);
+}
+
+.bg-beige-20 {
+  background-color: rgba($color_beige, 0.2);
+}
+
+.bg-white {
+  background-color: $color_white;
+}
+
+.bg-blue {
+  background-color: $color_blue;
+}
+
+.bg-lightblue {
+  background-color: $color_lightblue;
+}
+
+.bg-darkblue {
+  background-color: $color_darkblue;
+}
+
+.bg-red {
+  background-color: $color-red;
+}
+
+.bg-whitered {
+  background-color: $color-whitered;
+}
+
+.bg-grey {
+  background-color: $color_grey;
+}
+
+.bg-darkgrey {
+  background-color: $color_darkgrey
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.text-green {
+  color: $color_green;
+}
+
+.text-darkgreen {
+  color: $color_darkgreen;
+}
+
+.text-white {
+  color: $color_white;
+}
+
+.text-trans {
+  color: $color_trans;
+}
+
+.text-darkgrey {
+  color: $color_darkgrey;
+}
+
+.text-red {
+  color: $color_red;
+}
+
+.text-blue {
+  color: $color_blue;
+}
+
+.text-yellow {
+  color: $color_yellow;
+}
+
+.text-lightblue {
+  color: $color_lightblue;
+}
+
+.text-beige {
+  color: $color_beige;
+}
+
+.text-line {
+  background: $color_red;
+  height: 2px;
+  width: 110%;
+  position: absolute;
+  left: -5%;
+  top: 10px;
+  transform: rotate(10deg);
+  transform-origin: 0 0;
+}

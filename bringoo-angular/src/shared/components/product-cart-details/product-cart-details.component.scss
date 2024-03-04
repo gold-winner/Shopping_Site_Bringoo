@@ -1,0 +1,39 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/grid';
+@import 'src/scss/borders';
+
+.ui-product-cart-details {
+  @extend .d-flex;
+  @extend .align-items-center;
+  position: relative;
+}
+
+.badge-replace {
+  @extend .position-absolute;
+  @extend .text-small;
+  @extend .text-white;
+  @extend .border-radius-tb;
+  @extend .p-1;
+  @extend .ml-1;
+  bottom: -35px;
+  right: 140px;
+}
+
+.badge-available {
+  @extend .position-absolute;
+  @extend .text-small;
+  @extend .text-white;
+  @extend .border-radius-tb;
+  @extend .p-1;
+  @extend .ml-1;
+  bottom: -35px;
+  right: 0px;
+}
+
+.exchange {
+  @extend .position-absolute;
+  bottom: -40px;
+  right: 0px;
+}

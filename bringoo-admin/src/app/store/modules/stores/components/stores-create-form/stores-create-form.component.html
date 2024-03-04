@@ -1,0 +1,153 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input required label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input label="Description" type="textarea"
+                             formControlName="description_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input required label="Name public short"
+                             formControlName="name_public_short_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input required label="Name public long"
+                             formControlName="name_public_long_i18n"></app-multi-lang-v2-input>
+  </app-lang-controller>
+  <nz-form-item>
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="isActive">Status</nz-form-label>
+    <nz-form-control >
+      <app-status-switch formControlName="isActive" falseValue="Close" trueValue="Open"></app-status-switch>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Time Zone</nz-form-label>
+    <nz-form-control >
+      <app-list-select
+        formControlName="timeZone"
+        [isRequired]="true"
+        placeHolder="Time Zone"
+        [list]="timeZones"
+      ></app-list-select>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="replacementAllowed">Replacement Allowed</nz-form-label>
+    <nz-form-control >
+      <app-status-switch formControlName="replacementAllowed" falseValue="No" trueValue="Yes"></app-status-switch>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label
+      nz-tooltip="This code is meant to be used to share data between bringoo and partner."
+      nzTooltipPlacement="topLeft"
+      nzRequired
+    >External Code</nz-form-label>
+    <nz-form-control >
+      <input nz-input formControlName="externalCode" placeholder="External Code"/>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Vendor Type</nz-form-label>
+    <nz-form-control >
+      <app-select formControlName="vendorTypeCode" [options]="vendorType" placeHolder="Vendor Type"
+                  [required]='true'></app-select>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Vendor Category</nz-form-label>
+    <nz-form-control >
+      <app-select formControlName="vendorCategoryCode" [options]="vendorCategory" placeHolder="Vendor Category"
+                  [required]='true'></app-select>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Currency Code</nz-form-label>
+    <nz-form-control >
+      <app-select formControlName="currencyCode" [options]="currencySelect" placeHolder="Currency"
+                  [required]='true'></app-select>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Store Corporate</nz-form-label>
+    <nz-form-control >
+      <app-select formControlName='corporateCode' [options]='corporateSelect' placeHolder="Corporate"></app-select>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Store Brand</nz-form-label>
+    <nz-form-control >
+      <app-select formControlName='storeBrandCode' [options]='storeBrandSelect' placeHolder="Store Brand"></app-select>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Store Region</nz-form-label>
+    <nz-form-control >
+      <app-select formControlName='storeRegionCode' [options]='storeRegionSelect'
+                  placeHolder="Store Region"></app-select>
+    </nz-form-control>
+
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Store logo</nz-form-label>
+    <nz-form-control >
+      <app-file-upload [multiple]='false' formControlName="logoUrl" path="store" [isRequired]='true'></app-file-upload>
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Store Slug</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="slug" placeholder="Store Slug">
+    </nz-form-control>
+  </nz-form-item>
+
+  <label class='ml-sm-0' nz-checkbox formControlName='isPickup'>Is pickup</label><br/>
+  <label class='ml-sm-0' nz-checkbox formControlName='isDelivery'>Is Delivery</label><br/>
+  <label class='ml-sm-0' nz-checkbox formControlName='isOnlineShipment'>Is Online Shipment</label>
+
+  <nz-form-item>
+    <app-vat-select
+      formControlName="deliveryFeeVatCode"
+      [required]="true"
+      placeHolder="Delivery fee vat"
+      label="Delivery fee vat"
+    ></app-vat-select>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Picker Restriction">
+      <nz-form-label nzRequired>Picker Restriction</nz-form-label>
+      <app-list-select
+        formControlName="pickerRestriction"
+        [list]="storeStaffRestriction"
+        placeHolder="Picker Restriction"
+        [isRequired]="false"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Driver Restriction">
+      <nz-form-label nzRequired>Driver Restriction</nz-form-label>
+      <app-list-select
+        formControlName="driverRestriction"
+        [list]="storeStaffRestriction"
+        placeHolder="Driver Restriction"
+        [isRequired]="false"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

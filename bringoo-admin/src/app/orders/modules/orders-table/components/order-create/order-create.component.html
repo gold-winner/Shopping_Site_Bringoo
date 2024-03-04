@@ -1,0 +1,205 @@
+<div class="p-8">
+  <div class='d-flex justify-content-between'>
+    <div class="mb-4 cursor-pointer" routerLink='..'>
+      <i nz-icon nzType="left" nzTheme="outline" class="mr-2"></i>
+      <span class="text-bold">Create order</span>
+    </div>
+    <button nz-button nzType='primary' (click)='onCreateOrder()'>Create order</button>
+  </div>
+  <form nz-form nzLayout='vertical' [formGroup]='form'>
+  <div class='container bg-component p-4 f-4'>
+    <div class='row bg-component p-4'>
+      <h4 class='f-6 pb-4'>Summary</h4>
+      <div class='w-100p' style='border: 1px solid #D9D9D9'>
+        <div class='d-flex justify-content-between'><span>Order number</span><span>{{7}}</span></div>
+        <div class='d-flex justify-content-between'><span>Created</span><span>{{'Created'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Order Status</span><span>{{'Status'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Total amount</span><span>{{'Total amount'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Amount captured</span><span>{{'Amount captured'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Amount refunded</span><span>{{'refunded'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Customer</span><span>{{customer?.settings?.firstName}} {{customer?.settings?.lastName}}</span></div>
+        <div class='d-flex justify-content-between'><span>Customer phone</span><span *ngIf='customer?.settings?.phoneNumber'>+{{customer?.settings?.phoneCountryCode}} {{customer?.settings?.phoneNumber}}</span></div>
+        <div class='d-flex justify-content-between'><span>Metadata</span><span>{{'Metadata'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Checkout Payment URL</span><span>{{'wwwwwwwwwwwww'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Store receipt amount</span><span>{{'Store receipt amount'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Store receipt number</span><span>{{'Store receipt number'}}</span></div>
+        <div class='d-flex justify-content-between'><span>Invoice</span><span>{{'Invoice'}}</span></div>
+        <div class='d-flex justify-content-between' (click)="openPanel = 'receipt'">
+          <span>Store receipt images</span>
+          <span><img class='mr-sm-4' *ngFor='let src of [images[0], images[1], images[2]]' src='{{src}}' alt='img' width='68' height='68'></span>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='container bg-component p-4 mt-sm-4'>
+      <h4 class='f-6 pb-4'>Customer</h4>
+      <div class='d-flex justify-content-center'>
+        <app-customer-card class='col' [isEdited]='true' [customer]='customer' (edit)="openPanel = 'customer'" placeHolder='Store customer'></app-customer-card>
+        <span class='w-4'></span>
+        <app-address-card
+          class='col'
+          [isEdited]='!!customer.id'
+          [address]='deliveryAddress'
+          (edit)="openPanel = 'deliveryAddress'"
+          placeHolder='Select delivery address'
+          label='Delivery Address:'
+        ></app-address-card>
+        <span class='w-4'></span>
+        <app-address-card
+          class='col'
+          [isEdited]='!!customer.id'
+          [address]='billingAddress'
+          (edit)="openPanel = 'billingAddress'"
+          placeHolder='Select billing address'
+          label='Billing Address:'
+        ></app-address-card>
+      </div>
+    </div>
+
+    <div class='container bg-component p-4 mt-sm-4'>
+      <h4 class='f-6 pb-4'>Store</h4>
+      <div class='d-flex justify-content-center'>
+        <app-store-card class='col' [store]='store' [isEdited]='true' (edit)="openPanel = 'store'" placeHolder='Store select'></app-store-card>
+        <span class='w-4'></span>
+        <app-address-card
+          class='col-7'
+          [address]='storeAddress'
+          [isEdited]='!!store.id'
+          placeHolder='Select store address'
+          (edit)="openPanel = 'storeAddress'"
+          label='Store address:'
+        ></app-address-card>
+      </div>
+    </div>
+
+    <div class='container bg-component pb-0 pr-4 pt-4 pl-4 mt-sm-4'>
+      <h4 class='f-6 pb-4'>Basket</h4>
+      <app-select-products (receipt)='receipt = $event'></app-select-products>
+      <div class='d-flex justify-content-center pt-4'>
+        <nz-form-item class='col p-0'>
+          <nz-form-control labelForErrorTip="Enter your name!">
+            <textarea nz-input placeholder="Add a note" rows='10' formControlName='note'></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <span class='w-4'></span>
+        <div class='col-6 p-0'>
+          <div class='bg-body p-4' style='width: 100%; height: 100%'>
+            <div class='d-flex ml-4 justify-content-between'><i class='color-text-2'>Subtotal</i>{{receipt.subtotal.toFixed(2)}} EUR</div>
+            <hr>
+            <div class='d-flex ml-4 justify-content-between'><i class='color-text-2'>Taxes</i>{{receipt.taxes.toFixed(2)}} EUR</div>
+            <hr>
+            <div class='d-flex ml-4 justify-content-between align-items-center text-bold'>Total <div class='f-4'>{{(receipt.taxes + receipt.subtotal).toFixed(2)}} EUR</div></div>
+          </div>
+        </div>
+      </div>
+      <div class='row mt-sm-4'>
+        <nz-list nzBordered class='w-100p'>
+          <nz-list-item>
+            <span nz-typography>Email Invoice</span>
+            Email Invoice <i nz-icon nzType="mail" nzTheme="outline"></i>
+          </nz-list-item>
+          <nz-list-item>
+            <span nz-typography>Prepayment</span>
+            Add prepayment <i nz-icon nzType="plus" nzTheme="outline"></i>
+          </nz-list-item>
+          <nz-list-item>
+            <span nz-typography>Accept payment</span>
+            <div>
+              <span>Mark as paid <i nz-icon nzType="check-circle" nzTheme="outline"></i></span>
+              <span>Mark as pending <i nz-icon nzType="clock-circle" nzTheme="outline"></i></span>
+              <span>Pay with credit card <i nz-icon nzType="credit-card" nzTheme="outline"></i></span>
+            </div>
+          </nz-list-item>
+        </nz-list>
+      </div>
+    </div>
+
+    <div class='container bg-component p-4 mt-sm-4'>
+      <h4 class='f-6 pb-4'>Related payments</h4>
+      Transactions table
+    </div>
+
+    <div class='container mt-sm-4 p-0'>
+      <div class='d-flex justify-content-center'>
+        <app-staff-card class='col bg-component' [isEdited]='true' [staff]='picker' (edit)="openPanel = 'picker'" label='Picker:'></app-staff-card>
+        <span class='w-4'></span>
+        <app-staff-card class='col bg-component' [isEdited]='true' [staff]='driver' (edit)="openPanel = 'driver'" label='Driver:'></app-staff-card>
+      </div>
+    </div>
+
+    <div class='container mt-sm-4 p-0'>
+      <div class='row'>
+        <div class='col'>
+          <div class='bg-component p-4 border-round-sm'>
+            <h4 class='f-6 pb-4'>Tags</h4>
+            <input type="text" nz-input placeholder="Search name" />
+          </div>
+        </div>
+        <div class='col'>
+          <div class='bg-component p-4 border-round-sm'>
+            <h4 class='f-6 pb-4'>Select priority</h4>
+            <nz-radio-group>
+              <label nz-radio class='d-block' nzValue="LOW">Low</label><br/>
+              <label nz-radio class='d-block' nzValue="MEDIUM">Medium</label><br/>
+              <label nz-radio class='d-block' nzValue="HIGH">High</label><br/>
+              <label nz-radio class='d-block' nzValue="PREMIUM">Premium</label>
+            </nz-radio-group>
+          </div>
+        </div>
+        <div class='col'>
+          <div class='bg-component p-4 border-round-sm'>
+            <h4 class='f-6 pb-4'>Select Order Type</h4>
+            <nz-radio-group>
+              <label nz-radio class='d-block' nzValue="DELIVERY">Pick & Ride</label><br/>
+              <label nz-radio class='d-block' nzValue="PICKUP">Pick</label><br/>
+              <label nz-radio class='d-block' nzValue="SHIPPING">Shipment</label>
+            </nz-radio-group>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='container mt-sm-4 p-4 bg-component'>
+      <h4 class='f-6 pb-4'>Order Jobs</h4>
+      <nz-steps [nzCurrent]="1" nzDirection="vertical" nzSize="small" nzProgressDot>
+        <ng-container *ngFor='let item of orderJobs'>
+          <nz-step *ngIf='item.percent === 0' class='text-beige' nzTitle='{{item.label}}' nzDescription='{{item.value}}'></nz-step>
+          <nz-step *ngIf='item.percent !== 0 && item.percent !== 100' class='color-text-2' nzTitle='{{item.label}}' nzDescription='{{item.value}}'></nz-step>
+          <nz-step *ngIf='item.percent === 100' class='color-primary' nzTitle='{{item.label}}' nzDescription='{{item.value}}'></nz-step>
+        </ng-container>
+      </nz-steps>
+    </div>
+
+    <div class='container mt-sm-4 p-4 bg-component'>
+      <h4 class='f-6 pb-4'>Call history</h4>
+      <nz-steps [nzCurrent]="1" nzDirection="vertical" nzSize="small" nzProgressDot>
+        <nz-step nzTitle='Today' nzDescription='Rider has attempted to call customer with number +49 172 343 5324'></nz-step>
+      </nz-steps>
+    </div>
+
+    <div class='container mt-sm-4 p-4 bg-component'>
+      <h4 class='f-6 pb-4'>Timeline</h4>
+      <nz-steps [nzCurrent]="3" nzDirection="vertical" nzSize="small" nzProgressDot>
+        <nz-step nzTitle='Today' nzDescription='You added the email mail@gmai.com to this customer'></nz-step>
+        <nz-step nzDescription='You added the phone +49 923 23 32 to this customer'></nz-step>
+        <nz-step nzDescription='You created this customer'></nz-step>
+      </nz-steps>
+    </div>
+
+  </form>
+</div>
+
+<app-select-receipt [openPanel]="openPanel === 'receipt'" (submit)='onReceiptSubmit($event)' [images]='images'></app-select-receipt>
+
+<!--customer-->
+<app-select-customer [openPanel]="openPanel === 'customer'" (submit)='onCustomerSelect($event)'></app-select-customer>
+<app-select-customer-address [openPanel]="openPanel === 'deliveryAddress'" [customerId]='customer.id' (submit)='onCustomerAddressSelect($event)'></app-select-customer-address>
+<app-select-customer-address [openPanel]="openPanel === 'billingAddress'" [customerId]='customer.id' (submit)='onCustomerBillingSelect($event)'></app-select-customer-address>
+<!--store-->
+<app-select-store [openPanel]="openPanel === 'store'" (submit)='onStoreSelected($event)'></app-select-store>
+<app-select-store-address [openPanel]="openPanel === 'storeAddress'" [storeId]="store.id" (submit)='onStoreAddressSelected($event)'></app-select-store-address>
+<!--picker-->
+<app-select-picker [openPanel]="openPanel === 'picker'" (submit)='onPickerSelected($event)'></app-select-picker>
+<!--driver-->
+<app-select-driver [openPanel]="openPanel === 'driver'" (submit)='onDriverSelected($event)'></app-select-driver>

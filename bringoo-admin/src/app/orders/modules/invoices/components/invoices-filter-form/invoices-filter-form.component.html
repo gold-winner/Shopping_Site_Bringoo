@@ -1,0 +1,44 @@
+<form nz-form [formGroup]='form' class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col w-32 filter-form-item search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group nzPrefixIcon="search">
+          <input
+            nz-input
+            formControlName="search"
+            placeholder="Search"
+            nzTooltipPlacement="topLeft"
+            nz-tooltip="Search by Invoice ID, Order ID, Customer Name and Store Name"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="d-flex dates">
+      <nz-form-item class="w-32">
+        <nz-form-control labelForErrorTip="Start date">
+          <nz-form-label>Start date</nz-form-label>
+          <app-date-control
+            [dateFormat]="dateFormat"
+            formControlName="dateStart"
+            placeHolder="Date start"
+            [isRequired]="true"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="w-32">
+        <nz-form-control labelForErrorTip="End date">
+          <nz-form-label>End date</nz-form-label>
+          <app-date-control
+            [dateFormat]="dateFormat"
+            formControlName="dateEnd"
+            placeHolder="Date end"
+            [disableBefore]="form.controls.dateStart.value"
+            [isRequired]="true"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

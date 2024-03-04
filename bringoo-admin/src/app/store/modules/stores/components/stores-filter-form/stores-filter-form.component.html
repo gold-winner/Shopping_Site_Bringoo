@@ -1,0 +1,49 @@
+<form class="filter-form container-fluid" nz-form [formGroup]='form'>
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input nz-input formControlName="search" placeholder="Search"
+                 nz-tooltip="Search by Store Name"
+                 nzTooltipPlacement="topLeft"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-store-region-select
+      class="col"
+      label="Store region filter"
+      placeHolder="Store region"
+      formControlName="storeRegionCode"
+      type="multiple"
+    ></app-filter-store-region-select>
+
+    <app-filter-vendor-type-select
+      class="col"
+      formControlName="vendorTypeCode"
+      type="multiple"
+    ></app-filter-vendor-type-select>
+
+    <app-filter-store-brand-select
+      class="col"
+      formControlName="storeBrandCode"
+      type="multiple"
+    ></app-filter-store-brand-select>
+
+    <app-filter-corporate-select
+      class="col"
+      formControlName="corporateCode"
+      type="multiple"
+    ></app-filter-corporate-select>
+
+    <div class="col">
+      <nz-form-item>
+        <nz-form-control>
+          <label class='ml-0 mt-9' nz-checkbox formControlName='softDelete'>Include deleted</label>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

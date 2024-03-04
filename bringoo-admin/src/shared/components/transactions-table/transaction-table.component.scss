@@ -1,0 +1,15 @@
+.receipt{
+  position: relative;
+  width: 240px;
+  hr{
+    border: 1px solid #e2d3c5;
+    color: #e2d3c5;
+  }
+}
+
+.order-cancel{
+  position: absolute;
+  transform: translate(50%, -50%) rotateZ(45deg);
+  right: 50%;
+  top: 50%;
+}

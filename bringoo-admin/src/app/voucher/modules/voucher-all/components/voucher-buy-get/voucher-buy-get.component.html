@@ -1,0 +1,69 @@
+<form nz-form nzLayout="vertical" [formGroup]="form">
+  <div class="bg-component border-round-sm mt-4">
+    <div class="px-4 pt-4">
+      <app-radio-group
+        label="Customer buys"
+        size="lg"
+        [list]="minimumType"
+        (value)="form.patchValue({ isQuantity: $event })"
+      ></app-radio-group>
+      <div class="d-flex justify-content-between mt-2">
+        <nz-form-item style="width: 49%;">
+          <nz-form-control labelForErrorTip="Quantity">
+            <nz-form-label nzNoColon nzFor="note">Quantity</nz-form-label>
+            <input nz-input formControlName="buyQuantity" type="number" placeholder="Quantity">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item style="width: 49%;">
+          <nz-form-control labelForErrorTip="Any items form">
+            <nz-form-label nzNoColon nzFor="note">Any items form</nz-form-label>
+            <input nz-input formControlName="buyItemsForm" placeholder="?????">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <nz-form-item>
+        <nz-form-control labelForErrorTip="Please select any products">
+          <app-select type="tags" [options]="productList" placeHolder="Products select" formControlName="buyProductCodes"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <hr>
+    <div class="px-4 pb-4">
+      <h4>Customer gets</h4>
+      <p class="color-text-2">Customers must add the quantity of items specified below to their cart.</p>
+      <div class="d-flex justify-content-between mt-2">
+        <nz-form-item style="width: 49%;">
+          <nz-form-control labelForErrorTip="Quantity">
+            <nz-form-label nzNoColon nzFor="note">Quantity</nz-form-label>
+            <input nz-input formControlName="getQuality" type="number" placeholder="Quantity">
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item style="width: 49%;">
+          <nz-form-control labelForErrorTip="Any items form">
+            <nz-form-label nzNoColon nzFor="note">Any items form</nz-form-label>
+            <input nz-input formControlName="getItemsForm" placeholder="?????">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <nz-form-item>
+        <nz-form-control labelForErrorTip="Please select any products">
+          <app-select type="tags" [options]="productList" placeHolder="Products select" formControlName="getProductCodes"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+      <h5>AT A DISCOUNTED VALUE</h5>
+      <nz-radio-group formControlName="isPercentage">
+        <label nz-radio class="d-block" [nzValue]="true">Minimum purchase amount</label><br/>
+        <label nz-radio class="d-block" [nzValue]="false">Minimum quantity of items</label>
+      </nz-radio-group>
+      <nz-form-item class="mt-2">
+        <nz-form-control labelForErrorTip="Please choose code">
+          <nz-input-group [nzSuffixIcon]="form.get('isPercentage')?.value ? 'percentage' : null">
+            <input nz-input formControlName="value" type="number" placeholder="Value">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <label nz-checkbox [formControl]="maximumCountInOrderControl">Set a maximum number of uses per order</label><br/>
+      <input *ngIf="maximumCountInOrderControl.value" nz-input type="number" formControlName="maxInOrder" placeholder="Maximum voucher in order">
+    </div>
+  </div>
+</form>

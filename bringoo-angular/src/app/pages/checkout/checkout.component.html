@@ -1,0 +1,258 @@
+<ui-layout (onGoogleMap)="onGoogleMap($event)" [topAddInfo]="topAddInfo">
+  <div class="bg-beige-20 h-100p">
+    <div class="container">
+      <div class="text-medium my-7">
+        <a routerLink="/{{storeUrl}}">Categories</a> / <a routerLink='/shopping-cart'>Shopping Cart</a> / Checkout
+      </div>
+      <div class="text-bold">Checkout</div>
+      <div class="text-medium my-7">Delivery Store</div>
+      <div class="row px-3 my-7">
+        <div class="checkout-content checkout-content__left shadow-beigebackground">
+          <div *ngIf="mapLoaded" class="map">
+            <google-map [options]="options" (mapClick)="moveMap($event)" height="400px" width="100%">
+              <map-marker [position]="markerPosition" [options]="markerOptions">
+              </map-marker>
+            </google-map>
+          </div>
+          <div class="store-address">
+            <div class="text-bold">Lidl</div>
+            <div class="text-lightblue ml-4">{{addressInfo? addressInfo : location}}</div>
+          </div>
+          <div class="d-flex justify-content-between my-9">
+            <div class="input-item">
+              <ui-input [value]="deliveryAddress" label="Delivery Address" [disabled]="true"></ui-input>
+            </div>
+            <div>
+              <p class="change-btn" (click)="onChangeDeliveryAddressClick()">
+                Change <icon name="chevron-right"></icon>
+              </p>
+            </div>
+          </div>
+          <div class="input-item">
+            <div class="my-8">
+              <ui-dropdown label="Delivery Date" [items]="deliveryDateDropdownData"></ui-dropdown>
+            </div>
+            <div>
+              <ui-dropdown label="Delivery Time" [items]="deliveryTimeDropdownData"></ui-dropdown>
+            </div>
+          </div>
+          <div class="input-item my-8">
+            <div class="d-flex justify-content-between align-items-center text-medium">
+              <span class="text-bold">Delivery Instruction</span>
+              <div class="help">
+                <icon name="help"></icon>
+              </div>
+            </div>
+            <div class="mt-5">
+              <ui-switch selected="first" primaryLabel="Drop at my door" secondaryLabel="Drop at neighbour"
+                color="green" (onStateChange)="onStateChange($event)"></ui-switch>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between my-9">
+            <div class="w-60p">
+              <ui-input label="Phone number" [value]="phoneNumber"
+                description="Phone number for any inquiries of your delivery." [disabled]="true"></ui-input>
+            </div>
+            <div>
+              <p class="change-btn" (click)="onChangePhoneNumberClick()">
+                Change <icon name="chevron-right"></icon>
+              </p>
+            </div>
+          </div>
+          <div class="position-relative mb-9">
+            <ui-input label="Billing Address" [value]="billingAddress" [disabled]="true"></ui-input>
+            <div class="address-change">
+              <p class="change-btn" (click)="onChangeBillingAddressClick()">
+                Change <icon name="chevron-right"></icon>
+              </p>
+            </div>
+          </div>
+          <div class="input-item">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="text-medium text-bold">Payment Method</div>
+              <div class="d-flex align-items-center text-small">
+                <span class="text-green text-bold">SSL Secure</span>
+                <div class="d-flex align-items-center border-radius-lg p-1 ml-1 bg-green">
+                  <icon name="lock" class="text-white"></icon>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8">
+              <div *ngFor="let p of paymentMethods" class="payment-method">
+                <div class="d-flex">
+                  <img [src]="'/assets/img/'+p.imgUrl">
+                  <div class="ml-4">{{p.title}}</div>
+                </div>
+                <div>
+                  <div *ngIf="p.id!=selectedPaymentMethod" class="unselected" (click)="selectedPaymentMethod=p.id">
+                  </div>
+                  <div *ngIf="p.id==selectedPaymentMethod"
+                    class="d-flex align-items-center border-radius-lg p-1 ml-1 bg-green cursor-pointer"
+                    (click)="selectedPaymentMethod=undefined">
+                    <icon name="check" class="text-white"></icon>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-9" *ngIf="!cardList">
+            <div class="d-flex justify-content-between align-items-center my-6">
+              <div class="text-tiny text-semi-bold">Die Zahlung mit PayPal ist kostenfrei.</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center my-6">
+              <div class="text-medium text-tiny-bold">Verwende Deine gespeicherten PayPal-Informationen.</div>
+              <div class="d-flex align-items-center text-small text-green text-bold cursor-pointer">
+                <div class="paypal" (click)="enabled=!enabled"
+                  [ngClass]="enabled ? 'bg-green justify-content-end' : 'bg-lightblue justify-content-start'">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-9" *ngIf="cardList">
+            <div class="d-flex justify-content-between align-items-center my-6">
+              <div class="text-tiny text-semi-bold">Select from Saved Card</div>
+              <div class="d-flex align-items-center text-small text-green text-bold cursor-pointer">
+                <div (click)="onAddnewCard()">
+                  Add new <icon name="plus" class="plus"></icon>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <ui-card-payment *ngFor="let c of cardData" [paymentMethod]="c" [small]="true"
+                [selected]="selectedCard ? c.cardNo==selectedCard ? true : false : c.isDefault ? true : false"
+                (onSelect)="selectedCard=c.cardNo" class="mr-2 mb-2"></ui-card-payment>
+            </div>
+            <div class="under-style">
+              <div class="under-green"></div>
+            </div>
+          </div>
+          <ui-input label="Message for the Store"></ui-input>
+        </div>
+        <div class="checkout-content checkout-content__right shadow-beigebackground">
+          <div class="d-flex align-items-center">
+            <img src="{{storeData.logoUrl}}" class="w-20">
+            <div class="ml-5">
+              <span class="text-bold">{{storeData.name_public_long_i18n}}</span>
+              <div class="text-blue text-small">
+                <span class="text-bold">{{storeData.vendorType.name_i18n}}</span>
+                <span> · {{storeData.openingTime}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="border my-7"></div>
+          <div class="d-flex justify-content-between text-bold text-medium">
+            <span>Total</span>
+            <span>{{cartDetailInfo?.totalPrice}}</span>
+          </div>
+          <div class="d-flex justify-content-between text-medium">
+            <div>
+              <span class="text-green text-bold">{{cartDetailInfo?.itemsCount}} items</span> {{cartDetailInfo?.weight}}
+            </div>
+            <span>includes VAT and delivery</span>
+          </div>
+          <div class="border mt-7"></div>
+          <div class="text-medium my-3">Cart Total Overview</div>
+          <ui-total *ngIf="cartDetailInfo" class="bg-beige-20" [hasBackground]="true"
+            [subTotal]="cartDetailInfo.subtotal" [totalDeposit]="cartDetailInfo.totalDeposit"
+            [vatTotal]="cartDetailInfo.vatTotal" [totalPrice]="cartDetailInfo.totalPrice"
+            [deliveryFee]="cartDetailInfo.store.deliveryFee" (onAddVoucherClick)="onAddVoucherClick()"></ui-total>
+          <div class="px-3 my-6">
+            <div class="d-flex">
+              <ui-checkbox></ui-checkbox>
+              <div class="term-condition">
+                With your order you accept our <a href="https://bringoo.de/agbs/">terms</a> and <a
+                  href="https://bringoo.de/agbs/">condition</a>
+              </div>
+            </div>
+            <div class="warning">
+              <img src="{{'assets/img/18.svg'}}" class="w-8">
+              <div class="text-medium ml-3">You have ordered Alcohol, please keep your ID ready.</div>
+            </div>
+            <ui-button width="full" size="lg" radius="lg" (onClick)="onClickPay()">Pay Now</ui-button>
+          </div>
+          <div class="text-medium text-blue">
+            <p>
+              Was geschieht, wenn Sie eine Bestellung aufgeben? Wenn Sie auf den Button "Jetzt kaufen" klicken, senden
+              wir Ihnen eine E-Mail mit der Bestätigung der Bestellung zu. Ihr Kaufvertrag für einen Artikel kommt zu
+              Stande, wenn wir Ihre Bestellung annehmen, indem wir Ihnen eine E-Mail mit der Benachrichtigung zusenden,
+              dass der Artikel an Sie abgeschickt wurde
+            </p>
+            <p>
+              <span class="text-bold">Geschenk- und Aktionsgutscheine:</span><br />
+              Restguthaben werden bis zum Verfallsdatum des Gutscheins gutgeschrieben. Sollte der Wert des Gutscheins
+              für Ihre Bestellung nicht ausreichen, können Sie die Differenz mit einer anderen von Bringoo zugelassenen
+              Zahlungsweise oder durch Eingabe weiterer Geschenkgutscheine auf derselben Seite begleichen. Einige
+              Aktionsgutscheine sind auf bestimmte Produktgruppen oder einzelne Artikel beschränkt.
+            </p>
+          </div>
+          <div class="text-align-center mt-10">
+            <img src="{{'assets/img/logo-grey-sec.svg'}}">
+            <div class="text-lightblue text-tiny text-bold">Wir bringen es.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ui-modal [opened]="phoneModal" [smallSize]="true" (onClose)="phoneModal=false">
+    <div class="small-modal">
+      <span class="f-6 text-bold">Edit Phone Number</span>
+      <ui-input class="w-100p" [value]="editedPhoneNumber" (valueChange)="editedPhoneNumber=$event"
+        (keyup)="onEnterPhone($event)"></ui-input>
+      <div class="mt-6">
+        <ui-button width="full" size="lg" radius="lg" (click)="onChangePhoneNumber()">Apply</ui-button>
+      </div>
+    </div>
+  </ui-modal>
+
+  <ui-modal [opened]="deliveryAddressModal" [smallSize]="true" (onClose)="deliveryAddressModal=false">
+    <div class="small-modal">
+      <span class="f-6 text-bold">Edit Delivery Address</span>
+      <div class="ui-input">
+        <input #mapSearch type="text" class="ui-input__text w-100p" placeholder="Enter your address"
+          [value]="deliveryAddressInfo" (valueChange)="onDeliveryAddressChange($event)" />
+      </div>
+      <!-- <ui-input class="w-100p" [value]="editedDeliveryAddress" (valueChange)="editedDeliveryAddress=$event"></ui-input> -->
+      <div class="mt-6">
+        <ui-button width="full" size="lg" radius="lg" (click)="onChangeDeliveryAddress()">Apply</ui-button>
+      </div>
+    </div>
+  </ui-modal>
+
+  <ui-modal [opened]="billingAddressModal" [smallSize]="true" (onClose)="billingAddressModal=false">
+    <div class="small-modal">
+      <span class="f-6 text-bold">Edit Billing Address</span>
+      <div class="ui-input">
+        <input #mapSearch1 type="text" class="ui-input__text w-100p" placeholder="Enter your address"
+          [value]="billingAddressInfo" (valueChange)="onBillingAddressChange($event)" />
+      </div>
+      <div class="mt-6">
+        <ui-button width="full" size="lg" radius="lg" (click)="onChangeBillingAddress()">Apply</ui-button>
+      </div>
+    </div>
+  </ui-modal>
+
+  <ui-modal [opened]="voucherModal" [smallSize]="true" (onClose)="voucherModal=false">
+    <div class="small-modal">
+      <span class="f-6 text-bold">Insert voucher code</span>
+      <ui-input class="w-100p"></ui-input>
+      <div class="mt-6">
+        <ui-button width="full" size="lg" radius="lg">Apply</ui-button>
+      </div>
+    </div>
+  </ui-modal>
+  <ui-modal [opened]="orderModal" (onClose)="orderModal=false">
+    <ui-checkout-order [id]="id" [dAddress]="dAddress" [bAddress]="bAddress" [phoneCode]="phoneCode"
+      [phoneNumber]="phoneNumber" [destination]="destination"></ui-checkout-order>
+  </ui-modal>
+  <ui-modal [opened]="cardModal" [smallSize]="true" (onClose)="cardModal=false">
+    <div class="small-modal">
+      <span class="f-6 text-bold">Add new Card</span>
+      <div class="w-100p h-40p"></div>
+      <div class="mt-6">
+        <ui-button width="full" size="lg" radius="lg">Apply</ui-button>
+      </div>
+    </div>
+  </ui-modal>
+</ui-layout>

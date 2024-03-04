@@ -1,0 +1,45 @@
+<div class="header">
+  <div class="text-large text-bold text-align-center mt-1 mb-3">Select shop</div>
+  <div class="d-flex justify-content-between">
+    <div class="text-bold d-flex">
+      <div>
+        <span>All shops</span>
+        <span class="text-small text-green ml-2">5</span>
+      </div>
+      <div class="text-lightblue ml-15">
+        <span>Favorites</span>
+        <span class="text-small ml-2">0</span>
+      </div>
+    </div>
+    <div class="d-flex">
+      <a class="ui-header__topbar__info text-medium text-darkgrey cursor-pointer text-semi-bold">
+        Germany, Humburg
+        <icon name="edit" class="text-tiny ml-2"></icon>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="content">
+  <div class="h-100p">
+    <div class="container">
+      <div class="d-flex align-items-center mt-10">
+        <icon name="filter" class="filter mr-4"></icon>
+        <ui-option *ngFor="let option of options" 
+          [option]="option"
+          [selected]="selectedOption===option.id"
+          class="mr-2"
+          (optionSelect)="onChangeOption(option.id)">
+        </ui-option>
+      </div>
+      <div class="cards mt-4 text-large text-medium-bold" style="margin-left: 12px;" *ngIf="!isFound">Unfortunately, the store will not find...</div>
+      <div class="cards" *ngIf="isFound">
+        <ui-card-normal
+          *ngFor="let filtered_store of filtered_stores"
+          [store]=filtered_store
+          class="card"
+          (onStoreClick)="onStoreSelect(filtered_store.id)"
+        ></ui-card-normal>
+      </div>
+    </div>
+  </div>
+</div>

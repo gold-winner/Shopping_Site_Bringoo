@@ -1,0 +1,56 @@
+<ui-settings>
+  <div class="px-8 py-4">
+    <span class="f-8 text-bold">My Orders</span>
+  </div>
+  <div class="border"></div>
+  <div *ngIf="orders_data && orders_data?.data?.length !== 0 && options.length !== 0" class="d-flex my-8 px-8">
+    <ui-option *ngFor="let option of options; index as i" [option]="option" [selected]="selectedOption===option.id"
+      class="mr-4" (optionSelect)="onChangeOption(option.id)">
+    </ui-option>
+  </div>
+  <div *ngIf="orders_data && orders_data?.data?.length === 0 && options.length ===0" class="d-flex flex-column my-8 px-8">
+    <div *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">
+      <ngx-skeleton-loader count="1" appearance="line" animation="progress" [theme]="{
+          'background-color': '#AAAAAA',
+          height: '114px',
+          width: '456px',
+          'margin-bottom': '20px',
+          'border-radius': '12px'
+        }">
+      </ngx-skeleton-loader>
+    </div>
+  </div>
+  <div class="order">
+    <div class="order-list" [ngClass]="{'order-list--hidden': selectedOrder}">
+      <ui-order *ngFor="let order of orders" [id]="order.id" [status]="order.status"
+        [selected]="selectedOrder==order.id" (onSelect)="onSelectOrder(order.id)" class="mt-6">
+      </ui-order>
+    </div>
+    <div class="order-content">
+      <div *ngIf="!selectedOrder" class="text-lightblue text-medium text-align-center my-6">
+        Please select Order from the list to show details.
+      </div>
+      <div *ngIf="selectedOrder">
+        <ui-settings-history-subtitle option="replacement" class="subtitle">
+        </ui-settings-history-subtitle>
+        <ui-settings-history-category option="replacement" [category]="category"
+          (onCategoryClick)="onChangeCategory($event)" class="category">
+        </ui-settings-history-category>
+        <ui-settings-history-details option="replacement" [category]="category" class="details">
+        </ui-settings-history-details>
+        <div>
+          <div class="text-bold mt-5">Same Subcategory</div>
+          <div class="products">
+            <ui-card-product class="position-relative" *ngFor="let product of productsDetail | slice:0:3; let i=index"
+              [product]="product" productType="sale"></ui-card-product>
+          </div>
+          <div class="text-bold mt-15">Same Subcategory</div>
+          <div class="products">
+            <ui-card-product class="position-relative" *ngFor="let product of productsDetail | slice:0:3; let i=index"
+              [product]="product" productType="sale"></ui-card-product>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ui-settings>

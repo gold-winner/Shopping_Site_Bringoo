@@ -1,0 +1,48 @@
+<form nz-form [formGroup]='filterForm' nzLayout="inline" class="mb-4">
+  <nz-form-item class="w-48">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input nz-input formControlName="search" placeholder="Search"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<form nzLayout="vertical" nz-form [formGroup]='form'>
+  <ng-container *ngIf="showItems">
+    <nz-table
+      *ngIf='items | async as stores'
+      nzShowSizeChanger
+      nzShowPagination
+      [nzData]="stores"
+      [nzPageSize]='limit'
+      [nzFrontPagination]="false"
+      [nzLoading]="isLoading$|async"
+      [nzTotal]="total"
+      [nzPageIndex]="storeFilter.getValue().page || 1"
+      (nzPageIndexChange)="checked = false"
+      [nzShowTotal]="rangeTemplate"
+      [nzPageSizeOptions]="nzPageSizeOptions"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzSize]="'small'"
+    >
+      <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="checked" (nzCheckedChange)='onAllChecked($event, stores)'></th>
+        <th>Select all items in page</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of stores; let ind = index">
+        <td nzShowCheckbox *ngIf='item.id' [nzChecked]="setOfChecked.has(item.id)" (nzCheckedChange)="onItemChecked(item.id, $event)"></td>
+        <td>{{item.name_i18n}}
+      </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  </ng-template>
+</form>

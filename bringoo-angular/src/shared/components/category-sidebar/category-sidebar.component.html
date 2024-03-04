@@ -1,0 +1,15 @@
+<div class="">
+  <div class="d-flex mt-5 pt-1 pb-3" style="border-bottom: 1px solid #E2D3C5;">
+    <div (click)="onSidebarClose()" class="close">
+      <img src="{{'assets/img/close.svg'}}">
+    </div>
+    <div class="ml-12 w-22">
+      <img src="{{'assets/img/bringoo.svg'}}">
+    </div>
+  </div>
+  <div class="d-flex flex-wrap py-5 pr-2" *ngFor="let category of categoryDetail" (mouseover)="onCategoryOver(category.code)" (onClick)="onCategoryOver(category.code)" (mouseout)="onCategoryOut()" [ngClass]="{'item-over': category.code===selected_code}">
+    <img src="{{category.imageUrl}}" class="w-11 ml-7">
+    <span class="text-small text-semi-bold ml-3 mt-3">{{category.name_i18n}}</span>
+    <img src="{{'assets/img/right.svg'}}" *ngIf="category.code===selected_code" class="mr-2 w-2" style="margin-left: auto;">
+  </div>
+</div>

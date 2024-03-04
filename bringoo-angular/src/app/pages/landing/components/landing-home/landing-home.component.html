@@ -1,0 +1,241 @@
+<div>
+  <div class="content">
+    <div class="mt-8 d-flex">
+      <div *ngIf="stores?.length !== 0" class="position-relative d-flex flex-column" class="landing-location">
+        <div class="position-relative">
+          <input #mapSearchField (keyup)="onAddressChange($event)" type="text" class="location-input" name="location"
+            [ngClass]="!postal? 'border-red' : 'border-black'"
+            placeholder="Enter zipcode or address to browse through some stores">
+          <img class="position-absolute map" src="/assets/img/location-map.svg">
+        </div>
+        <div class="position-relative">
+          <button class="location-btn cursor-pointer" (click)="takeCurrentLocation()">
+            <span class="text-white">Take current location</span>
+            <img class="position-absolute pointer" src="/assets/img/location-pointer.svg">
+          </button>
+        </div>
+      </div>
+      <ngx-skeleton-loader 
+        *ngIf="stores?.length === 0"
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '464px',
+          width: '1380px',
+          'border-radius': '12px'
+        }"
+      >
+      </ngx-skeleton-loader>
+    </div>
+    <span class="mt-20 text-large text-bold">There are <a href="/store-selector"> {{stores?.length}} stores </a> for your
+      address</span>
+    <div class="store-list">
+      <ui-card-shop *ngFor="let store of stores | slice:0:6; let i=index" [store]="store"
+        (onStoreClick)="onStoreSelect($event)" class="mb-3 small-card"></ui-card-shop>
+      <ngx-skeleton-loader 
+        *ngIf="stores?.length === 0"
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '230px',
+          width: '440px',
+          'border-radius': '12px'
+        }"
+      >
+      </ngx-skeleton-loader>
+      <ngx-skeleton-loader 
+        *ngIf="stores?.length === 0"
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '230px',
+          width: '440px',
+          'border-radius': '12px'
+        }"
+      >
+      </ngx-skeleton-loader>
+      <ngx-skeleton-loader 
+        *ngIf="stores?.length === 0"
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '230px',
+          width: '440px',
+          'border-radius': '12px'
+        }"
+      >
+      </ngx-skeleton-loader>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center mt-16">
+    <span class="text-green text-large text-bold mr-3"> Enjoy life </span>
+    <span class="text-large text-bold"> and trust us with your shopping!</span>
+  </div>
+  <div class="life-cart position-relative">
+    <img src="assets/img/bringoo-side-logo.svg" class="side-logo">
+    <ui-card-step title1="Select a store and fill your" title2="cart with items"
+      content1="Choose a convenient delivery time." content2="" no="01" class="small-card mx-5"></ui-card-step>
+    <img class="arrow-right mx-3" src="/assets/img/landing/landing-right-arrow.svg">
+    <img class="arrow-down my-5" src="/assets/img/landing/landing-down-arrow.svg">
+    <ui-card-step title1="The picker will collect" title2="your order" content1="The freshest products right off the"
+      content2="shelves." no="02" class="small-card mx-5"></ui-card-step>
+    <img class="arrow-right mx-3" src="/assets/img/landing/landing-right-arrow.svg">
+    <img class="arrow-down my-5" src="/assets/img/landing/landing-down-arrow.svg">
+    <ui-card-step title1="A deliver will bring the" title2="groceries" content1="You can spend your time on more"
+      content2="important things." no="03" class="small-card mx-5"></ui-card-step>
+  </div>
+  <div *ngIf="stores?.length !== 0" class="d-flex container landing-mobile">
+    <div class="mobile">
+      <div class="text-white text-large text-bold">Download our Mobile App</div>
+      <div class="text-white text-medium text-semi-bold mt-1">and place your first order!</div>
+      <a href="https://apps.apple.com/us/app/id1517339024" class="a-app-store">
+        <img class="app-store mr-4 mt-6 cursor-pointer" src="/assets/img/app-store.png">
+      </a>
+      <a href="https://play.google.com/store/apps/details?id=com.bringoo.customer" class="a-google-store">
+        <img class="google-store mr-4 mt-6 cursor-pointer" src="/assets/img/google-store.png">
+      </a>
+    </div>
+  </div>
+  <ngx-skeleton-loader 
+    class="d-flex container"
+    *ngIf="stores?.length === 0"
+    count="1" 
+    appearance="line" 
+    animation="progress" 
+    [theme]="{
+      'background-color': '#AAAAAA',
+      height: '414px',
+      width: '1440px',
+      'border-radius': '12px'
+    }"
+  >
+  </ngx-skeleton-loader>
+  <div class="d-flex justify-content-center mt-20 my-5">
+    <span class="text-large text-bold mr-3"> Quick </span>
+    <a href="/settings/faq">
+      <span class="text-green text-large text-bold mr-3"> FAQs </span>
+    </a>
+  </div>
+  <div class="content-faqs">
+    <ui-faqs *ngFor="let faq of faqs" title={{faq.name}} content={{faq.description}}></ui-faqs>
+    <ngx-skeleton-loader 
+      *ngIf="faqs.length === 0"
+      count="1" 
+      appearance="line" 
+      animation="progress" 
+      [theme]="{
+        'background-color': '#AAAAAA',
+        'margin-top': '16px',
+        height: '56px',
+        width: '100%',
+        'border-radius': '8px'
+      }"
+    >
+    </ngx-skeleton-loader>
+    <ngx-skeleton-loader 
+      *ngIf="faqs.length === 0"
+      count="1" 
+      appearance="line" 
+      animation="progress" 
+      [theme]="{
+        'background-color': '#AAAAAA',
+        height: '56px',
+        'margin-top': '16px',
+        width: '100%',
+        'border-radius': '8px'
+      }"
+    >
+    </ngx-skeleton-loader>
+    <ngx-skeleton-loader 
+      *ngIf="faqs.length === 0"
+      count="1" 
+      appearance="line" 
+      animation="progress" 
+      [theme]="{
+        'background-color': '#AAAAAA',
+        height: '56px',
+        'margin-top': '16px',
+        width: '100%',
+        'border-radius': '8px'
+      }"
+    >
+    </ngx-skeleton-loader>
+    <ngx-skeleton-loader 
+      *ngIf="faqs.length === 0"
+      count="1" 
+      appearance="line" 
+      animation="progress" 
+      [theme]="{
+        'background-color': '#AAAAAA',
+        height: '56px',
+        'margin-top': '16px',
+        width: '100%',
+        'border-radius': '8px'
+      }"
+    >
+    </ngx-skeleton-loader>
+  </div>
+  <div class="container pt-20 pb-10">
+    <div class="d-flex flex-wrap justify-content-between">
+      <div class="d-flex flex-column">
+        <div class="text-bold mb-8">
+          Rechtliches
+        </div>
+        <div class="f-4 text-semi-bold"><a href="/impressum"><span class="subtitle">Impressum</span></a></div>
+        <div class="f-4 text-semi-bold"><a href="/datenschutz"><span class="subtitle">Datenschutz</span></a></div>
+        <div class="f-4 text-semi-bold"><a href="#"><span class="subtitle">AGB's</span></a></div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="text-bold mb-8">
+          Kontakt
+        </div>
+        <div class="f-4 text-semi-bold"><a href="mailto:support@bringoo.de"><span
+              class="subtitle">support@bringoo.de</span></a></div>
+        <div class="f-4 text-semi-bold"><a href="#"><span class="subtitle">Presse</span></a></div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="text-bold mb-8">
+          Folge uns
+        </div>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/bringoo.de/">
+            <icon name="instagram" class="social"></icon>
+          </a>
+          <a href="https://www.facebook.com/bringoo.de/">
+            <icon name="facebook" class="social ml-8"></icon>
+          </a>
+          <a href="https://www.linkedin.com/company/bringoo/">
+            <icon name="linkedin" class="social ml-8"></icon>
+          </a>
+          <icon name="xing" class="social ml-8"></icon>
+        </div>
+      </div>
+      <div class="d-flex flex-column">
+        <div class="Zahlungsarten text-bold mb-8">
+          Zahlungsarten
+        </div>
+        <div class="d-flex align-items-center">
+          <a href="#"><img class="card1" src="/assets/img/cards/visa.svg"></a>
+          <a href="#"><img class="card ml-1" src="/assets/img/cards/mastercard-color.svg"></a>
+          <a href="#"><img class="card ml-1" src="/assets/img/cards/amex.svg"></a>
+          <a href="#"><img class="card ml-1" src="/assets/img/cards/sofort.svg"></a>
+          <a href="#"><img class="card ml-1" src="/assets/img/cards/klama.svg"></a>
+          <a href="#"><img class="card ml-1" src="/assets/img/cards/giro-pay.svg"></a>
+          <a href="#"><img class="card ml-1" src="/assets/img/cards/paypal.svg"></a>
+          <a href="#"><img class="card ml-1" src="/assets/img/cards/apple-pay.svg"></a>
+        </div>
+      </div>
+    </div>
+    <div class="mt-15 f-4 text-tiny-bold">
+      © {{year}} bringoo.de. All rights reserved.
+    </div>
+  </div>
+</div>

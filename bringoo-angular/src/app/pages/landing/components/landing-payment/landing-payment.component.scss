@@ -1,0 +1,25 @@
+@import "src/scss/colors";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+@import "src/scss/borders";
+@import "src/scss/grid";
+
+.payment {
+  @extend .d-flex;
+  @extend .justify-content-start;
+  @extend .flex-wrap;
+  @extend .my-20;
+
+  @media (max-width: 1024px) {
+    justify-content: center;
+  }
+
+  &__item {
+    @extend .mr-8;
+    @extend .cursor-pointer;
+    @media (max-width: 1024px) {
+      margin-right: 32px;
+      margin-bottom: 20px;
+    }
+  }
+}

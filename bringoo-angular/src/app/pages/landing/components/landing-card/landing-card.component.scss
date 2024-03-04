@@ -1,0 +1,39 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+
+.landing-card {
+  @extend .d-flex;
+  @extend .border-radius-xlg;
+  @extend .overflow-hidden;
+  border: 1px solid $color_beige;
+  height: 516px;
+
+  &__media {
+    @extend .w-50p;
+    background-color: rgba($color_darkgrey, 0.2);
+  }
+  &__description {
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .w-50p;
+    @extend .py-15;
+    @extend .px-13;
+
+    &--title {
+      @extend .f-14;
+      @extend .text-bold;
+      line-height: 68px;
+    }
+  } 
+}
+
+.link {
+  @extend .cursor-pointer;
+
+  &:hover {
+    color: #69bec3;
+  }
+}

@@ -1,0 +1,24 @@
+<ui-settings>
+  <div class="px-8 py-4">
+    <span class="f-8 text-bold">FAQ's</span>
+  </div>
+  <div class="border"></div>
+  <div class="content">
+    <div class="d-flex">
+      <ui-option *ngFor="let option of options" 
+        [option]="option"
+        [selected]="selectedOption===option.id"
+        class="mr-2"
+        (optionSelect)="onChangeOption(option.id)">
+      </ui-option>
+    </div>
+    <div class="my-9">
+      <ui-accordion *ngFor="let faqItem of faqItems" 
+        title={{faqItem.name}}>
+        <span class="text-medium">
+          {{faqItem.description}}
+        </span>
+      </ui-accordion>
+    </div>
+  </div>
+</ui-settings>

@@ -1,0 +1,66 @@
+<div class="mx-8 mt-8 mb-8">
+  <div class="d-flex justify-content-between">
+    <a class="d-flex align-items-center" routerLink='../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>Products Out Of Stock</h3></a>
+    <div>
+      <button nz-button nzType="text">Print <i nz-icon nzType="printer"></i></button>
+      <button nz-button nzType="text">Export <i nz-icon nzType="export"></i></button>
+      <button nz-button nzType="primary" nzShape="round">Create order</button>
+    </div>
+  </div>
+
+  <div class="bg-component border-round-sm pb-4">
+    <app-products-out-of-stock-filter-form (salesFilter)="filtersUpdate($event)"></app-products-out-of-stock-filter-form>
+
+    <nz-table
+      class="px-4"
+      *ngIf="productsOutOfStock$ | async as products"
+      nzShowSizeChanger
+      nzShowPagination
+      [nzData]="products.items"
+      [nzFrontPagination]="false"
+      [nzLoading]="isLoading$|async"
+      [nzTotal]="products.total"
+      [nzPageIndex]="products.page"
+      [nzShowTotal]="rangeTemplate"
+      [nzPageSizeOptions]="nzPageSizeOptions"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzSize]="'small'"
+      [nzScroll]="{ x: '250px' }"
+    >
+      <thead>
+      <tr>
+        <th nzShowCheckbox [nzWidth]="'50px'"></th>
+        <th class="text-bold">Store</th>
+        <th class="text-bold">Order ID</th>
+        <th class="text-bold">Product</th>
+        <th class="text-bold">Category</th>
+        <th class="text-bold">SubCategory</th>
+        <th class="text-bold">Status</th>
+        <th class="text-bold">Price</th>
+        <th class="text-bold">Picker Job Started</th>
+        <th class="text-bold">Delivery Date</th>
+        <th class="text-bold">Update Stamp</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of products.items; let index = index">
+        <th nzShowCheckbox></th>
+        <td class="text-bold">{{item.storeName}}</td>
+        <td class="text-bold"><a routerLink="/orders/all/detail/{{item.orderId}}">{{item.orderNumber}}</a></td>
+        <td class="text-bold">{{item.productName}}</td>
+        <td class="text-bold">{{item.categoryName}} ({{item.vendorCategoryCode}})</td>
+        <td class="text-bold">{{item.subCategoryName}}</td>
+        <td class="text-bold">{{item.orderItemStatus}}</td>
+        <td class="text-bold">{{item.price}} {{item.currencyCode}}</td>
+        <td class="text-bold">{{item.pickJobStarted}}</td>
+        <td class="text-bold">{{item.deliveryDate}} {{item.deliveryTime}}</td>
+        <td class="text-bold">{{item.productUpdateStamp}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total }} items
+    </ng-template>
+  </div>
+</div>

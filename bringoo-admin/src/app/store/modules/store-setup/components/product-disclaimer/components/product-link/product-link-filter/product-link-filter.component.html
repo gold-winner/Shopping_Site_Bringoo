@@ -1,0 +1,37 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input nz-input formControlName="search" placeholder="Search"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-category-select
+    class="w-40 mr-4"
+    formControlName="category"
+  ></app-filter-category-select>
+
+  <app-filter-subcategory-select
+    class="w-40 mr-4"
+    formControlName="subCategory"
+    [categoryCode]="form.controls.category.value"
+  ></app-filter-subcategory-select>
+
+  <app-filter-brand-select
+    formControlName="brand"
+    label="Product Brand"
+  ></app-filter-brand-select>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Deposit filter</nz-form-label>
+      <app-list-select
+        class="d-block"
+        formControlName="isDeposit"
+        [list]="isDepositFilterStates"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

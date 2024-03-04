@@ -1,0 +1,27 @@
+<nz-layout class="layout-default" style="height: 100%">
+  <nz-sider
+    class="layout-sidebar"
+    [nzTrigger]="null"
+    nzBreakpoint="md"
+    nzCollapsible
+    nzWidth="250px"
+  >
+    <ul nz-menu nzMode="inline" class="h-100p scroll-y bg-component">
+      <ng-container *ngFor="let menuItem of sitemap">
+        <li
+          nz-menu-item
+          nzMatchRouter
+          [routerLink]="['.', menuItem.path]"
+          class="f-4"
+        >
+          <span>{{menuItem.title}}</span>
+        </li>
+      </ng-container>
+    </ul>
+  </nz-sider>
+  <nz-layout class='bg-body'>
+    <nz-content class='bg-component scroll-y my-sm-4 mx-sm-4'>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

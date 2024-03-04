@@ -1,0 +1,107 @@
+<form nzLayout="vertical" nz-form [formGroup]="form" class="p-4 w-100p h-100p overflow-auto position-relative" id="product-pharma-form">
+  <div class="row">
+    <div class="col-18">
+      <nz-card id="sizes" class="mb-4">
+        <nz-form-item class="mb-4">
+          <nz-form-label
+            [nzRequired]="true"
+          >
+            Pharmacy Central Number (PZN)
+            <span
+              class="ml-2 color-info"
+              nz-icon
+              nzType="question-circle"
+              nzTheme="outline"
+              [nz-tooltip]="pharmacyCentralNumber"
+            ></span>
+          </nz-form-label>
+          <nz-form-control labelForErrorTip="Pharmacy Central Number">
+            <input nz-input formControlName="pzn">
+          </nz-form-control>
+        </nz-form-item>
+
+        <app-lang-controller>
+          <app-multi-lang-v2-input
+            required label="DAR"
+            formControlName="dar_i18n"
+          ></app-multi-lang-v2-input>
+
+          <app-multi-lang-v2-input
+            required label="Packing Standard"
+            formControlName="packingStandard_i18n"
+          ></app-multi-lang-v2-input>
+
+          <app-multi-lang-v2-input
+            required label="Active substance"
+            formControlName="activeSubstance_i18n"
+          ></app-multi-lang-v2-input>
+        </app-lang-controller>
+
+        <nz-form-item>
+          <nz-form-label nzNoColon>Mono preparation</nz-form-label>
+          <nz-form-control labelForErrorTip="Mono preparation">
+            <app-status-switch
+              formControlName='monoPreparation'
+            ></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzNoColon>Recipe-able</nz-form-label>
+          <nz-form-control labelForErrorTip="Recipe-able">
+            <app-status-switch
+              formControlName='recipeAble'
+            ></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzNoColon>Pharmacies required</nz-form-label>
+          <nz-form-control labelForErrorTip="Pharmacies required">
+            <app-status-switch
+              formControlName='pharmaciesRequired'
+            ></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+    </div>
+  </div>
+</form>
+
+<ng-template #pharmacyCentralNumber>
+  <p>This symbology supports the following alphanumeric characters:</p>
+  <ul>
+    <li>
+      <p class="ListItem">All numeric digits (0-9)</p>
+    </li>
+    <li>
+      <p class="ListItem">All uppercase letters (A-Z)</p>
+    </li>
+    <li>
+      <p class="ListItem">The following symbols: </p>
+      <ul>
+        <li>
+          <p class="ListItem">Percent sign (%)</p>
+        </li>
+        <li>
+          <p class="ListItem">Plus sign (+)</p>
+        </li>
+        <li>
+          <p class="ListItem">Dollar sign ($)</p>
+        </li>
+        <li>
+          <p class="ListItem">Slash mark (/)</p>
+        </li>
+        <li>
+          <p class="ListItem">Period (.)</p>
+        </li>
+        <li>
+          <p class="ListItem">Hyphen (-)</p>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <p class="ListItem">Space character </p>
+    </li>
+  </ul>
+</ng-template>

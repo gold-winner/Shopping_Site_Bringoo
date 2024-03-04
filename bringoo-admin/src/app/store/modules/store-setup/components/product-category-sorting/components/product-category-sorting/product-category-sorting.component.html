@@ -1,0 +1,27 @@
+<div class='px-8 pt-8 bg-component fixed-header'>
+  <div class='my-4'>
+    <h5>Product Category Sorting</h5>
+    <p class="mb-0 f-4">
+      Sorting the categories and subcategories is used for sorting in the dispatcher app.
+      The ordering defines the sorting of the items for the picker inside the store.
+    </p>
+  </div>
+  <app-product-category-and-groups-filter (filters)="onChangeFilters($event)"></app-product-category-and-groups-filter>
+</div>
+
+<nz-tree
+  class="pl-4 scroll-y"
+  *ngIf="tree$|async as tree"
+  #nzTreeComponent
+  [nzData]="tree"
+  [nzSearchValue]="(searchValue$ | async) ?? ''"
+  [nzSearchFunc]="searchFunc"
+  [nzHideUnMatched]="true"
+  nzDraggable
+  nzAsyncData
+  (nzClick)="nzEvent($event)"
+  (nzExpandChange)="nzEvent($event)"
+  [nzBeforeDrop]="beforeDrop"
+  nzShowIcon
+></nz-tree>
+

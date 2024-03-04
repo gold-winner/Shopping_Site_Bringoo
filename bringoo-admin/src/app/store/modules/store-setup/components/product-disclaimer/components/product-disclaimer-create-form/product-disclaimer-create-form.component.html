@@ -1,0 +1,68 @@
+<form nz-form [formGroup]="form" nzLayout="vertical">
+
+  <app-lang-controller>
+    <app-multi-lang-v2-input
+      required label="Name"
+      formControlName="name_i18n"
+    ></app-multi-lang-v2-input>
+
+    <app-multi-lang-v2-input
+      class="col" label="Description" type="textarea" formControlName="description_i18n"
+      [rows]="6"
+    ></app-multi-lang-v2-input>
+  </app-lang-controller>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Seller</nz-form-label>
+    <nz-form-control>
+      <app-list-select
+        formControlName="seller"
+        [isRequired]="true"
+        placeHolder="Seller"
+        [list]="sellers"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Delivery</nz-form-label>
+    <nz-form-control>
+      <app-list-select
+        formControlName="delivery"
+        [isRequired]="true"
+        placeHolder="Delivery"
+        [list]="delivers"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Start date</nz-form-label>
+    <nz-form-control labelForErrorTip="Start date">
+      <app-date-control
+        formControlName="dateStart"
+        placeHolder="Date start"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Status</nz-form-label>
+    <nz-form-control>
+      <app-status-switch class="w-32" formControlName="isActive" falseValue="Inactive" trueValue="Active"></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-add-products-by-link
+    (productLinkIds)="onSelectProductLInks($event)"
+  ></app-add-products-by-link>
+
+</form>
+

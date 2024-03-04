@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-filter-category-select
+    class="w-40 mr-4"
+    formControlName="productCategoryCode">
+  </app-filter-category-select>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Commission percent</nz-form-label>
+    <nz-form-control labelForErrorTip="Commission percent">
+      <input nz-input type="number" min='0' formControlName='percent' placeholder='Commission percent'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Commission min</nz-form-label>
+    <nz-form-control labelForErrorTip="Commission min">
+      <input nz-input type="number" min='0' formControlName='min' placeholder='Commission min'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Commission max</nz-form-label>
+    <nz-form-control labelForErrorTip="Commission max">
+      <input nz-input type="number" min='0' formControlName='max' placeholder='Commission max'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzNoColon nzFor="dateStart">Start date</nz-form-label>
+    <nz-form-control labelForErrorTip="Start date">
+      <nz-date-picker formControlName="dateStart"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzNoColon nzFor="dateEnd">End date</nz-form-label>
+    <nz-form-control labelForErrorTip="End date">
+      <nz-date-picker formControlName="dateEnd"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+</form>

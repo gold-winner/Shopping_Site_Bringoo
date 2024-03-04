@@ -1,0 +1,17 @@
+<div class="ui-quantity" [ngClass]="{'ui-quantity__border' : border}">
+  <icon *ngIf="type !== 'trash' && page !== 'product'" name="minus" class="cursor-pointer quantity"
+    (click)="onClick(true)"></icon>
+  <icon *ngIf="type !== 'trash' && page === 'product'" name="minus" class="cursor-pointer" (click)="onClick(true)">
+  </icon>
+  <icon *ngIf="type === 'trash' && itemCount > 1 && page !== 'product'" name="minus" class="cursor-pointer quantity"
+    (click)="onClick(true)"></icon>
+  <icon *ngIf="type === 'trash' && itemCount > 1 && page === 'product'" name="minus" class="cursor-pointer"
+    (click)="onClick(true)"></icon>
+  <img *ngIf="type === 'trash' && itemCount === 1 && page !== 'product'" src="assets/img/trash.svg"
+    class="cursor-pointer quantity" (click)="onClick(true)" />
+  <img *ngIf="type === 'trash' && itemCount === 1 && page === 'product'" src="assets/img/trash.svg"
+    class="cursor-pointer" (click)="onClick(true)" />
+  <span class="value">{{itemCount}}</span>
+  <icon *ngIf="page !== 'product'" name="plus" class="cursor-pointer quantity" (click)="onClick(false)"></icon>
+  <icon *ngIf="page === 'product'" name="plus" class="cursor-pointer" (click)="onClick(false)"></icon>
+</div>

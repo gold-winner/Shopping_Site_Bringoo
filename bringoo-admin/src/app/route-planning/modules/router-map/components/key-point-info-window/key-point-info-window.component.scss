@@ -1,0 +1,27 @@
+:host {
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+::ng-deep app-key-point-info .ant-card-head-title, ::ng-deep app-order-info .ant-card-head-title {
+  overflow: visible !important;
+  padding-block: 8px;
+}
+
+.item-info>div>*:last-child {
+  white-space: normal;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.item-info>div>h5, .item-info>div>span:first-child {
+  white-space: nowrap;
+  margin-right: 4px;
+}
+
+.index {
+  background: #3f4362;
+  color: white;
+}

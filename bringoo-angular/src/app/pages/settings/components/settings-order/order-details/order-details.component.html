@@ -1,0 +1,53 @@
+<p class="text-align-center text-bold">
+  Order Details
+</p>
+<ui-shop-detail></ui-shop-detail>
+<div class="d-flex justify-content-between bg-beige-20 border-radius-lg p-4 my-6 cursor-pointer" (click)="onOrderStatusClick.emit(id)">
+  <div class="d-flex">
+    <icon name="maps-route" class="text-green mt-1"></icon>
+    <div class="d-flex flex-column text-medium ml-5">
+      <div class="text-green text-bold">Preparing your order</div>
+      <div>Your order is being prepared</div>
+    </div>
+  </div>
+  <icon name="chevron-right" class="align-self-center"></icon>
+</div>
+<div class="d-flex justify-content-between my-8 w-100p">
+  <ui-input label="Order date" value="09 November 2020 ∙ 19:09" [disabled]="true" class="w-65p"></ui-input>
+  <ui-input label="Order type" value="Standard" [disabled]="true" class="w-32p"></ui-input>
+</div>
+<ui-input label="Deliver to" value="Ferdinandstraße 32, 20095 Hamburg" [disabled]="true"></ui-input>
+<div class="my-8">
+  <ui-input label="Payment Method" value="Credit Card **** 3282" [disabled]="true"></ui-input>
+</div>
+<div class="mb-8">
+  <div class="d-flex text-medium justify-content-between">
+    <div class="text-semi-bold">Products</div>
+    <div class="text-green text-bold text-small align-items-center cursor-pointer" (click)="onProductsSelect.emit(id)">
+      <span class="mr-5">5 items</span><br>
+      <span class="ml-3">total</span><icon class="mb-1" name="chevron-right"></icon>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mt-3">
+    <div *ngFor="let i of [1,2,3]" class="d-flex border-radius-lg">
+      <img src="/assets/img/products/sause.svg" class="w-22 cursor-pointer">
+    </div> 
+  </div>
+</div>
+<div class="total">
+  <ui-total (onAddVoucherClick)="onAddVoucherClick()"></ui-total>
+</div>
+<div class="d-flex justify-content-between align-items-center my-8 cursor-pointer">
+  <span class="text-medium text-bold">Show Invoice</span>
+  <icon name="chevron-right" class="text-lightblue"></icon>
+</div>
+<ui-button color="red" size="lg" width="full" radius="xlg">Cancel Order</ui-button>
+<ui-modal [opened]="voucherModal" [smallSize]="true" (onClose)="onVoucherModalClose()">
+  <div class="ui-voucher-modal">
+    <span class="f-6 text-bold">Insert voucher code</span>
+    <ui-input class="w-100p"></ui-input>
+    <div class="mt-6">
+      <ui-button width="full" size="lg" radius="lg">Apply</ui-button>
+    </div>
+  </div>
+</ui-modal>

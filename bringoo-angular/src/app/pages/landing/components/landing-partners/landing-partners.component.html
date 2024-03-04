@@ -1,0 +1,45 @@
+<div class="header">
+  <div class="header-body">
+    <a routerLink="/login" class="cursor-pointer"><img src="/assets/img/logo.svg"></a>
+    <a routerLink="/login" class="btn-login">Log in</a>
+  </div>
+</div>
+<div class="content">
+  <div class="mt-8 d-flex">
+    <carousel [objectFit]="'cover'" [cellWidth]="'100%'" [loop]="true" [autoplay]="true">
+      <div *ngFor="let c of [].constructor(5); index as i" class="carousel-cell bg-green">
+          <img [src]="'./assets/img/cards/' + images[i]">
+      </div>
+    </carousel>
+  </div>
+</div>
+<div class="content justify-content-center align-items-center">
+  <div class="d-flex justify-content-center align-items-center f-8 text-bold mt-20">
+    Partners
+  </div>
+  <div class="d-flex justify-content-between flex-wrap w-96p mt-10">
+    <div *ngFor="let c of [].constructor(6)" class="partner">
+      <img src="/assets/img/cards/company-logo.svg">
+      <div class="d-flex flex-column ml-5">
+        <div class="text-bold">Meyer’s Frischecenter</div>
+        <div class="text-small text-blue">
+          <span class="text-bold">Supermarket</span> · 07:00–21:00
+        </div>
+      </div>
+    </div>
+  </div>
+  <ui-button radius="md" size="lg" class="mt-10">Show all</ui-button>
+</div>
+<div class="content">
+  <div class="text-bold f-8 mt-86">
+    Wir bringen es. <span class="text-green">Wie?</span>
+  </div>
+  <div class="d-flex justify-content-between flex-wrap mt-10 mb-86">
+    <div *ngFor="let card of cardData;index as i" class="card">
+      <div class="card-number">{{i+1}}</div>
+      <img [src]="'/assets/img/' + card.imgUrl">
+      <div class="text-align-center" [innerHTML]="card.description">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<div class="d-flex justify-content-between">
+  <h4>Orders with this product</h4>
+  <button
+    nz-button nz-dropdown nzType="default" class="mr-8"
+    [nzDropdownMenu]="menuExport" [nzPlacement]="'bottomCenter'">Export
+  </button>
+  <nz-dropdown-menu #menuExport="nzDropdownMenu" class="mr-8">
+    <ul nz-menu>
+      <ng-container>
+        <li nz-menu-item (click)="onExport('xlsx')">Export All as Excel</li>
+        <li nz-menu-item (click)="onExport('ods')">Export All as ODS</li>
+        <li nz-menu-item (click)="onExport('json')">Export All as JSON</li>
+      </ng-container>
+    </ul>
+  </nz-dropdown-menu>
+</div>
+<div class="mt-4 border-round-sm scroll-hidden">
+  <form [formGroup]="filterForm" nz-form class="filter-form container-fluid bg-component px-4 pt-2 mb-4">
+    <div class="row">
+      <div class="d-flex mr-4">
+        <nz-form-item class="w-24 ml-4 pr-0 mb-2">
+          <nz-form-control labelForErrorTip="Start date">
+            <nz-form-label>Start date</nz-form-label>
+            <app-date-control
+              [isRequired]="true"
+              formControlName="dateStart"
+              placeHolder="Date start"
+            ></app-date-control>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="w-24 mr-4 pr-0 mb-2">
+          <nz-form-control labelForErrorTip="End date">
+            <nz-form-label>End date</nz-form-label>
+            <app-date-control
+              [isRequired]="true"
+              formControlName="dateEnd"
+              placeHolder="Date end"
+              [disableBefore]="filterForm.value.dateStart"
+            ></app-date-control>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <app-filter-store-select
+        formControlName="storeIds"
+        class="col pl-0"
+        placeHolder="Store"
+        label="Store"
+        type="multiple"
+      ></app-filter-store-select>
+      <nz-form-item class="col">
+        <nz-form-control>
+          <nz-form-label>Order Status</nz-form-label>
+          <app-list-select
+            class="d-block"
+            formControlName="orderStatus"
+            placeHolder="Order Status"
+            [isRequired]="false"
+            [list]="orderStatuses"
+          ></app-list-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </form>
+
+  <nz-table
+    *ngIf="recallReport$|async as data"
+    nzShowSizeChanger
+    nzShowPagination
+    [nzData]="data.items || []"
+    [nzFrontPagination]="false"
+    [nzLoading]="isLoading$|async"
+    [nzTotal]="data.total"
+    [nzPageIndex]="data.page"
+    [nzPageSize]="filterForm.value?.limit ?? 20"
+    [nzSize]="'small'"
+    [nzScroll]="{ x: '250px' }"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    [nzShowTotal]="rangeTemplate"
+  >
+    <thead>
+    <tr class="fixed-header">
+      <th
+        [nzLeft]="true"
+        [nzWidth]="'50px'"
+      ></th>
+      <th [nzSortFn]="true" nzColumnKey="customerName">Customer Name</th>
+      <th [nzSortFn]="true" nzColumnKey="storeName">Store Name</th>
+      <th [nzSortFn]="true" nzColumnKey="orderNumber">Order Number</th>
+      <th [nzSortFn]="true" nzColumnKey="orderStatus">Order Status</th>
+      <th [nzSortFn]="true" nzColumnKey="deliveryDate">Delivery Date</th>
+      <th [nzSortFn]="true" nzColumnKey="quantity" class="text-align-right">Quantity</th>
+      <th [nzSortFn]="true" nzColumnKey="quantityRefund" class="text-align-right">Refund</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let item of (data.items || []); let ind = index">
+      <td nzShowCheckbox></td>
+      <td><a routerLink="/users/customers/details/{{item.customerId}}">{{item.customerName}}</a></td>
+      <td><a routerLink="/store/stores/{{item.storeId}}/basic-information">{{item.storeName}}</a></td>
+      <td><a routerLink="/orders/all/detail/{{item.orderId}}">{{item.orderNumber}}</a></td>
+      <td>{{item.orderStatus}}</td>
+      <td>{{item.deliveryDate|date :dateFormat}}</td>
+      <td class="text-align-right">{{item.quantity}}</td>
+      <td class="text-align-right">{{item.quantityRefund}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  </ng-template>
+</div>

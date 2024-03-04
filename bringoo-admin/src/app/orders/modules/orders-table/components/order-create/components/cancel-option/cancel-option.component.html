@@ -1,0 +1,46 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="700"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  [nzTitle]="label"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <p>You are about to cancel the order. Below are your options.</p>
+    <form nz-form nzLayout='vertical' [formGroup]='form'>
+      <b>Options</b>
+      <nz-form-item class="ml-4">
+        <nz-form-control>
+          <label nz-checkbox formControlName="refundOrder">Refund order amount</label>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="mt-4">
+        <nz-form-label nzRequired>Provide comment</nz-form-label>
+        <nz-form-control labelForErrorTip="Provide comment">
+          <textarea
+            class="w-100p"
+            placeholder="Provide comment"
+            formControlName="cancelDescription"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+    </form>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

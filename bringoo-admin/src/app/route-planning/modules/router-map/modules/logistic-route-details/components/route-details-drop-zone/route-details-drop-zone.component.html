@@ -1,0 +1,120 @@
+<div
+  class="h-100p scroll-y"
+  [id]="containerId"
+  cdkDropList
+  [cdkDropListConnectedTo]="(connectTo$|async) ?? []"
+  (cdkDropListDropped)="onChangeOrder($event)"
+>
+  <nz-empty *ngIf="itemsLength === 0" class="pt-4"></nz-empty>
+  <ng-container *ngIf="keyPoints$|async as keyPoints">
+    <app-key-point
+      *ngFor="let item of keyPoints; let index=index"
+      cdkDrag
+      (cdkDragStarted)="onDragStart(item.id)"
+      (cdkDragEnded)="onDragEnd()"
+      (cdkDragExited)="changeContainer($event)"
+      [cdkDragData]="isDragGroup ? checkedKeyPoints : item.id"
+      cdkDragPreviewClass="layout-item-drag-preview"
+
+      id="keyPoint{{index}}"
+      [class.order-number-error]="item.order && errorOrderNumber === item.order?.orderNumber"
+      [keyPoint]="item"
+      [index]="index"
+      [class.isInGroupDrag]="checkedKeyPoints.has(item.id) && isDragGroup"
+      (updateId)="onUpdate(item)"
+      (deleteId)="onShowDeleteModal($event)"
+      [attr.order-number]="item.order?.orderNumber"
+    >
+      <span class="checked-size">
+        {{checkedKeyPoints.has(item.id) ? checkedKeyPoints.size : 1}}
+      </span>
+      <div class="custom-placeholder" *cdkDragPlaceholder></div>
+      <i
+        cdkDragHandle
+        class="cursor-move"
+        nz-icon
+        nzType="drag"
+        nzTheme="outline"
+      ></i>
+      <label
+        nz-checkbox
+        (nzCheckedChange)="onKeyPointCheck($event, item.id)"
+        [nzChecked]="checkedKeyPoints.has(item.id)"
+      ></label>
+    </app-key-point>
+  </ng-container>
+</div>
+
+<nz-modal
+  [nzVisible]="showModal"
+  nzTitle="Remove a points"
+  (nzOnCancel)="onCloseModal()"
+  (nzOnOk)="onDelete()"
+  [nzOkLoading]="isLoading$|async"
+  nzOkDanger
+  nzOkText="Yes"
+  nzCancelText="No"
+><p class="mb-0" *nzModalContent>
+  <ng-container *ngIf="checkedKeyPoints.size === 0; else deleteMany">You want to remove a point from the route?</ng-container>
+  <ng-template #deleteMany>You want to remove {{checkedKeyPoints.size}} points from the route?</ng-template>
+</p></nz-modal>
+
+<nz-drawer
+  *ngIf="openPanel$|async as openPanel"
+  [nzVisible]="openPanel === 'createRouteItem'"
+  nzPlacement="right"
+  nzTitle="Create Route Item"
+  [nzWidth]="'90%'"
+  (nzOnClose)="onClosePanel()"
+  [nzFooter]="createRouteItemPanelFooter"
+>
+  <ng-container *nzDrawerContent>
+    <div>
+      <div
+        *ngIf="isLoading$|async"
+        class="form-modal"
+      ></div>
+      <ng-template
+        [ngComponentOutlet]="createRouteItem.form"
+        [ndcDynamicInputs]="createRouteItem.formInputs"
+        [ndcDynamicOutputs]="createRouteItem.formOutputs"
+      ></ng-template>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #createRouteItemPanelFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onClosePanel()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="createRouteItem.onButtonClick()" nzBlock nz-button nzType="primary">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<nz-modal
+  *ngIf="openPanel$|async as openPanel"
+  [nzVisible]="openPanel === 'updateRouteItem'"
+  nzTitle="Update Route Item"
+  (nzOnCancel)="onClosePanel()"
+  (nzOnOk)="updateKeyPoint.onButtonClick()"
+  [nzOkLoading]="isLoading$|async"
+  nzOkText="Update"
+  nzCancelText="Cancel"
+  [nzClassName]="'updateRouteItemModal'"
+>
+  <ng-container *nzModalContent>
+    <div class="h-100p position-relative">
+      <ng-template
+        [ngComponentOutlet]="updateKeyPoint.form"
+        [ndcDynamicInputs]="updateKeyPoint.formInputs"
+        [ndcDynamicOutputs]="updateKeyPoint.formOutputs"
+      ></ng-template>
+    </div>
+  </ng-container>
+</nz-modal>

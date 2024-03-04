@@ -1,0 +1,67 @@
+[nz-card] {
+  width: 160px;
+  height: 104px;
+  .ant-card-body::ng-deep {
+    height: 100%;
+  }
+}
+
+.chart-area {
+  @media screen and (min-width: 1660px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 480px 480px;
+    grid-template-rows: 338px 280px;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-areas:
+    "chart-1 chart-1 chart-3 chart-4"
+    "chart-2 chart-2 chart-3 chart-4";
+  }
+
+  @media screen and (min-width: 1050px) and (max-width: 1660px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 480px;
+    grid-template-rows: 338px 280px auto;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-areas:
+    "chart-1 chart-1 chart-3"
+    "chart-2 chart-2 chart-3"
+    "chart-4 chart-4 chart-4";
+  }
+
+  @media screen and (max-width: 1050px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 338px 280px auto;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-areas:
+    "chart-1 chart-1"
+    "chart-2 chart-2"
+    "chart-3 chart-3"
+    "chart-4 chart-4";
+  }
+
+  .chart-1 {
+    grid-area: chart-1;
+  }
+  .chart-2 {
+    grid-area: chart-2;
+  }
+  .chart-3 {
+    grid-area: chart-3;
+  }
+  .chart-4 {
+    grid-area: chart-4;
+  }
+
+  .chart-data {
+    max-height: 540px;
+    min-height: 50px;
+  }
+}
+.manager-tasks {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}

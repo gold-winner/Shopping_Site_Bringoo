@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+
+@color_danger: red;
+@color_green: #2CC84D;
+@color_primary_light: #4FBA5D;
+@color_darkgreen: #275029;
+@color_beige: #E2D3C5;
+@color_blue: #244875;
+@color_primary_blue: #244875;
+@color_lightblue: #677798;
+@color_lightgray: #f0f0f0;
+@color_darkgrey: #2B2D3A;
+@color_white: #ffffff;
+@color_red: #FF103B;
+@color_orange: #FA7C34;
+@color_vanilla: #F9F6F3;
+@color_darkvanilla: #e2d3c5;
+@color_black: #000000;
+@color_darken_gray_blue: #2B2D3A;
+@color_gray_blue: #22242F;
+@color_almost_black: #070A1B;
+@color-layout-sider: #1F1F1F;
+
+//base theme colors
+//@primary-color: @color_primary_light;
+@danger-color: @color_red;
+@body-background-darken: @color_darkvanilla;
+@default-text-color: @color_black;
+@inverse-default-text-color: @color_white;
+@color_text-2: @color_lightblue;
+@collapse-header-bg: @component-background;
+
+@map_info_bg: rgba(255, 255, 255, 0.8);
+
+.ant-card-meta-description {
+  color: @default-text-color !important;
+}
+
+.color-danger {
+  color: @color_danger;
+}
+
+google-map .text-black {
+  color: black;
+}
+
+
+nz-layout {
+  .layout-sidebar {
+    background-color: @color_darkgrey;
+    position: relative;
+    z-index: 10;
+    overflow: auto;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
+  }
+
+  [nz-menu]{
+    border-right: none;
+    &[class='main-menu'] {
+      border-right: 1px solid @color_darkgrey;
+    }
+    .logo{
+      height: 50px;
+    }
+    [nz-menu-item]{
+      background: none!important;
+    }
+  }
+}
+
+.main-menu {
+  border-right: 1px solid #2B2D3AFF!important;
+  .ant-menu-item::after{
+    left: 0 !important;
+    right: auto;
+  }
+
+  .ant-btn {
+    text-overflow: ellipsis;
+  }
+
+  .ant-menu-submenu-selected .ant-menu-submenu-arrow,
+  .ant-menu-submenu-selected,
+  .ant-menu-item-selected,
+  .ant-menu-item-selected a,
+  .ant-menu-item-selected span,
+  [nz-menu-item] a:hover
+  {
+    color: @primary-color !important;
+  }
+
+  .ant-menu {
+    background-color: transparent;
+  }
+}
+
+.ant-card-body {
+  height: 100%;
+}
+
+.color-scheme > div {
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
+  border-radius: 4px;
+}
+
+.color-scheme > div:last-child {
+  margin-right: 4px;
+}
+
+.heat-map-description {
+  border-bottom: 1px solid rgba(#677798, 0.5);
+}
+
+.store-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.input-max-length {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translateY(100%);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.filter-form {
+  .row {
+    padding-left: 16px;
+    padding-right: 0;
+  }
+  nz-form-item, .filter-form-item, .col {
+    padding: 0;
+    margin: 0;
+    & nz-form-item {
+      margin-right: 0;
+    }
+  }
+  nz-form-item:not(.search), .filter-form-item:not(.search), .col:not(.search) {
+    min-width: 160px;
+  }
+  .col, .dates, .filter-form-item {
+    margin-right: 16px;
+    padding-bottom: 8px;
+  }
+  .search {
+    min-width: 240px;
+    width: 240px;
+  }
+}
+
+
+ngx-colors-panel {
+  p {
+    color: black;
+  }
+}
+
+.hide-radio {
+  span {
+    display: none;
+  }
+}
+
+.reset-hr {
+  height: 1px;
+  border: 0;
+}
+
+.bg-button2 {
+  background: @color_blue !important;
+}
+
+.bg-component {
+  background: @component-background;
+}
+.bg-body {
+  background: @body-background;
+}
+
+.bg-primary {
+  background: @primary-color;
+}
+
+.color-primary {
+  color: @primary-color;
+}
+.color-text {
+  color: @default-text-color;
+}
+.color-text-2 {
+  color: @color_text-2;
+}
+
+.color-inverse-text {
+  color: @inverse-default-text-color;
+}
+
+@borders: {
+  body-background-darken: @color_darkvanilla;
+  body-background: @body-background;
+}
+each(@borders, {
+  .border-@{key} {
+    border: 1px solid @value;
+  }
+})
+
+@border-widths: 1,2,3,5;
+each(@border-widths, {
+  .border-width-@{value} {
+    border-width: unit(@value, px);
+  }
+})
+
+
+@opacity_steps: 10, 20, 40, 50, 60, 80;
+.colorsOpacity(@name, @color) {
+  .bg-@{name} {
+    background: @color;
+    each(@opacity_steps, {
+      &-@{value} {
+        background: fade(@color, unit(@value, %));
+      }
+    })
+  }
+  .color-@{name} {
+    color: @color;
+    each(@opacity_steps, {
+      &-@{value} {
+        color: fade(@color, unit(@value, %));
+      }
+    })
+  }
+}
+
+.colorsOpacity(primary, @primary-color);
+.colorsOpacity(danger, @danger-color);
+.colorsOpacity(primary-blue, @color_primary_blue);
+.colorsOpacity(primary-green, @color_primary_light);
+.colorsOpacity(info, @color_orange);
+.colorsOpacity(disabled, @disabled-color);
+.colorsOpacity(component, @component-background);
+.colorsOpacity(default-text-color, @default-text-color);
+.colorsOpacity(inverse-default-text-color, @inverse-default-text-color);
+.colorsOpacity(beige, @color_beige);
+.colorsOpacity(darkvanilla, @color_darkvanilla);
+
+.map-label {
+  background: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 15px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: relative;
+  &::after {
+    content: '';
+    width: 5px;
+    height: 10px;
+    position: absolute;
+    bottom: -6.5px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 8px solid white;
+  }
+}
+
+.settings-sidebar {
+  box-shadow: none !important;
+}
+
+.map-info {
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  >div{
+    background: @map_info_bg;
+  }
+  [nz-radio][class^="carts"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: #4FBA5D !important;
+    }
+    .ant-radio-inner::after{
+      background-color: #4FBA5D !important;
+    }
+  }
+
+
+  [nz-radio][class^="in-progress"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: yellow !important;
+    }
+    .ant-radio-inner::after{
+      background-color: yellow !important;
+    }
+  }
+
+  [nz-radio][class^="complete"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: #4FBA5D !important;
+    }
+    .ant-radio-inner::after{
+      background-color: #4FBA5D !important;
+    }
+  }
+
+  [nz-radio][class^="payment"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: #244875 !important;
+    }
+    .ant-radio-inner::after{
+      background-color: #244875 !important;
+    }
+  }
+
+  [nz-radio][class^="cancelled"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: red !important;
+    }
+    .ant-radio-inner::after{
+      background-color: red !important;
+    }
+  }
+}
+
+.ant-select-dropdown .full-width .cdk-virtual-scroll-spacer {
+  position: absolute;
+  top: 0;
+  width: 1px;
+}
+
+.ant-modal-confirm-body-wrapper .ant-modal-confirm-btns {
+  float: right;
+}
+
+.ant-tooltip {
+  font-size: 12px;
+}

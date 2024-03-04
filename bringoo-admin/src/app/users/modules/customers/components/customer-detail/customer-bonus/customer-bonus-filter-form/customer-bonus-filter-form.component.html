@@ -1,0 +1,13 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Bonus Type</nz-form-label>
+      <app-list-select
+        class="d-block"
+        [isRequired]="false"
+        formControlName="bonusType"
+        [list]="bonusTypes"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

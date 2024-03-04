@@ -1,0 +1,14 @@
+@import "../../../scss/colors";
+
+.customer-info{
+  img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+}
+:host{
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid #e2d3c5;
+}

@@ -1,0 +1,120 @@
+<form nz-form [formGroup]="form" nzLayout="vertical" class="mx-4 form scroll-y">
+  <div class="container-fluid">
+    <h3 class="mt-4">Shop Settings</h3>
+    <nz-form-item>
+      <nz-form-label nzRequired>Store Slug</nz-form-label>
+      <nz-form-control labelForErrorTip="Store Slug">
+        <input nz-input formControlName="slug" placeholder="Store Slug">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired>Maximum waiting time for a customer's response (in seconds) on product replacement</nz-form-label>
+      <nz-form-control nzHasFeedback labelForErrorTip="numberErrorTip">
+        <input nz-input formControlName="replacementMaxTime" placeholder="Min value 20">
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired>Maximum attempts to extend time on product replacement</nz-form-label>
+      <nz-form-control nzHasFeedback labelForErrorTip="numberErrorTip">
+        <input nz-input formControlName="replacementMaxAttempts" placeholder="Min value 10">
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="row">
+      <nz-form-item class="col">
+        <nz-form-label nzNoColon nzFor="replacementAllowed">Replacement Allowed</nz-form-label>
+        <nz-form-control labelForErrorTip="Replacement Allowed">
+          <app-status-switch
+            class="w-40"
+            formControlName='replacementAllowed'
+            trueValue="Yes"
+            falseValue="No"
+          ></app-status-switch>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="col">
+        <nz-form-label nzNoColon nzFor="syncOrdersToPartner">Sync Orders to Partner</nz-form-label>
+        <nz-form-control labelForErrorTip="Sync Orders to Partner">
+          <app-status-switch
+            class="w-40"
+            formControlName='syncOrdersToPartner'
+            trueValue="Yes"
+            falseValue="No"
+          ></app-status-switch>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="col">
+        <nz-form-label nzNoColon nzFor="isNextDayDeliveryOnly">Is working in next-day delivery mode</nz-form-label>
+        <nz-form-control labelForErrorTip="Is working in next-day delivery mode">
+          <app-status-switch
+            class="w-40"
+            formControlName='isNextDayDeliveryOnly'
+            trueValue="Yes"
+            falseValue="No"
+          ></app-status-switch>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="row">
+      <nz-form-item class="col">
+        <nz-form-label nzNoColon nzFor="orderCantBeCanceledWhilePick">Orders can't be canceled when picker work</nz-form-label>
+        <nz-form-control labelForErrorTip="Is working in next-day delivery mode">
+          <app-status-switch
+            class="w-40"
+            formControlName='orderCantBeCanceledWhilePick'
+            trueValue="Yes"
+            falseValue="No"
+          ></app-status-switch>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <nz-form-item>
+      <nz-form-label [nzRequired]="form.get('isNextDayDeliveryOnly')?.valueChanges|async">Next Day Delivery Cut Off Time</nz-form-label>
+        <nz-form-control labelForErrorTip="Next Day Delivery Cut Off Time">
+          <app-time-control
+            [minuteStep]="10"
+            formControlName="nextDayDeliveryCutOffTime"
+            appDisableControl
+            [disable]="!(form.get('isNextDayDeliveryOnly')?.valueChanges|async)"
+          ></app-time-control>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired>Time Zone</nz-form-label>
+      <nz-form-control labelForErrorTip="Time Zone">
+        <app-list-select
+          formControlName="timeZone"
+          [isRequired]="true"
+          placeHolder="Time Zone"
+          [list]="timeZones"
+        ></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>
+<div class="p-4">
+  <button
+    [nzLoading]="isLoading$ | async"
+    (click)="onSubmit()"
+    [nzType]="'primary'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Update
+  </button>
+  <button
+    [nzLoading]="isLoading$ | async"
+    (click)="onCancel()"
+    [nzType]="'link'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Cancel
+  </button>
+</div>

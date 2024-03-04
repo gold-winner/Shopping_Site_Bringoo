@@ -1,0 +1,22 @@
+<ng-container
+  *ngIf="barConfig"
+>
+  <div>
+    <canvas
+      baseChart
+      [height]="barConfig.height"
+      [legend]="false"
+      [options]="barConfig.options"
+      [datasets]="barConfig.dataSet"
+      [labels]="barConfig.labels"
+      [plugins]="plugins"
+    >
+    </canvas>
+  </div>
+</ng-container>
+
+<ng-container
+  *ngIf="!barConfig"
+>
+  <div class="text-center">-No Data-</div>
+</ng-container>

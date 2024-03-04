@@ -1,0 +1,104 @@
+<div class="ui-header">
+  <div *ngIf="enableSearch" class="cover" (click)="onClickCover()"></div>
+  <div class="ui-header__body">
+    <div *ngIf="enableStore" class="ui-header__body--actionbar">
+      <ui-button (onClick)="onSidebarOpen($event)">
+        <span *ngIf="innerWidth > 768">Categories</span>
+        <icon name="grid" *ngIf="innerWidth  < 768 "></icon>
+      </ui-button>
+      <ui-dropdown-button defaultValue="Delivery Type" [items]="deliveryTypeData" (onClickMode)="onClickMode($event)"
+        class="delivery-dropdown ml-5"></ui-dropdown-button>
+      <div class="search-box">
+        <ui-dropdown-store [defaultValue]="currentStoreImage" [items]="storeListData" class="delivery-dropdown ml-5">
+        </ui-dropdown-store>
+        <ui-dropdown-store [defaultValue]="currentStoreImage" [items]="storeListData"
+          class="store-mobile store-btn position-relative">
+        </ui-dropdown-store>
+        <div class="search-box__input">
+          <input type="text" [placeholder]="searchBoxPlaceHolder" [value]="searchInfo" (keyup)="onSearchChange($event)"
+            style="padding-right: 74px;" />
+          <icon name="close-x" class="search-box__input--close" (click)="onSearchDelete()"></icon>
+          <img class="search-box__input--divider" src="assets/img/divider.svg" />
+          <icon name="search" class="search-box__input--icon" (click)="onSearchItems()"></icon>
+        </div>
+        <div *ngIf="enableSearch">
+          <div class="search">
+            <div class="popup-bottom pb-4">
+              <div class="d-flex flex-row pl-8 pt-4">
+                <div *ngFor="let data of resultsAsArray;">
+                  <div class="d-flex flex-column justify-content-center align-items-center mx-3">
+                    <div class="d-flex justify-content-center px-2 py-1 border-radius-lg shadow-cardbackground"
+                      style="box-shadow: 0px 4px 14px #f1ede9;">
+                      <img src="/assets/img/products/crisp.svg" class="cursor-pointer"
+                        style="width: 75px; height: 95px;" />
+                    </div>
+                    <span class="text-medium text-semi-bold mt-2">{{data.key}}</span>
+                  </div>
+                </div>
+                <div *ngIf="searchData && searchData.count === 0" class="text-medium text-bold">There are no items match
+                  with this search ...</div>
+              </div>
+            </div>
+            <div *ngIf="searchData" class="d-flex flex-column justify-content-center">
+              <div *ngFor="let data of searchData.data | slice:0:5; let i=index">
+                <div class="d-flex flex-row py-3"
+                  [ngClass]="i!==searchData.data.length-1 ? i===0 ? 'popup-bottom' : 'popup-bottom ' : 'popup-bottom'">
+                  <img src="{{data.imageUrl}}" class="ml-8" style="width: 70px; height: 80px;">
+                  <div class="d-flex flex-column ml-6 justify-content-center align-items-start">
+                    <span class="text-medium text-bold">{{data.name_i18n}}</span>
+                    <div>
+                      <span class="text-medium text-bold">{{data.basePrice}}</span>
+                      <span class="text-medium text-semi-bold ml-3">{{data.baseSize}}</span>
+                      <span class="text-medium text-semi-bold ml-1">( {{data.productSize}} = {{data.regularPrice}}
+                        )</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="searchData && searchData.count !== 0" class="show_all">
+              <a href="/settings/products-filter"><span class="text-medium text-semi-bold py-4">Show all</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a routerLink="/settings/profile" class="profile-header">
+        <div class="square-icon none-icon">
+          <icon name="user"></icon>
+        </div>
+      </a>
+      <a routerLink="/settings/favorite" class="text-darkgrey">
+        <div class="square-icon none-icon">
+          <icon name="heart"></icon>
+        </div>
+      </a>
+      <a routerLink="/settings/notification" class="text-darkgrey">
+        <div class="square-icon none-icon">
+          <span class="square-icon__dot"></span>
+          <icon name="bell"></icon>
+        </div>
+      </a>
+      <div class="cart">
+        <div class="square-icon cart-icon" (click)="onShoppingCartClick.emit(cartDetail)">
+          <span class="text-notification">{{productsCount}}</span>
+          <icon name="cart"></icon>
+        </div>
+        <div *ngIf="enablePopup" class="popup pb-4 only-desktop">
+          <div *ngFor="let product of addedProducts let i = index" (click)="onShoppingCartClick.emit(cartDetail)">
+            <div class="d-flex mt-4 px-5" [ngClass]="i!==addedProducts.length-1 ? 'popup-bottom pb-4' : ''">
+              <img src="{{product.imageUrl}}" style="width: 100px; height: 90px;">
+              <div class="text-medium text-semi-bold ml-4 d-flex justify-content-center align-items-center"
+                style="width: 250px; height: 80px;">
+                <span>{{product.name_i18n}}</span>
+              </div>
+              <div class="text-large text-semi-bold ml-4 d-flex justify-content-center align-items-center"
+                style="width: 100px; height: 80px;">
+                <span>{{product.price}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

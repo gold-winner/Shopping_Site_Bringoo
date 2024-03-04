@@ -1,0 +1,10 @@
+<ng-container *ngIf="asyncDataObserver|async as data">
+  <canvas
+      #wordCloud
+      *ngIf="data.length > 0; else noData"
+      class="w-100p h-100p"
+  ></canvas>
+  <ng-template #noData>
+    <h5 class="text-center color-danger">—No Data—</h5>
+  </ng-template>
+</ng-container>

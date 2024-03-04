@@ -1,0 +1,39 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-56">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input
+          nz-input
+          formControlName="search"
+          placeholder="Search"
+          nzTooltipPlacement="topLeft"
+          nz-tooltip="Search by Title and Body"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="w-56">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label>User Group</nz-form-label>
+        <nz-select formControlName="userGroup" nzAllowClear nzShowSearch>
+          <nz-option *ngFor="let userGroup of userGroups" [nzValue]="userGroup" [nzLabel]="userGroup"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="w-56">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label>Status</nz-form-label>
+        <nz-select formControlName="status" nzAllowClear nzShowSearch>
+          <nz-option *ngFor="let status of statuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+</form>

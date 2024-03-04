@@ -1,0 +1,43 @@
+<div *ngIf="cartDetailInfo" class="ui-cart-sidebar">
+  <div class="sidebar-header ">
+    <div class="d-flex align-items-center">
+      <span>Shopping cart</span>
+      <a [routerLink]="['/shopping-cart']" class="cart-link">
+        <icon name="fullscreen" class="ml-3" (click)="onCloseSidebar.emit($event)"></icon>
+      </a>
+    </div>
+    <icon name="close-x" (click)="onCloseSidebar.emit($event)" class="cursor-pointer"></icon>
+  </div>
+  <div class="bg-beige-20 pt-4 px-5">
+    <ui-shop-detail [shopDetail]="cartDetailInfo.store"></ui-shop-detail>
+  </div>
+  <div class="mt-3 px-5">
+    <div class="d-flex justify-content-between text-small">
+      <span class="text-small text-lightblue">{{cartDetailInfo.productsCount}} items total</span>
+      <a class="d-flex align-items-center cursor-pointer" (click)="onSelectOption()">
+        <span>Select options for Replacement</span>
+        <icon name="repeat" class="ml-1"></icon>
+      </a>
+    </div>
+    <div *ngIf="cartDetailInfo" class="my-4">
+      <ui-product-cart *ngFor="let item of cartDetailInfo.items" 
+        [product]="item" 
+        [sidebar]="true" 
+        (onCartInfo)="onChangeCart($event)"
+        ></ui-product-cart>
+    </div>
+    <ui-total [subTotal]="cartDetailInfo.subtotal" [totalDeposit]="cartDetailInfo.totalDeposit" [vatTotal]="cartDetailInfo.vatTotal" [totalPrice]="cartDetailInfo.totalPrice" [deliveryFee]="cartDetailInfo.store.deliveryFee" (onAddVoucherClick)="onAddVoucherClick()"></ui-total>
+    <div class="mt-4 mb-13">
+      <ui-button width="full" size="lg" (onClick)="onProcessCheckout()">Process to Check out</ui-button>
+    </div>
+  </div>
+  <ui-modal [opened]="voucherModal" [smallSize]="true" (onClose)="onVoucherModalClose()">
+    <div class="ui-voucher-modal">
+      <span class="f-6 text-bold">Insert voucher code</span>
+      <ui-input class="w-100p"></ui-input>
+      <div class="mt-6">
+        <ui-button width="full" size="lg" radius="lg">Apply</ui-button>
+      </div>
+    </div>
+  </ui-modal>
+</div>

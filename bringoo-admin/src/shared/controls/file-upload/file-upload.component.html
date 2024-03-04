@@ -1,0 +1,78 @@
+<ng-container *ngIf="!multiple">
+  <ng-container *ngIf="fileList$ | async as list">
+    <div class="d-flex align-items-center mb-1">
+      <div [class.cursor-pointer]="list[0]|bool" (click)="onPreview(list[0]?.url)">
+        <img
+          nz-image
+          *ngIf="list.length > 0"
+          class="img-no-events"
+          [src]="(list[0]?.thumbUrl || list[0]?.url) || ''"
+          [nzSrc]="(list[0]?.thumbUrl || list[0]?.url) || ''"
+          [nzDisablePreview]="true"
+          style="max-height: 70px; max-width: 150px"
+          alt=""
+        />
+        <img
+          *ngIf="list.length === 0"
+          class="img-no-events"
+          src="./assets/img/noLogo.svg"
+          width="70"
+          alt=""
+        />
+      </div>
+      <div class="ml-2">
+        <h4>{{title}}</h4>
+        <h5>{{subTitle}}</h5>
+      </div>
+      <ng-container [ngTemplateOutlet]="deleteButton"></ng-container>
+      <ng-template #deleteButton>
+        <i *ngIf="list.length > 0" class="ml-auto mr-8 color-danger cursor-pointer" nz-icon nzType="delete" nzTheme="outline" (click)="onRemove(list[0])"></i>
+        <i *ngIf="list.length === 0" class="ml-auto mr-8 color-text-2" nz-icon nzType="delete" nzTheme="outline"></i>
+      </ng-template>
+    </div>
+  </ng-container>
+</ng-container>
+<nz-upload
+  nzType="drag"
+  [nzMultiple]="multiple"
+  [nzDisabled]="!path || isDisabled"
+  [nzCustomRequest]="uploadFile"
+  [nzRemove]='onRemove'
+  [nzFileList]='(fileList | async) || []'
+  [nzShowUploadList]="false"
+  [nzBeforeUpload]="beforeUpload"
+>
+  <p class="ant-upload-drag-icon">
+    <i nz-icon nzType="inbox"></i>
+  </p>
+  <p class="ant-upload-text">Click or drag file to this area to upload</p>
+  <p class="ant-upload-hint">Support for a single or bulk upload. You must define file path before adding files</p>
+</nz-upload>
+<ng-container *ngIf="multiple">
+  <nz-table class="border-1 mt-1" *ngIf="fileList$ | async as list" [nzData]="list" [nzFrontPagination]="false" [nzShowPagination]="false" nzSize="small">
+    <tbody cdkDropList (cdkDropListDropped)="onDrop($event)">
+    <tr *ngFor="let item of list" cdkDrag>
+      <td (click)="onPreview(item.url)">
+        <img
+          class="table-image img-no-events"
+          nz-image
+          [src]="(item.thumbUrl || item.url)"
+          [nzSrc]="(item.thumbUrl || item.url) || ''"
+          [nzDisablePreview]="true"
+          alt=""
+        />
+      </td>
+      <td>{{ item.name }}</td>
+      <td class="text-align-right">
+        <button
+          (click)="onRemove(item)"
+          nz-button
+          nzType="link"
+          nzSize="small"
+        ><i nz-icon class="color-danger" nzType="delete" nzTheme="outline"></i></button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</ng-container>
+<p class="color-danger bg-danger-10 position-absolute w-100p" *ngIf="uploadError$|async as error">{{error}}</p>

@@ -1,0 +1,15 @@
+@import "src/scss/colors";
+hr{
+  border: 1px solid $color_vanilla;
+  color: $color_vanilla;
+}
+.receipt{
+  width: 240px;
+  hr{
+    border: 1px solid $color_darkvanilla;
+    color: $color_darkvanilla;
+  }
+}
+.bringoo-logo {
+  height: 30px;
+}

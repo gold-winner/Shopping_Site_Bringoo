@@ -1,0 +1,60 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.order-status {
+  @extend .position-relative;
+  @extend .ml-2;
+  @extend .mr-10;
+  @extend .my-10;
+  border: 1px dashed $color_green;
+
+  .completed {
+    @extend .bg-green;
+  }
+  .incompleted {
+    background-color: rgba($color_lightblue, 0.4);
+  }
+  &__item {
+    @extend .position-absolute;
+    @extend .border-radius-lg;
+    left: -6px;
+
+    &:first-child {
+      top: -4px;
+    }
+    &:nth-child(2) {
+      top: 75px;
+    }
+    &:nth-child(3) {
+      top: 150px;
+    }
+    &:nth-child(4) {
+      top: 225px;
+    }
+    &:nth-child(5) {
+      top: 315px;
+    }
+  }
+
+  .current-status {
+    @extend .d-flex;
+    @extend .p-2;
+    @extend .text-white;
+    border-radius: 32px;
+    left: -18px;
+  }
+
+  .dot {
+    @extend .w-3;
+    @extend .h-3;
+    @extend .border-radius-md;
+    @extend .bg-green;
+  }
+}
+
+.status-item {
+  @extend .py-4;
+  border-bottom: 1px solid rgba($color_beige, 0.2);
+}

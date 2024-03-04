@@ -1,0 +1,21 @@
+<nz-time-picker
+  class='w-100p'
+  *ngIf="!disabledBeforeTime"
+  [formControl]="control"
+  [nzFormat]="timeFormat"
+  [nzDefaultOpenValue]="defaultTime"
+  [nzMinuteStep]="minuteStep"
+  [required]="isRequired"
+></nz-time-picker>
+
+<nz-time-picker
+  class='w-100p'
+  *ngIf="disabledBeforeTime"
+  [formControl]="control"
+  [nzFormat]="timeFormat"
+  [nzDefaultOpenValue]="defaultTime"
+  [nzMinuteStep]="minuteStep"
+  [required]="isRequired"
+  [nzDisabledHours]="nzDisabledHours"
+  [nzDisabledMinutes]="nzDisabledMinutes"
+></nz-time-picker>

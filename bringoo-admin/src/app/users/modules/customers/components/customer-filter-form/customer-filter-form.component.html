@@ -1,0 +1,57 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <div class="w-56">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input nz-input formControlName="search" placeholder="Search"
+                 nz-tooltip="Search by Email and Name"
+                 nzTooltipPlacement="topLeft"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="w-40">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label>Role</nz-form-label>
+        <nz-select formControlName="role">
+          <nz-option *ngFor="let role of roles" [nzValue]="role" nzLabel="{{role}}"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Tags filter</nz-form-label>
+      <nz-select
+        nzPlaceHolder="Tags filter"
+        nzMode="tags"
+        [nzDropdownStyle]="{ display: 'none' }"
+        formControlName="tags"
+        nz-tooltip="Searches for users who have entered tags."
+        nzTooltipPlacement="topLeft"
+      ></nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="w-40 pr-4">
+    <app-language-select
+      label="Language"
+      placeHolder="Language"
+      [required]="false"
+      formControlName='language'
+    ></app-language-select>
+  </div>
+
+  <div class="w-40">
+    <nz-form-item>
+      <nz-form-control>
+        <label class='ml-0 mt-9' nz-checkbox formControlName='softDelete'>Include deleted</label>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

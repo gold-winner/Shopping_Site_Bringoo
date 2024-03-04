@@ -1,0 +1,39 @@
+<ui-layout>
+  <div class="container h-100p">
+    <div class="text-medium my-8"> 
+      <a routerLink="/">Home</a> / Delivery and Payment
+    </div>
+    <div class="f-8 text-bold">Delivery and payment</div>
+    <div class="payment-form">
+      <ui-input
+        label="Name of store"
+        placeholder="Name of store"
+        [required]="true"></ui-input>
+      <ui-input
+        label="Representative of Store"
+        placeholder="Representative of Store"
+        [required]="true"
+        class="my-12"></ui-input>
+      <ui-input
+        label="Address of store"
+        placeholder="Address of store"
+        [required]="true"></ui-input>
+      <ui-input
+        label="Note"
+        placeholder="Note"
+        class="my-12"></ui-input>
+      <ui-input
+        label="Phone number"
+        placeholder="+49 40 6685 87 00"></ui-input>
+      <ui-input
+        label="URL of Store (if available)"
+        placeholder="https://test-store-102.shop.com/products/"
+        class="mt-12"></ui-input>
+      <div class="d-flex align-items-center mt-6">
+        <ui-checkbox></ui-checkbox>
+        <div class="text-medium ml-3">Agree to terms and condition</div>
+      </div>
+      <ui-button radius="lg" size="lg" class="submit-btn">Submit</ui-button>
+    </div>
+  </div>
+</ui-layout>

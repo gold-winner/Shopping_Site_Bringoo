@@ -1,0 +1,8 @@
+<div class="bg-component p-5">
+  <app-breadcrumbs></app-breadcrumbs>
+  <h5 class="f-5 mt-3">Settings</h5>
+</div>
+<div class="mt-4 p-4 bg-component">
+  <app-input-search (searchable)="onSearchChange($event)"></app-input-search>
+  <app-cards class='mt-sm-4' [searches]='searchValue' [cards]='settingsCardConfig'></app-cards>
+</div>

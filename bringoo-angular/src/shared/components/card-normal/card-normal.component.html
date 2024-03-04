@@ -1,0 +1,129 @@
+<div class="position-relative">
+  <div (click)="onSelectStore(store.id)" class="ui-card-normal">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <img src="{{store.logoUrl}}" style="width: 125px; border-radius: 10px;">
+    </div>
+    <div class="ui-card-normal__content">
+      <p class="ui-card-normal__header">{{store.name_public_long_i18n}}</p>
+      <div class="text-blue text-tiny mt-1">
+        <span class="text-bold">{{store.vendorType.name_i18n}}</span> · {{store.openingTime}}
+      </div>
+      <div class="text-green text-bold text-tiny mt-5">{{store.distance}}</div>
+    </div>
+  </div>
+  <div class="ui-card-normal__footer">
+    <ui-button size="sm" radius="bt" (onClick)="onDeliveryClick.emit($event)">
+      Delivery · {{store?.deliveryTimeInMinutes}}’
+    </ui-button>
+    <ui-button size="sm" radius="bt" color="dark" (onClick)="onPickupClick.emit($event)" class="ml-2">
+      Pickup
+    </ui-button>
+  </div>
+  <div class="favorite cursor-pointer">
+    <img *ngIf="!heart" src="{{'assets/icons/heart.svg'}}" width="80%" (click)="onHeart(heart)">
+    <img *ngIf="heart" src="{{'assets/icons/heart-one.svg'}}" width="80%" (click)="onHeart(heart)">
+  </div>
+  <!-- <div *ngIf="isloading">
+    <div class="ui-card-normal">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '125px',
+            width: '125px',
+            'margin-top': '10px',
+            'margin-bottom': '0px',
+            'border-radius': '12px'
+          }"
+        >
+        </ngx-skeleton-loader>
+      </div>
+      <div class="ui-card-normal__content">
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '30px',
+            width: '200px',
+            'margin-bottom': '0px',
+            'border-radius': '12px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '20px',
+            width: '150px',
+            'margin-bottom': '0px',
+            'border-radius': '12px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '15px',
+            width: '150px',
+            'margin-bottom': '10px',
+            'border-radius': '12px'
+          }"
+        >
+        </ngx-skeleton-loader>
+      </div>
+    </div>
+    <div class="ui-card-normal__footer">
+      <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '24px',
+            width: '90px',
+            'margin-top': '0px',
+            'margin-bottom': '-10px',
+            'margin-right': '15px'
+          }"
+        >
+      </ngx-skeleton-loader>
+      <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '24px',
+            width: '60px',
+            'margin-top': '0px',
+            'margin-bottom': '-10px'
+          }"
+        >
+      </ngx-skeleton-loader>
+    </div>
+    <div class="favorite cursor-pointer">
+      <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '19px',
+            width: '19px'
+          }"
+        >
+      </ngx-skeleton-loader>
+    </div>
+  </div> -->
+</div>

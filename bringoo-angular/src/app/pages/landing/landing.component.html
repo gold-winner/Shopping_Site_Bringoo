@@ -1,0 +1,26 @@
+ 
+<div class="header">
+  <div class="header-body">
+    <div class="header-logo">
+      <a routerLink="/login" class="cursor-pointer"><img src="/assets/img/logo.svg"></a>
+    </div>
+    <div class="header-main">
+      <div class="d-flex flex-column align-items-end">
+        <span class="phone">+7 800 222-11-00</span>
+        <span class="clock">Around the clock</span>
+      </div>
+      <ui-button (click)="SignIn()" class="ml-6" color="primary" width="full" radius="md" size="md">
+        Log in
+      </ui-button>
+      <ui-button (click)="SignUp()" class="ml-3" color="secondary" width="full" radius="md" size="md">
+        Sign up
+      </ui-button>
+    </div>
+  </div>
+</div>
+<ui-landing-home [mapLoaded]="mapLoaded"></ui-landing-home>
+<ui-sign-modal 
+    [opened]="signModal" 
+    (onClose)="onSignModalClose()">
+    <ui-auth [modal]="true" [pageStatus]="pageStatus"></ui-auth>
+</ui-sign-modal>

@@ -1,0 +1,9 @@
+<div *ngIf="($isLoaded|async) && mapOptions">
+  <google-map [options]="mapOptions" [width]="width" [height]="'500px'">
+
+    <map-marker-clusterer [imagePath]="markerClustererImagePath">
+      <map-marker></map-marker>
+    </map-marker-clusterer>
+
+  </google-map>
+</div>

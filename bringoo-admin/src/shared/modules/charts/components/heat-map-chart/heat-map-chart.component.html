@@ -1,0 +1,41 @@
+<ng-container *ngIf="count > 0">
+  <ng-container *ngIf="colorScheme$|async as colorScheme">
+    <div class="d-flex justify-content-between color-text-2 heat-map-description">
+      <div>{{label}}</div>
+      <div class="color-scheme d-flex mb-2" *ngIf="colorScheme.domain.length > 1">
+        Less
+        <div *ngFor="let color of colorScheme.domain" [style]="'background: ' + color"></div>
+        More
+      </div>
+    </div>
+    <div class="scroll-x w-100p">
+      <ng-container *ngIf="calendarData">
+        <ngx-charts-heat-map
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="calendarData"
+          [animations]="true"
+          [legend]="false"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showXAxisLabel]="false"
+          [showYAxisLabel]="false"
+          [xAxisTickFormatting]="calendarAxisTickFormatting"
+          [tooltipText]="calendarTooltipText"
+          [innerPadding]="1"
+          [tooltipDisabled]="false"
+          [trimXAxisTicks]="false"
+          [trimYAxisTicks]="false"
+          [rotateXAxisTicks]="false"
+          [maxXAxisTickLength]="16"
+          [maxYAxisTickLength]="16"
+        >
+        </ngx-charts-heat-map>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="count === 0">
+  <div class="text-center">{{noDataText}}</div>
+</ng-container>

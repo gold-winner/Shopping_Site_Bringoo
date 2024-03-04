@@ -1,0 +1,12 @@
+<div *ngIf="labels && labels.length > 0" [style]="{ height: height+'px' }">
+  <canvas
+    baseChart
+    [height]="height"
+    [legend]="barChartLegend"
+    [options]="options"
+    [datasets]="dataSet"
+    [labels]="labels"
+    [plugins]="plugins"
+  ></canvas>
+</div>
+<div *ngIf="!labels || labels.length === 0" class="text-center">-No Data-</div>

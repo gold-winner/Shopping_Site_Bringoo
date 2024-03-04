@@ -1,0 +1,18 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <ng-container *ngIf="assignedProductCategoryCodes$ | async as assignedProductCategoryCodes">
+    <app-filter-category-select
+      class="w-40 mr-4"
+      formControlName="productCategoryCode"
+      label="Product Category"
+      [isRequired]="true"
+      [excludeCodes]="assignedProductCategoryCodes"
+    ></app-filter-category-select>
+  </ng-container>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label nzRequired>Product out of stock time, hours</nz-form-label>
+    <nz-form-control labelForErrorTip="Out of stock time, hours">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='productOutOfStockTime' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+</form>

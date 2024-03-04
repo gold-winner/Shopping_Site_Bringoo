@@ -1,0 +1,114 @@
+<nz-collapse [nzBordered]="false" class="mb-4">
+  <nz-collapse-panel
+    [nzHeader]="header"
+    [nzActive]="active"
+    [nzExtra]="extra"
+  >
+    <app-create-key-points-list
+      [containerId]="containerId"
+      [connectTo]="connectedToContainers"
+      [list]="ordersAndKeyPoints"
+      (onListDropped)="onListDropped($event)"
+      (onRemoveFromRoute)="onRemoveKeyPointFormRoute($event)"
+    ></app-create-key-points-list>
+    <button
+      class="mt-2"
+      nz-button
+      nzSize="small"
+      (click)="keyPointCreateForm.onShow()"
+    ><span nz-icon nzType="plus" nzTheme="outline"></span> Create</button>
+  </nz-collapse-panel>
+  <ng-template #header>{{title}} <span class="color-danger"> (is not set up)</span></ng-template>
+  <ng-template #extra>
+    <div class="extra d-flex justify-content-center">
+      <div class="story-point" nz-tooltip="Total points">
+        <span class="story-point">{{totals.totalPoints}}</span>
+      </div>
+      <div class="story-point point-drop" nz-tooltip="Total drop points">
+        <span class="story-point">{{totals.totalDropOff}}</span>
+      </div>
+      <div class="story-point point-pick-up" nz-tooltip="Total pick up points">
+        <span class="story-point">{{totals.totalPickUp}}</span>
+      </div>
+      <div class="story-point point-refuel" nz-tooltip="Total refuel points">
+        <span class="story-point">{{totals.totalRefuel}}</span>
+      </div>
+      <div class="story-point point-breaks"  nz-tooltip="Total break points">
+        <span class="story-point">{{totals.totalBreaks}}</span>
+      </div>
+
+      <button
+        nz-button
+        (click)="onShowCreateRouteForm($event)"
+        nzType="primary"
+        nzSize="small"
+      >Create</button>
+
+      <button
+        nz-button
+        (click)="showDeleteRoutePanel($event)"
+        nzType="primary"
+        nzSize="small"
+        nzDanger
+      ><span nz-icon nzType="close" nzTheme="outline"></span></button>
+    </div>
+  </ng-template>
+</nz-collapse>
+
+<nz-modal
+  [nzVisible]="openCreateFormModal === 'show'"
+  nzTitle="The first Modal"
+  (nzOnCancel)="onHideCreateRouteForm()"
+  (nzOnOk)="onCreateRouteClick()"
+  nzOkText="Create Route"
+>
+  <div *nzModalContent>
+    <ng-template
+      [ngComponentOutlet]="routeCreateForm.form"
+      [ndcDynamicInputs]="routeCreateForm.formInputs"
+      [ndcDynamicOutputs]="routeCreateForm.formOutputs"
+    ></ng-template>
+  </div>
+</nz-modal>
+
+<nz-modal
+  [nzVisible]="openDeleteRouteModal === 'show'"
+  nzTitle="Delete route"
+  (nzOnCancel)="hideDeleteRoutePanel()"
+  (nzOnOk)="onDeleteRoute()"
+  nzOkText="Delete"
+  nzOkDanger
+>
+  <p *nzModalContent>Route is not created. You don't want to create it anymore?</p>
+</nz-modal>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="800"
+  [nzVisible]="openCreatePointModal === 'show'"
+  nzPlacement="right"
+  nzTitle="Add Key Point"
+  [nzFooter]="footer"
+  (nzOnClose)='keyPointCreateForm.onHideDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <ng-template
+      [ngComponentOutlet]="keyPointCreateForm.form"
+      [ndcDynamicInputs]="keyPointCreateForm.formInputs"
+      [ndcDynamicOutputs]="keyPointCreateForm.formOutputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='keyPointCreateForm.onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='keyPointCreateForm.onHideDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

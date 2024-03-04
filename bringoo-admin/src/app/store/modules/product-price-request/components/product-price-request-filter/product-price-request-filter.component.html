@@ -1,0 +1,56 @@
+<form nz-form [formGroup]='form' class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input
+            nz-input
+            formControlName="search"
+            placeholder="Search"
+            nzTooltipPlacement="topLeft"
+            nz-tooltip="Search by Store Name, Staff Name, Product Name"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-store-select
+      class="col"
+      label="Store Filter"
+      placeHolder="Store Filter"
+      formControlName="store"
+    ></app-filter-store-select>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Status</nz-form-label>
+        <nz-select formControlName="status" nzAllowClear nzShowSearch>
+          <nz-option
+            *ngFor="let status of statuses"
+            [nzValue]="status"
+            [nzLabel]="status">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Date of request</nz-form-label>
+        <app-date-control
+          formControlName="create_date"
+          placeHolder="Date Start"
+          [isRequired]="false"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-staff-select
+      class="col"
+      label="Staff Filter"
+      placeHolder="Staff Filter"
+      formControlName="staffId"
+    ></app-filter-staff-select>
+  </div>
+</form>

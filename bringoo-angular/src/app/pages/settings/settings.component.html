@@ -1,0 +1,24 @@
+<ui-layout>
+  <div class="bg-beige-20 h-100p">
+    <div class="container">
+      <div class="text-medium py-8"> 
+        <a routerLink="/settings">Settings</a> / {{selectedMenu!.label}}
+      </div>
+      <div class="settings pb-20">
+        <div class="settings-container menu-list">
+          <a [routerLink]="'/settings/' + menu.path" *ngFor="let menu of menuList">
+            <div 
+              class="settings-container__item"
+              [ngClass]="{'settings-container__item--unselected': selectedMenu!.path !== menu.path}">
+              <icon [name]="menu.icon"></icon> 
+              <span class="ml-4">{{menu.label}}</span>
+            </div>
+          </a>
+        </div>
+        <div class="settings-container content ">
+          <ng-content></ng-content>
+        </div>
+      </div>
+    </div>
+  </div>
+</ui-layout>

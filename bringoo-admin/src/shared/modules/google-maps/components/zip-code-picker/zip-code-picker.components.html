@@ -1,0 +1,19 @@
+<div *ngIf="($isLoaded|async)">
+  <google-map [options]="mapOptions" (mapClick)="mapClick($event)" width="100%">
+    <map-marker *ngIf="marketMarker" [options]="marketMarker"></map-marker>
+    <ng-container
+      *ngIf="polygonsSubject|async as map"
+    >
+      <ng-container *ngFor="let zipInfo of map.values()">
+        <ng-container *ngFor="let polygons of zipInfo.multipolygon">
+          <map-polygon
+            *ngFor="let p of polygons"
+            [paths]="p"
+            [options]="zipInfo.options"
+            (polygonClick)="deletePolygon(zipInfo.zipCode)"
+          ></map-polygon>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </google-map>
+</div>

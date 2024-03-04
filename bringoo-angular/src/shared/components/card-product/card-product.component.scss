@@ -1,0 +1,123 @@
+@import 'src/scss/colors';
+@import 'src/scss/borders';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import '../button/button.component.scss';
+
+.ui-card-product {
+  @extend .w-35;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .align-items-center;
+  @extend .position-relative;
+  
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    width: 264px;
+    margin-top: 20px;
+    flex-direction: row;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+  }
+  
+  &__img {
+    @extend .d-flex;
+    @extend .justify-content-center;
+    @extend .w-44;
+    @extend .mt-6;
+    @extend .mb-6;
+    @extend .position-relative;
+    @extend .cursor-pointer;
+   
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-left: -50px;
+      width: initial;
+      margin-top: 12px;
+      img {
+        width: 95px;
+        margin-left: 10px;
+      }
+    }
+
+    img {
+      @extend .w-70p;
+    }
+
+    &--badge {
+      @extend .text-white;
+      @extend .border-radius-bt;
+      @extend .text-tiny;
+      @extend .py-1;
+      @extend .px-2;
+      @extend .position-absolute;
+      bottom: 0px;
+      left: 20px;
+      @media (max-width: map-get($grid-breakpoints, 'md')) {
+        bottom: 3px;
+        margin-left: -20px;
+      }
+    }
+  }
+
+  &__body {
+    @extend .w-100p;
+    @extend .d-flex;
+    @extend .flex-column;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-left: 15px;
+    }
+
+    &--bottom {
+      @media (max-width: map-get($grid-breakpoints, 'md')) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .price-new {
+        @extend .text-bold;
+        @extend .pt-1;
+        @extend .text-red;
+        @extend .mr-2;
+      }
+
+      .price-old {
+        @extend .text-small;
+        @extend .pt-2;
+        @extend .text-bold;
+        @extend .text-middle-line;
+        @extend .text-lightblue;
+
+        @media (max-width: map-get($grid-breakpoints, 'md')) {
+          padding-top: 5px;
+        }
+      }
+    }
+
+    .cart {
+      @media (min-width: map-get($grid-breakpoints, 'md')) {
+        position: absolute;
+        width: 100%;
+        top: 303px;
+        left: 0px;
+      }
+      @media (max-width: map-get($grid-breakpoints, 'md')) {
+        margin-right: -30px;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  &__bookmark {
+    @extend .position-absolute;
+    @extend .cursor-pointer;
+    right: 8px;
+    top: 20px;
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-right: -40px;
+      top: -5px;
+    }
+  }
+}

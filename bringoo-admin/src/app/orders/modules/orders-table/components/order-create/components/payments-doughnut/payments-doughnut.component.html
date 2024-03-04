@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between">
+  <h4>Payments</h4>
+  <nz-radio-group [formControl]="viewModeController">
+    <label nz-radio [nzValue]="true">Percentage</label>
+    <label nz-radio [nzValue]="false">Absolute</label>
+  </nz-radio-group>
+</div>
+<app-doughnut-chart
+  class="d-flex flex-column align-items-center justify-content-center w-100p scroll-x mt-4"
+  [datasets]="datasets"
+  [labels]="labels"
+  [formatterSymbol]="formatterSymbol"
+  [refresh]="refresh"
+></app-doughnut-chart>

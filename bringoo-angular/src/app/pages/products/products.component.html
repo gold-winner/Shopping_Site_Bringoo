@@ -1,0 +1,152 @@
+<ui-layout [cartData]="cartData" [addedProduct]="addedProduct" [newItem]="newItem"
+  (onProductItem)="onProductItem($event)">
+  <div class="popular_view">
+    <ui-popular-view></ui-popular-view>
+  </div>
+  <div class="pb-20">
+    <div class="container mt-10">
+      <div *ngIf="PageableProductDetail.length !== 0" class="small-cards">
+        <ui-card-small title1="Todays" title2="Offers" btnLabel="Show all" imgUrl="todays_offer.png"
+          class="small-cards__item"></ui-card-small>
+        <ui-card-small title1="Upcoming" title2="Offers" btnLabel="Let's see" color="lightblue"
+          imgUrl="upcoming_offer.png" class="small-cards__item px-5"></ui-card-small>
+        <ui-card-small title1="Party" title2="Packages" btnLabel="Shop now" color="red" imgUrl="party_packages.png"
+          class="small-cards__item"></ui-card-small>
+      </div>
+      <div class="small-cards">
+        <ngx-skeleton-loader 
+          *ngIf="PageableProductDetail.length === 0"
+          class="small-cards__item"
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '176px',
+            width: '450px',
+            'border-radius': '12px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          *ngIf="PageableProductDetail.length === 0"
+          class="small-cards__item"
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '176px',
+            width: '450px',
+            'margin-left': '9px',
+            'margin-right': '11px',
+            'border-radius': '12px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          *ngIf="PageableProductDetail.length === 0"
+          class="small-cards__item"
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '176px',
+            width: '450px',
+            'border-radius': '12px'
+          }"
+        >
+        </ngx-skeleton-loader>
+      </div>
+      <div *ngFor="let detail of PageableProductDetail; let i=index;"
+        [ngClass]="i===PageableProductDetail.length-1 ? 'mt-15 pb-2' : 'divider'">
+        <div *ngIf="categoryDetail[i]" class="d-flex justify-content-between">
+          <span class="title">{{categoryDetail[i].name_i18n}}</span>
+          <a [routerLink]="['categories']" [queryParams]="{category: categoryDetail[i].code.toLowerCase()}"
+            [state]="{name: categoryDetail[i].name_i18n}">
+            <span class="show-all">
+              Show All {{categoryDetail[i].productCount}}
+            </span>
+          </a>
+        </div>
+        <div *ngIf="categoryDetail[i]" class="sub_category">
+          <div *ngFor="let sub of categoryDetail[i].subcategories">
+            <a [routerLink]="['categories']" [queryParams]="{category: categoryDetail[i].code.toLowerCase()}"
+              [state]="{name: categoryDetail[i].name_i18n, subcategory: sub.code}">
+              <ui-button size="sm" color="grey" fill="fill" class="text-tiny text-medium-bold mr-6">{{sub.name_i18n}}
+              </ui-button>
+            </a>
+          </div>
+        </div>
+        <div class="products">
+          <ui-card class="position-relative mt-7 card" *ngFor="let product of detail.data" [count]="product.inCart"
+            [category]="detail?.categoryCode!" [product]="product" [productType]="!product.salePrice? 'new' : 'sale'"
+            [disabled]="product.outOfStock? true : false" type="trash" (onClick)="onProductClick($event)"
+            (onCartInfo)="onCartDetail($event)"></ui-card>
+        </div>
+      </div>
+      <div class="divider">
+        <div class="d-flex justify-content-between">
+          <div *ngFor="let number of [0,1]">
+            <ngx-skeleton-loader 
+              *ngIf="PageableProductDetail.length === 0"
+              count="1" 
+              appearance="line" 
+              animation="progress" 
+              [theme]="{
+                'background-color': '#AAAAAA',
+                height: '32px',
+                width: '59px'
+              }"
+            >
+            </ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="sub_category">
+          <div *ngFor="let number of [0,1,2,3,4]">
+            <ngx-skeleton-loader 
+              *ngIf="PageableProductDetail.length === 0"
+              count="1" 
+              appearance="line" 
+              animation="progress" 
+              [theme]="{
+                'background-color': '#AAAAAA',
+                height: '32px',
+                width: '59px',
+                'margin-right': '10px'
+              }"
+            >
+            </ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="products">
+          <div *ngFor="let number of [0,1,2,3,4]">
+            <ngx-skeleton-loader 
+              *ngIf="PageableProductDetail.length === 0"
+              count="1" 
+              appearance="line" 
+              animation="progress" 
+              [theme]="{
+                'background-color': '#AAAAAA',
+                height: '420px',
+                width: '250px',
+                'margin-right': '25px',
+                'border-radius': '12px'
+              }"
+            >
+            </ngx-skeleton-loader>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-beige-20 mb-20">
+    <ui-recently-view></ui-recently-view>
+  </div>
+  <ui-modal [opened]="productModal" [isProduct]=true [productModal]="productModal" (onClose)="onProductModalClose()">
+    <ui-product *ngIf="productModal && productDetail" [productType]="!productDetail.salePrice? 'new' : 'sale'"
+      [value]="count" [linkId]="productModal" [productModal]="productModal" (onCartInfo)="onCartDetail($event)">
+    </ui-product>
+  </ui-modal>
+</ui-layout>

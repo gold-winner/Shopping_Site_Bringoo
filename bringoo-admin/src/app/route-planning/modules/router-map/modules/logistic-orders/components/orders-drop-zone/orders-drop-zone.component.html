@@ -1,0 +1,41 @@
+<div
+  *ngIf="orders$|async as orders"
+  class="h-100p"
+  [id]="containerId"
+  cdkDropList
+  [cdkDropListConnectedTo]="connectTo"
+  [cdkDropListSortingDisabled]="true"
+>
+  <nz-spin class="orders-spin h-100p" [nzSpinning]="isLoading$|async">
+    <app-order-item
+      *ngFor="let order of orders; let index=index"
+      [order]="order"
+      [index]="index"
+
+      cdkDrag
+      (cdkDragStarted)="onDragStart(order.orderId)"
+      (cdkDragEnded)="onDragEnd()"
+      [cdkDragData]="checked.has(order.orderId) ? checked : order.orderId"
+      cdkDragPreviewClass="layout-item-drag-preview"
+    >
+      <span class="checked-size">{{checked.has(order.orderId) ? checked.size : 1}}</span>
+      <div class="custom-placeholder" *cdkDragPlaceholder></div>
+      <label
+        nz-checkbox
+        (nzCheckedChange)="changeShowStatus($event, order.orderId)"
+        [nzChecked]="checked.has(order.orderId)"
+      ></label>
+      <i class="cursor-move" nz-icon nzType="drag" nzTheme="outline"></i>
+    </app-order-item>
+  </nz-spin>
+</div>
+<div
+  [id]="createRouteContainerId"
+  [class.open]="isDragged"
+
+  cdkDropList
+  [cdkDropListConnectedTo]="containerId"
+  (cdkDropListDropped)="onDropEvent($event)"
+>
+  <h4 class="hint pt-1"><span nz-icon nzType="inbox" nzTheme="outline"></span> Create Route</h4>
+</div>

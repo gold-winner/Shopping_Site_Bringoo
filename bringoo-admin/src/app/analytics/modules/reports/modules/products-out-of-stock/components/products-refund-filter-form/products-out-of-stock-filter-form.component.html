@@ -1,0 +1,41 @@
+<form nz-form [formGroup]='form' nzLayout="inline" class="bg-component p-4">
+  <div class="d-flex">
+    <nz-form-item class="w-32 mr-0">
+      <nz-form-control labelForErrorTip="Start date">
+        <nz-form-label>Start date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateStart"
+          placeHolder="Date start"
+          [isRequired]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="w-32">
+      <nz-form-control labelForErrorTip="End date">
+        <nz-form-label>End date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateEnd"
+          placeHolder="Date end"
+          [disableBefore]="form.controls.dateStart.value"
+          [isRequired]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <input nz-input formControlName="search" placeholder="Search"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-store-select
+    class="w-40 mr-4"
+    label="Store filter"
+    formControlName="storeId"
+  ></app-filter-store-select>
+</form>

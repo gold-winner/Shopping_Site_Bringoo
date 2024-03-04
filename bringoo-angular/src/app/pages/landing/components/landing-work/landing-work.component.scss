@@ -1,0 +1,47 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+
+.card {
+  @extend .position-relative;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .align-items-center;
+  @extend .p-4;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    margin-left: 30px;
+  }
+
+  img {
+    @extend .h-60;
+    z-index: 0;
+  }
+
+  &-number {
+    @extend .f-50;
+    @extend .text-beige;
+    @extend .text-bold;
+    @extend .position-absolute;
+    opacity: 0.2;
+    top: -80px;
+    left: -20px;
+    z-index: -1;
+  }
+}
+
+.title {
+  @extend .ml-2;
+  @extend .f-14;
+  @extend .text-bold;
+}
+
+.content {
+  @extend .mt-15;
+  @extend .mb-35;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    margin-left: 10px;
+    font-size: 14.5px;
+  }
+}

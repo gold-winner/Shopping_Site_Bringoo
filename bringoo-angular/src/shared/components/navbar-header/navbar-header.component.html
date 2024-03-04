@@ -1,0 +1,40 @@
+<div class="ui-header__body">
+  <div *ngIf="enableStore" class="ui-header__body--menus">
+    <div class="menu-list ">
+      <a routerLink="/{{storeUrl}}">
+        <img class="logo-web" src="/assets/img/logo.svg">
+        <img class="logo-mobile" src="/assets/img/logo-header.svg">
+      </a>
+      <a routerLink="/how-we-work" class="menu-list__item">How we work</a>
+      <a routerLink="/payment" class="menu-list__item">Delivery and payment</a>
+      <a routerLink="/settings/contact" class="menu-list__item">Contact us</a>
+      <a routerLink="/settings/faq" class="menu-list__item">FAQ's</a>
+      <a routerLink="/partnership" class="menu-list__item">Partnership</a>
+    </div>
+  </div>
+  <div *ngIf="!enableStore">
+    <div class="text-large text-bold text-align-center mt-1 mb-3 position-relative">
+      Select shop
+      <img src="/assets/img/close1.svg" class="position-absolute cursor-pointer" style="right: -100px; top: 4px;" (click)="onClickClose()">
+    </div>
+    <div class="shop_info d-flex justify-content-between">
+      <div class="text-bold d-flex">
+        <div>
+          <span>All shops</span>
+          <span class="text-medium text-green ml-2">{{allShop}}</span>
+        </div>
+        <div class="favorites text-lightblue ml-15">
+          <span>Favorites</span>
+          <span class="text-medium ml-2">0</span>
+        </div>
+      </div>
+      <div class="d-flex" (click)="onAddressClick.emit('Delivery')">
+        <a class="ui-header__topbar__info text-medium text-lightblue cursor-pointer text-semi-bold">
+          <icon name="location-pin" class="text-small mr-2"></icon>
+          {{ location }} 
+          <icon name="edit" class="text-tiny ml-2"></icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

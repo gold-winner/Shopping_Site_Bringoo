@@ -1,0 +1,79 @@
+<form nz-form [formGroup]='form' nzLayout="inline">
+  <div class="d-flex mt-4">
+    <nz-form-item class="w-32">
+      <nz-form-control labelForErrorTip="Start date">
+        <nz-form-label>Start date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateStart"
+          placeHolder="Date start"
+          [isRequired]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="w-32">
+      <nz-form-control labelForErrorTip="End date">
+        <nz-form-label>End date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateEnd"
+          placeHolder="Date end"
+          [disableBefore]="form.controls.dateStart.value"
+          [isRequired]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item class="w-32 mt-4">
+    <nz-form-control>
+      <nz-form-label>Group by</nz-form-label>
+      <nz-select formControlName="groupBy">
+        <nz-option *ngFor="let item of ordered" [nzValue]="item" nzLabel="{{item}}"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-store-select
+    class="w-32 mt-4"
+    placeHolder="Store"
+    formControlName="storeId"
+    label="Store"
+  ></app-filter-store-select>
+<!--  storeCorporateCode-->
+  <app-filter-store-corporate-select
+    class="w-32 mt-4"
+    placeHolder="Corporate"
+    formControlName="storeCorporateCode"
+    label="Corporate"
+  ></app-filter-store-corporate-select>
+
+  <app-filter-store-brand-select
+    class="w-32 mt-4"
+    placeHolder="Brand"
+    formControlName="storeBrandCode"
+    label="Brand"
+  ></app-filter-store-brand-select>
+
+  <app-filter-store-region-select
+    class="w-32 mt-4"
+    placeHolder="Region"
+    formControlName="storeRegionCode"
+    label="Region"
+  ></app-filter-store-region-select>
+
+  <app-filter-store-vendor-category-select
+    class="w-32 mt-4"
+    placeHolder="Vendor Category"
+    formControlName="vendorCategoryCode"
+    label="Vendor Category"
+  ></app-filter-store-vendor-category-select>
+
+  <app-filter-vendor-type-select
+    class="w-32 mt-4"
+    placeHolder="Vendor Type"
+    formControlName="vendorTypeCode"
+    label="Vendor Type"
+  ></app-filter-vendor-type-select>
+</form>

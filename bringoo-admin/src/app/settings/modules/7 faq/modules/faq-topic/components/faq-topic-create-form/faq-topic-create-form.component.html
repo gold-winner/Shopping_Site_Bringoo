@@ -1,0 +1,45 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input type='text' required formControlName='name_i18n' label="Name"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input required type='textarea' formControlName='description_i18n' label="Description"></app-multi-lang-v2-input>
+  </app-lang-controller>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label nzRequired>Active From</nz-form-label>
+      <nz-form-control labelForErrorTip="Active From">
+        <app-date-control
+          formControlName="dateStart"
+          placeHolder="Date start"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-label nzRequired>Active To</nz-form-label>
+      <nz-form-control labelForErrorTip="Active To">
+        <app-date-control
+          formControlName="dateEnd"
+          placeHolder="Date end"
+          [disableBefore]="form.controls?.dateStart?.value"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="isActive">Status</nz-form-label>
+    <nz-form-control labelForErrorTip="Status">
+      <app-status-switch
+        formControlName='isActive'
+      ></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>

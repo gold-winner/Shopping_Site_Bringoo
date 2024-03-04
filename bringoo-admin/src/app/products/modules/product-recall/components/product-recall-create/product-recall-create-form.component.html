@@ -1,0 +1,36 @@
+<form nz-form [formGroup]="form" nzLayout="vertical">
+  <app-filter-product-select
+    [required]="true"
+    label="Product"
+    formControlName="productId">
+  </app-filter-product-select>
+
+  <app-filter-store-select
+    label="Stores"
+    type="multiple"
+    formControlName="storeIds">
+  </app-filter-store-select>
+
+  <app-filter-recall-reason-select
+    class="w-40 mr-4"
+    formControlName="reasonCode"
+    label="Reason"
+    [required]="true"
+  ></app-filter-recall-reason-select>
+
+  <div class="d-flex mx--4">
+    <nz-form-item class="col">
+      <nz-form-label nzRequired nzNoColon nzFor="startDateTime">Start date</nz-form-label>
+      <nz-form-control labelForErrorTip="Start date">
+        <nz-date-picker class="w-100p" formControlName='startDateTime'></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <nz-form-item class="col">
+      <nz-form-label nzRequired nzNoColon nzFor="endDateTime">End date</nz-form-label>
+      <nz-form-control labelForErrorTip="End date">
+        <nz-date-picker class="w-100p" formControlName='endDateTime'></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

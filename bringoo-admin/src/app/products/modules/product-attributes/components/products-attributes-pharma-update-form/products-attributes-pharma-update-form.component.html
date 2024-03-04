@@ -1,0 +1,58 @@
+<form nzLayout="vertical" nz-form [formGroup]="form" class="p-4 w-100p h-100p overflow-auto position-relative" id="product-pharma-form">
+  <div class="row">
+    <div class="col-18">
+      <nz-card id="sizes" class="mb-4">
+        <nz-form-item class="mb-4">
+          <nz-form-label [nzRequired]="true">Pharmacy Central Number (PZN)</nz-form-label>
+          <nz-form-control labelForErrorTip="Pharmacy Central Number">
+            <input nz-input formControlName="pzn">
+          </nz-form-control>
+        </nz-form-item>
+
+        <app-lang-controller>
+          <app-multi-lang-v2-input
+            required label="DAR"
+            formControlName="dar_i18n"
+          ></app-multi-lang-v2-input>
+
+          <app-multi-lang-v2-input
+            required label="Packing Standard"
+            formControlName="packingStandard_i18n"
+          ></app-multi-lang-v2-input>
+
+          <app-multi-lang-v2-input
+            required label="Active substance"
+            formControlName="activeSubstance_i18n"
+          ></app-multi-lang-v2-input>
+        </app-lang-controller>
+
+        <nz-form-item>
+          <nz-form-label nzNoColon>Mono preparation</nz-form-label>
+          <nz-form-control labelForErrorTip="Mono preparation">
+            <app-status-switch
+              formControlName='monoPreparation'
+            ></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzNoColon>Recipe-able</nz-form-label>
+          <nz-form-control labelForErrorTip="Recipe-able">
+            <app-status-switch
+              formControlName='recipeAble'
+            ></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzNoColon>Pharmacies required</nz-form-label>
+          <nz-form-control labelForErrorTip="Pharmacies required">
+            <app-status-switch
+              formControlName='pharmaciesRequired'
+            ></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+    </div>
+  </div>
+</form>

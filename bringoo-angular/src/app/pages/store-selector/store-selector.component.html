@@ -1,0 +1,52 @@
+<ui-layout [shopCount]="total">
+  <div class="bg-beige-20 h-100p">
+    <div class="container">
+      <div *ngIf="all_stores?.length !== 0" class="d-flex align-items-center mt-10">
+        <icon name="filter" class="mr-4" [ngClass]="selectedOption==='all' ? '' : 'filter'"></icon>
+        <ui-option *ngFor="let option of options" [option]="option" [selected]="selectedOption===option.id" class="mr-2"
+          (optionSelect)="onChangeOption(option.id)">
+        </ui-option>
+      </div>
+      <div *ngIf="all_stores?.length === 0" class="d-flex align-items-center mt-10">
+        <div *ngFor="let number of [0,1,2,3,4]" class="position-relative mt-7 card">
+          <ngx-skeleton-loader 
+            count="1" 
+            appearance="line" 
+            animation="progress" 
+            [theme]="{
+              'background-color': '#AAAAAA',
+              height: '36px',
+              width: '118px',
+              'margin-right': '5px'
+            }"
+          >
+          </ngx-skeleton-loader>
+        </div>
+      </div>
+      <div class="cards mt-4 text-large text-medium-bold" style="margin-left: 12px;" *ngIf="!isFound && all_stores?.length !== 0">Unfortunately, the
+        store will not find...</div>
+      <div class="cards" *ngIf="isFound && all_stores?.length !== 0">
+        <ui-card-normal *ngFor="let filtered_store of filtered_stores" [store]=filtered_store class="card"
+          (onStoreClick)="onStoreClick(filtered_store.id)" (onPickupClick)="onPickupClick(filtered_store.id)"
+          (onDeliveryClick)="onDeliveryClick()"></ui-card-normal>
+      </div>
+      <div class="cards" *ngIf="all_stores?.length === 0">
+        <div *ngFor="let number of [0,1,2,3,4,5]" class="position-relative mt-7 card">
+          <ngx-skeleton-loader 
+            count="1" 
+            appearance="line" 
+            animation="progress" 
+            [theme]="{
+              'background-color': '#AAAAAA',
+              height: '160px',
+              width: '400px',
+              'margin-right': '5px',
+              'border-radius': '12px'
+            }"
+          >
+          </ngx-skeleton-loader>
+        </div>
+      </div>
+    </div>
+  </div>
+</ui-layout>

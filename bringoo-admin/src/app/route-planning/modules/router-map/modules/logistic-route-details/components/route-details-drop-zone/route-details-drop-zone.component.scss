@@ -1,0 +1,38 @@
+#DROP_LIST_KEY_POINTS {
+  height: 100%;
+  .custom-placeholder {
+    background: #ccc;
+    border: dotted 3px #999;
+    min-height: 60px;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  ::ng-deep .checked-size {
+    display: none;
+  }
+}
+.layout-item-drag-preview {
+  ::ng-deep .checked-size {
+    display: inline-block!important;
+    position: absolute;
+    background: red;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 0.5em 0.75em;
+    border-radius: 30px;
+    right: 0;
+    top: 0;
+    line-height: normal;
+    transform: translate(50%, -50%);
+  }
+}
+
+::ng-deep {
+  .order-select .cdk-virtual-scroll-viewport {
+    max-height: 500px !important;
+  }
+  .updateRouteItemModal {
+    top: 15px;
+    padding: 0;
+  }
+}

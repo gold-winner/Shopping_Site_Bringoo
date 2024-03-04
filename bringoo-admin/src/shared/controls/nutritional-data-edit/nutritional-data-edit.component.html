@@ -1,0 +1,163 @@
+<label class="ml-sm-0" nz-checkbox [formControl]="nutritionData">
+  This product has nutritional data
+</label>
+<form formGroupName="nutritional_data" *ngIf="form.get('nutritional_data')?.value">
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label>Total energy</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'kJ'">
+          <input
+            nz-input
+            formControlName="energyTotal"
+            placeholder="Total enetgy"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col">
+      <nz-form-label>Calories(per 100g)</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'kcal'">
+          <input
+            nz-input
+            formControlName="calories"
+            placeholder="Calories"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label>Total fat</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'gr'">
+          <input
+            nz-input
+            formControlName="fatTotal"
+            placeholder="Total fat"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col">
+      <nz-form-label>Saturated fat</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'gr'">
+          <input
+            nz-input
+            formControlName="fatSaturates"
+            placeholder="Saturated fat"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label>Carbohydrate total</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'gr'">
+          <input
+            nz-input
+            formControlName="carbohydrateTotal"
+            placeholder="Carbohydrate total"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col">
+      <nz-form-label>Carbohydrate of which sugars</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'gr'">
+          <input
+            nz-input
+            formControlName="carbohydrateSugars"
+            placeholder="carbohydrate of which sugars"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label>Fibres</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'gr'">
+          <input
+            nz-input
+            formControlName="fibres"
+            placeholder="Fibres"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col">
+      <nz-form-label>Protein</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'gr'">
+          <input
+            nz-input
+            formControlName="protein"
+            placeholder="Protein"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class="row">
+    <nz-form-item class="col mb-0">
+      <nz-form-label>Salt</nz-form-label>
+      <nz-form-control>
+        <nz-input-group [nzSuffix]="'gr'">
+          <input
+            nz-input
+            formControlName="salt"
+            placeholder="salt"
+            type="number"
+            min="0"
+            step="1"
+            [pattern]="decimalPattern"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="col"></div>
+  </div>
+</form>

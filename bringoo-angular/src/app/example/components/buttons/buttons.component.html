@@ -1,0 +1,61 @@
+<h1>Buttons</h1>
+
+<div *ngFor="let color of colors" class="py-4">
+  <h3>{{color}}</h3>
+  <table>
+    <tr>
+      <th>size</th>
+      <th>inline</th>
+      <th>square</th>
+      <th>radius = xlg</th>
+      <th>outline</th>
+      <th>transparent</th>
+      <th>disabled</th>
+      <th>block</th>
+    </tr>
+    <tr
+      *ngFor="let size of sizes">
+      <td>
+        {{size}}
+      </td>
+      <td>
+        <ui-button [color]="color" [size]="size">Primary button
+          <icon class="ml-1" name="bell"></icon>
+        </ui-button>
+      </td>
+      <td>
+        <ui-button [color]="color" [size]="size" width="square">
+          <icon name="plus"></icon>
+        </ui-button>
+      </td>
+      <td>
+        <ui-button [color]="color" [size]="size" width="square" radius="xlg">
+          <icon name="cart"></icon>
+        </ui-button>
+      </td>
+      <td>
+        <ui-button [color]="color" [size]="size" width="square" radius="xlg" fill="outline">
+          <icon name="cart"></icon>
+        </ui-button>
+      </td>
+      <td>
+        <ui-button [color]="color" [size]="size" fill="transparent">
+          BACK
+          <icon name="chevron-right"></icon>
+        </ui-button>
+      <td>
+        <ui-button [color]="color" [size]="size" [disabled]="true">Primary button</ui-button>
+      </td>
+      <td>
+        <ui-button [color]="color" [size]="size" width="full">Primary button</ui-button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+
+
+

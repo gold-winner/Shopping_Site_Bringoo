@@ -1,0 +1,77 @@
+<div class="p-5">
+  <div nz-row nzJustify="space-between">
+    <h2 nz-col>Пользователи</h2>
+    <div nz-col>
+      <button nz-button nzType="primary" nzSize="large" (click)="onShowCreateForm()" nzShape="circle"><i nz-icon nzType="plus"></i></button>
+    </div>
+  </div>
+</div>
+
+<nz-table [nzData]="dataList"
+          [nzFrontPagination]="false"
+          [nzLoading]="loading$ | async"
+          [nzTotal]="total"
+          [nzPageSize]="pageSize"
+          [nzPageIndex]="pageIndex"
+          (nzQueryParams)="onQueryParamsChange($event)">
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th>Имя</th>
+    <th nzWidth="160px">Действия</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of dataList">
+    <td>{{ data.email }}</td>
+    <td>{{ data.firstName }}</td>
+
+    <td>
+      <button (click)="onShowUpdateForm(data)" nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="edit"></i></button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button nzDanger nzShape="circle"><i nz-icon nzType="delete"></i></button>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="nameSearchTerm" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()">
+        Искать
+      </button>
+      <button nz-button nzSize="small" (click)="reset()">Отмена</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-drawer
+  [nzMaskClosable]="false"
+  [nzWidth]="500"
+  [nzVisible]="createVisible"
+  nzTitle="Добавить пользователя"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <app-user-create-form
+    *ngIf="createVisible"
+    (create)="onCreate($event)"
+  >
+
+  </app-user-create-form>
+</nz-drawer>
+
+<nz-drawer
+  [nzMaskClosable]="false"
+  [nzWidth]="500"
+  [nzVisible]="updateVisible"
+  nzTitle="Редкатировать пользователя"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <app-user-update-form
+    *ngIf="updateVisible"
+    [model]="selectedItem"
+    (update)="onUpdate($event)"
+  ></app-user-update-form>
+</nz-drawer>

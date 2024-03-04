@@ -1,0 +1,11 @@
+<app-crud
+  *ngIf="(storeDetailsService.store$|async) as store"
+  [config]="config"
+  [service]="service"
+  [createForm]="createForm"
+  [updateForm]="updateForm"
+  [filterForm]="filterForm"
+  [columns]="columns"
+  [fields]="fields"
+  [join]='join'
+></app-crud>

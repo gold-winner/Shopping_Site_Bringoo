@@ -1,0 +1,14 @@
+<app-crud
+  [config]="config"
+  [service]="service"
+  [createForm]="createForm"
+  [updateForm]="updateForm"
+  [filterForm]="filterForm"
+  [columns]="columns"
+  [fields]="fields"
+  [nzPageSizeOptions]="pageSizeOptions"
+  [limit]="50"
+  (draggedEnd)="draggedEnd($event)"
+  [reloadData]="reloadPage"
+  [horizontalPadding]="0"
+></app-crud>

@@ -1,0 +1,62 @@
+<div class="d-flex flex-wrap-reverse justify-content-between f-4 header pb-4">
+  <h4>Voucher info</h4>
+</div>
+<div>
+  <ng-container *ngIf="cartVoucher$ | async as cartVoucher else noVoucher">
+    <div class="mb-2">
+      Code: <a 
+        [routerLink]="'/vouchers/all/details/' + cartVoucher?.cartVoucherId">
+        {{ cartVoucher?.voucherCode}}
+      </a>
+      <div>
+        <button
+          nz-button
+          nzType="primary"
+          nzDanger
+          (click)="deleteVoucher()">
+          Delete
+        </button>
+      </div>
+    </div>
+    <nz-table
+      class="mb-0"
+      [nzShowPagination]="false"
+      [nzFrontPagination]="false"
+      [nzSize]="'small'"
+      [nzData]="[cartVoucher]"
+    >
+      <thead>
+      <tr>
+        <th>Products discount</th>
+        <th>Delivery discount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{ cartVoucher?.itemsDiscount }}</td>
+        <td>{{ cartVoucher?.deliveryFeeDiscount }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+  <ng-template #noVoucher>
+    <div class="container">
+      <div class="row">
+        <div class="col-3">
+          Voucher code:
+        </div>
+        <div class="col-7">
+          <input nz-input #voucherCode />
+        </div>
+        <div class="col-2">
+          <button
+            nz-button
+            nzType="primary"
+            (click)="applyVoucher(voucherCode.value)">
+            Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

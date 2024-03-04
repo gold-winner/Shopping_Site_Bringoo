@@ -1,0 +1,57 @@
+<ng-container *ngIf="type === 'box'">
+  <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)='onChange($event)'>
+    <ng-container *ngIf='!borders'>
+      <label
+        *ngFor='let item of boxList; let ind = index'
+        class='d-flex align-items-center'
+        nz-checkbox [nzValue]="ind"
+        [ngModel]="control.value.includes(ind)"
+      >
+        <div *ngIf='item.label'>{{item.label}}</div>
+        <div class='color-text-2' *ngIf='item.desc'>{{item.desc}}</div>
+      </label>
+    </ng-container>
+    <ng-container *ngIf='borders'>
+      <label
+        *ngFor='let item of boxList; let ind = index'
+        class='d-flex align-items-center group-border'
+        nz-checkbox
+        [nzValue]="ind"
+        [ngModel]="control.value.includes(ind)"
+      >
+        <div *ngIf='item.label'>{{item.label}}</div>
+        <div class='color-text-2' *ngIf='item.desc'>{{item.desc}}</div>
+      </label>
+    </ng-container>
+  </nz-checkbox-wrapper>
+</ng-container>
+<ng-container *ngIf="type === 'name'">
+  <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)='onChange($event)'>
+    <nz-content *ngIf='inline'>
+      <div nz-row>
+        <label
+          nz-col
+          *ngFor='let item of namesList; let ind = index'
+          class='d-flex align-items-center'
+          nz-checkbox
+          [nzValue]="item"
+          [ngModel]="control.value.includes(item)"
+        >
+          <div>{{item}}</div>
+        </label>
+      </div>
+    </nz-content>
+    <nz-content *ngIf='!inline'>
+      <label
+        *ngFor='let item of namesList; let ind = index'
+        class='d-flex align-items-center'
+        nz-checkbox
+        [nzValue]="item"
+        [ngModel]="control.value.includes(item)"
+        style='margin-left: 0'
+      >
+        <div>{{item}}</div>
+      </label>
+    </nz-content>
+  </nz-checkbox-wrapper>
+</ng-container>

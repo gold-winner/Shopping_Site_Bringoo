@@ -1,0 +1,141 @@
+<nz-list
+  *ngIf="routes$|async as routes"
+  cdkDropList
+  [id]="containerId"
+  [cdkDropListConnectedTo]="connectToContainers"
+  [nzLoading]="isLoading|async"
+  [cdkDropListData]="items"
+  (cdkDropListDropped)="onDropped($event)"
+  [cdkDropListSortPredicate]="sortPredicate"
+  class="orders-list"
+  nzBordered
+  nzSize="small"
+>
+  <div class="empty" *ngIf="items.length === 0; else list_template">
+    <span>Empty. Not found points for route.</span>
+  </div>
+  <ng-template #list_template>
+    <nz-list-item
+      *ngFor="let item of items; let index=index"
+      cdkDrag
+      cdkDragPreviewClass="backlog-drag-preview"
+      [cdkDragData]="item"
+      [nzExtra]="extra"
+      [class.flagged]="item.isFlagged"
+      [class.display-none]="item|hideKpByFilters :filterItems"
+      (cdkDragDropped)="onDroppedItem($event)"
+    >
+      <div class="order-item d-flex flex-wrap">
+        <div class="title">
+          <div class="order-icon {{item.pointType}}">
+          <span
+            nz-icon
+            [nzType]="item.pointType|keyPointTypeIcon"
+            [nz-tooltip]="item.pointType|titlecase"
+            style="color: white"
+          ></span>
+          </div>
+          <a *ngIf="item.order as order" routerLink="/orders/all/detail/{{order.id}}">
+            <app-search-match-string [search]="filterItems.search" [value]="order.orderNumber"></app-search-match-string>
+          </a>
+        </div>
+        <ng-container [ngSwitch]="item.pointType">
+          <ng-container *ngSwitchCase="'DROP_OFF'">
+            <ng-container *ngIf="item.order as order">
+              <h5>
+                {{order.startTime}}-{{order.endTime}}
+              </h5>
+              <span>
+                <app-search-match-string [search]="filterItems.search" [value]="order.customerName"></app-search-match-string>
+              </span>
+              <ng-container *ngIf="order.tags as tags">
+                <nz-tag *ngFor="let tag of tags" nzColor="blue">{{tag}}</nz-tag>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'PICK_UP'">
+            <h5>{{item.pointType|titlecase}}</h5>
+            <span>
+              <app-search-match-string [search]="filterItems.search" [value]="item.store?.name_i18n ?? ''"></app-search-match-string>
+            </span>
+          </ng-container>
+          <ng-container *ngSwitchCase="'BREAK_POINT'">
+            <h5>{{item.pointType|titlecase}}</h5>
+          </ng-container>
+          <ng-container *ngSwitchCase="'MOBILITY_REFUEL'">
+            <h5>{{item.pointType|titlecase}}</h5>
+            <span>{{item.refuelType|titlecase}}</span>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="(item.store || item.order?.store) as store">
+          <a class="ml-4" routerLink="/store/stores/{{store.id}}/basic-information">{{store.name_i18n}}</a>
+        </ng-container>
+      </div>
+      <ng-template #extra>
+        <div class="extra d-flex justify-content-center">
+          <icon *ngIf="item.isFlagged" class="mr-3 flag-icon f-4" name="flag"></icon>
+
+          <div class="story-point">
+            <span class="story-point">{{index+1}}</span>
+          </div>
+          <ng-container *ngIf="item.order as order">
+            <icon
+              *ngIf="order.orderPriority|orderPriority as priorityData"
+              [name]="priorityData.icon"
+              [style]="{color: priorityData.color}"
+
+              class="cursor-pointer"
+              [nz-tooltip]="order.orderPriority"
+              [nzTooltipPlacement]="'bottom'"
+            ></icon>
+          </ng-container>
+          <ng-container *ngIf="(item.order?.store || item.store) as store">
+            <img
+              class="logo"
+              [nz-tooltip]="store.name_i18n"
+              [src]="(store.logoUrl|imageMiniature) || noAvatar"
+              alt="store logo"
+            />
+          </ng-container>
+          <ng-container *ngIf="item.order as order">
+            <nz-tag [nzColor]="order.orderStatus|orderTagStatus">{{order.orderStatus|titlecase}}</nz-tag>
+            <app-staff-avatars
+              [driver]="item.driver"
+              [picker]="item.picker"
+            ></app-staff-avatars>
+          </ng-container>
+          <img class="logo" *ngIf="item.store?.logoUrl as logoUrl" [src]="logoUrl|imageMiniature" alt="store logo"/>
+
+          <button
+            nz-button
+            nz-dropdown
+            nzSize="small"
+            nzType="default"
+            [nzDropdownMenu]="menu"
+          >...</button>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzMode="inline">
+              <li nz-submenu nzTitle="Actions">
+                <ul>
+                  <li nz-menu-item (click)="changeFlagStatus(item.isFlagged, item.id)">{{item.isFlagged ? 'Remove Flag' : 'Add flag'}}</li>
+                  <li nz-menu-item (click)="removePoint(item)">Remove Point</li>
+                </ul>
+              </li>
+              <li nz-submenu nzTitle="Move to">
+                <ul>
+                  <li nz-menu-item (click)="moveTo(index, 'top')">Top</li>
+                  <li nz-menu-item (click)="moveTo(index, 'bottom')">Bottom</li>
+                  <li
+                    *ngFor="let route of routes"
+                    nz-menu-item
+                    (click)="moveToRoute(route.id, item.id)"
+                  >{{route.name}} ({{route.code}})</li>
+                </ul>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+      </ng-template>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

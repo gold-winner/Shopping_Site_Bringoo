@@ -1,0 +1,140 @@
+<div class="mx-8 mt-8 mb-8">
+  <div class="d-flex justify-content-between mb-4">
+    <a class="d-flex align-items-center" routerLink='../../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>{{term}}</h3></a>
+  </div>
+  <nz-card nzBorderless class="border-round-sm">
+    <form nz-form [formGroup]="form" nzLayout="horizontal">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group nzPrefixIcon="search">
+            <input formControlName="productName" nz-input placeholder="Filter products"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div class="row mx-0 mt-4">
+        <app-filter-category-select
+          formControlName="categoryCode"
+          class="w-40 pr-4"
+          placeHolder="Category"
+          label="Category"
+        ></app-filter-category-select>
+        <app-filter-subcategory-select
+          formControlName="subcategoryCode"
+          class="w-40 pr-4"
+          placeHolder="Subcategory"
+          label="Subcategory"
+        ></app-filter-subcategory-select>
+
+        <nz-form-item class="w-40 pr-4">
+          <nz-form-control>
+            <nz-form-label>Alcohol</nz-form-label>
+            <app-list-select
+              class="d-block"
+              formControlName="isAlcohol"
+              [list]="isAlcoholFilterStates"
+            ></app-list-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="w-40 pr-4">
+          <nz-form-control>
+            <nz-form-label>Bio</nz-form-label>
+            <app-list-select
+              class="d-block"
+              formControlName="isBio"
+              [list]="isBioFilterStates"
+            ></app-list-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="w-40 pr-4">
+          <nz-form-control>
+            <nz-form-label>Frozen</nz-form-label>
+            <app-list-select
+              class="d-block"
+              formControlName="isFrozen"
+              [list]="isFrozenFilterStates"
+            ></app-list-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="w-40 pr-4">
+          <nz-form-control>
+            <nz-form-label>Tobacco</nz-form-label>
+            <app-list-select
+              class="d-block"
+              formControlName="isTobacco"
+              [list]="isTobaccoFilterStates"
+            ></app-list-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </form>
+    <nz-table
+      *ngIf="items$|async as data"
+      nzShowSizeChanger
+      nzShowPagination
+      [nzData]="data"
+      [nzFrontPagination]="false"
+      [nzLoading]="false"
+      [nzTotal]="total"
+      [nzPageIndex]="page"
+      [nzPageSize]="10"
+      [nzSize]="'small'"
+      [nzPageSizeOptions]="nzPageSizeOptions"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzScroll]="{ x: '600px' }"
+    >
+      <thead>
+      <tr>
+        <th nzWidth="50px" class="text-align-center">№</th>
+        <th [nzColumnKey]="'customerNumber'">Product Name</th>
+        <th [nzColumnKey]="'customerNumber'">Search rate</th>
+        <th [nzColumnKey]="'customerName'"> Category</th>
+        <th [nzColumnKey]="'totalRevenue'"> Subcategory</th>
+        <th [nzColumnKey]="'totalRevenue'"> Is Alcohol</th>
+        <th [nzColumnKey]="'totalRevenue'"> Is Bio</th>
+        <th [nzColumnKey]="'totalRevenue'"> Is Frozen</th>
+        <th [nzColumnKey]="'totalRevenue'"> Is Tobacco</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of data; let index = index">
+        <td class="text-align-center">{{index|tableItemIndex :page :limit}}</td>
+        <td>{{ item?.productName }}</td>
+        <td>{{ item?.count }}</td>
+        <td>{{ item?.categoryName }}</td>
+        <td>{{ item?.subcategoryName }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <div class="row-sm d-md-flex mt-4">
+      <div class="col border-round-sm border-1 border-darkvanilla pt-4 pb-3">
+        <app-line-chart
+          [dataLabel]="'Product'"
+          [data]="data"
+          [labels]="labels"
+          title="Interest over time"
+          gridBorderColor="#2CC84D"
+          [showLegend]="false"
+          [displayXGrid]="false"
+        ></app-line-chart>
+      </div>
+
+      <span class="w-4"></span>
+
+      <div class="col border-round-sm border-1 border-darkvanilla pt-4 pb-3">
+        <app-line-chart
+          [dataLabel]="'Product'"
+          [data]="data"
+          [labels]="labels"
+          title="Interest over time"
+          gridBorderColor="#2CC84D"
+          [showLegend]="false"
+          [displayXGrid]="false"
+        ></app-line-chart>
+      </div>
+    </div>
+  </nz-card>
+</div>

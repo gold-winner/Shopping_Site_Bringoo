@@ -1,0 +1,12 @@
+.summary{
+  border: 1px solid #D9D9D9;
+  div{
+    padding-left: 16px;
+  }
+  div + div {
+    border-top: 1px solid #D9D9D9;
+  }
+  div>span:nth-child(2) {
+    width: 50%;
+  }
+}

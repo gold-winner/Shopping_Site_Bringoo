@@ -1,0 +1,21 @@
+#summary{
+  border: 1px solid #D9D9D9;
+  div{
+    padding-left: 16px;
+  }
+  div + div {
+    border-top: 1px solid #D9D9D9;
+  }
+  div>span:nth-child(2) {
+    width: 50%;
+  }
+}
+
+.receipt{
+  position: relative;
+  width: 240px;
+  hr{
+    border: 1px solid #e2d3c5;
+    color: #e2d3c5;
+  }
+}

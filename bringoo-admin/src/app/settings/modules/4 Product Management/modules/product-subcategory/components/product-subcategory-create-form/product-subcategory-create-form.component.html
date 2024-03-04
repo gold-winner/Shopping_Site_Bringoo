@@ -1,0 +1,35 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input required label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input label="Description" type="textarea" formControlName="description_i18n"></app-multi-lang-v2-input>
+  </app-lang-controller>
+  <nz-form-item class="mt-4">
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Sub-category picture</nz-form-label>
+    <nz-form-control labelForErrorTip="Sub-category picture">
+      <app-file-upload [multiple]='false' formControlName='imageUrl' path='subcategory'></app-file-upload>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="isActive">Status</nz-form-label>
+    <app-status-switch formControlName='isActive'></app-status-switch>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>SubCategory Slug</nz-form-label>
+    <nz-form-control labelForErrorTip="SubCategory Slug">
+      <input nz-input formControlName="slug" placeholder="Category Slug">
+      <ng-template #slagErrorTip let-control>
+        <ng-container *ngIf="control.hasError('maxlength')">Maximum character count 400!</ng-container>
+        <ng-container *ngIf="control.hasError('minlength')">Minimum character count 3!</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Please input Subcategory Slug!</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">Сan contain [a-z,0-9,_,-]</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>

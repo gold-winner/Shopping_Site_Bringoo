@@ -1,0 +1,99 @@
+<nz-layout class="layout-default">
+  <nz-sider
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+    class="layout-sidebar main-menu"
+    nzBreakpoint="xl"
+    nzCollapsible
+    nzWidth="200px"
+    style="overflow: hidden"
+  >
+    <ul [nzInlineCollapsed]="isCollapsed" nz-menu nzMode="inline" class="scroll-y bg-darkgrey text-white">
+
+      <div class="logo pt-3 ml-6 d-flex justify-content-between align-items-center">
+
+        <a *ngIf="!isCollapsed" [routerLink]="'/dashboard'">
+          <img alt="BRINGOO" src="../../../../assets/img/logo.svg" width="80"/>
+        </a>
+        <i
+          (click)="isCollapsed = !isCollapsed"
+          [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          class="trigger f-7 d-flex align-items-center pr-2 color-text-2 cursor-pointer"
+          nz-icon>
+        </i>
+      </div>
+
+      <ng-container *ngFor="let link of sitemap">
+        <li *ngIf="link.children && !isCollapsed && !link.showInMenu" nz-menu-group
+          nzOpen
+          class="f-4"
+        >
+          <div class="title">{{link.title}}</div>
+          <ul>
+            <li *ngFor="let child of link.children"
+                nz-menu-item class="ml-sm-6"
+                nzMatchRouter
+                nzMatchRouter
+                [nzMatchRouterExact]="child.matchPathExact|bool"
+            >
+              <a
+                [id]="child.path"
+                routerLink="{{link.path}}/{{child.path}}"
+              >{{child.title}}</a>
+            </li>
+          </ul>
+        </li>
+
+        <nz-submenu
+          *ngIf="link.children && link.showInMenu"
+          nz-submenu
+          class="f-4 submenu"
+          [nzTitle]='title'
+        >
+          <li *ngFor="let child of link.children" nz-menu-item class="f-3" nzMatchRouter style="padding-left: 25px">
+            <icon *ngIf="child.fIcon" [name]="child.fIcon" class="f-4"></icon>
+            <a [id]="link.path+ '_' +child.path" class='d-flex align-items-center' routerLink="{{link.path}}/{{child.path}}">{{child.title}}</a>
+          </li>
+        </nz-submenu>
+
+        <ng-template #title>
+          <i *ngIf="link.icon" nz-icon nzType="{{link.icon}}" nzTheme="outline"></i>
+          <icon class="mr-2" *ngIf="link.fIcon" [name]="link.fIcon"></icon>
+          <span *ngIf="!isCollapsed">{{link.title}}</span>
+        </ng-template>
+
+        <li
+          id="{{link.title.replace(' ', '')}}"
+          *ngIf="!link.children"
+          nz-menu-item nzMatchRouter
+          [nzMatchRouterExact]="link.matchPathExact|bool"
+          [routerLink]="[link.path]"
+          class="f-4 pr-sm-6"
+        >
+          <i *ngIf="link.icon" nz-icon nzType="{{link.icon}}" nzTheme="outline"></i>
+          <icon class="mr-2" *ngIf="link.fIcon" [name]="link.fIcon"></icon>
+          <span *ngIf="!isCollapsed">{{link.title}}</span>
+        </li>
+      </ng-container>
+
+    </ul>
+    <a
+      class="partner mb-2"
+      [class.ml-6]="!isCollapsed"
+      [class.mx-auto]="isCollapsed"
+      [href]="partnersUrl"
+      target="_blank"
+    >
+      <i class="mb-2" nz-icon nzType="solution" nzTheme="outline"></i>
+      <span class="ml-2" *ngIf="!isCollapsed">Partners</span>
+    </a>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="bg-component">
+      <app-header></app-header>
+    </nz-header>
+    <nz-content class='bg-body scroll-y'>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

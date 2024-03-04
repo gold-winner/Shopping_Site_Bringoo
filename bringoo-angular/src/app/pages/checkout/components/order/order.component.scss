@@ -1,0 +1,45 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.order {
+  @extend .w-60p;
+  @extend .d-flex;
+  @extend .justify-content-center;
+  @extend .align-items-center;
+  @extend .flex-column;
+  
+  @media (max-width: map-get($grid-breakpoints, 'sm')) {
+    width: 100%;
+  }
+
+  &__like {
+    @extend .w-100p;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-between;
+    @extend .bg-beige-20;
+    @extend .border-radius-lg; 
+    @extend .px-13;
+    @extend .py-5;
+    @extend .mt-6;
+
+    .item {
+      @extend .d-flex;
+      @extend .align-items-center;
+      @extend .border-radius-xlg;
+      @extend .p-2;
+      @extend .cursor-pointer;
+      border: 2px solid rgba($color_beige, 0.4);
+    }
+  }
+
+  &__footer {
+    @extend .w-100p;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-between;
+    @extend .mt-10;
+  }
+}

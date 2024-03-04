@@ -1,0 +1,317 @@
+<div class="p-8" *ngIf="staff$ | async as staff">
+  <div class="d-flex justify-content-between">
+    <div class="mb-4 cursor-pointer" (click)="goToStaffPage()">
+      <i nz-icon nzType="left" nzTheme="outline" class="mr-2"></i>
+      <span class="text-bold">{{ staff?.settings?.firstName + ' ' + staff?.settings?.lastName }}</span>
+    </div>
+    <button nz-button nzType="primary" [disabled]="!!staff.deleted_date || !roleForm.dirty"
+            (click)="onSaveChanges()">Save changes
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-16">
+      <nz-card class="mb-8">
+        <nz-card-meta [nzTitle]="staffCardTitle" [nzDescription]="staffCardDescription"
+                      [nzAvatar]="avatarTemplate"></nz-card-meta>
+        <div class="d-flex justify-content-between">
+          <div class="w-100p">
+            <span>Staff note</span>
+            <textarea nz-input rows="2" readonly [value]="staff.note"></textarea>
+          </div>
+          <a *ngIf="!staff.deleted_date" (click)="openPanel = 'note'">Edit</a>
+        </div>
+      </nz-card>
+      <ng-template #staffCardTitle>
+        <div class="d-flex justify-content-between">
+          {{staff?.settings?.firstName + ' ' + staff?.settings?.lastName}}
+          <a *ngIf="!staff.deleted_date" (click)="openPanel = 'info'">Edit</a>
+        </div>
+      </ng-template>
+      <ng-template #staffCardDescription>
+        <div>Staff since: {{staff?.lastLoginDate}}</div>
+      </ng-template>
+      <ng-template #avatarTemplate>
+        <img class="mr-sm-4" width="50" height="50" [src]="'./../../../../../../../assets/img/avatars/userAvatar.svg'"
+             alt="Staff">
+      </ng-template>
+      <!--      todo add Current Status, waiting backend-->
+      <nz-card class="mb-8">
+        <nz-card-meta nzTitle="Current Status"></nz-card-meta>
+        <nz-steps class="mt-4" nzSize="small">
+          <nz-step nzTitle="Waiting for Job" nzStatus="finish" nzIcon="clock-circle"></nz-step>
+          <nz-step nzTitle="Working on a Job" nzStatus="finish" nzIcon="shop"></nz-step>
+          <nz-step nzTitle="On Break" nzStatus="process" nzIcon="message"></nz-step>
+          <nz-step nzTitle="Logged out" nzStatus="wait" nzIcon="logout"></nz-step>
+        </nz-steps>
+      </nz-card>
+      <div class="bg-component mb-8">
+        <app-staff-session-history></app-staff-session-history>
+      </div>
+      <div class="bg-component mb-8">
+        <app-user-subscription></app-user-subscription>
+      </div>
+      <div class="bg-component mb-8">
+        <app-staff-order-history (totalCount)="totalCount = $event"></app-staff-order-history>
+      </div>
+      <div class="bg-component mb-8">
+        <app-staff-store-bound-crud></app-staff-store-bound-crud>
+      </div>
+      <div class='bg-component mb-8'>
+        <app-sms-history-crud [userType]="'staff'"></app-sms-history-crud>
+      </div>
+      <nz-card class="mb-8">
+        <nz-card-meta nzTitle="Jobs History"></nz-card-meta>
+        <span><i nz-icon nzType="info-circle" nzTheme="outline"></i> This shopper doesn't have an job yet!</span>
+      </nz-card>
+      <nz-card class="mb-8">
+        <nz-card-meta nzTitle="Timeline"></nz-card-meta>
+        todo when we understand what it is
+      </nz-card>
+      <button *ngIf="!staff.deleted_date" nz-button nzDanger nzType="primary" (click)="isDeleteModalVisible = true"
+              class="mr-3">Deactivate staff
+      </button>
+      <button *ngIf="staff.deleted_date" nz-button nzType="primary" (click)="onRecover()" class="mr-3">Recover Staff
+      </button>
+    </div>
+    <div class="col-8">
+
+      <nz-card class="mb-8">
+        <div nz-card-grid [ngStyle]="{ width: '100%' }" [nzHoverable]="false" class="f-4">
+          <div class='d-flex justify-content-between mb-4'><h4>Staff Overview</h4> <a (click)="openPanel = 'overview'">Edit</a></div>
+          <div class="d-flex justify-content-between">
+            <a [href]="'mailto:' + staff.email" nz-typography [nzContent]="staff.email"></a>
+            <i nz-icon nzType="copy" nzTheme="outline" class="color-primary"></i>
+          </div>
+          <div [class.color-danger]="!staff?.settings?.phoneNumber">
+            <i nz-icon nzType="phone" nzTheme="outline"></i>
+            <ng-container *ngIf="staff?.settings?.phoneNumber; else isMissingPhone">
+              <p class="d-inline" nz-typography nzCopyable nzCopyText="+{{staff?.settings?.phoneCountryCode}} {{ staff?.settings?.phoneNumber }}">
+                +{{staff?.settings?.phoneCountryCode}} {{ staff?.settings?.phoneNumber }}
+                <app-verification-status class="f-3" [isVerified]="staff.isPhoneNumberVerified|bool"></app-verification-status>
+              </p>
+            </ng-container>
+            <ng-template #isMissingPhone>
+              Phone number is missing
+            </ng-template>
+          </div>
+        </div>
+        <div nz-card-grid [ngStyle]="{ width: '100%' }" [nzHoverable]="false">
+          <div class='d-flex f-3 mb-2'>Language settings:</div>
+          <app-language-select
+            [hideLabel]="true"
+            placeHolder="Staff Language"
+            [formControl]="staffLanguageController"
+            [required]="true"
+          ></app-language-select>
+        </div>
+      </nz-card>
+
+      <nz-card class="mb-8" [formGroup]="roleForm">
+        <nz-card-meta nzTitle="Staff Account Type"></nz-card-meta>
+        <nz-radio-group formControlName="role">
+          <label nz-radio nzValue="DRIVER">Rider</label><br/>
+          <label nz-radio nzValue="PICKER">Picker</label><br/>
+          <label nz-radio nzValue="PICKER_DRIVER">Rider & Picker</label>
+        </nz-radio-group>
+        <p class="mb-0 color-text-2" *ngIf="roleForm.get('role')?.value === 'UNASSIGNED'">Account type not
+          assigned.</p>
+      </nz-card>
+
+      <nz-card class="mb-8" [formGroup]="roleForm">
+        <nz-card-meta nzTitle="Is External Employee"></nz-card-meta>
+        <nz-form-item>
+          <nz-form-control labelForErrorTip="Is External Employee">
+            <app-status-switch
+              formControlName='isExternalEmployee'
+              trueValue="External Employee"
+              falseValue="Inhouse Employee"
+            ></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+
+      <nz-card class="mb-8">
+        <nz-card-meta nzTitle="Associate Jobs"></nz-card-meta>
+        <p class="f-3 text-bold">Enable this user to receive jobs also for stores which have their own associates.</p>
+        <label nz-checkbox [formControl]="associateJobsControl" (nzCheckedChange)="associateJobChange($event)">Open for associate jobs</label>
+      </nz-card>
+
+      <nz-card class="mb-8">
+        <nz-card-meta nzTitle="Vehicle Type"></nz-card-meta>
+        <label nz-checkbox nzValue="Car">Car</label><br/>
+        <label nz-checkbox nzValue="Bike" class="ml-0">Bike</label><br/>
+        <label nz-checkbox nzValue="E-Scooter" class="ml-0">E-Scooter</label><br/>
+        <label nz-checkbox nzValue="By Foot" class="ml-0">By Foot</label>
+      </nz-card>
+      <nz-card class="mb-8">
+        <nz-card-meta nzTitle="Vendor Type Entitlement"></nz-card-meta>
+        <label nz-checkbox nzValue="Supermarket">Supermarket</label><br/>
+        <label nz-checkbox nzValue="Discount-Market" class="ml-0">Discount-Market</label><br/>
+        <label nz-checkbox nzValue="Gas station" class="ml-0">Gas station</label><br/>
+        <label nz-checkbox nzValue="Pharmacy" class="ml-0">Pharmacy</label><br/>
+        <label nz-checkbox nzValue="Bakery" class="ml-0">Bakery</label>
+      </nz-card>
+      <nz-card class="mb-8">
+        <nz-card-meta nzTitle="Account status"></nz-card-meta>
+        <nz-radio-group>
+          <label nz-radio nzValue="Supermarket">Supermarket</label><br/>
+          <label nz-radio nzValue="Active">Active</label><br/>
+          <label nz-radio nzValue="Paused">Paused</label><br/>
+          <label nz-radio nzValue="Suspended">Suspended</label><br/>
+          <label nz-radio nzValue="Deleted">Deleted</label>
+        </nz-radio-group>
+      </nz-card>
+      <nz-card class="mb-8" [nzTitle]="emailMarketing">
+        <ng-template #emailMarketing>
+          <div class="d-flex justify-content-between">Email Marketing <a>Edit</a></div>
+          <div class="color-danger"><i nz-icon nzType="close" nzTheme="outline"></i>No subscription</div>
+        </ng-template>
+        <app-status-switch trueValue="Newsletter" falseValue="Newsletter"></app-status-switch>
+        <app-status-switch trueValue="Order Confirmation" falseValue="Order Confirmation"></app-status-switch>
+        <app-status-switch trueValue="Order Product Replacement"
+                           falseValue="Order Product Replacement"></app-status-switch>
+        <app-status-switch trueValue="New Product arrivals" falseValue="New Product arrivals"></app-status-switch>
+        <app-status-switch trueValue="Sales" falseValue="Sales"></app-status-switch>
+      </nz-card>
+      <nz-card class="mb-8">
+        <nz-card-meta [nzTitle]="totalOrders"></nz-card-meta>
+        <ng-template #totalOrders>
+          <div class="d-flex justify-content-between">Total Orders <a>Detail</a></div>
+        </ng-template>
+        <span class="color-primary">{{totalCount}}</span>
+      </nz-card>
+      <nz-card class="mb-8">
+        <nz-card-meta [nzTitle]="totalRevenue"></nz-card-meta>
+        <ng-template #totalRevenue>
+          <div class="d-flex justify-content-between">Total Revenue <a>Detail</a></div>
+        </ng-template>
+        <span class="color-primary">{{ordersRevenue$ | async}} EUR</span>
+      </nz-card>
+      <nz-card class="mb-8">
+        <nz-card-meta [nzTitle]="totalTags"></nz-card-meta>
+        <ng-template #totalTags>
+          <div class="d-flex justify-content-between">Tags <a>View all tags</a></div>
+        </ng-template>
+        <nz-select nzMode="tags" nzPlaceHolder="tags" class="w-100p mt-3" nzSize="default"></nz-select>
+      </nz-card>
+      <nz-card>
+        <nz-card-meta nzTitle="Shopper Privacy"></nz-card-meta>
+        <p class="f-3 text-bold">Request shopper data</p>
+        <p>Get a copy of this shopper’s data by email so you can forward it to them. <a>Learn more about requesting
+          shopper data.</a></p>
+        <button nz-button [nzType]="'primary'" style="background: #244875" nzShape="round">Request personal data
+        </button>
+        <hr>
+        <p class="f-3 text-bold">Erase personal data</p>
+        <p>Abilityu to remove this shopper’s personal information from backend. <a>Learn about the process of erasure
+          requests.</a></p>
+        <button nz-button [nzType]="'primary'" style="background: #244875" nzShape="round">Erase personal data</button>
+        <hr>
+        <p class="f-3 text-bold">Reset password</p>
+        <p>Forgot Password? <a>We will send you instructions to reset your password.</a></p>
+        <nz-input-group [nzSuffix]="mailIcon">
+          <input nz-input type="text" placeholder="Email" />
+        </nz-input-group>
+        <ng-template #mailIcon>
+          <i nz-icon nzType="mail"></i>
+        </ng-template>
+        <button class="mt-2" nz-button [nzType]="'primary'" style="background: #244875" nzShape="round">Reset password
+        </button>
+      </nz-card>
+    </div>
+  </div>
+  <nz-drawer
+    [nzClosable]="true"
+    [nzWidth]="700"
+    [nzVisible]="openPanel === 'overview'"
+    nzPlacement="right"
+    nzTitle="Edit contact info"
+    [nzFooter]="overview"
+    (nzOnClose)="onCloseDrawer()"
+  >
+    <ng-template nzDrawerContent>
+      <app-staff-overview [staffInfo]="staff" [submit]="submitEvent"
+                          (updatePage)="updateStaff.next($event)"></app-staff-overview>
+    </ng-template>
+  </nz-drawer>
+
+  <ng-template #overview>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <button nzBlock nz-button nzType="primary" (click)="onSubmit()">Apply</button>
+        </div>
+        <div class="col-12">
+          <button nzBlock nz-button nzType="link" (click)="onCloseDrawer()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <nz-drawer
+    [nzClosable]="true"
+    [nzWidth]="700"
+    [nzVisible]="openPanel === 'info'"
+    nzPlacement="right"
+    nzTitle="Edit staff info"
+    [nzFooter]="staffInfo"
+    (nzOnClose)="onCloseDrawer()"
+  >
+    <ng-template nzDrawerContent>
+      <app-staff-info [staffInfo]="staff" [submit]="submitEvent"
+                      (updatePage)="updateStaff.next($event)"></app-staff-info>
+    </ng-template>
+  </nz-drawer>
+
+  <ng-template #staffInfo>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <button nzBlock nz-button nzType="primary" (click)="onSubmit()">Apply</button>
+        </div>
+        <div class="col-12">
+          <button nzBlock nz-button nzType="link" (click)="onCloseDrawer()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <nz-modal
+    [(nzVisible)]="isDeleteModalVisible"
+    nzTitle="Are you sure you want to delete this staff?"
+    (nzOnCancel)="onCancelDelete()"
+    (nzOnOk)="onOkDelete()"
+    [nzOkDanger]="true"
+    nzOkText="Delete"
+  >
+    <h5 *nzModalContent><span>Delete {{staff?.settings?.firstName}} {{staff?.settings?.lastName}} ?</span></h5>
+  </nz-modal>
+
+  <nz-drawer
+    [nzClosable]="true"
+    [nzWidth]="700"
+    [nzVisible]="openPanel === 'note'"
+    nzPlacement="right"
+    nzTitle="Edit staff note"
+    [nzFooter]="staffNote"
+    (nzOnClose)="onCloseDrawer()"
+  >
+    <ng-template nzDrawerContent>
+      <app-staff-note [staffInfo]="staff" [submit]="submitEvent"
+                      (updatePage)="updateStaff.next($event)"></app-staff-note>
+    </ng-template>
+  </nz-drawer>
+  <ng-template #staffNote>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <button nzBlock nz-button nzType="primary" (click)="onSubmit()">Apply</button>
+        </div>
+        <div class="col-12">
+          <button nzBlock nz-button nzType="link" (click)="onCloseDrawer()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

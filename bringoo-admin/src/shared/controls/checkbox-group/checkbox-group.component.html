@@ -1,0 +1,3 @@
+<nz-checkbox-wrapper (nzOnChange)='onChange($event)' *ngIf="value$|async as controlValue">
+  <label *ngFor='let v of items' nz-checkbox [nzChecked]="controlValue.includes(v)" [nzValue]='v'>{{v}}</label>
+</nz-checkbox-wrapper>

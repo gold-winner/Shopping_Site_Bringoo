@@ -1,0 +1,118 @@
+<nz-table
+  class="mx-0"
+  #transactionItemsTable
+  [nzShowPagination]="false"
+  [nzData]="transactionItems"
+  [nzSize]="'small'"
+  [nzScroll]="{ x: '900px' }"
+  [nzWidthConfig]="['20px', '20px', '120px', '50px', '50px', '50px', '40px', '40px', '50px', '50px', '50px', '50px']"
+>
+  <thead>
+  <tr>
+    <th
+      [colSpan]="2"
+      [nzLeft]="true"
+    >Item</th>
+    <th [nzLeft]="true">Product Name</th>
+    <th class="text-align-right">Weight</th>
+    <th class="text-align-right">Quantity Ordered</th>
+    <th class="text-align-right">Quantity Found</th>
+    <th class="text-align-right">Refund</th>
+    <th class="text-align-right">VAT</th>
+    <th class="text-align-right">Single Price</th>
+    <th class="text-align-right">Single discount</th>
+    <th class="text-align-right">Total discount</th>
+    <th class="text-align-right">Total Price</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of transactionItems; let index = index">
+    <td
+      style="padding-right: 0"
+      [nzLeft]="true"
+      nzShowCheckbox
+      [nzChecked]="checkedItems.has(item.orderItemId)"
+      (nzCheckedChange)="onItemChecked(item.orderItemId, $event)"
+      [nzDisabled]="(item.quantity === item.quantityRefund) || !(useRefund && orderStatus === completeOrderStatus)"
+    ></td>
+    <td style="padding-left: 0" [nzLeft]="true">{{index + 1}}</td>
+    <td [nzLeft]="true">
+      <a (click)="onClickProductDetails(item.linkId)">
+        <i *ngIf="item.isDeposit" nz-icon nzType="code-sandbox" class="mr-2" nzTheme="outline"></i>{{item.name_i18n}}
+      </a><br/>
+      EAN: {{item.ean}}
+      <p class="mb-0">
+        <nz-tag
+          *ngIf="item.customerNote"
+          class="white-space-normal"
+        >{{item.customerNote}}</nz-tag>
+      </p>
+    </td>
+    <td class="text-align-right">{{item.weight|gramsToKg}}</td>
+    <td class="text-align-right">{{item.quantity}}</td>
+    <td class="text-align-right">{{item.quantityFound}}</td>
+    <td class="text-align-right">{{item.quantityRefund}}</td>
+    <td class="text-align-right">{{item.vatPercent}} %</td>
+    <td class="text-align-right">{{item.price}}</td>
+    <td class="text-align-right">{{item.voucherDiscount}}</td>
+    <td class="text-align-right">{{item.voucherAllDiscount}}</td>
+    <td class="text-align-right">{{item.totalAmount}}</td>
+  </tr>
+  </tbody>
+</nz-table>
+<div class="bg-body w-100p p-4 mb-1 d-flex justify-content-end f-4">
+  <div class="receipt">
+    <div class="total-row d-flex justify-content-between text-bold">
+      <span>Sub total incl. VAT</span>
+      <span class="w-10"></span>
+      <span class="text-align-right">{{totalAmount}}</span>
+    </div>
+
+    <div class="total-row d-flex justify-content-between" *ngFor="let vat of totalVats">
+      <span>incl. {{vat.vat}}</span>
+      <span class="text-align-right">{{vat.value}}</span>
+    </div>
+
+    <div class="total-row d-flex justify-content-between">
+      <span>Total Deposit</span>
+      <span class="text-align-right">{{totalDeposit}}</span>
+    </div>
+
+    <ng-container *ngIf="deliveryFee">
+      <div class="total-row d-flex justify-content-between"
+           [class.text-strike]="deliveryFee.isRefunded"
+      >
+        <span>Delivery Fee</span>
+        <span class="text-align-right">{{deliveryFee?.value}}</span>
+      </div>
+      <hr>
+    </ng-container>
+
+    <div class="total-row d-flex justify-content-between">
+      <span>Discount items</span>
+      <span class="text-align-right">{{itemsDiscount}}</span>
+    </div>
+
+    <div class="total-row d-flex justify-content-between">
+      <span>Discount Delivery fee</span>
+      <span class="text-align-right">{{deliveryFeeDiscount}}</span>
+    </div>
+
+    <div class="total-row d-flex justify-content-between">
+      <span>Discount Total</span>
+      <span class="text-align-right">{{allDiscount}}</span>
+    </div>
+
+    <hr>
+
+    <ng-container *ngIf="totalRefund !== '0'">
+      <div class="total-row d-flex justify-content-between"
+           [class.text-strike]="deliveryFee?.isRefunded|bool"
+      >
+        <span>Total Refund</span>
+        <span class="text-align-right">{{totalRefund}}</span>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

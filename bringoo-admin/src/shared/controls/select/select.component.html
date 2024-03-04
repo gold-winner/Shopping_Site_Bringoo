@@ -1,0 +1,32 @@
+<nz-select
+  class='w-100p'
+  nzPlaceHolder="{{placeHolder}}"
+  nzShowSearch
+  nzServerSearch
+  [nzOptions]="optionList"
+  [formControl]="control"
+  (nzOnSearch)="onSearch($event)"
+  (nzOpenChange)="onSelectOpenChange($event)"
+  (nzScrollToBottom)="onScrollBottom()"
+  [nzAllowClear]='!required'
+  [nzMode]="type"
+  [nzShowArrow]="true"
+  [nzLoading]="selectOptions.service.isLoading$ | async"
+  [nzDropdownMatchSelectWidth]="false"
+  [nzDropdownRender]="total > 3 && type !== 'default' ? render : null"
+></nz-select>
+<ng-template #render>
+  <nz-divider style="margin: 4px 0;"></nz-divider>
+  <div>
+    <button
+      nz-button
+      [nzType]="'link'"
+      (click)="onSelectAll()"
+    >Select All</button>
+    <button
+      nz-button
+      [nzType]="'link'"
+      (click)="onClearAll()"
+    >Clear All</button>
+  </div>
+</ng-template>

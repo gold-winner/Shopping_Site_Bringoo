@@ -1,0 +1,81 @@
+<form nz-form [formGroup]='filterForm' nzLayout="inline" class="mb-4">
+  <nz-form-item class="w-48">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input nz-input formControlName="search" placeholder="Search"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-category-select
+    class="w-40 mr-4"
+    formControlName="productCategoryCode"
+  ></app-filter-category-select>
+
+  <app-filter-subcategory-select
+    class="w-40 mr-4"
+    formControlName="productSubcategoryCode"
+    [categoryCode]="filterForm.get('productCategoryCode')?.value || ''"
+  ></app-filter-subcategory-select>
+
+  <app-filter-brand-select
+    class="w-40 mr-4"
+    formControlName="productBrandCode"
+  ></app-filter-brand-select>
+</form>
+<form nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-table
+    *ngIf='items | async as products'
+    nzShowSizeChanger
+    nzShowPagination
+    [nzData]="products"
+    [nzPageSize]='limit'
+    [nzFrontPagination]="false"
+    [nzLoading]="isLoading$|async"
+    [nzTotal]="total"
+    [nzPageIndex]="productFilter.getValue().page || 1"
+    (nzPageIndexChange)="checked = false"
+    [nzShowTotal]="rangeTemplate"
+    [nzPageSizeOptions]="nzPageSizeOptions"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    [nzSize]="'small'"
+  >
+    <thead>
+    <tr>
+      <th
+        nzShowCheckbox
+        [(nzChecked)]="checked"
+        (nzCheckedChange)='onAllChecked($event, products)'>
+      </th>
+      <th>Select all items in page</th>
+      <th>Brand</th>
+      <th>VAT</th>
+      <th>Default Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of products; let ind = index">
+      <td 
+        nzShowCheckbox
+        *ngIf='item.id'
+        [nzDisabled]="!isAvailableForCheck(item)"
+        [nzChecked]="setOfChecked.has(item.id)"
+        (nzCheckedChange)="onItemChecked(item.id, $event)">
+      </td>
+      <td>{{item.product?.name_i18n}} <br> Barcode (EAN) {{item.product?.ean}}</td>
+      <td>{{item.product?.productBrand?.name_i18n}}</td>
+      <td class='text-align-right'>
+        {{item.product?.productValueGross}} VAT {{item.product?.productVatPercent}}%
+      </td>
+      <td class='text-align-right'>
+        {{item.product?.defaultPrice}} EUR
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  </ng-template>
+</form>

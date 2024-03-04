@@ -1,0 +1,61 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/typography';
+.ui-auth {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+  @extend .h-100p;
+
+  &-background {
+    background-image: url('/assets/img/background.png');
+    background-size: cover;
+    background-repeat: round;
+  }
+
+  .content {
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .flex-column;
+    @extend .bg-white;
+    @extend .border-radius-lg;
+    width: 544px;
+
+    &-large {
+      height: 850px;
+    }
+
+    &-medium {
+      height: 730px;
+    }
+
+    &-menu {
+      @extend .w-100p;
+      @extend .d-flex;
+      @extend .justify-content-evenly;
+      @extend .mt-10;
+      @extend .px-12;
+      @extend .text-medium;
+      @extend .text-lightblue;
+      @extend .text-bold;
+      border-bottom: 1px solid rgba($color_beige, 0.5);
+
+      &__item {
+        @extend .cursor-pointer;
+        @extend .pb-3;
+        @extend .px-5;
+        &--selected {
+          @extend .text-darkgrey;
+          border-bottom: 4px solid $color_green;
+        }
+      }
+    }
+
+    &-body {
+      @extend .w-100p;
+      @extend .px-24;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<nz-date-picker
+  class="w-100p"
+  [formControl]="control"
+  [nzFormat]="dateFormat"
+  [nzAllowClear]="!isRequired"
+  [nzPlaceHolder]="placeHolder"
+  [nzDefaultPickerValue]="defaultDate"
+  [nzShowTime]="showTime"
+  [nzDisabledDate]="_disableBefore ? disabledDate(_disableBefore) : undefined"
+></nz-date-picker>

@@ -1,0 +1,32 @@
+@import "src/scss/colors";
+@import "src/scss/borders";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+
+.ui-quantity {
+  @extend .border-0;
+  @extend .d-flex;
+  @extend .justify-content-between;
+  @extend .align-items-center;
+
+  &__border {
+    border-bottom: 1px solid $color_lightblue;
+  }
+
+  span {
+    @extend .px-5;
+    @extend .f-5;
+  }
+
+  .value {
+    font-family: sans-serif;
+  }
+}
+
+.quantity {
+  @extend .cursor-pointer;
+
+  &:hover {
+    color: $color_green;
+  }
+}

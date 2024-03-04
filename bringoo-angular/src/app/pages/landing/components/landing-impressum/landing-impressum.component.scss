@@ -1,0 +1,91 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+
+.header {
+  box-shadow: 0px 4px 11px rgba($color_grey, 0.3);
+  height: 80px;
+  
+  &-body {
+    @extend .container;
+    @extend .py-5;
+    @extend .d-flex;
+    @extend .justify-content-between;
+  }
+
+  &-main {
+    @extend .d-flex;
+
+    .phone {
+      margin-top: -4px; 
+      font-size: 15px; 
+      font-weight: 800;
+    }
+
+    .clock {
+      margin-top: -12px; 
+      font-size: 12px; 
+      font-weight: 500;
+    }
+  }
+}
+
+.content {
+  @extend .container;
+  @extend .py-5;
+
+  .title {
+    @extend .text-large;
+    @extend .text-darkgrey;
+    @extend .text-bold;
+  }
+
+  .contact {
+    @extend .text-medium;
+    @extend .text-lightblue;
+  }
+
+  .contact-title {
+    @extend .text-medium;
+    @extend .text-lightblue;
+  }
+
+  .contact-content {
+    @extend .text-medium;
+    @extend .text-green;
+  }
+
+  .contact-description {
+    @extend .text-medium;
+    @extend .text-darkgrey;
+  }
+}
+
+.footer {
+  .Zahlungsarten {
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-top: 30px;
+    }
+  }
+  
+  .text-semi-bold > a, .social-icons > a {
+    color: $color_darkgrey;
+    &:hover {
+      color: $color_green;
+    }
+  }
+  
+  .social:hover {
+    @extend .cursor-pointer;
+    color:rgb(31, 182, 31);
+  }
+
+  .card {
+    @extend .ml-8;
+    @media (max-width: 1280px) { 
+      margin-left: 4px;
+    }
+  }
+}

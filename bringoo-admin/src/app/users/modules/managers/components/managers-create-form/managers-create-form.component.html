@@ -1,0 +1,111 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-manager-role-select
+    formControlName='role'
+    [required]="true"
+  ></app-manager-role-select>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="email" nzRequired>Email</nz-form-label>
+    <nz-form-control labelForErrorTip="Email">
+      <ng-template #emailErrors>
+        <div *ngIf="form.get('email')?.errors?.email">
+          Wrong email address
+        </div>
+        <div *ngIf="!form.get('email')?.errors?.email">
+          Please input email
+        </div>
+      </ng-template>
+      <input formControlName='email' nz-input name="email" placeholder="Email">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="password" nzRequired>Password</nz-form-label>
+    <nz-form-control labelForErrorTip="Password">
+      <ng-template #passwordErrors>
+        <div *ngIf="form.get('password')?.errors?.maxlength">
+          Long password. Max length {{passwordMaxLength}} symbols
+        </div>
+        <div *ngIf="!form.get('password')?.errors?.maxlength">
+          Please input password
+        </div>
+      </ng-template>
+      <nz-input-group nzSize="large" [nzSuffix]="suffixTemplate">
+        <input
+          nz-input
+          formControlName="password"
+          [type]="passwordVisible ? 'text' : 'password'"
+          placeholder="Password"
+        />
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <i nz-icon [nzType]="passwordVisible ? 'eye' : 'eye-invisible'" (click)="passwordVisible = !passwordVisible"></i>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <form formGroupName='settings'>
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="firstName" nzRequired>First name</nz-form-label>
+      <nz-form-control labelForErrorTip="First name">
+        <input formControlName='firstName' nz-input name="firstName" placeholder="firstName">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="lastName" nzRequired>Last Name</nz-form-label>
+      <nz-form-control labelForErrorTip="Last Name">
+        <input formControlName='lastName' nz-input name="lastName" placeholder="lastName">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="lastName">Date Of Birth</nz-form-label>
+      <nz-form-control labelForErrorTip="Date Of Birth">
+        <nz-date-picker formControlName='dateOfBirth'></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="placeOfBirth">Place Of Birth</nz-form-label>
+      <nz-form-control labelForErrorTip="Place Of Birth">
+        <input
+          formControlName="placeOfBirth"
+          nz-input
+          type="text"
+          placeholder="Place Of Birth"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="managerLanguageCode" nzRequired>Manager Language</nz-form-label>
+      <nz-form-control labelForErrorTip="Manager Language">
+        <app-select [options]="languageCode" [placeHolder]="'Manager Language'" [required]="true" formControlName="managerLanguageCode"></app-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-nationality-select
+      class="mt-4"
+      formControlName="nationalityCode"
+    ></app-nationality-select>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="salutation">Salutation</nz-form-label>
+      <nz-form-control labelForErrorTip="Salutation">
+        <app-list-select
+          placeHolder='Salutation'
+          formControlName='salutation'
+          [list]='salutationList'
+        ></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="firstName">Phone number</nz-form-label>
+      <nz-form-control labelForErrorTip="Phone number">
+        <nz-input-group nzCompact>
+          <nz-select formControlName='phoneCountryCode' style="width:30%;" nzPlaceHolder='Country code' nzShowSearch>
+            <nz-option *ngFor='let phoneCode of countryCode' [nzLabel]="phoneCode[0] +' +'+ phoneCode[1]" [nzValue]="phoneCode[1]"></nz-option>
+          </nz-select>
+          <input nz-input appDisableControl [disable]="!form.controls.settings.value.phoneCountryCode" formControlName='phoneNumber' style="width:70%;" placeholder='Enter number'/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</form>

@@ -1,0 +1,30 @@
+:host{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+}
+::ng-deep {
+  nz-breadcrumb-item{
+    display: flex;
+    span {
+      max-width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.breadcrumb-item {
+  text-wrap: none;
+  white-space: nowrap;
+}
+
+.white-space-normal {
+  white-space: normal;
+}
+
+.not-readed-notifications {
+  color: rgb(211, 16, 16);
+}

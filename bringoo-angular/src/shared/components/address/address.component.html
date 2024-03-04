@@ -1,0 +1,33 @@
+<div class="ui-address">
+  <div class="ui-address__main" (click)="onExpandStore(store!.id)">
+    <img src="{{store.logoUrl}}" class="col-3">
+    <div class="d-flex flex-column" class="col-12 pl-0">
+      <strong class="text-medium">{{store.name_public_long_i18n}}</strong>
+      <div class="text-blue text-tiny mt-1">
+        <strong>{{store?.vendorType?.name_i18n}}</strong> · {{store.openingTime}}
+      </div>
+    </div>
+    <div class="ui-address__outline-btn offset-1" [ngClass]="{'unselected': !expanded}" >
+      {{store?.addresses?.length}} shops
+    </div>
+    <icon *ngIf="expanded" name="chevron-up" class="offset-3" ></icon>
+    <icon *ngIf="!expanded" name="chevron-down" class="unselected offset-3" ></icon>
+  </div>
+  <div *ngIf="expanded" class="ui-address__expanded-list">
+    <div *ngFor="let address of store.addresses" class="ui-address__expanded-item">
+      <div class="d-flex flex-column" class="col-12 pl-0">
+        <span class="text-medium text-lightblue">{{address.streets}}, {{address.city}}</span>
+        <div class="text-darkgrey text-tiny mt-1">
+          Delivery<strong> · 10:30 - 20:00</strong>
+        </div>
+      </div>
+      <div
+        class="ui-address__outline-btn align-self-center"
+        [ngClass]="selectedStore === address.id ? 'ui-address__outline-btn--selected' : 'unselected'"
+        (click)="onSelect()"
+      >
+        Select
+      </div>
+    </div>
+  </div>
+</div>

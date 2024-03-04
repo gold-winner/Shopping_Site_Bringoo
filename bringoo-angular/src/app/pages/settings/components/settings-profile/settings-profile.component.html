@@ -1,0 +1,172 @@
+<ui-settings>
+  <div class="d-flex justify-content-between px-8 py-4">
+    <div class="d-flex">
+      <span class="f-8 text-bold">My profile</span>
+      <div *ngIf="!isGuest" class="text-medium align-self-end text-lightblue cursor-pointer ml-2 mb-2"
+        (click)="isEditing=!isEditing">
+        <span *ngIf="!isEditing" class="profile">Edit profile</span>
+        <span *ngIf="isEditing" class="profile">View profile</span>
+      </div>
+    </div>
+    <div class="d-flex align-items-end text-medium ml-2 mb-2">
+      <div *ngIf="!isGuest" class="d-flex">
+        <div class="d-flex align-items-center cursor-pointer" (click)="onSignout()">
+          <span class="text-semi-bold mr-1 only-desktop">Logout</span>
+          <icon name="log-out"></icon>
+        </div>
+        <div class="d-flex align-items-center text-red cursor-pointer ml-5" (click)="deleteAccountModal=true">
+          <icon name="delete"></icon>
+          <span class="text-semi-bold ml-1 only-desktop">Delete Account</span>
+        </div>
+      </div>
+      <div *ngIf="isGuest">
+        <div class="d-flex align-items-center cursor-pointer mr-3" (click)="onSignin()">
+          <span class="text-semi-bold mr-1">Login</span>
+          <icon name="log-in"></icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="border"></div>
+  <div class="d-flex flex-column my-8 px-8">
+    <div *ngIf="!isGuest">
+      <div *ngIf="!isEditing">
+        <div class="text-medium">
+          <div class="f-5 text-bold">{{profile && profile.firstName}} {{profile && profile.lastName}}</div>
+          <div class="d-flex justify-content-between">
+            <div>{{profile && profile.email}}</div>
+            <img src="assets/img/edit.svg" class="cursor-pointer" (click)="onEditEmail()" />
+          </div>
+          <div *ngIf="isEmailChanged" class="d-flex mt-2 email_verify">
+            <img class="mb-3 mx-2" src="assets/img/warn.svg" />
+            <div class="d-flex flex-column">
+              <span class="text-bold text-red">Your email is not verified</span>
+              <span class="text-semi-bold">Click here and verify your email</span>
+            </div>
+          </div>
+          <div class="text-lightblue mt-3">Customer Number:</div>
+          <div class="text-green">{{profile && profile.customerNumber}}</div>
+        </div>
+        <div class="d-flex justify-content-between mt-2 profile_section">
+          <div class="d-flex">
+            <img class="mb-3 mx-3" src="assets/img/profile/address.svg" />
+            <div class="d-flex flex-column">
+              <span class="text-large text-bold">Address</span>
+              <span class="text-tiny text-semi-bold">Ferdinandstraße 32, Hamburg</span>
+            </div>
+          </div>
+          <img class="mr-3" src="assets/img/profile/right.svg" />
+        </div>
+        <div class="d-flex justify-content-between mt-2 profile_section">
+          <div class="d-flex">
+            <img class="mb-3 mx-3" src="assets/img/profile/payment.svg" />
+            <div class="d-flex flex-column">
+              <span class="text-large text-bold">Payment methods</span>
+              <span class="text-tiny text-semi-bold">Cash</span>
+            </div>
+          </div>
+          <img class="mr-3" src="assets/img/profile/right.svg" />
+        </div>
+        <div class="d-flex justify-content-between mt-2 profile_section">
+          <div class="d-flex">
+            <img class="mb-3 mx-3" src="assets/img/profile/order.svg" />
+            <div class="d-flex flex-column">
+              <span class="text-large text-bold">My order history</span>
+              <span class="text-tiny text-semi-bold">You didn't order anything</span>
+            </div>
+          </div>
+          <img class="mr-3" src="assets/img/profile/right.svg" />
+        </div>
+        <div class="d-flex justify-content-between mt-2 profile_section">
+          <div class="d-flex">
+            <img class="mb-3 mx-3" src="assets/img/profile/setting.svg" />
+            <div class="d-flex flex-column">
+              <span class="text-large text-bold">App Settings</span>
+              <span class="text-tiny text-semi-bold">Notifications off</span>
+            </div>
+          </div>
+          <img class="mr-3" src="assets/img/profile/right.svg" />
+        </div>
+        <div class="d-flex justify-content-between mt-2 profile_section py-6">
+          <div class="d-flex">
+            <img class="mx-3" src="assets/img/profile/contact.svg" />
+            <div class="d-flex flex-column">
+              <span class="text-large text-bold">Contact us</span>
+            </div>
+          </div>
+          <img class="mr-3" src="assets/img/profile/right.svg" />
+        </div>
+        <div class="d-flex justify-content-between mt-2 profile_section"
+          style="padding-top: 24px; padding-bottom: 24px;">
+          <div class="d-flex">
+            <img class="mx-3" src="assets/img/profile/faq.svg" />
+            <div class="d-flex flex-column">
+              <span class="text-large text-bold">FAQ's</span>
+            </div>
+          </div>
+          <img class="mr-3" src="assets/img/profile/right.svg" />
+        </div>
+        <div class="only-desktop d-flex justify-content-between align-items-center text-bold text-medium mt-8">
+          <div>Address</div>
+          <div class="d-flex align-items-center text-green cursor-pointer" (click)="onAddAddress()">
+            <span>Add new address</span>
+            <icon name="plus" class="text-large"></icon>
+          </div>
+        </div>
+        <div class="only-desktop cards">
+          <ui-card-address *ngFor="let address of cardAddressData" [address]="address" class="mr-2 mb-2"
+            [selected]="address.isDefault ? true : false" (onDelete)="onDeleteAddressClick($event)"
+            (onEdit)="onEditCardClick($event)" (onSelect)="onSelectAddressClick($event)">
+          </ui-card-address>
+        </div>
+        <div class="only-desktop d-flex justify-content-between align-items-center text-bold text-medium mt-8">
+          <div>Payment Method</div>
+          <div class="d-flex flex-column">
+            <div class="d-flex align-items-center text-green cursor-pointer" (click)="cardModal=true">
+              <span>Add new credit card</span>
+              <icon name="plus" class="text-large"></icon>
+            </div>
+            <div class="d-flex align-items-center text-tiny">
+              <span class="text-green">SSL Secure</span>
+              <div class="d-flex align-items-center border-radius-lg p-1 ml-1 bg-green">
+                <icon name="lock" class="text-white"></icon>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="only-desktop cards">
+          <ui-card-payment *ngFor="let paymentMethod of paymentMethodData" [paymentMethod]="paymentMethod"
+            class="mr-2 mb-2" [selected]="paymentMethod.isDefault ? true : false" (onDelete)="onDeleteCardClick($event)"
+            (onSelect)="onSelectCardClick($event)">
+          </ui-card-payment>
+        </div>
+      </div>
+      <div *ngIf="isEditing">
+        <ui-settings-edit-account [profile]="profile" [langs]="langs" (onClickConfirm)="onClickConfirm($event)">
+        </ui-settings-edit-account>
+      </div>
+    </div>
+    <div *ngIf="isGuest">
+      <span class="text-bold text-large">Guest</span>
+      <span class="text-semi-bold text-medium ml-2">Please Login or Register</span>
+    </div>
+  </div>
+  <ui-modal [opened]="addressModal" [smallSize]="true" (onClose)="addressModal=false">
+    <ui-settings-add-address [addressInfo]="address" [isSave]="isSave" (onClickSave)="onClickSave($event)">
+    </ui-settings-add-address>
+  </ui-modal>
+  <ui-modal [opened]="cardModal" [smallSize]="true" (onClose)="cardModal=false">
+    <ui-settings-add-card></ui-settings-add-card>
+  </ui-modal>
+  <ui-modal [opened]="deleteAccountModal" [smallSize]="true" (onClose)="deleteAccountModal=false">
+    <ui-settings-delete-account (clickConfirm)="onConfirm()"></ui-settings-delete-account>
+  </ui-modal>
+  <ui-modal [opened]="deleteAddressModal" [smallSize]="true" (onClose)="deleteAddressModal=undefined">
+    <ui-settings-delete-address (onConfirmDelete)="onDeleteAddress()" (onCancel)="deleteAddressModal=undefined">
+    </ui-settings-delete-address>
+  </ui-modal>
+  <ui-modal [opened]="deleteCardModal" [smallSize]="true" (onClose)="deleteCardModal=undefined">
+    <ui-settings-delete-card (onConfirmDelete)="onDeleteCard()" (onCancel)="deleteCardModal=undefined">
+    </ui-settings-delete-card>
+  </ui-modal>
+</ui-settings>

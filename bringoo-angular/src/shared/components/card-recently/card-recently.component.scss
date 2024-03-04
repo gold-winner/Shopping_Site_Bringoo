@@ -1,0 +1,44 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/shadows';
+
+.ui-card-recently {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .align-items-center;
+  @extend .w-40;
+  @extend .bg-white;
+  @extend .border-radius-md;
+  @extend .position-relative;
+  @extend .py-3;
+  z-index: 0;
+
+  &__badge {
+    @extend .border-radius-bt;
+    @extend .text-white;
+    @extend .text-tiny;
+    @extend .py-1;
+    @extend .px-2;
+    @extend .position-absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+  }
+
+  &__content {
+    @extend .d-flex;
+    @extend .flex-column;
+  }
+
+  &:hover {
+    @extend .cursor-pointer;
+    @extend .shadow-light;
+  }
+
+  img {
+    width: 90px;
+    height: 90px;
+  }
+}

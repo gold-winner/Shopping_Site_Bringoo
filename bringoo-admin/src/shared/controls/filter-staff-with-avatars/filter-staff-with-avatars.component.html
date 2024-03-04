@@ -1,0 +1,49 @@
+<p class="mt-2 mb-0">{{label}} :</p>
+<nz-avatar-group *ngIf="staffs$|async as staffs" >
+  <nz-avatar
+    *ngFor="let staff of staffs|slice :0 :defaultVisibleAvatars; let index = index"
+    class="bg-primary-blue cursor-pointer preview-avatar avatar"
+    [nzSrc]="staff.settings?.photoUrl ?? ''"
+    nzText="{{staff.settings!.firstName![0]}}{{staff.settings!.lastName![0]}}"
+    nz-tooltip="{{staff.settings!.firstName}} {{staff.settings!.lastName}}"
+    [nzTooltipPlacement]="'bottom'"
+    [ngStyle]="{ 'background-color': colorList[index] }"
+    [class.selected]="selectedStaffs.has(staff.id)"
+    (click)="onChangeSelect(staff.id, !selectedStaffs.has(staff.id))"
+  ></nz-avatar>
+
+  <nz-avatar
+    class="more-users cursor-pointer"
+    *ngIf="total > defaultVisibleAvatars"
+    [nzText]="'+' + (total - defaultVisibleAvatars).toString()"
+
+    nz-popover
+    nzPopoverTrigger="click"
+    nzPopoverPlacement="bottom"
+    (nzPopoverVisibleChange)="changeVisible($event)"
+    [nzPopoverContent]="contentTemplate"
+  ></nz-avatar>
+  <ng-template #contentTemplate>
+    <div class="popover-staffs scroll-y" [style]="{ maxHeight: maxHeight+'px' }">
+      <div
+        *ngFor="let staff of staffs|slice :defaultVisibleAvatars; let index = index"
+        class="popover-staff px-2 py-1 d-flex align-items-center cursor-pointer"
+        (click)="onChangeSelect(staff.id, !selectedStaffs.has(staff.id))"
+      >
+        <label nz-checkbox [ngModel]="selectedStaffs.has(staff.id)" (nzCheckedChange)="onChangeSelect(staff.id, $event)"></label>
+        <nz-avatar
+          class="bg-primary-blue cursor-pointer preview-avatar avatar"
+          nzSize="small"
+          [nzSrc]="staff.settings?.photoUrl ?? ''"
+          nzText="{{staff.settings!.firstName![0]}}{{staff.settings!.lastName![0]}}"
+          nz-tooltip="{{staff.settings!.firstName}} {{staff.settings!.lastName}}"
+          [nzTooltipPlacement]="'bottom'"
+          [ngStyle]="{ 'background-color': colorList[index%colorList.length] }"
+          [class.selected]="selectedStaffs.has(staff.id)"
+          (click)="onChangeSelect(staff.id, !selectedStaffs.has(staff.id))"
+        ></nz-avatar>
+        <span>{{staff.settings?.firstName}} {{staff.settings?.lastName}}</span>
+      </div>
+    </div>
+  </ng-template>
+</nz-avatar-group>

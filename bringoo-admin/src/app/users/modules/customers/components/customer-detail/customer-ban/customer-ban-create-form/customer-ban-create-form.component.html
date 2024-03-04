@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="isActive">Is Banned</nz-form-label>
+    <nz-form-control labelForErrorTip="Is Banned">
+      <app-status-switch
+        formControlName='isActive'
+      ></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzNoColon nzFor="startDateTime">Start date</nz-form-label>
+    <nz-form-control labelForErrorTip="Start date">
+      <nz-date-picker formControlName='startDateTime'></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="endDateTime">End date</nz-form-label>
+    <nz-form-control labelForErrorTip="End date">
+      <nz-date-picker formControlName='endDateTime'></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Comment</nz-form-label>
+    <nz-form-control labelForErrorTip="Comment">
+      <input nz-input type='text' formControlName='managerComment' placeholder='Add comment'>
+    </nz-form-control>
+  </nz-form-item>
+</form>

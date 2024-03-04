@@ -1,0 +1,37 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.border {
+  border-bottom: 1px solid rgba($color_beige, 0.2);
+}
+
+.content {
+  @extend .d-flex;
+  @extend .justify-content-between;
+  @extend .mx-8;
+  @extend .mt-6;
+  @extend .py-4;
+  @extend .border;
+  @extend .w-56p;
+
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    width: 90%;
+  }
+  .notification {
+    @extend .d-flex;
+    @extend .border-radius-lg;
+    @extend .cursor-pointer;
+    min-width: 52px;
+    max-height: 28px;
+    padding: 2px;
+  
+    .circle {
+      @extend .w-6;
+      @extend .h-6;
+      @extend .border-radius-lg;
+      @extend .bg-white;
+    }
+  }
+}

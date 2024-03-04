@@ -1,0 +1,6 @@
+<div 
+  class="ui-checkbox" 
+  [ngClass]="{'ui-checkbox--selected': selected}" 
+  (click)="onSelect()">
+  <icon name="check" *ngIf="selected"></icon>
+</div>

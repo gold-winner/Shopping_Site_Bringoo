@@ -1,0 +1,50 @@
+.chart-area {
+  display: grid;
+  width: 100%;
+  position: relative;
+
+  @media screen and (min-width: 1400px) {
+    grid-template-columns: 260px 1fr 480px;
+    grid-template-rows: auto 280px;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-areas:
+    "store-information totals wordCloud"
+    "order-history order-history wordCloud";
+  }
+
+  @media screen and (max-width: 1400px) and (min-width: 790px) {
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: auto 280px auto;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-areas:
+    "store-information totals"
+    "order-history order-history"
+    "wordCloud wordCloud";
+  }
+
+  @media screen and (max-width: 790px) {
+    grid-template-rows: auto 200px 280px auto;
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
+    grid-template-areas:
+    "store-information"
+    "totals"
+    "order-history"
+    "wordCloud";
+  }
+
+  .store-information {
+    grid-area: store-information;
+  }
+  .totals {
+    grid-area: totals;
+  }
+  .order-history {
+    grid-area: order-history;
+  }
+  .wordCloud {
+    grid-area: wordCloud;
+  }
+}

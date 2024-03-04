@@ -1,0 +1,59 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-faqs {
+  @extend .bg-white;
+  @extend .py-4;
+  @extend .px-6;
+  @extend .mt-4;
+  @extend .border-radius-md;
+  background-color: $color_white;
+  border: 1px solid rgb(238, 230, 230);
+  box-shadow: 0px 1px 11px rgba($color_grey, 0.3);
+
+  &:hover {
+    box-shadow: 0px 0px 10px 0px #fbf6f6;
+  }
+
+  &__main {
+    @extend .d-flex; 
+    @extend .px-4;
+    @extend .justify-content-between;
+    @extend .cursor-pointer;
+  }
+
+  &__outline-btn {
+    @extend .text-medium;
+    @extend .border-radius-md;
+    @extend .text-lightblue;
+    @extend .cursor-pointer;
+    border: 1px solid $color_lightblue;
+    padding: 7px 10px;
+
+    &--selected {
+      @extend .bg-green;
+      color: $color_white;
+      border: 1px solid $color_green;
+      opacity: 1;
+    }
+  }
+
+  &__expanded-list {
+    @extend .px-4;
+    @extend .mt-4;
+    border-top: 1px solid rgba($color_beige, 0.4);
+  }
+
+  &__expanded-item {
+    @extend .d-flex; 
+    @extend .justify-content-between;
+    @extend .py-3;
+    border-bottom: 1px solid rgba($color_beige, 0.4);
+  }
+
+  .unselected {
+    opacity: 0.4;
+  }
+}

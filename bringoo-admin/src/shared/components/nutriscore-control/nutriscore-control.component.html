@@ -1,0 +1,11 @@
+<div class="nutri-score p-4 border-round-sm">
+  <div class="d-flex align-items-center border-round-md mb-4 ">
+    <button type="button"
+            class="{{type}} {{formControl.value === type ? 'active' : 'default'}}"
+            *ngFor="let type of nutriTypes.slice(0, nutriTypes.length - 1)"
+            (click)="formControl.patchValue(type)"
+    >{{type}}</button>
+  </div>
+  <app-list-select [list]="nutriTypes" [formControl]="formControl"></app-list-select>
+</div>
+

@@ -1,0 +1,41 @@
+<nz-avatar-group>
+  <ng-container *ngIf="picker as picker; else picker_empty">
+    <nz-avatar
+      nzSize="small"
+      class="bg-primary-blue cursor-pointer"
+      [nzSrc]="picker.photoUrl"
+      nzText="{{picker.firstName[0]}}{{picker.lastName[0]}}"
+      nz-tooltip="Picker Assigned: {{picker.firstName}} {{picker.lastName}}"
+      [nzTooltipPlacement]="'bottom'"
+    ></nz-avatar>
+  </ng-container>
+  <ng-template #picker_empty>
+    <nz-avatar
+      class="cursor-pointer avatar-empty"
+      nzSize="small"
+      nzText="P"
+      nz-tooltip="Picker not assigned"
+      [nzTooltipPlacement]="'bottom'"
+    ></nz-avatar>
+  </ng-template>
+
+  <ng-container *ngIf="driver as driver; else driver_empty">
+    <nz-avatar
+      nzSize="small"
+      class="bg-primary-green cursor-pointer"
+      [nzSrc]="driver.photoUrl"
+      nzText="{{driver.firstName[0]}}{{driver.lastName[0]}}"
+      nz-tooltip="Driver Assigned: {{driver.firstName}} {{driver.lastName}}"
+      [nzTooltipPlacement]="'bottom'"
+    ></nz-avatar>
+  </ng-container>
+  <ng-template #driver_empty>
+    <nz-avatar
+      class="cursor-pointer avatar-empty"
+      nzSize="small"
+      nzText="D"
+      nz-tooltip="Driver not assigned"
+      [nzTooltipPlacement]="'bottom'"
+    ></nz-avatar>
+  </ng-template>
+</nz-avatar-group>

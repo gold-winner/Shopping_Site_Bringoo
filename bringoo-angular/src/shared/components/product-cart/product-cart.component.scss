@@ -1,0 +1,168 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/grid';
+
+.ui-product-cart {
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .py-3;
+  border-bottom: 1px solid $color_beige;
+
+  &__delete {
+    @extend .mr-12;
+    @extend .ml-4;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-right: 16px;
+      margin-left: 0px;
+    }
+  }
+  
+  &__image {
+    @extend .ml-0;
+    @extend .mr-11;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-right: 5px;
+      margin-left: 0px;
+    }
+  }
+  
+  &__detail {
+    @extend .mr-5;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-left: 55px;
+    }
+  }
+  
+  &__quantity {
+    @extend .ml-10;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-left: 0px;
+    }
+
+    &--sidebar {
+      @extend .mr-10;
+      margin-left: 0px;
+    }
+  }
+  
+  &__price {
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-left: 50px;
+    }
+  }
+  
+  &__exchange {
+    @extend .mr-5;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-top: -13px;
+      margin-right: 6px;
+      margin-left: 10px;
+    }
+  }
+  
+  &__sidebar {
+    @extend .h-25;
+    @extend .offset-3;
+    // margin-left: 4.5%;
+    margin-top: -3px;
+  }
+
+  img {
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      width: 65px;
+    }
+  }
+
+  &__action {
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .justify-content-between;
+
+    .checkbox {
+      @extend .w-6;
+      @extend .h-6;
+      border: 1px solid;
+      border-radius: 5px;
+    }
+  }
+
+  .repeat {
+    @extend .mb-2;
+    @extend .text-white;
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-left: 3px;
+      margin-bottom: 4px;
+    }
+  }
+
+  .salePrice {
+    @extend .text-bold;
+    @extend .text-large;
+  }
+
+}
+
+.repeat-checkbox {
+  @extend .checkbox;
+  @extend .text-beige;
+  @extend .mt-2;
+  &:hover {
+    cursor: pointer;
+    color: #2CC84D;
+  }
+}
+
+.delete {
+  @extend .text-beige;
+  @extend .text-large;
+  @extend .pb-3;
+  @extend .mt-5;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    margin-top: 9px;
+    font-size: 25px;
+  }
+  &:hover {
+    cursor: pointer;
+    color: #2CC84D;
+  }
+
+}
+
+#loading {
+  position: absolute;
+  left: 32%;
+  bottom: 3px;
+  z-index: 1;
+  margin: auto;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.image_size {
+  width: 130px; 
+  height: 132px;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    width: 110px !important;
+    height: 105px !important;
+  }
+}
+
+.check-box {
+  pointer-events: none;
+  visibility: hidden;
+}

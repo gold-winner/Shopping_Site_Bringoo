@@ -1,0 +1,14 @@
+<ui-settings>
+  <div class="px-8 py-4">
+    <span class="f-8 text-bold">Notifications</span>
+  </div>
+  <div class="border"></div>
+  <div *ngIf="notification" class="content">
+    <div class="text-medium">
+      Information about promotions and special offers
+    </div>
+    <div class="notification" (click)="onChangeNotification()" [ngClass]="notification?.deliveryStatusChange ? 'bg-green justify-content-end' : 'bg-lightblue justify-content-start'">
+      <div class="circle"></div>
+    </div>
+  </div>
+</ui-settings>

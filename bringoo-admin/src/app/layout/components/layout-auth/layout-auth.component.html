@@ -1,0 +1,33 @@
+<div class="container-fluid h-100p bg-component scroll-hidden position-relative">
+  <div class="background-logo1"></div>
+  <div class="background-logo2"></div>
+  <div class="background-logo3"></div>
+  <div class="background-logo4"></div>
+  <div class="row mx-0 h-100p w-100p justify-content-center">
+    <div class="col col-md-15 col-lg-10 d-flex flex-column align-items-center">
+      <div class="global-loading" *ngIf="isLoading$ | async">
+        <nz-progress
+          nzStrokeWidth
+          [nzStrokeWidth]="4"
+          nzStrokeLinecap="square"
+          [nzShowInfo]="false"
+          [nzPercent]="99.9"
+          [nzStrokeColor]="{ '0%': '#D1290D', '100%': '#DB2C49' }"
+          [nzStatus]="'active'"></nz-progress>
+      </div>
+      <div class="mt-12 text-center mb-16">
+        <svg class="logo mb-3">
+          <use [attr.xlink:href]="'assets/symbol-defs.svg#bringoo-logo'"></use>
+        </svg>
+        <span class="f-4" nz-typography nzType="secondary">Get in front of customers when they are buying products online with Bringoo.</span>
+      </div>
+      <router-outlet class="position-absolute"></router-outlet>
+      <div class="mt-auto">
+        <div class="text-center f-4" nz-typography nzType="secondary">
+          Bringoo GmbH <span class="mx-4">|</span> Bringoo Administration
+          <p>© 2022 Bringoo GmbH</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

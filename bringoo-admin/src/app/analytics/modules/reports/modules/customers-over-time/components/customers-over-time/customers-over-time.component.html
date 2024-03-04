@@ -1,0 +1,22 @@
+<div class="mx-8 mt-8 mb-8">
+  <div class="d-flex justify-content-between">
+    <a class="d-flex align-items-center" routerLink='../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>Customers over time</h3></a>
+    <div>
+      <button nz-button nzType="text">Print <i nz-icon nzType="printer"></i></button>
+      <button nz-button nzType="text">Export <i nz-icon nzType="export"></i></button>
+      <button nz-button nzType="primary" nzShape="round">Create order</button>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <app-customers-over-time-filter-form class="pb-4" (salesFilter)="filterPatch($event)"></app-customers-over-time-filter-form>
+    <ng-container
+      *ngIf="chartData$|async let data"
+    >
+      <app-bar-chart
+        *ngIf="isLoaded|async"
+        [chartData]="data"
+      ></app-bar-chart>
+    </ng-container>
+  </div>
+</div>

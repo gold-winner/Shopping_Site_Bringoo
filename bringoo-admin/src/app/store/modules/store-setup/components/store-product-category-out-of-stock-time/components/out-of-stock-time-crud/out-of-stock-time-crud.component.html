@@ -1,0 +1,13 @@
+<app-crud
+  *ngIf="(storeDetailsService.store$|async) as store"
+  [customImportParams]="{storeId:store.id}"
+  [exportFileName]="'store-product-category-out-of-stock-time-export-'+store.code"
+  [config]="config"
+  [service]="service"
+  [join]="join"
+  [createForm]="createForm"
+  [updateForm]="updateForm"
+  [filterForm]="filterForm"
+  [columns]="columns"
+  [fields]="fields"
+></app-crud>

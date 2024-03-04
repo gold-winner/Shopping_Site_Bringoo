@@ -1,0 +1,86 @@
+<h5 class='pt-5 pl-5'>Picker Job Setting</h5>
+<form nz-form nzLayout="vertical" class="px-5 scroll-y" [formGroup]="form">
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Picker Job Distance</nz-form-label>
+    <nz-form-control labelForErrorTip="Picker Job Distance">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='pickerJobDistance' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Rider Job Distance</nz-form-label>
+    <nz-form-control labelForErrorTip="Rider Job Distance">
+      <input nz-input type='number' min='0' pattern="\d*"  formControlName='riderJobDistance' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>SignUp Code</nz-form-label>
+    <nz-form-control labelForErrorTip="SignUp Code">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='signUpCode' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>App iOS version</nz-form-label>
+    <p class="mb-0">Insert built version of mobile app. This can be found in TestFlight for iOS or Google PlayStore Console for Android.</p>
+    <nz-form-control labelForErrorTip="Please input correct app ios version">
+      <input nz-input type="text" formControlName='appIosVersion' placeholder='input version'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>App Android version</nz-form-label>
+    <p class="mb-0">Insert built version of mobile app. This can be found in TestFlight for iOS or Google PlayStore Console for Android.</p>
+    <nz-form-control labelForErrorTip="Please input correct app android version">
+      <input nz-input type="text" formControlName='appAndroidVersion' placeholder='input version'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Minimum search rank for products</nz-form-label>
+    <nz-form-control labelForErrorTip="Minimum search rank for products">
+      <input
+        nz-input
+        type="number"
+        min="0"
+        step="0.01"
+        [pattern]="decimalCommaPattern"
+        formControlName='searchRank'
+        placeholder='input number'
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Push Notification Subscription Active Time, hours</nz-form-label>
+    <nz-form-control labelForErrorTip="Push Notification Subscription Active Time, hours">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='subscriptionActiveTime' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+
+<div class="p-4 d-flex justify-content-between">
+  <div>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onSubmit()"
+      [nzType]="'primary'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Update
+    </button>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onCancel()"
+      [nzType]="'link'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Cancel
+    </button>
+  </div>
+</div>

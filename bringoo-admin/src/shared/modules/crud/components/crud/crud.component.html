@@ -1,0 +1,459 @@
+<div [class]="topMargin ? 'p-'+horizontalPadding+' crud-container' : 'px-'+horizontalPadding+' pb-'+horizontalPadding+' crud-container'">
+  <div class="px-4 pt-4 d-flex justify-content-between bg-component fixed-header" *ngIf="showTitle" #titleContainer>
+    <div>
+      <h5>{{crudConfig?.title}}</h5>
+      <p *ngIf="crudConfig.subTitle" class="mb-0 f-3">{{crudConfig.subTitle}}</p>
+    </div>
+    <div class="d-flex flex-wrap-reverse justify-content-end">
+      <button
+        class="mr-4"
+        nz-button
+        nz-tooltip="Reload Table"
+        nzType="link"
+        (click)="reloadPage()"
+      >
+        <i nz-icon nzType="reload" nzTheme="outline"></i>
+      </button>
+      <button
+        *ngIf="isImportAllowed"
+        class="ml-auto mr-8" nz-button nzType="text" (click)="onShowImportForm()">
+        Import
+        <i nz-icon nzType="cloud-upload"></i>
+      </button>
+      <ng-container *ngIf="isExportAllowed">
+        <button
+          nz-button nz-dropdown nzType="default" nzSize="large" class="mr-8"
+          [nzDropdownMenu]="menuExport" [nzPlacement]="'bottomCenter'">Export ({{setOfChecked.size}})
+        </button>
+        <nz-dropdown-menu #menuExport="nzDropdownMenu" class="mr-8">
+          <ul nz-menu>
+            <ng-container>
+              <li nz-menu-item [nzDisabled]="setOfChecked.size < 1" (click)="onExport('xlsx')">Export as Excel</li>
+              <li nz-menu-item [nzDisabled]="setOfChecked.size < 1" (click)="onExport('ods')">Export as ODS</li>
+              <li nz-menu-item [nzDisabled]="setOfChecked.size < 1" (click)="onExport('json')">Export as JSON</li>
+              <li nz-menu-item (click)="onExport('xlsx', true)">Export All as Excel</li>
+              <li nz-menu-item (click)="onExport('ods', true)">Export All as ODS</li>
+              <li nz-menu-item (click)="onExport('json', true)">Export All as JSON</li>
+            </ng-container>
+          </ul>
+        </nz-dropdown-menu>
+      </ng-container>
+      <ng-container *ngIf="
+        ((isUpdateManyAllowed || isDeleteManyAllowed) && crudConfig.isShowDefaultActions)
+        ||
+        crudConfig.actionsList.length > 0
+      ">
+        <button
+          nz-button nz-dropdown nzType="default" nzSize="large" class="mr-8"
+          [nzDropdownMenu]="menu" [nzPlacement]="'bottomCenter'">Action ({{setOfChecked.size}})
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu" class="mr-8">
+          <ul nz-menu>
+            <ng-container *ngIf="crudConfig.isShowDefaultActions">
+              <li *ngIf="isUpdateManyAllowed" nz-menu-item [nzDisabled]="setOfChecked.size < 1"
+                  (click)="onShowUpdateManyForm(setOfChecked)">Edit
+              </li>
+              <li *ngIf="isDeleteManyAllowed" nz-menu-item [nzDisabled]="setOfChecked.size < 1"
+                  (click)="onDeleteManyModalShow()">Delete
+              </li>
+              <li nz-menu-item [nzDisabled]="setOfChecked.size < 1" (click)="onClearSelection()">Clear selection</li>
+            </ng-container>
+            <ng-container *ngIf="crudConfig.actionsList.length > 0">
+              <li [nzDisabled]="action.noSelectionDisable && setOfChecked.size < 1" nz-menu-item
+                  *ngFor="let action of crudConfig.actionsList"
+                  (click)="action.action(setOfChecked)">{{action.label}}</li>
+            </ng-container>
+          </ul>
+        </nz-dropdown-menu>
+      </ng-container>
+
+      <button
+        *ngIf="crudConfig?.isCreateButtonVisible && isCreateAllowed"
+        nz-button nzType="primary" nzSize="large" (click)="onShowCreateForm()"
+      >
+        <i class="mr-2" nz-icon nzType="plus" nzTheme="outline"></i>
+        Create
+        {{crudConfig?.single}}
+      </button>
+    </div>
+  </div>
+  <div class="py-4 px-4 bg-component" #filterFormContainer>
+    <ng-template
+      [ngComponentOutlet]="filterForm"
+      [ndcDynamicInputs]="filterFormInputs"
+      [ndcDynamicOutputs]="filterFormOutputs"
+    ></ng-template>
+  </div>
+  <nz-table
+    #virtualTable
+    *ngIf="columns"
+    nzShowSizeChanger
+    nzShowPagination
+    [nzData]="items"
+    [nzPageSize]="limit"
+    [nzFrontPagination]="false"
+    [nzLoading]="isLoading$|async"
+    [nzTotal]="total"
+    [nzPageIndex]="page"
+    (nzPageIndexChange)="checkedPage = false"
+    [nzShowTotal]="rangeTemplate"
+    [nzPageSizeOptions]="nzPageSizeOptions"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    [nzSize]="'small'"
+    [nzScroll]="(nzScroll | async) || { x: '250px' }"
+  >
+    <thead>
+    <tr class="fixed-header">
+      <th
+        *ngIf="showCheckboxes"
+        [nzLeft]="true"
+        nzShowCheckbox
+        [(nzChecked)]="checkedPage"
+        (nzCheckedChange)="onAllChecked($event)"
+        [nzWidth]="'50px'"
+      ></th>
+      <th
+        *ngIf="crudConfig.isDragged"
+        [nzWidth]="'50px'"
+      ></th>
+      <ng-container *ngFor="let col of columns">
+        <!--        todo todo @col.sortBy?.includes('_i18n')@ filter, when backEnd fix jsonb sorting-->
+        <ng-container *ngIf="!col.isSortable || col.sortBy?.includes('_i18n')">
+          <th
+            *ngIf="col.label"
+            class="text-align-{{col?.align || 'left'}}"
+            [nzLeft]="col.fixedLeft|bool"
+            [nzRight]="col.fixedRight|bool"
+            [nzWidth]="col.nzWidth ?? ''"
+          >{{col.label}}</th>
+          <th
+            *ngIf="!col.label"
+            [nzWidth]="'50px'"
+            class="text-align-{{col?.align || 'left'}}"
+            [nzLeft]="col.fixedLeft|bool"
+            [nzRight]="col.fixedRight|bool"
+          ></th>
+        </ng-container>
+        <!--        todo todo @col.sortBy?.includes('_i18n')@ filter, when backEnd fix jsonb sorting-->
+        <th
+          *ngIf="col.isSortable && !col.sortBy?.includes('_i18n')"
+          [nzSortFn]="true"
+          [nzColumnKey]="col.sortBy"
+          class="text-align-{{col?.align || 'left'}}"
+          [nzLeft]="col.fixedLeft|bool"
+          [nzRight]="col.fixedRight|bool"
+          [nzWidth]="col.nzWidth ?? ''"
+        >{{col.label}}</th>
+      </ng-container>
+      <th
+        *ngIf="crudConfig.isActionColumnVisible && (isUpdateAllowed || isDeleteAllowed || crudConfig.isDetailButtonVisible)"
+        [nzWidth]="[isUpdateAllowed, isDeleteAllowed, crudConfig.isDetailButtonVisible]|actionColumnWidth"
+        nzAlign="center"
+        [nzRight]="true"
+      >
+        Actions
+      </th>
+    </tr>
+    </thead>
+
+    <tbody
+      cdkDropList
+      (cdkDropListDropped)="onDrop()"
+      [cdkDropListData]="items"
+      [cdkDropListSortingDisabled]="!crudConfig.isDragged"
+      [cdkDropListAutoScrollDisabled]="!crudConfig.isDragged"
+      [cdkDropListDisabled]="!crudConfig.isDragged"
+      [cdkDropListSortPredicate]="onSortPredicate"
+    >
+    <tr
+      *ngFor="let item of items; let ind = index"
+      cdkDrag
+      [cdkDragDisabled]="!crudConfig.isDragged"
+
+      (cdkDragStarted)="onStartDrag(item.id)">
+      <td
+        *ngIf="showCheckboxes"
+        nzShowCheckbox
+        [nzChecked]="setOfChecked.has(item.id)"
+        (nzCheckedChange)="onItemChecked(item.id, $event)"
+        [nzLeft]="true"
+      ></td>
+      <td
+        *ngIf="crudConfig.isDragged"
+      ><i nz-icon nzType="drag" nzTheme="outline"></i></td>
+      <td
+        *ngFor="let col of columns"
+        class="text-align-{{col?.align || 'left'}} text-bold"
+        [nzLeft]="col.fixedLeft|bool"
+        [nzRight]="col.fixedRight|bool"
+      >
+        <a *ngIf="col.type === 'link' && col.link" [routerLink]="col.link(item)"
+           [queryParams]="col?.getQueryParams ? col?.getQueryParams(item) : null">
+          {{item|entityValue:col}}
+        </a>
+        <ng-container *ngIf="col.type === 'text'">
+          {{item|entityValue:col}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'text[]'">
+          {{item|entityValue:col | join}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'tags'">
+          <app-column-tags [tags]="(item|entityValue:col)"></app-column-tags>
+        </ng-container>
+        <ng-container *ngIf="col.type === 'image'">
+          <div class="cursor-pointer" *ngIf="item|entityValue:col as imageUrl"
+               (click)="col.type === 'image' && onImagePreview(imageUrl)">
+            <img src="{{imageUrl|imageMiniature}}" alt="" class="table-image">
+          </div>
+        </ng-container>
+        <ng-container *ngIf="col.type === 'float2decimalplaces'">
+          {{item|entityValue:col|number:'1.2-2'}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'price'">
+          {{item|entityValue:col|formatPrice}}
+        </ng-container>
+        <ng-container *ngIf="col.type === 'location'">
+          <a
+            *ngIf="item|entityValue:col as location"
+            href="http://maps.google.com/maps?q=loc:{{location.lat}},{{location.lng}}" target="_blank"
+            [nz-tooltip]="location.lat +', '+ location.lng"
+          ><i nz-icon nzType="environment" nzTheme="outline"></i> Show on map</a>
+        </ng-container>
+
+        <app-column-date *ngIf="col.type === 'date'" class="text-bold" [value]="item|entityValue:col"
+                         [dateType]="col.dateFormat || 'mediumDate'"></app-column-date>
+        <app-column-time *ngIf="col.type === 'time'" class="text-bold" [value]="item|entityValue:col"></app-column-time>
+        <app-status
+          *ngIf="col.type === 'boolean'"
+          [value]="item|entityValue:col"
+          [trueText]="col.boolean?.trueText"
+          [falseText]="col.boolean?.falseText"
+        ></app-status>
+      </td>
+      <td
+        *ngIf="crudConfig.isActionColumnVisible && (isUpdateAllowed || isDeleteAllowed || crudConfig.isDetailButtonVisible)"
+        nzAlign="center"
+        [nzRight]="true"
+      >
+        <button
+          *ngIf="crudConfig?.isEditButtonVisible && isUpdateAllowed"
+          (click)="onShowUpdateForm(item)"
+          nz-button
+          nzType="link"
+          nzSize="small">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </button>
+        <button
+          *ngIf="crudConfig.isDetailButtonVisible"
+          (click)="onShowDetailForm(item)"
+          nz-button
+          nzType="link"
+          nzSize="small">
+          <i nz-icon nzType="read" nzTheme="outline"></i>
+        </button>
+        <button
+          *ngIf="crudConfig?.isDeleteButtonVisible && isDeleteAllowed"
+          (click)="onDelete(item)"
+          nzType="link"
+          nz-button
+          nzDanger
+          nzSize="small">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+</ng-template>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="crudConfig.formWidth"
+  [nzVisible]="openPanel === 'create'"
+  [nzBodyStyle]="nzBodyStyle"
+  nzPlacement="right"
+  nzTitle="Create {{crudConfig?.single}}"
+  [nzFooter]="createPanelFooter"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <div class="form-loader" *ngIf="isLoading$|async">
+      <nz-spin nzSize="large" nzSimple></nz-spin>
+    </div>
+    <ng-template
+      [ngComponentOutlet]="createForm"
+      [ndcDynamicInputs]="createFormInputs"
+      [ndcDynamicOutputs]="createFormOutputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #createPanelFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onCreateButtonClick()" nzBlock nz-button nzType="primary">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="crudConfig.formWidth"
+  [nzVisible]="openPanel === 'update'"
+  nzPlacement="right"
+  nzTitle="Edit {{updateName}}"
+  [nzFooter]="updatePanelFooter"
+  [nzBodyStyle]="nzBodyStyle"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <div class="form-loader" *ngIf="isLoading$|async">
+      <nz-spin nzSize="large" nzSimple></nz-spin>
+    </div>
+    <ng-template
+      [ngComponentOutlet]="updateForm"
+      [ndcDynamicInputs]="updateFormInputs"
+      [ndcDynamicOutputs]="updateFormOutputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #updatePanelFooter>
+  <div class="container" *ngIf="crudConfig?.isEditSubmitButtonVisible">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onUpdateButtonClick()" nzBlock nz-button nzType="primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="crudConfig.formBundleWidth || crudConfig.formWidth || ''"
+  [nzVisible]="openPanel === 'detail'"
+  nzPlacement="right"
+  nzTitle="Details {{detailName}}"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <div class="form-modal" *ngIf="isLoading$|async">
+      <nz-spin nzSize="large" nzSimple></nz-spin>
+    </div>
+    <ng-template
+      [ngComponentOutlet]="detailForm"
+      [ndcDynamicInputs]="detailFormInputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="crudConfig.formBundleWidth"
+  [nzVisible]="openPanel === 'patchBundle'"
+  nzPlacement="right"
+  nzTitle="Edit {{crudConfig?.plural}}"
+  [nzFooter]="updateManyPanelFooter"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <div style="position: relative">
+      <ng-template
+        [ngComponentOutlet]="updateManyForm"
+        [ndcDynamicInputs]="updateManyFormInputs"
+        [ndcDynamicOutputs]="updateManyFormOutputs"
+      ></ng-template>
+    </div>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #updateManyPanelFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onUpdateManyButtonClick()" nzBlock nz-button nzType="primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<nz-modal
+  [(nzVisible)]="isDeleteModalVisible"
+  nzTitle="Are you sure you want to delete {{crudConfig?.single?.toLowerCase()}}?"
+  (nzOnCancel)="onCancelDelete()"
+  (nzOnOk)="onOkDelete()"
+  [nzCancelDisabled]="isLoading$| async"
+  [nzOkLoading]="isLoading$| async"
+  [nzOkDanger]="true"
+  nzOkText="Delete"
+>
+  <h5 *nzModalContent><span *ngIf="deletedName">Delete {{deletedName}} ?</span></h5>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isDeleteManyModalVisible"
+  nzTitle="Are you sure you want to delete many {{crudConfig.plural}}"
+  (nzOnCancel)="this.isDeleteManyModalVisible = false"
+  (nzOnOk)="onOkDeleteMany()"
+  [nzCancelDisabled]="isLoading$| async"
+  [nzOkLoading]="isLoading$| async"
+  [nzOkDanger]="true"
+  nzOkText="Delete"
+>
+  <h5 *nzModalContent><span>Delete {{crudConfig.plural}} ?</span></h5>
+</nz-modal>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="'90%'"
+  [nzVisible]="openPanel === 'import'"
+  nzPlacement="right"
+  nzTitle="Import {{crudConfig?.plural}}"
+  [nzFooter]="importPanelFooter"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <app-import-form
+      (formSubmit)="onImport($event)"
+      [startImport]="startImport"
+      [response]="importDto"
+    ></app-import-form>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #importPanelFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Close</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onImportButtonClick()" nzBlock nz-button nzType="primary">
+          Import
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

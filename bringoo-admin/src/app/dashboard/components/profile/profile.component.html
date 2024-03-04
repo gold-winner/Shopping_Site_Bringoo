@@ -1,0 +1,290 @@
+<div class='mx-8 mb-8'>
+  <a class='d-flex align-items-center mt-7' routerLink='../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>User Profile</h3></a>
+  <div class='row pl-4 mt-4' *ngIf="user.getValue() as user">
+    <div class='col-24 pl-0 col-lg-14'>
+      <nz-card
+        nzBorderless
+        class="border-round-sm"
+        [nzTitle]="profileTitle"
+        [nzExtra]="profileExtra"
+      >
+        <div class='d-flex flex-column'>
+          <span *ngIf="user.dateOfBirth"><b>Date of Birth:</b> {{user.dateOfBirth | date : 'shortDate'}}</span>
+          <span *ngIf="user.phoneNumber"><b>Telephone:</b> +{{user.phoneCountryCode}} {{user.phoneNumber}}</span>
+          <span><b>My current user group:</b> {{user.role}}</span>
+        </div>
+      </nz-card>
+      <ng-template #profileTitle>
+        <div class='d-flex align-items-center'>
+          <img src='assets/img/avatars/userAvatar.svg' width='60' alt="User">
+          <div class='d-flex flex-column ml-4 f-5'>
+            <span class="text-bold">{{user.salutation}} {{user.firstName}} {{user.lastName}}</span>
+            <span>{{user.email}}</span>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #profileExtra>
+        <button nz-button class='color-text-2 ml-auto' nzType='link'>
+          <i nz-icon nzType="edit" nzTheme="outline" (click)="openPanel.next('userSettings')"></i>
+        </button>
+      </ng-template>
+
+      <nz-card
+        nzBorderless
+        class="mt-4 border-round-sm mb-4"
+      >
+
+        <div class="d-flex justify-content-between">
+          <h4 class="d-inline"><i nz-icon class='color-primary mr-4' nzType="lock" nzTheme="outline"></i> Change Password</h4>
+          <button nz-button class='color-text-2 ml-auto' nzType='link' (click)="openPanel.next('changePassword')">
+            <i nz-icon nzType="right" nzTheme="outline"></i>
+          </button>
+        </div>
+      </nz-card>
+    </div>
+    <div class='col-24 pl-0 col-lg-10'>
+      <nz-card nzBorderless class="border-round-sm">
+        <nz-card-meta
+          [nzTitle]="customer_title"
+          [nzDescription]="customer_description"
+        ></nz-card-meta>
+        <ng-template #customer_title>
+          <h4>Verified Email</h4>
+        </ng-template>
+        <ng-template #customer_description>
+          <p *ngIf="!user.isEmailVerified" class="color-danger">
+            <i nz-icon nzType="close" nzTheme="outline"></i>{{user.email}}
+          </p>
+          <p *ngIf="user.isEmailVerified" class="color-primary">
+            <i nz-icon nzType="check" nzTheme="outline"></i>{{user.email}}
+          </p>
+          <nz-alert
+            *ngIf="!user.isEmailVerified"
+            nzType="success"
+            [nzMessage]='alertMessage'
+            [nzDescription]="alertDescription"
+            nzShowIcon
+            [nzIconType]="'info-circle'"
+            [nzCloseable]='true'
+          ></nz-alert>
+          <ng-template #alertMessage>
+            You need to verify your email address <a>{{user.email}}</a>
+          </ng-template>
+          <ng-template #alertDescription>
+            <a (click)="onSendVerificationEmail()"><u>Resend verification email</u></a>
+          </ng-template>
+        </ng-template>
+      </nz-card>
+      <nz-card
+        *ngIf="sessions$|async as deviceHistory"
+        nzBorderless
+        class="border-round-sm mt-4"
+        [nzTitle]="deviceTitle"
+      >
+        <ng-template #deviceTitle>
+          <div class="d-flex justify-content-between">
+            <h4>Devices</h4>
+            <button nz-button nzType='link' (click)="onLogOut()">Log out all</button>
+          </div>
+          <p class="w-100p mb-0 white-space-normal">You're currently logged in to Bringoo on these devices. If you don't recognize a device, log out to keep your account secure.</p>
+        </ng-template>
+        <nz-card-meta
+          [nzTitle]="metaTitle"
+          [nzDescription]="metaDescription"
+        ></nz-card-meta>
+        <ng-template #metaTitle>
+          <h4>Logged in</h4>
+        </ng-template>
+        <ng-template #metaDescription>
+          <div *ngFor="let item of deviceHistory.items" class="d-flex justify-content-between mt-2">
+            <div>
+              <i nz-icon class='mr-4' nzType="{{item.deviceType === 'browser' ? 'desktop' : 'mobile'}}" nzTheme="outline"></i>
+              {{item.deviceOs ? item.deviceOs + ',' : ''}} {{item.deviceType}}
+            </div>
+            <ng-container *ngIf="deviceId === item.deviceId">
+              <button
+                nz-button
+                class='bg-primary-10 color-primary'
+                nzType='text'
+                nzShape='round'
+              >This session</button>
+            </ng-container>
+            <ng-container *ngIf="deviceId !== item.deviceId">
+              <button
+                nz-button
+                class='bg-danger-10 color-danger'
+                nzType='text'
+                nzShape='round'
+                (click)="selectSession(item.id!)"
+              >LogOut</button>
+            </ng-container>
+          </div>
+        </ng-template>
+      </nz-card>
+    </div>
+  </div>
+</div>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="500"
+  [nzVisible]="(openPanel | async) === 'changePassword'"
+  nzPlacement="right"
+  nzTitle="Change password"
+  [nzFooter]="changePasswordFooter"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <form nz-form nzLayout='vertical' [formGroup]="changePasswordForm">
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="oldPassword" nzRequired>Old password</nz-form-label>
+        <nz-form-control labelForErrorTip="Old password">
+          <nz-input-group
+            nzSize="large"
+            nzSuffixIcon="lock">
+            <input formControlName="oldPassword" id="oldPassword" nz-input type="password" placeholder="Old Password"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="password" nzRequired>New password</nz-form-label>
+        <nz-form-control labelForErrorTip="New password">
+          <nz-input-group
+            nzSize="large"
+            nzSuffixIcon="lock">
+            <input formControlName="password" id="password" nz-input type="password" placeholder="New Password"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="confirmPassword" nzRequired>New password</nz-form-label>
+        <nz-form-control labelForErrorTip="New password">
+          <nz-input-group
+            nzSize="large"
+            nzSuffixIcon="lock">
+            <input formControlName="confirmPassword" id="confirmPassword" nz-input type="password" placeholder="Confirm Password"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+
+</nz-drawer>
+
+<ng-template #changePasswordFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onChangePassword()" nzBlock nz-button nzType="primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<nz-modal
+  [nzVisible]="(openPanel|async) === 'SessionLogOut'"
+  nzTitle="Session log out"
+  (nzOnCancel)="sessionLogOutCancel()"
+  (nzOnOk)="onSessionLogOut()"
+>
+  <ng-template nzModalContent>
+    <p>Log out from session: <b>{{selectedSession}}</b></p>
+  </ng-template>
+</nz-modal>
+
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="500"
+  [nzVisible]="(openPanel | async) === 'userSettings'"
+  nzPlacement="right"
+  nzTitle="Edit profile"
+  [nzFooter]="settingsFooter"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <form nzLayout="vertical" nz-form [formGroup]='managerForm'>
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="email" nzRequired>Email</nz-form-label>
+        <nz-form-control labelForErrorTip="Email">
+          <input formControlName='email' nz-input name="email" placeholder="Email">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="firstName" nzRequired>First name</nz-form-label>
+        <nz-form-control labelForErrorTip="First name">
+          <input formControlName='firstName' nz-input name="firstName" placeholder="firstName">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="lastName" nzRequired>Last Name</nz-form-label>
+        <nz-form-control labelForErrorTip="Last Name">
+          <input formControlName='lastName' nz-input name="lastName" placeholder="lastName">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="lastName">Date Of Birth</nz-form-label>
+        <nz-form-control labelForErrorTip="Date Of Birth">
+          <nz-date-picker formControlName='dateOfBirth'></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="managerLanguageCode" nzRequired>Manager Language</nz-form-label>
+        <nz-form-control labelForErrorTip="Manager Language">
+          <app-select [options]="languageCode" [placeHolder]="'Manager Language'" [required]="true" formControlName="managerLanguageCode"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <app-nationality-select
+        class="mt-4"
+        formControlName="nationalityCode"
+      ></app-nationality-select>
+
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="salutation">Salutation</nz-form-label>
+        <nz-form-control labelForErrorTip="Salutation">
+          <app-list-select
+            placeHolder='Salutation'
+            formControlName='salutation'
+            [list]='salutationList'
+          ></app-list-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzNoColon nzFor="firstName">Phone number</nz-form-label>
+        <nz-form-control labelForErrorTip="Phone number">
+          <nz-input-group nzCompact>
+            <nz-select formControlName='phoneCountryCode' style="width:30%;" nzPlaceHolder='Country code' nzShowSearch nzAllowClear>
+              <nz-option *ngFor='let phoneCode of countryCode' [nzLabel]="phoneCode[0] +' +'+ phoneCode[1]" [nzValue]="phoneCode[1]"></nz-option>
+            </nz-select>
+            <input nz-input appDisableControl [disable]="!managerForm.value.phoneCountryCode" formControlName='phoneNumber' style="width:70%;" placeholder='Enter number'/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+
+  </ng-template>
+
+</nz-drawer>
+
+<ng-template #settingsFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onUpdateUser()" nzBlock nz-button nzType="primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

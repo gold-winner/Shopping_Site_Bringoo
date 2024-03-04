@@ -1,0 +1,35 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="700"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Select Customer"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <app-crud
+      [config]="crudConfig"
+      [service]="service"
+      [filterForm]='filterForm'
+      [columns]="crudColumn"
+      [fields]='fields'
+      [join]='join'
+      (checkboxes)='selectedCustomerId = $event[0]'
+      [isSingleSelect]='true'
+    ></app-crud>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSearchCustomer()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

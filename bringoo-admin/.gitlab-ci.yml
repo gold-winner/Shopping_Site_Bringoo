@@ -1,0 +1,174 @@
+stages:
+- test
+- build-dev
+- build-qa
+- build
+- deploy-dev
+- deploy-qa
+- deploy
+
+workflow:
+  rules:
+  - if: $CI_PIPELINE_SOURCE != "merge_request_event"
+
+variables:
+  COMPOSE_DOCKER_CLI_BUILD: 1
+  DOCKER_BUILDKIT: 1
+
+cache:
+  paths:
+  - .yarn-cache/
+  - yarn.lock
+  - .eslintcache
+  - .npm
+  #key:
+    #files:
+    #- yarn.lock
+
+.build:
+  image: docker
+  tags:
+  - build
+  variables:
+    NODE_OPTIONS: --max_old_space_size=4096
+  before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - apk add git gettext
+  - git clone --depth 1 ${CI_SERVER_PROTOCOL}://${CI_REGISTRY_USER}:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/config.git
+  - envsubst < config/${CI_PROJECT_NAME}/${ENV} > env.ci
+  - rm -rf config
+  script:
+  - docker build -t ${CI_REGISTRY_IMAGE}:${ENV} -f docker/Dockerfile .
+  - docker push ${CI_REGISTRY_IMAGE}:${ENV}
+  cache:
+    paths:
+    - .yarn-cache/
+    - yarn.lock
+    policy: pull
+
+build-dev-de:
+  extends: .build
+  stage: build-dev
+  variables:
+    ENV: dev
+    COUNTRY_CODE: de
+  rules:
+  - if: $CI_COMMIT_REF_SLUG == "development"
+    when: on_success
+
+build-qa-de:
+  extends: .build
+  stage: build-qa
+  variables:
+    ENV: qa
+    COUNTRY_CODE: de
+  rules:
+  - if: $CI_COMMIT_REF_SLUG == "development"
+    when: on_success
+
+build-prod-de:
+  extends: .build
+  stage: build
+  variables:
+    COUNTRY_CODE: de
+    ENV: prod
+  rules:
+  - if: $CI_COMMIT_REF_SLUG == "production"
+    when: on_success
+
+
+test:
+  stage: test
+  image: node:16-alpine
+  tags:
+  - build
+  - de
+  script:
+  - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+  - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+  - yarn install --no-progress
+  - yarn lint
+  allow_failure: false
+
+
+.deploy:
+  image: docker
+  before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - apk add git gettext
+  - git clone --depth 1 ${CI_SERVER_PROTOCOL}://${CI_REGISTRY_USER}:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/config.git
+  - envsubst < config/${CI_PROJECT_NAME}/${ENV} > env.ci
+  - rm -rf config
+  script:
+  - docker pull ${CI_REGISTRY_IMAGE}:${ENV}
+  - docker stop $CI_PROJECT_NAME || true
+  - docker rm $CI_PROJECT_NAME || true
+  - docker network create bringoo || true
+  - docker run -d
+    --env-file env.ci
+    -v /etc/localtime:/etc/localtime
+    --restart unless-stopped
+    --name $CI_PROJECT_NAME
+    --hostname $CI_PROJECT_NAME
+    --network bringoo
+    --log-driver json-file
+    --log-opt max-size=10m
+    --log-opt max-file=3
+    --log-opt tag="{{.Name}}"
+    ${CI_REGISTRY_IMAGE}:${ENV}
+
+deploy-dev-de:
+  extends: .deploy
+  stage: deploy-dev
+  tags:
+  - dev
+  - de
+  variables:
+    ENV: dev
+    COUNTRY_CODE: de
+  rules:
+  - if: $CI_COMMIT_REF_SLUG == "development"
+    when: on_success
+  - when: never
+
+deploy-qa-de:
+  extends: .deploy
+  stage: deploy-qa
+  tags:
+  - qa
+  - de
+  variables:
+    ENV: qa
+    COUNTRY_CODE: de
+  rules:
+  - if: $CI_COMMIT_REF_SLUG == "development"
+    when: on_success
+  - when: never
+
+deploy-prod-01-de:
+  extends: .deploy
+  stage: deploy
+  tags:
+  - prod01
+  - de
+  variables:
+    ENV: prod
+    COUNTRY_CODE: de
+  rules:
+  - if: $CI_COMMIT_REF_SLUG == "production"
+    when: manual
+  - when: never
+
+deploy-prod-02-de:
+  extends: .deploy
+  stage: deploy
+  tags:
+  - prod02
+  - de
+  variables:
+    ENV: prod
+    COUNTRY_CODE: de
+  rules:
+  - if: $CI_COMMIT_REF_SLUG == "production"
+    when: manual
+  - when: never

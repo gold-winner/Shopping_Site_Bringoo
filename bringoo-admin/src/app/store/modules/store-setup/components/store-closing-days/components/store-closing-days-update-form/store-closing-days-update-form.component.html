@@ -1,0 +1,14 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Start/End date">
+      <nz-form-label nzRequired>Start/End date</nz-form-label>
+      <nz-range-picker [formControl]='dateRange' class='w-100p'></nz-range-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Comment</nz-form-label>
+    <nz-form-control labelForErrorTip="Comment">
+      <input nz-input type='text' formControlName='note' placeholder='Add comment'>
+    </nz-form-control>
+  </nz-form-item>
+</form>

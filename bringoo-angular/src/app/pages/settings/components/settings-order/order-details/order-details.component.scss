@@ -1,0 +1,16 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.total {
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
+.ui-voucher-modal {
+  @extend .w-65p;
+  @extend .align-items-center;
+  @extend .text-align-center;
+  margin: auto;
+}

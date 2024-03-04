@@ -1,0 +1,48 @@
+<div class="ui-product-cart-replace">
+  <div class="replace replace__old">
+    <img [src]="'/assets/img/products/' + product_old.imageUrls[0]" class="w-20"/>
+    <div class="d-flex justify-content-between align-items-center flex-grow-1 ml-1">
+      <div class="d-flex flex-column ">
+        <div class="text-bold text-medium w-56">{{product_old.name_i18n}}</div>
+        <span class="text-tiny text-lightblue">{{product_old.productSize}} ({{product_old.baseSize}} = {{product_old.basePrice}})</span>
+        <div class="d-flex align-items-center mt-2">
+          <span class="text-bold">{{product_old.salePrice}}</span> 
+          <icon name="close-x"></icon> 
+          {{product_old.inCart}}
+        </div>
+        <span class="text-tiny">Regular price = {{product_old.regularPrice}}</span>
+        <span class="text-tiny">Voucher -10% = 0,29 €</span>
+      </div>
+      <div class="text-bold mr-0">
+        = {{product_old.price}}
+      </div>
+    </div>
+    <div>
+      <span *ngIf="replaced" class="badge-replace bg-green">Product replaced</span>
+      <div *ngIf="replaced" class="exchange">
+        <img src="/assets/img/exchange.svg" class="w-6">
+      </div>
+      <span *ngIf="!available" class="badge-available bg-whitered">Product not available</span>
+    </div>
+  </div>
+  
+  <div class="replace">
+    <img [src]="'/assets/img/products/' + product_new.imageUrls[0]" class="w-20"/>
+    <div class="d-flex justify-content-between align-items-center flex-grow-1 ml-1">
+      <div class="d-flex flex-column ">
+        <div class="text-bold text-medium w-56">{{product_new.name_i18n}}</div>
+        <span class="text-tiny text-lightblue">{{product_new.productSize}} ({{product_new.baseSize}} = {{product_new.basePrice}})</span>
+        <div class="d-flex align-items-center mt-2">
+          <span class="text-bold">{{product_new.salePrice}}</span> 
+          <icon name="close-x"></icon> 
+          {{product_new.inCart}}
+        </div>
+        <span class="text-tiny">Regular price = {{product_new.regularPrice}}</span>
+        <span class="text-tiny">Voucher -10% = 0,29 €</span>
+      </div>
+      <div class="text-bold mr-0">
+        = {{product_new.price}}
+      </div>
+    </div>
+  </div>
+</div>

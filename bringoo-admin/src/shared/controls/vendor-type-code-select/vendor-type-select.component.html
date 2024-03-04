@@ -1,0 +1,13 @@
+
+<nz-select
+  (nzScrollToBottom)="loadMore()"
+  nzPlaceHolder="{{placeHolder}}"
+  [nzDropdownRender]="renderTemplate"
+  [formControl]='control'
+  (ngModelChange)='onChange($event)'
+>
+  <nz-option *ngFor="let vendorType of vendorTypesSubject.value.items" [nzValue]="vendorType.code" [nzLabel]="vendorType.code!"></nz-option>
+</nz-select>
+<ng-template #renderTemplate>
+  <nz-spin *ngIf="(isLoading | async) && !isEnd"></nz-spin>
+</ng-template>

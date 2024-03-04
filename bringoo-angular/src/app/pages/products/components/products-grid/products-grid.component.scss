@@ -1,0 +1,120 @@
+@import "src/scss/colors";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+@import "src/scss/borders";
+@import "src/scss/shadows";
+.ui-product-grid {
+  @extend .position-relative;
+
+  &__notification {
+    @extend .position-absolute;
+    @extend .border-radius-md;
+    @extend .shadow-light;
+    width: 400px;
+    top: 0;
+    right: 0;
+
+    .notify {
+      @extend .position-absolute;
+      top: -30px;
+      right: 85px;
+
+      &-icon {
+        @extend .position-relative;
+        @extend .overflow-hidden;
+        @extend .w-16;
+        @extend .h-8;
+
+        &::after {
+          @extend .position-absolute;
+          @extend .bg-white;
+          @extend .shadow-light;
+          @extend .w-13;
+          @extend .h-13;
+          content: "";
+          transform: rotate(45deg);
+          top: 22px;
+          left: 25px;
+        }
+      }
+    }
+
+    &--item {
+      @extend .d-flex;
+      @extend .justify-content-between;
+      @extend .align-items-center;
+      @extend .text-medium;
+      @extend .py-3;
+      @extend .px-2;
+      img {
+        width: 50px;
+      }
+    }
+
+    .border {
+      border: 1px solid rgba($color_beige, 0.5);
+    }
+  }
+
+  &__content {
+    @extend .row;
+    @extend .mt-3;
+
+    &--filter {
+      @extend .col-4;
+      @media (max-width: map-get($grid-breakpoints, "md")) {
+        display: none;
+      }
+    }
+    &--products {
+      @extend .col-20;
+      @media (max-width: map-get($grid-breakpoints, "md")) {
+        max-width: 100%;
+        flex: 100%;
+      }
+    }
+  }
+  .subcategory_btn {
+    @extend .border-radius-md;
+    @extend .cursor-pointer;
+    @extend .text-medium;
+    @extend .px-3;
+    @extend .py-1;
+    opacity: 0.4;
+    border: 2px solid rgba($color_lightblue, 0.1);
+
+    &:not(:first-child) {
+      @extend .ml-3;
+    }
+
+    &--selected {
+      @extend .bg-green;
+      @extend .text-white;
+      opacity: 1;
+    }
+  }
+}
+
+.ui-card-list {
+  @extend .d-flex;
+  @extend .flex-wrap;
+  @extend .mt-9;
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    justify-content: center;
+  }
+}
+
+.card {
+  @media (min-width: map-get($grid-breakpoints, "md")) {
+    padding: 20px 14px 166px 14px;
+    border-radius: 10px;
+    margin-right: 19.2px;
+  }
+
+  @media (min-width: map-get($grid-breakpoints, "md")) {
+    &:hover {
+      box-shadow: 0px 0px 10px 0px rgb(180, 178, 178);
+      transition: all 0.3s ease-out;
+    }
+  }
+}

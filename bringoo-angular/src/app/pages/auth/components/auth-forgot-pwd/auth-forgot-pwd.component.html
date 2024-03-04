@@ -1,0 +1,17 @@
+<div class="d-flex flex-column justify-content-between align-items-center">
+  <div class="f-6 text-bold">Forgot Password</div>
+  <div class="text-normal text-align-center mt-3">We will send you instructions to reset <br> your password.</div>
+  <ui-input
+    [leftIcon]="false"
+    icon="mail"
+    [error]="error_email"
+    [value]="email"
+    (valueChange)="email=$event"
+    placeholder="Email"
+    (keyup)="onEnter($event)"
+    class="w-100p mt-5"></ui-input>
+  <ui-button *ngIf="!loading" width="full" size="lg" radius="lg" class="w-100p mt-5" (onClick)="onReset($event)">Reset Password</ui-button>
+  <ui-button *ngIf="loading"  width="full" size="lg" radius="lg" class="w-100p mt-5 position-relative">
+    <span id="loading"></span>
+  </ui-button>
+</div>

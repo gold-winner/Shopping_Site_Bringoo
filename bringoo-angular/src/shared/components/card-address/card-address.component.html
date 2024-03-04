@@ -1,0 +1,15 @@
+<div class="ui-card-address" [ngClass]="selected ? 'bg-blue text-white' : 'bg-beige-20 text-darkgrey'" (click)="onSelect.emit(address?.zipCode)">
+  <div class="d-flex justify-content-between">
+    <span class="text-medium text-bold">{{address.addressName}}</span>
+    <icon name="delete" class="text-red cursor-pointer" (click)="onDeleteAddress(address.id, address.zipCode)"></icon>
+  </div>
+  <p class="text-medium mt-2">{{address?.streets}}, {{address?.zipCode}} {{address?.city}} </p>
+  <div class="d-flex align-items-center justify-content-between">
+    <span class="text-tiny text-bold">
+      <icon *ngIf="selected" name="circle-check" class="check-icon text-green"></icon>
+      <icon *ngIf="!selected" name="circle-empty" class="check-icon"></icon>
+      Use as the default address
+    </span>
+    <icon name="edit" class="edit-icon" (click)="onEditAddress(address)"></icon>
+  </div>
+</div>

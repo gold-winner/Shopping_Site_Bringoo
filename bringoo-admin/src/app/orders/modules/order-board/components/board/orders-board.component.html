@@ -1,0 +1,60 @@
+<div class="d-flex flex-column w-100p h-100p p-4">
+  <div class="d-flex justify-content-between pb-2">
+    <a class="d-flex align-items-center" routerLink='../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>Order Board</h3></a>
+  </div>
+  <form nz-form [formGroup]='form' class="bg-component border-round-sm px-4 pb-4 pt-2 filter-form">
+    <div class="row">
+      <nz-form-item class="w-38 filter-form-item">
+        <nz-form-control>
+          <nz-form-label>Search</nz-form-label>
+          <nz-input-group [nzPrefixIcon]="'search'">
+            <input nz-input formControlName="search" placeholder="Search"
+                   nzTooltipTitle="Search by Order ID, Mollie ID and Store Name"
+                   nzTooltipPlacement="topLeft"
+                   nz-tooltip
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="filter-form-item">
+        <nz-form-control>
+          <nz-form-label>Delivery Date</nz-form-label>
+          <nz-date-picker
+            class="d-block"
+            formControlName="date"
+            [nzFormat]="dateFormat"
+            [nzShowTime]="false"
+            [nzAllowClear]="false"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <app-filter-store-region-select
+        class="w-60 filter-form-item"
+        formControlName="storeRegion"
+        label="Store Region"
+      ></app-filter-store-region-select>
+    </div>
+  </form>
+  <div class="container-fluid scroll-xy h-100p my-4">
+    <div class="d-flex">
+      <app-board-status-column
+        *ngFor="let item of ordersStatuses"
+        [statusType]="item.status"
+        [observer]="item.ordersObserver"
+      ></app-board-status-column>
+    </div>
+  </div>
+  <nz-pagination
+    class="d-flex ml-auto"
+    nzSize="small"
+    nzShowSizeChanger
+    (nzPageSizeChange)="onChangePageSize($event)"
+    [nzPageSize]="pageSize"
+    [nzPageSizeOptions]="[15, 30, 50, 100]"
+    [nzPageIndex]="page"
+    [nzTotal]="total"
+    (nzPageIndexChange)="onChangePageIndex($event)"
+  ></nz-pagination>
+</div>

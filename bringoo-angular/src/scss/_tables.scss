@@ -1,0 +1,37 @@
+@import './colors';
+@import './sizes';
+@import './typography';
+
+table {
+  @extend .pm-0;
+  @extend .w-100p;
+  @extend .text-medium;
+  border-collapse: collapse;
+  text-align: left;
+
+  thead {
+    @extend .bg-beige;
+    @extend .text-white;
+    
+    tr th {
+      @extend .p-2;
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        @extend .p-2;
+        @extend .text-lightblue;
+
+        &:first-child {
+          width: 40%;
+        }
+      }
+
+      &:nth-child(even) {
+        @extend .bg-beige-20;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<div class="ui-accordion">
+  <div 
+    class="ui-accordion__title" 
+    [ngClass]="{'light': !primary && !opened}" 
+    (click)="toggle()">
+    <span class="text-bold">{{title}}</span>
+    <icon name="minus" *ngIf="opened && primary"></icon>
+    <icon name="plus" *ngIf="!opened && primary"></icon>
+    <icon name="chevron-up" *ngIf="opened && !primary"></icon>
+    <icon name="chevron-down" *ngIf="!opened && !primary"></icon>
+  </div>
+  <div class="ui-accordion__body" [ngClass]="{'ui-accordion__body--opened': opened, 'border': primary, 'transition-none': !primary}">
+    <ng-content></ng-content>
+  </div>
+</div>

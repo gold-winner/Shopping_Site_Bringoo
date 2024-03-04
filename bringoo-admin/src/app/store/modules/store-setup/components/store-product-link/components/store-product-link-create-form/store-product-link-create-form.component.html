@@ -1,0 +1,114 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="800"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Select Products"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <ng-container [ngTemplateOutlet]="forms"></ng-container>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #forms>
+  <form nz-form [formGroup]='filterForm' nzLayout="inline" class="mb-4">
+    <nz-form-item class="w-48">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input nz-input formControlName="search" placeholder="Search"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-category-select
+      class="w-40 mr-4"
+      formControlName="productCategoryCode"
+    ></app-filter-category-select>
+
+    <app-filter-subcategory-select
+      class="w-40 mr-4"
+      formControlName="productSubcategoryCode"
+      [categoryCode]="form.get('productCategoryCode')?.value"
+    ></app-filter-subcategory-select>
+
+    <app-filter-brand-select
+      class="w-40 mr-4"
+      formControlName="productBrandCode"
+    ></app-filter-brand-select>
+
+    <nz-form-item class="w-40">
+      <nz-form-control>
+        <nz-form-label>Tags filter</nz-form-label>
+        <nz-select
+          nzPlaceHolder="Tags filter"
+          nzMode="tags"
+          [nzDropdownStyle]="{ display: 'none' }"
+          formControlName="productTags"
+        ></nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <form nzLayout="vertical" nz-form [formGroup]='form'>
+    <nz-table
+      *ngIf='items | async as products'
+      nzShowSizeChanger
+      nzShowPagination
+      [nzData]="products"
+      [nzPageSize]='limit'
+      [nzFrontPagination]="false"
+      [nzLoading]="isLoading$|async"
+      [nzTotal]="total"
+      [nzPageIndex]="productFilter.getValue().page || 1"
+      (nzPageIndexChange)="checked = false"
+      [nzShowTotal]="rangeTemplate"
+      [nzPageSizeOptions]="nzPageSizeOptions"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      [nzSize]="'small'"
+    >
+      <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="checked" (nzCheckedChange)='onAllChecked($event, products)'></th>
+        <th>Select all items in page</th>
+        <th>Brand</th>
+        <th>Tags</th>
+        <th>VAT</th>
+        <th>Default Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of products; let ind = index">
+        <td nzShowCheckbox *ngIf='item.id' [nzChecked]="setOfChecked.has(item.id)" (nzCheckedChange)="onItemChecked(item.id, $event)"></td>
+        <td>{{item.name_i18n}} <br> Barcode (EAN) {{item.ean}}</td>
+        <td>{{item.productBrand?.name_i18n}}</td>
+        <td>{{item.tags_i18n || '---'}}</td>
+        <td class='text-align-right'>
+          {{item.productValueGross}} VAT {{item.productVatPercent}}%
+        </td>
+        <td class='text-align-right'>
+          {{item.defaultPrice}} EUR
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total }} items
+    </ng-template>
+  </form>
+</ng-template>

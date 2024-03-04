@@ -1,0 +1,28 @@
+<nz-select
+  class="w-100p"
+  [formControl]='control'
+  nzShowSearch
+  nzPlaceHolder="{{placeHolder}}"
+  (ngModelChange)='onChange($event)'
+  [nzAllowClear]="!isRequired"
+  [nzMode]="type"
+  [nzDropdownMatchSelectWidth]="false"
+  [nzShowArrow]="true"
+  [nzDropdownRender]="_list.length > 10 && type !== 'default' ? render : null"
+  [nzOptions]="_list"
+></nz-select>
+<ng-template #render>
+  <nz-divider style="margin: 4px 0;"></nz-divider>
+  <div>
+    <button
+      nz-button
+      [nzType]="'link'"
+      (click)="onSelectAll()"
+    >Select All</button>
+    <button
+      nz-button
+      [nzType]="'link'"
+      (click)="onClearAll()"
+    >Clear All</button>
+  </div>
+</ng-template>

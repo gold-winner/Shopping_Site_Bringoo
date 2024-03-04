@@ -1,0 +1,17 @@
+ <app-crud
+  *ngIf="(storeDetailsService.store$|async) as store"
+  [customImportParams]="customImportParams"
+  [exportFileName]="'store-product-link-export-'+store.code"
+  [config]="config"
+  [filterForm]='filterForm'
+  [service]="service"
+  [columns]="columns"
+  [fields]="fields"
+  [join]="join"
+  [reloadData]="reloadPage"
+></app-crud>
+
+<app-product-link-create-create-form
+  (onChangePanelStatus)="onChangePanelStatus($event)"
+  [openPanel]="openPanel"
+></app-product-link-create-create-form>

@@ -1,0 +1,32 @@
+@import 'colors';
+
+.border-round-sm {
+  border-radius: 4px !important;
+}
+
+.border-round-md {
+  border-radius: 8px !important;
+}
+
+.border-round-lg {
+  border-radius: 16px !important;
+}
+
+.border-circle {
+  border-radius: 50% !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $color_darkgrey;
+}
+
+.border-top {
+  border-top: 1px solid $color_darkgrey;
+}
+
+$sizes: 1, 2, 3, 4, 5;
+@each $size in $sizes {
+  .border-#{$size} {
+    border: #{$size}px solid $color_vanilla;
+  }
+}

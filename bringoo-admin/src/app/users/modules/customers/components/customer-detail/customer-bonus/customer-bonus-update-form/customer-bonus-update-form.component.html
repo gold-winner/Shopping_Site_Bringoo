@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item class="mb-0">
+    <nz-form-label nzFor="isActive">Status</nz-form-label>
+    <nz-form-control labelForErrorTip="Status">
+      <app-status-switch formControlName="isActive"></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>

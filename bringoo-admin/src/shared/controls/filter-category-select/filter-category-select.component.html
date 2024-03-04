@@ -1,0 +1,12 @@
+<nz-form-item class="mr-0">
+  <nz-form-control>
+    <nz-form-label>{{label}}</nz-form-label>
+    <app-select
+      *ngIf="categorySelect"
+      [placeHolder]="placeHolder"
+      [options]="categorySelect"
+      [type]="type"
+      [formControl]="control"
+    ></app-select>
+  </nz-form-control>
+</nz-form-item>

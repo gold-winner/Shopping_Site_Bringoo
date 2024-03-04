@@ -1,0 +1,50 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-switch {
+  @extend .d-inline-flex;
+  @extend .border-radius-md;
+  @extend .text-medium;
+  padding: 2px;
+
+  &__lightgrey {
+    padding-left: 18px;
+    padding-right: 18px;
+    color: #60647e;
+    font-weight: 600;
+  }
+
+  &__darkgrey {
+    padding-left: 18px;
+    padding-right: 18px;
+    color: #2B2D3A;
+    font-weight: 600;
+  }
+
+  &__green {
+    @extend .bg-green;
+  }
+
+  &__grey {
+    @extend .bg-grey;
+    line-height: 12px;
+  }
+
+  &__btn {
+    @extend .px-9;
+    @extend .py-2;
+    @extend .cursor-pointer;
+    @extend .text-tiny-bold;
+  }
+
+  &__primary {
+    @extend .bg-white;
+    @extend .border-radius-md;
+  }
+
+  &__secondary {
+    @extend .text-white;
+  }
+}

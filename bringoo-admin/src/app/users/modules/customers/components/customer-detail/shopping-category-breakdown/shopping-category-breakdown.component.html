@@ -1,0 +1,10 @@
+<ng-container
+  *ngIf="isLoaded$|async"
+>
+  <app-bar-chart
+    class="px-4"
+    *ngIf="chartData|async as data"
+    [chartData]="data"
+    indexAxios="y"
+  ></app-bar-chart>
+</ng-container>

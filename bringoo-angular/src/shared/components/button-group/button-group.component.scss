@@ -1,0 +1,26 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-button-group {
+  @extend .d-inline-flex;
+  @extend .text-white;
+  @extend .text-small;
+  @extend .border-radius-sm;
+  @extend .overflow-hidden;
+
+  &__item {
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .p-1;
+    @extend .cursor-pointer;
+  }
+  .primary {
+    @extend .bg-darkgreen;
+  }
+
+  .secondary {
+    @extend .bg-green;
+  }
+}

@@ -1,0 +1,68 @@
+<div
+  *ngIf="routes$| async as routes"
+  cdkScrollable
+  class="h-100p scroll-y d-flex flex-column"
+  [id]="containerId"
+  cdkDropList
+  (cdkDropListDropped)="onChangeOrder($event)"
+>
+  <nz-spin
+    [nzSpinning]="isLoading$|async"
+    class="h-100p routes-spin"
+    cdkDropListGroup
+  >
+    <app-router-item
+      *ngFor="let route of routes; let index=index"
+      cdkDrag
+      [route]="route"
+      [index]="index"
+      (click)="onShowRouteDetails(route.id)"
+      (delete)="onShowDeleteModal(route.id)"
+      [isActive]="(activeRoute$|async) === route.id"
+      (dropKeyPoint)="onKeyPointDropToRoute($event, route.id)"
+      (dropOrder)="onOrdersDropToRoute($event, route.id)"
+    >
+      <label
+        nz-checkbox
+        (nzCheckedChange)="onKeyPointCheck($event, route.id)"
+        [nzChecked]="checkedKeyPoints.has(route.id)"
+      ></label>
+      <i cdkDragHandle class="cursor-move" nz-icon nzType="drag" nzTheme="outline"></i>
+    </app-router-item>
+  </nz-spin>
+</div>
+
+<nz-modal
+  nzTitle="Change Route for {{this.keyPointsCount}} keypoint{{this.keyPointsCount > 1 ? 's' : ''}}"
+  [nzVisible]="showModal === 'change route for kp'"
+  (nzOnCancel)="onCloseModal()"
+  (nzOnOk)="changeRouteForKeyPoints()"
+  nzOkText="Yes"
+  nzCancelText="No"
+>
+  <ng-container *nzModalContent>
+    You want to move the points to another route?
+  </ng-container>
+</nz-modal>
+
+<nz-modal
+  [nzVisible]="showModal === 'remove route'"
+  nzTitle="Remove a route"
+  (nzOnCancel)="onCloseModal()"
+  (nzOnOk)="onDelete()"
+  [nzOkLoading]="isLoading$|async"
+  nzOkDanger
+  nzOkText="Yes"
+  nzCancelText="No"
+>
+  <p class="mb-0" *nzModalContent>
+    <ng-container *ngIf="checkedKeyPoints.size === 0; else deleteMany">You want to remove a route?</ng-container>
+    <ng-template #deleteMany>You want to remove {{checkedKeyPoints.size}} routes?</ng-template>
+  </p>
+</nz-modal>
+
+<app-orders-to-route
+  [routeId]="routeId"
+  [orderIds]="dropOrderIds"
+  (afterUpdate)="onOrdersAreMovedToRoute()"
+></app-orders-to-route>

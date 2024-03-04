@@ -1,0 +1,85 @@
+<h5 class="pt-5 pl-5">Customer App Settings</h5>
+
+<form nz-form nzLayout="vertical" class="px-5 scroll-y" [formGroup]="form">
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Cart Max Weight, kg</nz-form-label>
+    <nz-form-control labelForErrorTip="Cart Max Weight, kg">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='cartMaxWeight' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Order Delay Notification Time, minutes</nz-form-label>
+    <nz-form-control labelForErrorTip="Order Delay Notification Time, minutes">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='orderDelayNotificationTime' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Product out of stock time, hours</nz-form-label>
+    <nz-form-control labelForErrorTip="Product out of stock time, hours">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='productOutOfStockTime' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>App iOS version</nz-form-label>
+    <nz-form-control labelForErrorTip="App iOS version">
+      <input nz-input type="text" formControlName='appIosVersion' placeholder='input version'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>App Android version</nz-form-label>
+    <nz-form-control labelForErrorTip="App Android version">
+      <input nz-input type="text" formControlName='appAndroidVersion' placeholder='input version'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Minimum search rank for products</nz-form-label>
+    <nz-form-control labelForErrorTip="Minimum search rank for products">
+      <input
+        nz-input
+        type="number"
+        min="0"
+        step="0.01"
+        [pattern]="decimalCommaPattern"
+        formControlName='searchRank'
+        placeholder='input number'
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Push Notification Subscription Active Time, hours</nz-form-label>
+    <nz-form-control labelForErrorTip="Push Notification Subscription Active Time, hours">
+      <input nz-input type="number" min='0' pattern="\d*" formControlName='subscriptionActiveTime' placeholder='input number'>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+
+<div class="p-4 d-flex justify-content-between">
+  <div>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onSubmit()"
+      [nzType]="'primary'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Update
+    </button>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onCancel()"
+      [nzType]="'link'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Cancel
+    </button>
+  </div>
+</div>

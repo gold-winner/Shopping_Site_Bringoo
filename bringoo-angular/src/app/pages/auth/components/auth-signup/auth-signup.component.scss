@@ -1,0 +1,14 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/typography';
+
+.border {
+  @extend .col;
+  border-bottom: 1px dashed rgba($color_beige, 0.5);
+
+  &-processing {
+    border-bottom: 1px dashed $color_green;
+  }
+}

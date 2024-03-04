@@ -1,0 +1,70 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input
+          nz-input
+          formControlName="search"
+          placeholder="Search"
+          nz-tooltip="Search"
+          nzTooltipPlacement="topLeft"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Status filter</nz-form-label>
+      <nz-select formControlName="isActive" nzAllowClear nzPlaceHolder="Status filter">
+        <nz-option [nzLabel]="'Show Active'" [nzValue]="'Show Active'" style="color: green" [nzCustomContent]="true">
+          <nz-content>
+            <app-status [value]="true" [trueText]="'Show Active'"></app-status>
+          </nz-content>
+        </nz-option>
+        <nz-option [nzLabel]="'Show Inactive'" [nzValue]="'Show Inactive'" [nzCustomContent]="true">
+          <nz-content>
+            <app-status [value]="false" [falseText]="'Show Inactive'"></app-status>
+          </nz-content>
+        </nz-option>
+        <nz-option [nzLabel]="'Show ALL'" [nzValue]="'Show ALL'" ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-32 mr-0">
+    <nz-form-control labelForErrorTip="Start date">
+      <nz-form-label>Start date</nz-form-label>
+      <app-date-control
+        [dateFormat]="dateFormat"
+        formControlName="dateStart"
+        placeHolder="Date start"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-32">
+    <nz-form-control labelForErrorTip="End date">
+      <nz-form-label>End date</nz-form-label>
+      <app-date-control
+        [dateFormat]="dateFormat"
+        formControlName="dateEnd"
+        placeHolder="Date end"
+        [disableBefore]="form.controls.dateStart.value"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Voucher Type</nz-form-label>
+      <app-list-select
+        class="d-block"
+        [isRequired]="false"
+        formControlName="voucherType"
+        [list]="voucherTypes"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

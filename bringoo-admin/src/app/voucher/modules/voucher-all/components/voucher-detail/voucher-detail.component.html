@@ -1,0 +1,106 @@
+
+<div class="p-8">
+  <div class='d-flex justify-content-between'>
+    <a class='d-flex align-items-center mb-4' routerLink='../..'>
+      <i nz-icon nzType="left" nzTheme="outline"></i>
+      <h3 class='mb-0'>Vouchers list</h3>
+    </a>
+  </div>  
+  <div class='container f-4'>
+    <div class='row bg-component border-round-sm p-4'>
+      <h4 class='f-6 pb-4'>Details</h4>
+      <div class='w-100p summary'>
+      <ng-container *ngIf="voucher$ | async as voucher" >
+        <div class='d-flex justify-content-between'>
+          <span>Code</span>
+          <span> {{voucher.code}} </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Type</span>
+          <span> 
+            {{voucher.voucherType}} 
+            <ng-container *ngIf="voucher?.voucherType === 'DISCOUNT_PERCENTAGE'">
+              ({{ voucher?.discount?.value }} %)
+            </ng-container>
+            <ng-container *ngIf="voucher?.voucherType === 'DISCOUNT_FIXED'">
+              ({{ voucher?.discount?.value }})
+            </ng-container>
+          </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Creator</span>
+          <span> {{voucher.manager?.settings?.firstName}} {{voucher.manager?.settings?.lastName}} </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Is Voucher limitation in total usage</span>
+          <span> {{voucher.isLimitUsageTotal ? 'Yes' : 'No'}} </span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="voucher.isLimitUsageTotal">
+          <span>Limit usage total</span>
+          <span> {{voucher.limitUsageTotal}} </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Is Voucher limitation usage per customer</span>
+          <span> {{voucher.isLimitUsagePerCustomer ? 'Yes' : 'No'}} </span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="voucher.isLimitUsagePerCustomer">
+          <span>Limit usage per customer</span>
+          <span> {{voucher.limitUsagePerCustomer}} </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Customer eligibility</span>
+          <span> {{voucher.customerEligibility}} </span>
+        </div>
+        <ng-container *ngIf="voucher.customerEligibility === 'TAGS'">
+          <div class='d-flex justify-content-between'>
+            <span>Customer tags</span>
+            <span>
+              <span *ngFor="let tag of voucher.customerTags">
+                {{ tag }}<br>
+              </span>
+            </span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="voucher.customerEligibility === 'SELECTED'">
+          <div class='d-flex justify-content-between' *ngIf="customers$ | async as customers">
+            <span>Customers</span>
+            <span>
+              <span *ngFor="let customer of customers">
+                {{ customer?.settings?.firstName }} {{ customer?.settings?.lastName }} <br>
+              </span>
+            </span>
+          </div>
+        </ng-container>
+        <div class='d-flex justify-content-between'>
+          <span>Voucher valid only for new customer</span>
+          <span> {{voucher.isForNewCustomerOnly ? 'Yes' : 'No'}} </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Store eligibility</span>
+          <span> {{voucher.storeEligibility}} </span>
+        </div>
+        <ng-container *ngIf="voucher.storeEligibility === 'SELECTED'">
+          <div class='d-flex justify-content-between' *ngIf="stores$ | async as stores">
+            <span>Store</span>
+            <span>
+              <span *ngFor="let store of stores">
+                {{ store?.name_i18n }} <br>
+              </span>
+            </span>
+          </div>
+        </ng-container>
+        <div class='d-flex justify-content-between'>
+          <span>Voucher valid start date</span>
+          <span> {{voucher.dateStart}} </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Voucher valid end date</span>
+          <span> {{voucher.dateEnd}} </span>
+        </div>
+        <app-voucher-orders>
+        </app-voucher-orders>
+      </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

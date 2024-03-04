@@ -1,0 +1,145 @@
+<ui-layout (onSubCategoryClick)="clickSubCategory($event)" [cartData]="cartData" [addedProduct]="addedProduct"
+  [newItem]="newItem" (onProductItem)="onProductItem($event)">
+  <div class="container mt-8 ui-product-grid">
+    <div class="text-medium">
+      <a routerLink="..">Categories</a> / {{categoryTitle}}
+    </div>
+    <div class="ui-product-grid__notification" *ngIf="notification">
+      <div class="positon-relative">
+        <div class="notify">
+          <div class="notify-icon"></div>
+        </div>
+        <div class="ui-product-grid__notification--item">
+          <img src="/assets/img/products/sause.svg">
+          <div class="d-flex flex-column mr-15">
+            <span>Knorr Sauce Hollandaise 250ml</span>
+            <span>1 pc.</span>
+          </div>
+          <span class="text-bold">1,17 €</span>
+        </div>
+        <div class="border"></div>
+        <div class="ui-product-grid__notification--item">
+          <img src="/assets/img/products/sause.svg">
+          <div class="d-flex flex-column mr-15">
+            <span>Knorr Sauce Hollandaise 250ml</span>
+            <span>1 pc.</span>
+          </div>
+          <span class="text-bold">1,17 €</span>
+        </div>
+      </div>
+    </div>
+    <div class="ui-product-grid__content">
+      <div class="ui-product-grid__content--filter">
+        <ui-product-filter (onSearchClick)="onProductSearch($event)"></ui-product-filter>
+      </div>
+      <div class="ui-product-grid__content--products">
+        <div *ngIf="productsDetail.length !== 0" class="f-8 text-bold">{{categoryTitle}}</div>
+        <ngx-skeleton-loader 
+          *ngIf="productsDetail.length === 0"
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            'margin-top': '16px',
+            height: '48px',
+            width: '250px',
+            'border-radius': '8px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <div *ngIf="productsDetail.length !== 0" class="d-flex mt-8">
+          <ui-option *ngFor="let subcategory of subcategories" [option]="subcategory"
+            [selected]="selectedSubcategory===subcategory.id" class="mx-2"
+            (optionSelect)="onChangeSubcategory(subcategory.id)">
+          </ui-option>
+        </div>
+        <div class="d-flex mt-8">
+          <div *ngFor="let number of [0,1,2,3]">
+            <ngx-skeleton-loader 
+              *ngIf="productsDetail.length === 0"
+              count="1" 
+              appearance="line" 
+              animation="progress" 
+              [theme]="{
+                'background-color': '#AAAAAA',
+                'margin-right': '10px',
+                height: '36px',
+                width: '120px',
+                'border-radius': '8px'
+              }"
+            >
+            </ngx-skeleton-loader>
+          </div>
+        </div>
+        <div *ngIf="productsDetail.length !== 0" class="ui-card-list">
+          <ui-card class="position-relative mt-7 card" *ngFor="let product of productsDetail"
+            [count]="product.linkId===linkId? count : product.inCart" [category]="categoryCode"
+            [productType]="!product.salePrice? 'new' : 'sale'" [disabled]="product.outOfStock? true : false"
+            [product]="product" type="trash" (onClick)="onProductClick($event)" (onCartInfo)="onCartDetail($event)">
+          </ui-card>
+        </div>
+        <div *ngIf="productsDetail.length === 0" class="ui-card-list">
+          <div *ngFor="let number of [0,1,2,3,4]" class="position-relative mt-7 card">
+            <ngx-skeleton-loader 
+              count="1" 
+              appearance="line" 
+              animation="progress" 
+              [theme]="{
+                'background-color': '#AAAAAA',
+                height: '420px',
+                width: '220px',
+                'margin-right': '10px',
+                'border-radius': '12px'
+              }"
+            >
+            </ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="mt-14">
+          <ui-pagination *ngIf="total && pageCount && productsDetail.length !== 0" [currentPage]="currentPageNum" [pageSize]="countPerPage"
+            [total]="total" [pageCount]="pageCount" (changePageSize)="onChangeSize($event)"
+            (clickPageItem)="onClickPage($event)"></ui-pagination>
+          <div class="d-flex justify-content-between">
+            <ngx-skeleton-loader 
+              *ngIf="productsDetail.length === 0"
+              count="1" 
+              appearance="line" 
+              animation="progress" 
+              [theme]="{
+                'background-color': '#AAAAAA',
+                'margin-top': '16px',
+                height: '48px',
+                width: '250px',
+                'border-radius': '8px'
+              }"
+            >
+            </ngx-skeleton-loader>
+            <ngx-skeleton-loader 
+              *ngIf="productsDetail.length === 0"
+              count="1" 
+              appearance="line" 
+              animation="progress" 
+              [theme]="{
+                'background-color': '#AAAAAA',
+                'margin-top': '16px',
+                height: '48px',
+                width: '250px',
+                'border-radius': '8px'
+              }"
+            >
+            </ngx-skeleton-loader>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bg-beige-20 my-20">
+    <ui-recently-view></ui-recently-view>
+  </div>
+  <ui-modal [isProduct]=true [opened]="productModal" [productModal]="productModal" (onClose)="onProductModalClose()">
+    <ui-product *ngIf="productModal && productDetail" [productType]="!productDetail.salePrice? 'new' : 'sale'"
+      [value]="count" [linkId]="productModal" [productModal]="productModal" (onCartInfo)="onCartDetail($event)">
+    </ui-product>
+  </ui-modal>
+</ui-layout>

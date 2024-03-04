@@ -1,0 +1,84 @@
+<div class="p-4">
+  <div class="bg-component p-5 mb-4">
+    <h5 class="f-5 mt-3">Backlog</h5>
+    <app-backlog-page-filters
+      (filters)="onFilterUpdate($event)"
+    ></app-backlog-page-filters>
+  </div>
+  <div class="routes" *ngIf="routes$|async as routes">
+    <app-route
+      class="mb-4"
+      *ngFor="let route of routes"
+      [route]="route"
+      [routeIds]="routeIds"
+      (onEditRoute)="updateRouteForm.onShowForm(route.id, $event)"
+      (onDeleteRoute)="onDeleteRouteDriverShow(route.id, $event)"
+      [filterItems]="filterItems"
+    ></app-route>
+  </div>
+
+  <div class="route-creation">
+    <app-create-route
+      *ngFor="let containerId of routeUUIDs"
+      [containerId]="containerId"
+      [connectedToContainers]="routeUUIDs|getContainerIds :containerId"
+      [title]="containerId"
+      (onCreateRouteData)="onCreateRoute($event)"
+    ></app-create-route>
+  </div>
+
+  <app-backlog-orders [createRouteContainers]="routeUUIDs" [routeIds]="routeIds"></app-backlog-orders>
+
+</div>
+
+<nz-drawer
+  [nzVisible]="openPanel === 'updateRoute'"
+  nzPlacement="right"
+  nzTitle="{{updateRouteForm.routeName}}"
+  [nzWidth]="500"
+  (nzOnClose)="onClosePanel()"
+  [nzFooter]="updateRoutePanelFooter"
+>
+  <ng-container *nzDrawerContent>
+    <div>
+      <div
+        *ngIf="routeIsLoading$|async"
+        class="form-modal"
+      ></div>
+      <ng-template
+        [ngComponentOutlet]="updateRouteForm.form"
+        [ndcDynamicInputs]="updateRouteForm.formInputs"
+        [ndcDynamicOutputs]="updateRouteForm.formOutputs"
+      ></ng-template>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #updateRoutePanelFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onClosePanel()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="routeIsLoading$ | async" (click)="updateRouteForm.onButtonClick()" nzBlock nz-button nzType="primary">
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<nz-modal
+  [nzVisible]="openPanel === 'deleteRoute'"
+  [nzOkLoading]="routeIsLoading$ | async"
+  nzTitle="Delete {{deleteRouteName}}"
+  nzCancelText="Cancel"
+  (nzOnCancel)="onClosePanel()"
+  nzOkDanger
+  nzOkText="Delete"
+  (nzOnOk)="onDeleteRoute()"
+>
+  <ng-container *nzModalContent>
+    You want to delete route?
+  </ng-container>
+</nz-modal>

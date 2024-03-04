@@ -1,0 +1,101 @@
+<form nz-form [formGroup]='form' class="filter-form row ml-0">
+  <nz-form-item class="col w-40">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input
+          nz-input
+          formControlName="search"
+          placeholder="Search"
+          nzTooltipPlacement="topLeft"
+          nz-tooltip="Search by Name, Product Brand and Category"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="col w-40">
+    <nz-form-control>
+      <nz-form-label>Images filter</nz-form-label>
+      <nz-select formControlName="onlyWithImages">
+        <nz-option *ngFor="let status of imagesStatuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-category-select
+    class="col w-40 mr-4"
+    formControlName="category"
+  ></app-filter-category-select>
+
+  <app-filter-subcategory-select
+    class="col w-40 mr-4"
+    formControlName="subCategory"
+    [categoryCode]="form.controls.category.value"
+  ></app-filter-subcategory-select>
+
+  <nz-form-item class="col w-40">
+    <nz-form-control>
+      <nz-form-label>Weight filter</nz-form-label>
+      <nz-input-group nzSuffix="gr" [nzAddOnBefore]="weightOrdered">
+        <input nz-input type="number" formControlName="weight" placeholder="Weight in gram">
+      </nz-input-group>
+    </nz-form-control>
+    <ng-template #weightOrdered>
+      <nz-select formControlName='orderBy' nzShowSearch>
+        <nz-option nzValue="$eq" nzLabel="="></nz-option>
+        <nz-option nzValue="$ne" nzLabel="!="></nz-option>
+        <nz-option nzValue="$gt" nzLabel=">"></nz-option>
+        <nz-option nzValue="$lt" nzLabel="<"></nz-option>
+        <nz-option nzValue="$gte" nzLabel=">="></nz-option>
+        <nz-option nzValue="$lte" nzLabel="<="></nz-option>
+      </nz-select>
+    </ng-template>
+  </nz-form-item>
+
+  <app-filter-brand-select
+    class="col w-40 mr-4"
+    formControlName="brand"
+  ></app-filter-brand-select>
+
+  <nz-form-item class="col w-40">
+    <nz-form-control>
+      <nz-form-label>Deposit filter</nz-form-label>
+      <app-list-select
+        class="d-block"
+        formControlName="isDeposit"
+        [list]="depositFilter"
+      ></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="col w-40">
+    <nz-form-control>
+      <nz-form-label>Tags filter</nz-form-label>
+      <nz-select
+        nzPlaceHolder="Tags filter"
+        nzMode="tags"
+        [nzDropdownStyle]="{ display: 'none' }"
+        formControlName="tags"
+      ></nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="col w-40">
+    <nz-form-control>
+      <nz-form-label>Status filter</nz-form-label>
+      <nz-select formControlName="isActive" nzAllowClear nzPlaceHolder="Status filter">
+        <nz-option [nzLabel]="'Active'" [nzValue]="true" style="color: green" [nzCustomContent]="true">
+          <nz-content>
+            <app-status [value]="true" [trueText]="'Active'" [falseText]="'Inactive'"></app-status>
+          </nz-content>
+        </nz-option>
+        <nz-option [nzLabel]="'Inactive'" [nzValue]="false" [nzCustomContent]="true">
+          <nz-content>
+            <app-status [value]="false" [trueText]="'Active'" [falseText]="'Inactive'"></app-status>
+          </nz-content>
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

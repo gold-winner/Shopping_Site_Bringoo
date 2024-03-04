@@ -1,0 +1,32 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+
+.cards {
+  @extend .d-flex;
+  @extend .flex-wrap; 
+  @extend .mb-10;
+  @extend .mt-4;
+  margin-left: 10px;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    justify-content: center;
+    margin-left: 5px;
+  }
+
+  .card {
+    @extend .border-radius-md;
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+      margin: 15px 23px 15px 23px;
+      padding: -15px;
+    }
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-top: 15px;
+    }
+  }
+}
+
+.filter {
+  color:green;
+}

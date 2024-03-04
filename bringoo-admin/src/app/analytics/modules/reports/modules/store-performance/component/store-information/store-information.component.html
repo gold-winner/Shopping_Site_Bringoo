@@ -1,0 +1,24 @@
+<nz-card
+  class="border-round-sm h-100p"
+  [nzBordered]="false"
+>
+  <div class="d-flex align-items-center mb-4">
+    <img class="mr-sm-4 logo" src="{{store?.logoUrl || './../../../assets/img/avatars/noAvatar.svg'}}" alt="Store">
+    <div>
+      <div class="f-3 color-text-2">Opening hours</div>
+      <h5 *ngIf="store?.openingHours">{{store.openingHours|storeOpeningHours}}</h5>
+      <!--    todo add delivery time-->
+      <!--    <div class='pl-4' *ngIf="store.deliveryTime">-->
+      <!--      <div class='f-3 color-text-2'>Expected delivery time</div>-->
+      <!--    </div>-->
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <h4 class="color-text-2 f-4">{{store?.vendorType?.name_i18n}}</h4>
+    <h4 class="f-4 mb-2"><a routerLink="/store/stores/{{store?.id}}/basic-information">{{store?.name_i18n}}</a></h4>
+    <a class="f-4" *ngIf="store.addresses|addressLocation as location"
+       href="https://maps.google.com/maps?q=loc:{{location.lat}},{{location.lng}}" target="_blank">
+      {{store.addresses|storeAddress}}
+    </a>
+  </div>
+</nz-card>

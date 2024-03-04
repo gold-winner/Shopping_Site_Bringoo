@@ -1,0 +1,54 @@
+<div class="d-flex flex-wrap-reverse justify-content-between f-4 header pb-4">
+  <h4>Commission Fee</h4>
+  <button
+    nz-button
+    nzType="primary"
+    nzShape="round"
+    (click)="recalculateCommissionFee()">
+    Recalculate
+  </button>
+</div>
+<div>
+  <ng-container *ngIf="orderCommissionFee$ | async as orderCommissionFee">
+    <nz-table
+      class="mb-0"
+      [nzShowPagination]="false"
+      [nzData]="orderCommissionFee.commissionFeeOrderItems || []"
+      [nzFrontPagination]="false"
+      [nzSize]="'small'"
+      [nzLoading]="isLoading$ | async"
+    >
+      <thead>
+      <tr>
+        <th>Item</th>
+        <th>Name</th>
+        <th class="text-align-right">Scale</th>
+        <th class="text-align-right">Quantity</th>
+        <th class="text-align-right">Percent</th>
+        <th class="text-align-right">Unit Fee</th>
+        <th class="text-align-right">Fee</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of orderCommissionFee.commissionFeeOrderItems; let index = index">
+        <td>{{ index + 1 }}</td>
+        <td> {{ item.orderItem?.name_i18n | language:appLanguageService.language }} </td>
+        <td class="text-align-right">{{ item.commissionFeeScale }}</td>
+        <td class="text-align-right">{{ item.quantity }}</td>
+        <td class="text-align-right">{{ item.percent }}</td>
+        <td class="text-align-right">{{ item.valuePerUnit | formatPrice }}</td>
+        <td class="text-align-right">{{ item.value | formatPrice }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <div class="bg-body w-100p p-4 mb-8 d-flex justify-content-end">
+      <div class="total-fee">
+        <hr>
+        <div class="total-row d-flex justify-content-between">
+          <span>Total commission fee </span>
+          <span class="text-align-right">{{ orderCommissionFee.valueTotal | formatPrice }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

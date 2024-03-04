@@ -1,0 +1,17 @@
+<form nz-form nzLayout="vertical" [formGroup]='form' *ngIf="!(service.isLoading|async)">
+  <ng-container *ngFor='let lang of langList'>
+    <nz-form-item class='w-100p h-100p' *ngIf='lang === language'>
+      <nz-form-label [nzRequired]="isRequired">{{label}} ({{lang}})
+      </nz-form-label>
+      <nz-form-control labelForErrorTip="Please complete this field"
+                       [nzValidateStatus]="form.get(lang)?.invalid ? 'error' : 'success'">
+        <app-markdown-editor
+          [formControlName]="lang"
+          [isOpen]="true"
+          [imageUrlPath]="imageUrlPath"
+          [customHeight]="customHeight ? customHeight+'px' : ''"
+        ></app-markdown-editor>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+</form>

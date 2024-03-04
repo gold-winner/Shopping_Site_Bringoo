@@ -1,0 +1,34 @@
+<app-create-order-manager-comment
+  class="w-100p"
+  [orderId]="orderId"
+  [managerId]="managerId"
+  (created)="onReloadMessages()"
+></app-create-order-manager-comment>
+
+<hr class="reset-hr bg-body my-3">
+
+<div class="order-messages pl-4" *ngIf="currentPage|async as currentPage">
+  <ng-container
+    *ngFor="let item of currentPage.items"
+  >
+    <app-order-manager-comment
+      [messageEntity]="item"
+      [isCurrentUserMessage]="item.managerId === managerId"
+      (reload)="onReloadMessages()"
+      [tz]="tz"
+    ></app-order-manager-comment>
+    <hr class="reset-hr bg-body my-3">
+  </ng-container>
+  <div class="d-flex justify-content-end mt-4">
+    <nz-pagination
+      [nzPageIndex]="page"
+      [nzTotal]="total"
+      [nzSize]="'small'"
+      [nzShowTotal]="totalTemplate"
+      (nzPageIndexChange)="onChangePage($event)"
+    ></nz-pagination>
+    <ng-template #totalTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total }} items
+    </ng-template>
+  </div>
+</div>

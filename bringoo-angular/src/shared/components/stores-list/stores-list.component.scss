@@ -1,0 +1,60 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+
+.cards {
+  @extend .d-flex;
+  @extend .flex-wrap; 
+  @extend .mb-10;
+  @extend .mt-4;
+  @extend .ml-20;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    justify-content: center;
+    margin-left: 5px;
+  }
+
+  .card {
+    @extend .border-radius-md;
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+      margin: 15px 30px 15px 30px;
+      padding: -15px;
+    }
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-top: 15px;
+    }
+  }
+}
+
+.filter:hover {
+  cursor: pointer;
+  color:green;
+}
+
+.ui-header {
+  
+  &__topbar {
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-center;
+    @extend .h-10;
+    @extend .text-medium;
+    @extend .bg-darkgrey;
+    @extend .text-white;
+
+    &__info {
+      @extend .d-flex;
+      @extend .align-items-center;
+
+      &:hover {
+        color:rgb(57, 165, 138) !important;
+        font-weight: 600 !important;
+      }
+    }
+
+    @media (max-width: map-get($grid-breakpoints, 'lg')) {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,148 @@
+header {
+  background-color: $color-green;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200;
+
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
+    height: 80px;
+  }
+
+  svg {
+    fill: $color_white;
+  }
+
+  #logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: $color_white !important;
+    margin-top: -4px;
+
+
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+      margin-top: -2px;
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &:active {
+      opacity: 0.6;
+    }
+
+    svg {
+      height: 26px;
+      width: 72px;
+      @media (min-width: map-get($grid-breakpoints, 'md')) {
+        width: 100px;
+        height: 37px;
+      }
+    }
+
+  }
+
+  .container {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+
+    > button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+
+      &:active {
+        opacity: 0.6;
+      }
+    }
+  }
+}
+
+#main-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: fixed;
+  left: 0;
+  top: 60px;
+  background: $color_green;
+  width: 100%;
+  height: 0;
+  z-index: 201;
+  transition: height 300ms;
+  overflow: hidden;
+
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: stretch;
+    position: static;
+    height: 80px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: $color_white !important;
+    padding: 16px 32px;
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 700;
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &:active {
+      opacity: 0.6;
+    }
+
+    &:last-child{
+      padding-bottom: 100px;
+      @media (min-width: map-get($grid-breakpoints, 'md')) {
+        padding-bottom: 0;
+      }
+    }
+
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
+      padding: 0 16px;
+    }
+  }
+}
+
+
+.menu-icon-open {
+  display: block;
+}
+
+.menu-icon-close {
+  display: none;
+}
+
+body.menu-open {
+  overflow: hidden;
+
+  #main-menu {
+    height: calc(100vh - 60px);
+  }
+
+  .menu-icon-open {
+    display: none;
+  }
+
+  .menu-icon-close {
+    display: block;
+  }
+}

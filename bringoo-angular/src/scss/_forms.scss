@@ -1,0 +1,44 @@
+form {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  display: block;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: $color_darkgrey;
+
+  sup {
+    color: #FF103B;
+    vertical-align: text-top;
+    line-height: 24px;
+  }
+}
+
+input, select {
+  height: 56px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: $color_darkgrey;
+  font-size: 20px;
+  line-height: 32px;
+  border: 0;
+  border-bottom: 1px solid $color_lightblue;
+  outline: none;
+  background: transparent;
+
+
+  &:focus {
+    border-bottom: 1px solid $color_green;
+  }
+}
+
+select {
+  cursor: pointer;
+}

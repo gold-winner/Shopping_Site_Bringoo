@@ -1,0 +1,64 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.replace-product {
+  @extend .d-table;
+  @extend .p-5;
+  @extend .bg-white;
+  @extend .border-radius-md;
+  @extend .col-md-8;
+  @extend .col-sm-24;
+  @extend .ml-4;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    margin-left: 0px;
+    margin-top: 10px;
+  }
+
+  &__option {
+    @extend .text-small;
+    @extend .ml-2;
+    margin-top: 2px;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-top: 0px;
+    }
+  }
+}
+
+#loading{
+  position: absolute;
+  left: 35%;
+  bottom: 3px;
+  z-index: 1;
+  margin: auto;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ui-voucher-modal {
+  @extend .w-65p;
+  @extend .align-items-center;
+  @extend .text-align-center;
+  margin: auto;
+}
+
+.item-count {
+  @extend .text-green;
+  @extend .text-bold;
+  @extend .text-medium;
+
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    margin-top: 2px;
+  }
+}

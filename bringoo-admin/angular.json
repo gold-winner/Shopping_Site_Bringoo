@@ -1,0 +1,209 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "bringoo-admin": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "changeDetection": "OnPush"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/bringoo-admin",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/assets/",
+              "src/assets/auth-bg",
+              "src/assets/img",
+              "src/firebase-messaging-sw.js",
+              "src/check-browser-validity.js",
+              "src/manifest.json",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              },
+              {
+                "input": "./node_modules/@google/markerclustererplus/images",
+                "glob": "*",
+                "output": "/images"
+              }
+            ],
+            "styles": [
+              {
+                "input": "src/themas/light.less",
+                "bundleName": "light",
+                "inject": false
+              },
+              {
+                "input": "src/themas/dark.less",
+                "bundleName": "dark",
+                "inject": false
+              },
+              "src/styles.scss",
+              "@toast-ui/editor/dist/toastui-editor.css",
+              "@toast-ui/editor/dist/toastui-editor-viewer.css",
+              "@toast-ui/editor/dist/theme/toastui-editor-dark.css",
+              "node_modules/survey-core/defaultV2.min.css",
+              "node_modules/survey-creator-core/survey-creator-core.min.css"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles/themes"
+              ]
+            },
+            "scripts": [
+              "node_modules/chart.js/dist/chart.js",
+              "node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "date-fns",
+              "@agm/core",
+              "chartjs-chart-wordcloud",
+              "jsbarcode",
+              "clone-deep",
+              "@toast-ui/editor",
+              "date-fns-tz",
+              "survey-creator-core"
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "optimization": false,
+            "namedChunks": true,
+            "sourceMap": true
+          },
+          "configurations": {
+            "develop": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.develop.ts"
+                }
+              ],
+              "optimization": false,
+              "outputHashing": "none",
+              "aot": false,
+              "namedChunks": false,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "sourceMap": true,
+              "buildOptimizer": false,
+              "statsJson": false,
+              "progress": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "14mb",
+                  "maximumError": "15mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "16kb"
+                }
+              ]
+            },
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "aot": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": true,
+              "sourceMap": true,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "8kb",
+                  "maximumError": "16kb"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "bringoo-admin:build"
+          },
+          "configurations": {
+            "develop": {
+              "browserTarget": "bringoo-admin:build:develop"
+            },
+            "production": {
+              "browserTarget": "bringoo-admin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "bringoo-admin:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "./node_modules/survey-core/defaultV2.css",
+              "./node_modules/survey-creator-core/survey-creator-core.css"
+            ],
+            "scripts": []
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "bringoo-admin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "bringoo-admin:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

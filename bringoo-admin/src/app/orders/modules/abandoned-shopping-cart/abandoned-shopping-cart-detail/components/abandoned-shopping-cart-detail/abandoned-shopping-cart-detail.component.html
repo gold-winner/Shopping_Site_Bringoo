@@ -1,0 +1,384 @@
+<ng-container *ngIf="cartDetails$ | async as cartDetails">
+  <div *ngIf="cart$ | async as cart" class="p-8">
+    <div class="d-flex justify-content-between">
+      <div class="mb-4 cursor-pointer" [routerLink]="'../'">
+        <i nz-icon nzType="left" nzTheme="outline" class="mr-2"></i>
+        <span class="text-bold">Shopping Carts</span>
+      </div>
+
+      <div
+        class="justify-content-end align-items-center"
+        [ngClass]="{ 'd-flex flex-column': cart?.customer?.role === 'GUEST' }"
+      >
+        <button
+          *ngIf="cart?.cartStatus === 'OPEN'"
+          class="ml-auto mr-2"
+          nz-button nzType="primary"
+          nzShape="round"
+          (click)="openCheckoutForm(cart)"
+          [disabled]="cart?.customer?.role === 'GUEST'"
+        >
+          Checkout
+        </button>
+        <p *ngIf="cart?.customer?.role === 'GUEST'" class="color-danger f-3 mr-2">Guest can't checkout. Need to signUp.</p>
+      </div>
+    </div>
+
+    <div class="container f-4">
+      <nz-card nzBorderless class="border-round-sm mx--4">
+        <nz-card-meta
+          [nzTitle]="summaryTitle"
+          [nzDescription]="summaryDescription"
+        ></nz-card-meta>
+        <ng-template #summaryTitle>
+          <h4>Summary</h4>
+        </ng-template>
+        <ng-template #summaryDescription>
+          <div class="w-100p text-default f-4" id="summary">
+            <div class="d-flex justify-content-between">
+              <span>Card code</span><span>{{cart.cartCode}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Created</span><span>{{cart.create_date | date : dateFormat}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Cart Status</span><span>{{cart.cartStatus}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Subtotal</span><span>{{cartDetails.subtotal}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Grand Total</span><span>{{cartDetails.totalPrice}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Discount items</span><span>{{cartDetails.itemsDiscount}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Discount Delivery fee</span><span>{{cartDetails.deliveryFeeDiscount}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Discount Total</span><span>{{cartDetails.allDiscount}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Customer</span>
+              <span>
+                    <a routerLink="/users/customers/details/{{cart.customerId}}">
+                      {{cart.customer?.settings?.firstName}}
+                      <ng-container *ngIf="cart.customer?.role === 'CUSTOMER'">
+                        {{cart.customer?.settings?.lastName}}
+                      </ng-container>
+                    </a>
+                  </span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Customer phone</span>
+              <span
+                *ngIf="cart.customer?.settings?.phoneNumber"
+              >
+                    +{{cart.customer?.settings?.phoneCountryCode}} {{cart.customer?.settings?.phoneNumber}}
+                <app-verification-status
+                  class="f-3"
+                  [isVerified]="cart.customer?.isPhoneNumberVerified|bool"
+                ></app-verification-status>
+                    </span>
+              <span *ngIf="!cart.customer?.settings?.phoneNumber">---</span>
+            </div>
+            <div class="d-flex justify-content-between"><span>Metadata</span><span>{{'---'}}</span></div>
+          </div>
+        </ng-template>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+        <ng-container *ngIf="cartId">
+          <app-shopping-cart-voucher [cartId]="cartId"></app-shopping-cart-voucher>
+        </ng-container>
+      </nz-card>
+
+      <nz-card nzBorderless class="border-round-sm mx--4 mt-4">
+        <nz-card-meta
+          [nzTitle]="customerTitle"
+          [nzDescription]="customerDescription"
+        ></nz-card-meta>
+        <ng-template #customerTitle>
+          <h4>Customer</h4>
+        </ng-template>
+        <ng-template #customerDescription>
+          <div class='row ml-0 mr-0 p-md-0 ml-md--4 mr-md-0 mt--4'>
+            <app-customer-card
+              id="customer"
+              class='col-24 col-md ml-md-4 mt-4'
+              [isEdited]='false'
+              [customer]='cart.customer'
+            ></app-customer-card>
+
+            <app-store-card
+              class="col-24 col-md ml-md-4 mt-4"
+              [isEdited]="false"
+              [store]="cart?.store"
+            ></app-store-card>
+          </div>
+        </ng-template>
+      </nz-card>
+
+      <nz-card nzBorderless class="border-round-sm mx--4 mt-4">
+        <nz-card-meta
+          [nzTitle]="basketTitle"
+          [nzDescription]="basketDescription"
+        ></nz-card-meta>
+        <ng-template #basketTitle>
+          <div class="d-flex justify-content-between">
+            <h4>Basket</h4>
+            <div class="d-flex flex-wrap-reverse justify-content-end f-4 header pb-4">
+              <button
+                *ngIf="cartDetails.changedItems && cartDetails.changedItems.length > 0"
+                nz-button
+                nzType="primary"
+                nzShape="round"
+                class="ml-auto mr-2"
+                (click)="acceptCart()">
+                Resolve conflicts
+              </button>
+              <button
+                nz-button
+                nzType="primary"
+                nzShape="round"
+                (click)="openAddProductForm()">
+                Add product
+              </button>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template #basketDescription>
+          <div>
+            <ng-container>
+              <nz-table
+                class="mb-0"
+                [nzShowPagination]="false"
+                [nzData]="cartDetails.items || []"
+                [nzFrontPagination]="false"
+                [nzSize]="'small'"
+                [nzLoading]="isLoading$ | async"
+              >
+                <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Name</th>
+                  <th class="text-align-right">
+                    Weight
+                    <span [class.color-danger]="isOverWeight">({{cartDetails.weight}} / {{cartDetails.maxWeight}})</span>
+                  </th>
+                  <th class="text-align-right">Quantity</th>
+                  <th class="text-align-right">VAT</th>
+                  <th class="text-align-right">Single Price</th>
+                  <th class="text-align-right">Single discount</th>
+                  <th class="text-align-right">Total discount</th>
+                  <th class="text-align-right">Total Price</th>
+                  <th class="text-align-right">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of cartDetails.items; let index = index">
+                  <td>{{ index + 1 }}</td>
+                  <td>
+                    <a (click)="onClickProductDetails(item.linkId)">{{ item.name_i18n }}</a>
+                    <p class="mb-0">
+                      <nz-tag
+                        *ngIf="item.customerNote"
+                        class="white-space-normal"
+                        nzColor="closeable"
+                      >{{item.customerNote}}</nz-tag>
+                    </p>
+                    <ng-container *ngIf="item?.changeText">
+                      <br>
+                      <span class="color-danger">{{ item.changeText }}</span>
+                    </ng-container>
+                  </td>
+                  <td
+                    class="text-align-right"
+                    nz-tooltip
+                    nzTooltipPlacement="topRight"
+                    nzTooltipTitle="{{item.weight|gramsToKg}} * {{item.inCart}}"
+                  >{{(item.weight * item.inCart)|gramsToKg}}</td>
+                  <td class="text-align-right"><a (click)="onProductChangeCount(item)">{{ item.inCart }}</a></td>
+                  <td class="text-align-right">{{ item.vatPercent }} %</td>
+                  <td class="text-align-right">{{ item.price || (0|formatPrice) }}</td>
+                  <td class="text-align-right">{{ item.voucherDiscount || (0|formatPrice) }}</td>
+                  <td class="text-align-right">{{ item.voucherAllDiscount  || (0|formatPrice) }}</td>
+                  <td class="text-align-right">{{ item.totalAmount || (0|formatPrice) }}</td>
+                  <td class="text-align-right">
+                    <button
+                      (click)="onProductDelete(item)"
+                      nzType="link"
+                      nz-button
+                      nzDanger
+                      nzSize="small">
+                      <i nz-icon nzType="delete" nzTheme="outline"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7" *ngIf="cartDetails.isOverload">
+                <span class="color-danger">
+                  <i nz-icon nzType="shopping-cart" nzTheme="outline"></i> Overloaded!
+                </span>
+                  </td>
+                </tr>
+                </tbody>
+              </nz-table>
+              <div class="bg-body w-100p px-4 pt-4 d-flex justify-content-end">
+                <div class="receipt">
+                  <div class='total-row d-flex justify-content-between text-bold'>
+                    <span>Sub total incl. VAT</span>
+                    <span class='text-align-right'>{{cartDetails.subtotal}}</span>
+                  </div>
+                  <div class='total-row d-flex justify-content-between' *ngFor="let vat of cartDetails.vatTotal">
+                    <span>incl. {{vat.vat}}</span>
+                    <span class='text-align-right'>{{vat.value}}</span>
+                  </div>
+                  <div class='total-row d-flex justify-content-between'>
+                    <span>Total Deposit</span>
+                    <span class='text-align-right'>{{cartDetails.totalDeposit}}</span>
+                  </div>
+                  <hr>
+                  <div class='total-row d-flex justify-content-between'>
+                    <span>Delivery Fee</span>
+                    <span class='text-align-right'>{{cart.deliveryFee | formatPrice:'EUR'}}</span>
+                  </div>
+                  <hr>
+                  <div class='total-row d-flex justify-content-between'>
+                    <span>Discount items</span>
+                    <span class='text-align-right'>{{cartDetails.itemsDiscount}}</span>
+                  </div>
+                  <hr>
+                  <div class='total-row d-flex justify-content-between'>
+                    <span>Discount Delivery fee</span>
+                    <span class='text-align-right'>{{cartDetails.deliveryFeeDiscount}}</span>
+                  </div>
+                  <hr>
+                  <div class='total-row d-flex justify-content-between'>
+                    <span>Discount Total</span>
+                    <span class='text-align-right'>{{cartDetails.allDiscount}}</span>
+                  </div>
+                  <hr>
+                  <div class='total-row d-flex justify-content-between'>
+                    <span>Grand total</span>
+                    <span class='text-align-right'>{{cartDetails.totalPrice}}</span>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-template>
+      </nz-card>
+    </div>
+  </div>
+</ng-container>
+
+
+<nz-modal
+  [(nzVisible)]="isProductDeleteModalVisible"
+  nzTitle="Are you sure you want to delete the cart item?"
+  (nzOnCancel)="onProductCancelDelete()"
+  (nzOnOk)="deleteProduct()"
+  [nzCancelDisabled]="isLoading$| async"
+  [nzOkLoading]="isLoading$| async"
+  [nzOkDanger]="true"
+  nzOkText="Delete"
+>
+  <h5 *nzModalContent><span *ngIf="deleteName">Delete {{deleteName}} ?</span></h5>
+</nz-modal>
+
+<nz-modal
+  [(nzVisible)]="isProductChangeCountModalVisible"
+  nzTitle="Are you sure you want to change the quantity of the cart item?"
+  (nzOnCancel)="onProductCancelChangeCount()"
+  (nzOnOk)="changeCountProduct()"
+  [nzCancelDisabled]="isLoading$| async"
+  [nzOkLoading]="isLoading$| async"
+  [nzOkDanger]="true"
+  nzOkText="Change"
+>
+  <h5 *nzModalContent>
+    <div>
+      <span *ngIf="changeCountName">Change amount {{changeCountName}} ?</span>
+    </div>
+    <div>
+      <nz-input-number nzPlaceHolder="Product count" [nzMin]="1" [(ngModel)]="changeCountValue">
+      </nz-input-number>
+    </div>
+  </h5>
+</nz-modal>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="'40%'"
+  [nzVisible]="openPanel === 'checkout'"
+  nzPlacement="right"
+  nzTitle="Checkout cart"
+  [nzFooter]="checkoutFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <ng-template
+      [ngComponentOutlet]="checkoutForm"
+      [ndcDynamicInputs]="checkoutFormInputs"
+      [ndcDynamicOutputs]="checkoutFormOutputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="'40%'"
+  [nzVisible]="openPanel === 'addProduct'"
+  nzPlacement="right"
+  nzTitle="Add products to the cart"
+  [nzFooter]="addProductFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <ng-container *ngIf="cartDetails$ | async as cartDetails">
+      <ng-container *ngIf="cart$ | async as cart">
+        <app-abandoned-shopping-cart-add-product-form
+          [submit]='addProductSubmit'
+          [customerId]="cart.customerId || ''"
+          [cartDetailsInfo]="cartDetails"
+          (formSubmit)="addProducts($event)"
+        >
+        </app-abandoned-shopping-cart-add-product-form>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #addProductFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onAddProductSubmit()'>Add</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #checkoutFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onCheckoutSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-product-detail
+  [linkId]="productDetailId"
+  (submit)="closeProductDetail()"
+></app-product-detail>
+

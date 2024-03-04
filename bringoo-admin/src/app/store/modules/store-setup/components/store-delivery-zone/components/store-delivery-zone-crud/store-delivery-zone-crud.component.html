@@ -1,0 +1,13 @@
+<app-crud
+  *ngIf="(storeDetailsService.store$|async) as store"
+  [customImportParams]="{storeId:store.id}"
+  [exportFileName]="'store-delivery-zone-export-'+store.code"
+  [config]="config"
+  [service]="service"
+  [createForm]="createForm"
+  [updateForm]='updateForm'
+  [filterForm]='filterForm'
+  [columns]="columns"
+  [fields]='fields'
+  [join]='join'
+></app-crud>

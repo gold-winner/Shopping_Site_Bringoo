@@ -1,0 +1,54 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-address {
+  @extend .bg-white;
+  @extend .py-4;
+  @extend .border-radius-md;
+
+  &:hover {
+    box-shadow: 0px 4px 11px rgba($color_grey, 0.3);
+  }
+
+  &__main {
+    @extend .row; 
+    @extend .px-4;
+    @extend .align-items-center;
+    @extend .cursor-pointer;
+  }
+
+  &__outline-btn {
+    @extend .text-medium;
+    @extend .border-radius-md;
+    @extend .text-lightblue;
+    @extend .cursor-pointer;
+    border: 1px solid $color_lightblue;
+    padding: 7px 10px;
+
+    &--selected {
+      @extend .bg-green;
+      color: $color_white;
+      border: 1px solid $color_green;
+      opacity: 1;
+    }
+  }
+
+  &__expanded-list {
+    @extend .px-4;
+    @extend .mt-4;
+    border-top: 1px solid rgba($color_beige, 0.4);
+  }
+
+  &__expanded-item {
+    @extend .d-flex; 
+    @extend .justify-content-between;
+    @extend .py-3;
+    border-bottom: 1px solid rgba($color_beige, 0.4);
+  }
+
+  .unselected {
+    opacity: 0.4;
+  }
+}

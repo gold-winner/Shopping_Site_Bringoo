@@ -1,0 +1,98 @@
+<form nzLayout="vertical" nz-form [formGroup]="form" class="p-4 w-100p h-100p overflow-auto position-relative" id="product-grocery-form">
+  <div class="row">
+    <div class="col-18">
+      <nz-card
+        id="allergenic-information"
+        nzTitle="Allergenic Information"
+        class="mb-4"
+        [nzExtra]="allergicTemplate"
+      >
+        <app-lang-controller>
+          <app-multi-lang-v2-input
+            label="Allergenic"
+            type="textarea"
+            formControlName="allergenic_information_i18n"
+          ></app-multi-lang-v2-input>
+        </app-lang-controller>
+      </nz-card>
+      <ng-template #allergicTemplate>
+        <i
+          class="color-danger f-4"
+          nz-icon
+          nzType="info-circle"
+          nzTheme="outline"
+          nz-tooltip
+          nzTooltipTitle="Do not forget to enter Information about Allergies. It can save a life."
+          nzTooltipPlacement="topLeft"
+        ></i>
+      </ng-template>
+
+      <nz-card id="nutri-score" nzTitle="Nutri Score" class="mb-4">
+
+        <nz-form-item>
+          <app-products-nutriscore-control formControlName="nutriScore"></app-products-nutriscore-control>
+        </nz-form-item>
+
+        <h3 class="mt-4">Nutritional Data</h3>
+        <nz-form-item>
+          <app-products-nutritional-data-control formControlName="nutritional_data"></app-products-nutritional-data-control>
+        </nz-form-item>
+      </nz-card>
+
+      <nz-card nzTitle="Ingredients" id="ingredients" class="mb-4">
+        <app-lang-controller>
+          <app-multi-lang-v2-input label="Ingredients" type="textarea"
+                                   formControlName="ingredients_i18n"></app-multi-lang-v2-input>
+        </app-lang-controller>
+      </nz-card>
+
+      <nz-card
+        id="storage-instructions"
+        nzTitle="Storage Instructions"
+        class="mb-4"
+      >
+        <app-lang-controller>
+          <app-multi-lang-v2-input
+            label="Storage Instructions"
+            type="textarea"
+            formControlName="storageInstructions_i18n"
+          ></app-multi-lang-v2-input>
+        </app-lang-controller>
+      </nz-card>
+
+      <nz-card
+        nzTitle="Basic Data" id="basic-data" class="mb-4"
+      >
+        <label class="ml-0" nz-checkbox formControlName="isBio">Bio</label><br/>
+        <label class="ml-0" nz-checkbox formControlName="isFrozen">Frozen</label><br/>
+        <label class="ml-0" nz-checkbox formControlName="isTobacco">Tobacco</label><br/>
+        <label class="ml-0" nz-checkbox formControlName="isVegan">Vegan</label><br/>
+        <label class="ml-0" nz-checkbox formControlName="isVegetarian">Vegetarian</label><br/>
+        <label class="ml-0" nz-checkbox formControlName="isGlutenFree">Gluten Free</label><br/>
+        <label class="ml-0" nz-checkbox formControlName="isLactoseFree">Lactose Free</label><br/>
+        <label class="ml-0" nz-checkbox formControlName="isAlcohol">Alcohol</label>
+        <nz-form-item class="mb-4">
+          <nz-form-label [nzRequired]="form.get('isAlcohol')?.valueChanges|async">Alcohol value</nz-form-label>
+          <nz-form-control labelForErrorTip="Alcohol value">
+            <nz-input-number class="w-100p" appDisableControl [disable]="!(form.get('isAlcohol')?.value)"
+                             nzPlaceHolder="Alcohol value" formControlName="alcoholValue" [nzMin]="0" [nzMax]="100"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+    </div>
+  </div>
+</form>
+
+
+<nz-anchor
+  style="position: absolute; top: 14px; right: 28px;"
+  [nzAffix]="false"
+  [nzShowInkInFixed]="true"
+  *ngIf="isReady$|async"
+  nzContainer="#product-grocery-form">
+  <nz-link nzHref="#allergenic-information" nzTitle="Allergenic Information"></nz-link>
+  <nz-link nzHref="#nutri-score" nzTitle="Nutri Score"></nz-link>
+  <nz-link nzHref="#ingredients" nzTitle="Ingredients"></nz-link>
+  <nz-link nzHref="#storage-instructions" nzTitle="Storage Instructions"></nz-link>
+  <nz-link nzHref="#basic-data" nzTitle="Basic Data"></nz-link>
+</nz-anchor>

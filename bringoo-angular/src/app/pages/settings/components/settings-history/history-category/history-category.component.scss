@@ -1,0 +1,24 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.underline {
+  border-bottom: 1px solid rgba($color_beige, 0.5);
+
+  .underline-select {
+    border-bottom: 4px solid $color-blue;
+  }
+  
+  .category {
+    @extend .text-align-center;
+    @extend .pb-1;
+    flex-grow: 0.3; 
+  
+    .category-text {
+      @extend .text-medium;
+      @extend .text-bold;
+      @extend .cursor-pointer;
+    }
+  }
+}

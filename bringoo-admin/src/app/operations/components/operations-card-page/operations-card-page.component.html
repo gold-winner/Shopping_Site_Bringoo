@@ -1,0 +1,5 @@
+<h5 class="ml-sm-8 mb-sm-4 mt-sm-4">Operations</h5>
+<div class="mr-sm-8 ml-sm-8 p-4 settings-menu-list">
+  <app-input-search (searchable)="onSearchChange($event)"></app-input-search>
+  <app-cards class='mt-sm-4' [searches]='searchValue' [cards]='settingsCardConfig'></app-cards>
+</div>

@@ -1,0 +1,23 @@
+:host{
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow-y: auto;
+  &>div{
+    border-top: 1px solid #f0f0f0;
+  }
+}
+
+.horizontal {
+  [nz-radio]{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 4px 4px 4px 16px;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    & + [nz-radio]{
+      margin-top: 4px;
+    }
+  }
+}

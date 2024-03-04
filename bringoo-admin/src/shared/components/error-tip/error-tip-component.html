@@ -1,0 +1,11 @@
+<ng-container *ngIf="error$|async as error" [ngSwitch]="error.key">
+  <ng-container *ngSwitchCase="'server'">{{error.value}}</ng-container>
+  <ng-container *ngSwitchCase="'required'">Please input {{ label || 'value'}}!</ng-container>
+  <ng-container *ngSwitchCase="'email'">Incorrect email address!</ng-container>
+  <ng-container *ngSwitchCase="'minlength'">There must be more than {{error.value.requiredLength}} characters!</ng-container>
+  <ng-container *ngSwitchCase="'maxlength'">There must be less than {{error.value.requiredLength}} characters!</ng-container>
+  <ng-container *ngSwitchCase="'min'">There must be more than {{error.value.min}}!</ng-container>
+  <ng-container *ngSwitchCase="'max'">There must be less than {{error.value.max}}!</ng-container>
+  <ng-container *ngSwitchCase="'pattern'">Сan contain {{error.value.requiredPattern}}</ng-container>
+  <ng-container *ngSwitchDefault>Please input {{ label || 'value'}}!</ng-container>
+</ng-container>

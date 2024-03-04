@@ -1,0 +1,20 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.text-header__back {
+  @extend .text-bold;
+  @extend .mr-15;
+}
+
+.text-header__title {
+  @extend .text-bold;
+  @extend .ml-15;
+}
+
+.text-content {
+  @extend .text-small;
+  @extend .text-semi-bold;
+  @extend .text-lightblue;
+}

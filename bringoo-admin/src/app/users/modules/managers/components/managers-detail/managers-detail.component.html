@@ -1,0 +1,165 @@
+<div class="p-8" *ngIf="manager$ | async as manager">
+  <div class='d-flex justify-content-between'>
+    <div class="mb-4 cursor-pointer" (click)="goToManagersPage()">
+      <i nz-icon nzType="left" nzTheme="outline" class="mr-2"></i>
+      <span class="text-bold">{{ manager?.settings?.firstName + ' ' + manager?.settings?.lastName }}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-16">
+      <nz-card class="mb-8">
+        <nz-card-meta [nzTitle]="managerCardTitle" [nzDescription]="managerCardDescription"
+                      [nzAvatar]="avatarTemplate"></nz-card-meta>
+        <div class='d-flex justify-content-between'>
+          <div class='w-100p'>
+            <span>Manager note</span>
+            <textarea nz-input rows='2' readonly [value]="manager.note"></textarea>
+          </div>
+          <a (click)="openPanel = 'note'">Edit</a>
+        </div>
+      </nz-card>
+      <ng-template #managerCardTitle>
+        <div class='d-flex justify-content-between'>
+          {{manager?.settings?.firstName + ' ' + manager?.settings?.lastName}}
+          <a (click)="openPanel = 'info'">Edit</a>
+        </div>
+      </ng-template>
+      <ng-template #managerCardDescription>
+        <div>Manager since: {{manager?.lastLoginDate}}</div>
+      </ng-template>
+      <ng-template #avatarTemplate>
+        <img class='mr-sm-4' width='50' height='50' [src]="'./../../../../../../../assets/img/avatars/userAvatar.svg'"
+             alt="User">
+      </ng-template>
+      <div class='bg-component mb-8'>
+        <app-managers-session-history></app-managers-session-history>
+      </div>
+      <div class="bg-component mb-8">
+        <app-user-subscription></app-user-subscription>
+      </div>
+      <button nz-button nzDanger nzType='primary' (click)="isDeleteModalVisible = true" class='mr-3'>Deactivate
+        manager
+      </button>
+    </div>
+    <div class="col-8">
+      <nz-card class="mb-8" [formGroup]='form'>
+        <nz-card-meta [nzTitle]="managerOverviewTitle"></nz-card-meta>
+        <ng-template #managerOverviewTitle>
+          <div class='d-flex justify-content-between mb-4'>Manager Overview <a (click)="openPanel = 'overview'">Edit</a></div>
+        </ng-template>
+        <div class="row" *ngIf="manager?.email">
+          <div class="col-20"><a [href]="'mailto:' + manager.email">{{ manager.email }}</a></div>
+          <div class="col-4"><i nz-icon nzType="copy" nzTheme="outline"></i></div>
+        </div>
+        <div *ngIf="manager?.settings?.phoneNumber">
+          +{{manager?.settings?.phoneCountryCode}} {{ manager?.settings?.phoneNumber }}</div>
+      </nz-card>
+
+      <nz-card class="mb-8" [formGroup]='form'>
+        <nz-card-meta [nzTitle]='managerAccountTypeTitle'></nz-card-meta>
+        <ng-template #managerAccountTypeTitle>
+          <div class='d-flex justify-content-between mb-4'>Manager Account Type
+            <button [disabled]="!form.controls.role.dirty" nz-button nzSize="small" nzType="primary" (click)="onChangeRole()">Save</button>
+          </div>
+        </ng-template>
+        <app-manager-type-account-radio
+          formControlName='role'
+        ></app-manager-type-account-radio>
+      </nz-card>
+    </div>
+  </div>
+  <nz-drawer
+    [nzClosable]="true"
+    [nzWidth]="700"
+    [nzVisible]="openPanel === 'overview'"
+    nzPlacement="right"
+    nzTitle="Edit contact info"
+    [nzFooter]="overview"
+    (nzOnClose)="onCloseDrawer()"
+  >
+    <ng-template nzDrawerContent>
+      <app-manager-overview [managerInfo]="manager" [submit]='submitEvent'
+                            (updatePage)='updateManager.next(true)'></app-manager-overview>
+    </ng-template>
+  </nz-drawer>
+
+  <ng-template #overview>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <button nzBlock nz-button nzType="primary" (click)="onSubmit()">Apply</button>
+        </div>
+        <div class="col-12">
+          <button nzBlock nz-button nzType="link" (click)="onCloseDrawer()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <nz-drawer
+    [nzClosable]="true"
+    [nzWidth]="700"
+    [nzVisible]="openPanel === 'info'"
+    nzPlacement="right"
+    nzTitle="Edit manager info"
+    [nzFooter]="managerInfo"
+    (nzOnClose)="onCloseDrawer()"
+  >
+    <ng-template nzDrawerContent>
+      <app-manager-info [managerInfo]='manager' [submit]='submitEvent'
+                        (updatePage)='updateManager.next(true)'></app-manager-info>
+    </ng-template>
+  </nz-drawer>
+
+  <ng-template #managerInfo>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <button nzBlock nz-button nzType="primary" (click)="onSubmit()">Apply</button>
+        </div>
+        <div class="col-12">
+          <button nzBlock nz-button nzType="link" (click)="onCloseDrawer()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <nz-modal
+    [(nzVisible)]="isDeleteModalVisible"
+    nzTitle="Are you sure you want to delete this manager?"
+    (nzOnCancel)="onCancelDelete()"
+    (nzOnOk)="onOkDelete()"
+    [nzOkDanger]="true"
+    nzOkText="Delete"
+  >
+    <h5 *nzModalContent><span>Delete {{manager?.settings?.firstName}} {{manager?.settings?.lastName}} ?</span></h5>
+  </nz-modal>
+
+  <nz-drawer
+    [nzClosable]="true"
+    [nzWidth]="700"
+    [nzVisible]="openPanel === 'note'"
+    nzPlacement="right"
+    nzTitle="Edit manager note"
+    [nzFooter]="managerNote"
+    (nzOnClose)="onCloseDrawer()"
+  >
+    <ng-template nzDrawerContent>
+      <app-manager-note [managerInfo]="manager" [submit]='submitEvent'
+                        (updatePage)='updateManager.next(true)'></app-manager-note>
+    </ng-template>
+  </nz-drawer>
+  <ng-template #managerNote>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <button nzBlock nz-button nzType="primary" (click)="onSubmit()">Apply</button>
+        </div>
+        <div class="col-12">
+          <button nzBlock nz-button nzType="link" (click)="onCloseDrawer()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

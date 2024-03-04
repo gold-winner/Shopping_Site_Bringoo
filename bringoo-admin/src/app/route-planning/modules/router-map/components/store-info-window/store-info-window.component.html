@@ -1,0 +1,27 @@
+<nz-card nzTitle="Store Card" [nzExtra]="extraTemplate" style="width:300px;">
+  <nz-card-meta
+    [nzAvatar]="storeLogo"
+    [nzTitle]="storeTitle"
+    [nzDescription]="storeAddress"
+  ></nz-card-meta>
+
+  <ng-template #storeLogo>
+    <img class="store-logo" [src]="store.logoUrl ?? ''" alt="Store Logo">
+  </ng-template>
+  <ng-template #storeAddress>
+    {{store.addresses|storeAddress}}
+  </ng-template>
+  <ng-template #storeTitle>
+    <a routerLink="/store/stores/{{store.id}}/basic-information" target="_blank">{{store.name_i18n}}</a>
+  </ng-template>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <button
+    class='mr--4'
+    nz-button
+    nzType="text"
+    nzSize="small"
+    (click)="onClose.emit()"
+  ><i nz-icon nzType="close" nzTheme="outline"></i></button>
+</ng-template>

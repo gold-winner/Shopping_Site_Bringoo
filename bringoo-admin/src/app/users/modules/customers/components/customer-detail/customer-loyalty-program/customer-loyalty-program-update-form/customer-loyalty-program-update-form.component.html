@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-loyalty-program-select
+    class="mt-4"
+    formControlName="loyaltyProgramId">
+  </app-loyalty-program-select>
+  
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label>Card Number</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'credit-card'">
+        <input nz-input formControlName="cardNumber" placeholder="Card Number"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>

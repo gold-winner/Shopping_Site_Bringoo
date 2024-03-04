@@ -1,0 +1,62 @@
+<ui-input
+  placeholder="Name"
+  [leftIcon]="false"
+  [error]="error_name"
+  type="text"
+  icon="user"
+  [value]="name"
+  (keyup)="onEnter($event)"
+  (valueChange)="name=$event"></ui-input>
+<ui-input
+  placeholder="Lastname"
+  [leftIcon]="false"
+  [error]="error_lastName"
+  type="text"
+  icon="lock"
+  [value]="lastName"
+  (keyup)="onEnter($event)"
+  (valueChange)="lastName=$event">
+</ui-input>
+<ui-input
+  placeholder="Email"
+  [leftIcon]="false"
+  [error]="error_email"
+  type="email"
+  icon="mail"
+  [value]="email"
+  (keyup)="onEnter($event)"
+  (valueChange)="email=$event">
+</ui-input>
+<ui-input
+  placeholder="Password"
+  type="password"
+  [leftIcon]="false"
+  [error]="error_pwd"
+  [value]='pwd'
+  (keyup)="onEnter($event)"
+  icon="eye-off"(valueChange)="onSetpassword($event)">
+</ui-input>
+<span class="text-medium text-bold" *ngIf=(strengthBadge) [ngClass]="strengthBadgeStyle">{{strengthBadge}}</span>
+<ui-input
+  placeholder="Password confirm"
+  type="password"
+  [leftIcon]="false"
+  [error]="error_confirmPwd"
+  [value]='confirmPwd'
+  (keyup)="onEnter($event)"
+  icon="eye-off"(valueChange)="confirmPwd=$event">
+</ui-input>
+<p class="text-tiny border border-radius-lg p-3 mt-5 text-height-normal">
+  Mit deiner Registrierung erklärst du dich mit den „
+  <span class="text-green text-bold">Nutzungsbedingungen – Bringoo Kundenkonto</span>“ 
+  einverstanden. Nähere Informationen zur Verarbeitung deiner Daten entnimmst du bitte unseren
+  <a href="/datenschutz"><span class="text-green text-bold">Datenschutzhinweisen</span>.</a>
+</p>
+<div class="d-flex justify-content-between mt-7">
+  <ui-button fill='transparent' label='Back' size='lg' (onClick)='onBack()'></ui-button>
+  <ui-button *ngIf="!loading" label='Continue' size='lg' (onClick)="onContinue($event)"></ui-button>
+  <ui-button *ngIf="loading" size='lg' class="position-relative">
+    <span class="text-trans">Continue</span>
+    <span id="loading"></span>
+  </ui-button>
+</div>

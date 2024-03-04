@@ -1,0 +1,78 @@
+<nz-steps
+  *ngIf="orderHistory$|async as orderHistory"
+  [nzCurrent]="1"
+  nzProgressDot
+  nzDirection="vertical"
+  id="order-history"
+>
+  <ng-container
+    *ngFor="let event of orderHistory.events"
+  >
+    <nz-step *ngIf="!event.dateTime" [nzTitle]="event.name_i18n" [nzDescription]="description" [nzStatus]="'wait'"></nz-step>
+    <nz-step *ngIf="event.dateTime" [nzTitle]="event.name_i18n" [nzDescription]="description" [nzStatus]="'finish'"></nz-step>
+    <ng-template #description>
+      <div class="mb-0 ml-4 order-history-metadata">
+        <ng-container [ngSwitch]="event.eventType">
+          <ng-container
+            *ngSwitchCase="orderHistoryEventType.ADD_ORDER_RECEIPT_IMAGES_BY_MANAGER"
+          >
+            <p class="mb-0">{{event.metadata![0]}}</p>
+            <p class="mb-0 d-flex flex-wrap">
+              <ng-container *ngFor="let data of event.metadata|slice :1">
+                <img (click)="onImagePreview(data)" src="{{data|imageMiniature}}" alt="" class="table-image mr-1 mt-1 cursor-pointer">
+              </ng-container>
+            </p>
+          </ng-container>
+
+          <ng-container
+            *ngSwitchCase="orderHistoryEventType.UPDATE_ORDER_RECEIPT_IMAGES_BY_MANAGER"
+          ><ng-container *ngTemplateOutlet="receiptEvent"></ng-container></ng-container>
+
+          <ng-container
+            *ngSwitchCase="orderHistoryEventType.UPDATE_ORDER_VAT_RECEIPT_IMAGES_BY_MANAGER"
+          ><ng-container *ngTemplateOutlet="receiptEvent"></ng-container></ng-container>
+
+          <ng-container
+            *ngSwitchCase="orderHistoryEventType.UPDATE_ORDER_RECEIPT_NUMBER_BY_MANAGER"
+          >
+            <ng-container *ngIf="event.metadata as metadata">
+              <p class="mb-0">{{metadata[0]}}</p>
+              <p class="mb-0" *ngIf="metadata[1] as prev">Previous value: {{prev}}</p>
+              <p class="mb-0" *ngIf="metadata[2] as current">Current value: {{current}}</p>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #receiptEvent>
+            <p class="mb-0">{{event.metadata![0]}}</p>
+            <ng-container *ngIf="(event.metadata!|slice :1)|receiptUpdateGroupsPipe as receiptUpdateGroups">
+              <ng-container *ngIf="receiptUpdateGroups.add.length > 0">
+                <p class="mb-0">Added Images</p>
+                <p class="mb-0 d-flex flex-wrap">
+                  <ng-container *ngFor="let url of receiptUpdateGroups.add">
+                    <img (click)="onImagePreview(url)" src="{{url|imageMiniature}}" alt="" class="table-image mr-1 mt-1 cursor-pointer">
+                  </ng-container>
+                </p>
+              </ng-container>
+
+              <ng-container *ngIf="receiptUpdateGroups.delete.length > 0">
+                <p class="mb-0">Deleted Images</p>
+                <p class="mb-0 d-flex flex-wrap">
+                  <ng-container *ngFor="let url of receiptUpdateGroups.delete">
+                    <img (click)="onImagePreview(url)" src="{{url|imageMiniature}}" alt="" class="table-image mr-1 mt-1 cursor-pointer">
+                  </ng-container>
+                </p>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+
+          <ng-container *ngSwitchDefault>
+            <p class="mb-0" *ngFor="let data of event.metadata">{{data}}</p>
+          </ng-container>
+        </ng-container>
+
+        <p *ngIf="event.eventType === canceledByManagerType" class="mb-0">Comment: {{cancelDescription}}</p>
+      </div>
+      <p *ngIf="event.dateTime" class="mb-1">{{(event.dateTime * 1000)|date:dateTimeFormat}}</p>
+    </ng-template>
+  </ng-container>
+</nz-steps>

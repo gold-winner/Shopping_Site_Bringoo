@@ -1,0 +1,47 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="organizationId">Organization ID</nz-form-label>
+    <nz-form-control>
+      <input 
+        formControlName="organizationId"
+        nz-input
+        name="organizationId"
+        placeholder="organizationId"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="name">Name</nz-form-label>
+    <nz-form-control>
+      <input 
+        formControlName="name"
+        nz-input
+        name="name"
+        placeholder="name"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="email">Email</nz-form-label>
+    <nz-form-control>
+      <input 
+        formControlName="email"
+        nz-input
+        name="email"
+        placeholder="email"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label>Stores:</nz-form-label>
+      <app-select 
+        [options]="storeSelect"
+        placeHolder="Store select"
+        formControlName="storeIds"
+        [type]="'multiple'"
+      >
+      </app-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

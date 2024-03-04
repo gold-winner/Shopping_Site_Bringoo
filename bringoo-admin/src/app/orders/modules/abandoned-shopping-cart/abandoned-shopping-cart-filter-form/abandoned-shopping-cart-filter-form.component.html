@@ -1,0 +1,45 @@
+<form nz-form [formGroup]='form' class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input nz-input formControlName="search" placeholder="Search"
+                 nz-tooltip="Search by Store Name, User Name"
+                 nzTooltipPlacement="topLeft"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="d-flex dates">
+      <nz-form-item class="w-32">
+        <nz-form-control labelForErrorTip="Start date">
+          <nz-form-label>Start date</nz-form-label>
+          <app-date-control
+            [dateFormat]="dateFormat"
+            formControlName="dateStart"
+            placeHolder="Date start"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item class="w-32">
+        <nz-form-control labelForErrorTip="End date">
+          <nz-form-label>End date</nz-form-label>
+          <app-date-control
+            [dateFormat]="dateFormat"
+            formControlName="dateEnd"
+            placeHolder="Date end"
+            [disableBefore]="form.controls.dateStart.value"
+          ></app-date-control>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <app-filter-store-select
+      class="col"
+      formControlName="storeId"
+    ></app-filter-store-select>
+  </div>
+</form>

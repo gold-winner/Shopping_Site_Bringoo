@@ -1,0 +1,23 @@
+<div class="ui-input" [ngClass]="{'ui-input--disabled': disabled, 'ui-input--error': error}">
+  <label *ngIf="label">{{label}}<span *ngIf="required" class="text-red"> *</span></label>
+  <span class="text-tiny" *ngIf="description">{{description}}</span>
+  <icon 
+    *ngIf="!!icon"
+    [name]="icon" 
+    [ngClass]="{'ui-input__icon-right': !leftIcon}">
+  </icon>
+  <img *ngIf="!!img" 
+    [src]="'/assets/img/' + img" 
+    [ngClass]="{'ui-input__icon-right': !leftIcon}">
+  <input 
+    [type]="type"
+    [value]="value ? value : ''"
+    [placeholder]="placeholder"
+    class="ui-input__text"
+    [ngClass]="{'ui-input__padding-left': icon && leftIcon, 'ui-input__text--small': size === 'sm', 'ui-input__text--disabled': disabled, 'ui-input__text--center' : centered}"
+    (click)="onClick.emit($event)"
+    (keyup)="onChange($event)"
+    [disabled]="disabled"
+    [attr.maxlength]="length"
+  />
+</div>

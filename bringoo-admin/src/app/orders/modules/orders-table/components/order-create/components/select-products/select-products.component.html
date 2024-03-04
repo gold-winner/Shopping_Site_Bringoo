@@ -1,0 +1,67 @@
+<ng-container>
+  <button nzBlock nz-button nzType="primary" (click)='openPanel = true' [disabled]="(store.idObserver$ | async) == ''">Add products</button>
+  <nz-table
+    nzShowSizeChanger
+    nzShowPagination
+    [nzData]="items"
+    [nzPageSize]='limit'
+    [nzFrontPagination]="false"
+    [nzLoading]="isLoading$|async"
+    [nzPageIndex]="page"
+    [nzShowTotal]="rangeTemplate"
+    [nzPageSizeOptions]="nzPageSizeOptions"
+    [nzSize]="'small'"
+  >
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>VAT</th>
+      <th>Total Amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items; let ind = index">
+      <td>{{item?.name_i18n}}</td>
+      <td>NEW</td>
+      <td>{{this.quantity.get(item?.linkId || '8')}}</td>
+      <td>{{item?.price|formatPrice}}</td>
+      <td>{{this.item?.productVatPercent}} %</td>
+      <td>{{(this.quantity.get(item.linkId || '8') || 1) * (item.price || 1)|formatPrice}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <ng-template #rangeTemplate let-range="range" let-total>
+    {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  </ng-template>
+</ng-container>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="700"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Select Products"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <app-select-products-form *ngIf='store.idObserver$ | async' [submit]='submitSymbol' (quantity)='quantity = $event'></app-select-products-form>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

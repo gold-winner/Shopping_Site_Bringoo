@@ -1,0 +1,42 @@
+<div *ngIf="store" class="ui-card-shop">
+  <div class="border-radius-lg" style="background: {{bgColor}}; height: 230px; width: 440px;"
+    (click)="onSelectStore(store.id)">
+    <div class="ui-card-shop__imgCover">
+      <img src="{{store.landingImgUrl}}" class="ui-card-shop__img">
+    </div>
+    <div class="ui-card-shop__logo">
+      <img src="{{store.logoUrl}}" class="ui-card-shop__logo">
+    </div>
+    <div>
+      <div class="d-flex justify-content-between">
+        <span *ngIf="store.name_public_long_i18n.length <= 22" class="store-name">{{store.name_public_long_i18n}}</span>
+        <span *ngIf="store.name_public_long_i18n.length > 22" class="store-name">{{store.name_public_long_i18n.substr(0,
+          22)}} ...</span>
+      </div>
+      <div class="d-flex justify-content-between ml-7 mt-1">
+        <span class="text-white text-medium">0,50 km · {{store.openingTime}} </span>
+      </div>
+    </div>
+  </div>
+  <div class="cursor-pointer position-absolute" style="top: 15px; right: 17px;">
+    <img *ngIf="!heart" src="assets/img/favorite-landing.svg" (click)="onHeart(heart)">
+    <img *ngIf="heart" src="assets/img/favorite-landing.svg" (click)="onHeart(heart)">
+  </div>
+  <ui-button color="white" size="sm" radius="sm" width="inline" (onClick)="onClickType(store.id)"
+    style="position: absolute; bottom: 10px; left: 30px;">
+    {{store.vendorType.name_i18n}}
+  </ui-button>
+  <ui-button color="white" size="sm" radius="sm" width="inline" (onClick)="onClickShipment(store.id)"
+    style="position: absolute; bottom: 10px; left: 140px;">
+    Shipment · 30’
+  </ui-button>
+  <ui-button color="white" size="sm" radius="sm" width="inline" (onClick)="onClickMin(store.id)"
+    style="position: absolute; bottom: 10px; left: 240px;">
+    min 12 €
+  </ui-button>
+  <ui-button color="white" size="sm" radius="sm" width="inline" fill="outline" (onClick)="onClickFeature(store.id)"
+    style="position: absolute; bottom: 6px; left: 320px;">
+    <img src="/assets/img/crown.svg" class="w-4 mr-1">
+    Featured
+  </ui-button>
+</div>

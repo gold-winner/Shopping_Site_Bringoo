@@ -1,0 +1,97 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.header {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+
+  &_delivery-type {
+    @extend .text-bold;
+    @extend .text-medium;
+    @extend .mt-3;
+    @extend .cursor-pointer;
+    opacity: 0.6;
+
+    span {
+      @extend .p-3;
+    }
+    &--selected {
+      @extend .text-green;
+      border-bottom: 2px solid $color-green;
+      opacity: 1;
+    }
+  }
+}
+
+.content {
+  @extend .bg-beige-20;
+  @extend .mt-3;
+  @extend .px-5;
+  margin-bottom: -20px;
+  margin-left: -20px;
+  margin-right: -20px;
+
+  &__header {
+    @extend .d-flex;
+    @extend .justify-content-center;
+    @extend .align-items-center;
+    @extend .p-5; 
+  }
+
+  .search-box{
+    @extend .position-relative;
+    @extend .w-96p;
+    &--icon {
+      @extend .position-absolute;
+      top: 8px;
+      opacity: 0.6;
+
+      &__search {
+        left: 4px;
+      }
+
+      &__close {
+        @extend .cursor-pointer;        
+        right: 4px;
+      }
+    }
+    input {
+      @extend .text-medium;
+      @extend .border-0;
+      @extend .h-9;
+      @extend .px-8;
+      @extend .bg-white;
+      @extend .border-radius-md;
+      @extend .w-100p;
+      &:hover, &:focus {
+        @extend .border-0;
+        outline: 0;
+      }
+      &:focus {
+        border: 2px solid #2CC84D;
+      }
+    }
+  }
+
+  .map {
+    margin-left: -20px;
+    margin-right: -20px;
+
+    ::ng-deep .map-container {
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+    }
+  }
+}
+
+.city1 {
+  min-height: 200px !important;
+}
+
+.city2 {
+  min-height: 0px !important;
+}

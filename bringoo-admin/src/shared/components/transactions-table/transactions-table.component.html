@@ -1,0 +1,282 @@
+<div class="d-flex flex-wrap mt--4 justify-content-between" *ngIf="!isInvoice">
+  <h4 class="mt-4">Basket</h4>
+  <div class="d-flex flex-wrap flex-grow-1 justify-content-end">
+    <button
+            nz-button
+            class="border-round-md ml-2 mt-4"
+            nzType="primary"
+            [disabled]="deliveryFee === 0 || disableRefundDeliveryDee.includes(orderStatus)"
+            (click)="onRefundDeliveryFeeButtonClick()">
+      Refund delivery fee
+    </button>
+
+    <button
+      nz-button
+      class="border-round-md ml-2 mt-4"
+      nzType="primary"
+      [disabled]="selectedProducts.size === 0"
+      (click)="onOpenRefundDriver()">
+      Refund ({{selectedProducts.size}}) products
+    </button>
+
+    <button
+      class="border-round-md ml-2 mt-4"
+      [nz-tooltip]="'Should be active replacement and not readed by customer with number verified'"
+      nz-button
+      nzType="primary"
+      [disabled]="!canSendVoiceCallReplacementReminder()"
+      (click)="sendVoiceCallReplacementReminder()">
+      Replacement reminder <i nz-icon [nzType]="'phone'"></i>
+    </button>
+    <button
+      nz-button
+      class="border-round-md ml-2 mt-4"
+      nzType="primary"
+      [disabled]="!hasActiveReplacement"
+      (click)="onTerminateActiveReplacement()">
+      Terminate active replacement
+    </button>
+  </div>
+</div>
+
+<div class="mt-4">
+  <nz-table
+    [nzShowPagination]="false"
+    [nzData]="transactions"
+    [nzSize]="'small'"
+    [nzScroll]="{ x: '800px' }"
+  >
+    <thead>
+    <tr>
+      <th
+        *ngIf="!isInvoice"
+        [nzDisabled]="!(useRefundFunctions && orderStatus === completeOrderStatus)"
+        nzShowCheckbox
+        [nzWidth]="'50px'"
+        [(nzChecked)]="selectedAll"
+        (nzCheckedChange)="onAllTransactionChecked($event, transactions)"
+      ></th>
+      <th
+        class="text-center"
+        [nzWidth]="'50px'"
+      ><i nz-icon nzType="eye" nzTheme="outline"></i></th>
+      <th>Transaction</th>
+      <th>Payment Url</th>
+      <th>Transaction Experience</th>
+      <th *ngIf="!isInvoice">Voucher</th>
+      <th class="text-align-right">Weight</th>
+      <th>Status</th>
+      <th class="text-align-right" [nzWidth]="'100px'">Item Count</th>
+      <th class="text-align-right" [nzWidth]="'100px'">Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let transaction of transactions; let index = index">
+
+      <tr>
+        <td *ngIf="!isInvoice" [nzDisabled]="!(useRefundFunctions && orderStatus === completeOrderStatus)" nzShowCheckbox
+            [nzChecked]="selectedTransactions.has(transaction.id)"
+            (nzCheckedChange)="onTransactionChecked(transaction.orderTransactionItems, $event)"
+        ></td>
+        <td
+          class="text-center"
+          [nzExpand]="transactionsExpand.has(transaction.id)"
+          (nzExpandChange)="onTransactionExpandChange(transaction.id, $event)"
+        ></td>
+        <td><strong>Transaction: {{transaction.orderTransactionNumber}}</strong></td>
+        <td>
+          <p class="mb-0" nz-typography nzCopyable nzCopyText="{{transaction.checkoutUrl}}">
+            <a href="{{transaction.checkoutUrl}}" target="_blank">Link:</a>
+          </p>
+          <p class="mb-0" nz-typography>
+            SMS: &nbsp;
+            <ng-container *ngIf="transaction.orderTransactionStatus === 'NEW'">
+              <a (click)="sendSmsWithPaymentLink(transaction.id)">
+                <i nz-icon [nzType]="'message'"></i>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="transaction.orderTransactionStatus !== 'NEW'">
+              <i nz-icon [nzType]="'message'" nz-tooltip="Order already paid, complete or canceled"></i>
+            </ng-container>
+          </p>
+        </td>
+        <td class="f-5 text-center">
+          <i *ngIf="transaction.isShoppingExperienceGood"
+             class="color-primary"
+             nz-icon
+             nzType="smile"
+          ></i>
+          <i *ngIf="!transaction.isShoppingExperienceGood"
+             class="color-danger"
+             nz-icon
+             nzType="frown"
+          ></i>
+        </td>
+        <td *ngIf="!isInvoice">
+          <ng-container *ngIf="transaction.orderTransactionVoucher">
+            <a 
+              [routerLink]="'/vouchers/all/details/' + transaction.orderTransactionVoucher?.orderVoucherId">
+              {{ transaction.orderTransactionVoucher.voucherCode}}
+            </a>
+          </ng-container>
+        </td>
+        <td class="text-align-right" >
+          <span nz-tooltip="Initial / Actual weight">{{transaction.initialOrderTransactionWeight|gramsToKg}} / {{transaction.actualOrderTransactionWeight|gramsToKg}}</span>
+        </td>
+        <td>{{transaction.orderTransactionStatus}}</td>
+        <td class="text-align-right">{{transaction.orderTransactionItems.length}}</td>
+        <td class="text-align-right">{{transaction.totalAmount}}</td>
+      </tr>
+
+      <tr [nzExpand]="transactionsExpand.has(transaction.id)">
+        <app-transaction-items-table
+          [orderStatus]="orderStatus"
+          [useRefund]="useRefundFunctions"
+          [transactionItems]="transaction.orderTransactionItems"
+          [checkedItems]="selectedProducts"
+
+          [totalAmount]="transaction.totalAmountDiscounted || '0'"
+          [totalRefund]="transaction.totalRefundDiscounted || '0'"
+          [totalDeposit]="transaction.totalDeposit || '0'"
+          [totalVats]="transaction.orderTransactionVatTotal"
+          [deliveryFee]="transaction.deliveryFee"
+          [itemsDiscount]="transaction.itemsDiscount || '0'"
+          [deliveryFeeDiscount]="transaction.deliveryFeeDiscount || '0'"
+          [allDiscount]="transaction.allDiscount || '0'"
+
+          (addChecked)="addCheckedOrderItems($event)"
+          (deleteChecked)="deleteCheckedOrderItems($event)"
+          (showProductDetail)="onShowProductDetail($event)"
+        ></app-transaction-items-table>
+      </tr>
+
+    </ng-container>
+    </tbody>
+  </nz-table>
+  <div class="bg-body w-100p p-4 d-flex justify-content-end">
+    <div class="receipt">
+      <div class="total-row d-flex justify-content-between text-bold">
+        <span>Sub total</span>
+        <span class="text-align-right">{{subTotal}}</span>
+      </div>
+      <div class="total-row d-flex justify-content-between" *ngFor="let vat of vatTotal">
+        <span>{{vat.vat}}</span>
+        <span class="text-align-right">{{vat.value}}</span>
+      </div>
+      <div class="total-row d-flex justify-content-between">
+        <span>Total Deposit</span>
+        <span class="text-align-right">{{totalDeposit || (0|formatPrice)}}</span>
+      </div>
+      <hr>
+      <div class="total-row d-flex justify-content-between text-bold">
+        <span>Delivery Fee</span>
+        <span class="text-align-right">{{deliveryPrice || (0|formatPrice)}}</span>
+      </div>
+      <div class="total-row d-flex justify-content-between">
+        <span>Delivery Vat</span>
+        <span class="text-align-right">{{deliveryVatRate}}% {{deliveryVatAmount || (0|formatPrice)}}</span>
+      </div>
+      <hr>
+      <div class="total-row d-flex justify-content-between text-bold">
+        <span>Discount items</span>
+        <span class="text-align-right">{{itemsDiscount}}</span>
+      </div>
+      <div class="total-row d-flex justify-content-between text-bold">
+        <span>Discount Delivery fee</span>
+        <span class="text-align-right">{{deliveryFeeDiscount}}</span>
+      </div>
+      <div class="total-row d-flex justify-content-between text-bold">
+        <span>Discount Total</span>
+        <span class="text-align-right">{{allDiscount}}</span>
+      </div>
+      <hr>
+      <div class="total-row d-flex justify-content-between text-bold">
+        <span>Total Refund</span>
+        <span class="text-align-right">{{totalRefund}}</span>
+      </div>
+      <div class="total-row d-flex justify-content-between">
+        <span>Grand total</span>
+        <span class="text-align-right">{{grandTotal}}</span>
+      </div>
+      <div *ngIf="canceledStatuses.has(orderStatus)"
+           class="order-cancel color-danger text-bold f-10">CANCELLED
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-drawer
+  *ngIf="useRefundFunctions"
+  [nzClosable]="true"
+  [nzWidth]="800"
+  [nzVisible]="!!(openRefundSettings|async)"
+  nzPlacement="right"
+  nzTitle="Select Products"
+  (nzOnClose)="onCloseRefundDriver()"
+  [nzFooter]="carouselFooter"
+  [nzBodyStyle]="{ padding: '0px 16px' }"
+>
+  <ng-template nzDrawerContent>
+    <div>
+      <form nz-form *ngIf="refundItems$|async as items" [formGroup]="form">
+        <ng-container formArrayName="refund">
+          <nz-table
+            nzSize="small"
+            [nzData]="items"
+            [nzShowPagination]="false"
+          >
+            <thead>
+            <tr>
+              <th>Item</th>
+              <th>Product Name</th>
+              <th>Quantity Ordered</th>
+              <th>Quantity Refunded</th>
+              <th>Quantity Refund</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of items; let index = index">
+              <td>{{index + 1}}</td>
+              <td>{{item.name_i18n}}</td>
+              <td nzAlign="center">{{item.quantity}}</td>
+              <td nzAlign="center">{{item.quantityRefund}}</td>
+              <td nzAlign="center">
+                <nz-form-control labelForErrorTip="Input quantity">
+                  <nz-input-number [nzMin]="0" [nzMax]="item.quantity - item.quantityRefund" [formControlName]="index"></nz-input-number>
+                </nz-form-control>
+              </td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </ng-container>
+      </form>
+    </div>
+  </ng-template>
+</nz-drawer>
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseRefundDriver()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-product-detail
+  [linkId]="productLinkId|async"
+  (submit)="onCloseProductDetail()"
+></app-product-detail>
+
+<ng-container>
+  <nz-modal
+    nzModalType="confirm"
+    [nzVisible]="confirmRefundDeliveryFeePanel === 'show'"
+    nzTitle="Refund delivery fee for order"
+    (nzOnCancel)="onHideRefundDeliveryFeeModal()"
+    (nzOnOk)="onRefundDeliveryFee()"
+  ></nz-modal>
+</ng-container>

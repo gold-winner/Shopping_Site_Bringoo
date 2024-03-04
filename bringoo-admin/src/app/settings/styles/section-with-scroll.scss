@@ -1,0 +1,8 @@
+:host{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow-y: auto;
+  &>div{
+    border-top: 1px solid #f0f0f0;
+  }
+}

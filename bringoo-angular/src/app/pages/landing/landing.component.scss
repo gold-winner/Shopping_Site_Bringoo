@@ -1,0 +1,33 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+
+.header {
+  box-shadow: 0px 4px 11px rgba($color_grey, 0.3);
+  height: 80px;
+  
+  &-body {
+    @extend .container;
+    @extend .py-5;
+    @extend .d-flex;
+    @extend .justify-content-between;
+  }
+
+  &-main {
+    @extend .d-flex;
+
+    .phone {
+      margin-top: -4px; 
+      font-size: 15px; 
+      font-weight: 800;
+    }
+
+    .clock {
+      margin-top: -12px; 
+      font-size: 12px; 
+      font-weight: 500;
+    }
+  }
+}

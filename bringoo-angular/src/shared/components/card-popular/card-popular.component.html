@@ -1,0 +1,42 @@
+<div class="ui-card" [ngClass]="{'ui-card--disabled': disabled}">
+  <div class="ui-card__img">
+    <picture>
+      <img src="assets/img/products/sause.svg" alt="" class="image_size" />
+    </picture> 
+    <div 
+      class="ui-card__img--badge" 
+      [ngClass]="{'bg-blue': productType==='new', 'bg-red': productType==='sale'}"
+      [hidden]="!productType"
+    >
+    </div>
+  </div>
+  <div class="ui-card__body">
+    <span class="category">Sauses</span>
+    <span class="name" style="font-size: 15px; line-height: 25px;">Knorr Sauce Hollandaise 250 ml</span>
+    <span class="amount">250ml (100 ml = 0,47 €)</span>
+    <div class="ui-card__body--bottom">
+      <span class="price" [ngClass]="{'text-red': productType==='sale'}" style="font-size: 17px;">1,17 €</span>
+      <ui-button *ngIf="count==0" color="blue" width="full" (mouseenter)="hovered=true" (mouseleave)="hovered=false" [disabled]=false class="cart"  (click)="changeCartInit()">
+        <icon name="cart"></icon>
+      </ui-button>
+      <ui-button *ngIf="count!=0" color="cart" width="full" (mouseenter)="hovered=true" (mouseleave)="hovered=false" [disabled]=false class="cart">
+        <ui-quantity-input *ngIf="!disabled" class="w-100p" [itemCount]="count" [type]="type" (onChangeCart)="changeCart($event)"></ui-quantity-input>
+      </ui-button>
+      <ui-button *ngIf="count==0" color="blue" width="full" (mouseenter)="hovered=true" (mouseleave)="hovered=false" [disabled]=true class="cart">
+        <icon name="cart"></icon>
+      </ui-button>
+      <ui-button *ngIf="count!=0" color="cart" width="full" (mouseenter)="hovered=true" (mouseleave)="hovered=false" [disabled]=true class="cart">
+        <ui-quantity-input *ngIf="!disabled" class="w-100p" [itemCount]="count" [type]="type"></ui-quantity-input>
+      </ui-button>
+    </div>
+  </div>
+  <div 
+    class="ui-card__bookmark" 
+    [ngClass]="{'text-green': bookmarked}"
+    [ngSwitch]="bookmarked" 
+    (click)="onBookmarkClick()"
+  >
+    <icon name="bookmark-checked" *ngSwitchCase="true"></icon>
+    <icon name="bookmark" *ngSwitchCase="false"></icon>
+  </div>
+</div>

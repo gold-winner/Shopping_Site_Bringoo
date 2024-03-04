@@ -1,0 +1,404 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical"
+      nz-form [formGroup]="form"
+      class="position-relative w-100p h-100p overflow-hidden">
+  <nz-tabset [nzSize]="'large'"
+             [nzTabBarStyle]="nzTabBarStyle"
+             [nzAnimated]="false"
+             class="static-header"
+             [nzTabBarGutter]="12">
+    <nz-tab nzTitle="General information" [nzForceRender]="true">
+      <div class="p-4 h-100p overflow-auto position-relative" id="product-core-form">
+        <div class="row">
+          <div class="col-18">
+            <nz-card class="mb-4 border-round-sm"
+                     id="name-and-description"
+                     nzTitle="Name and Description"
+            >
+              <app-lang-controller [borderLess]="true" [paddingLess]="true">
+                <app-multi-lang-v2-input required label="Name"
+                                         formControlName="name_i18n"></app-multi-lang-v2-input>
+                <app-multi-lang-v2-input label="Description" type="textarea"
+                                         formControlName="description_i18n"></app-multi-lang-v2-input>
+              </app-lang-controller>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="groups"
+                     nzTitle="Groups"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired>Product type</nz-form-label>
+                <nz-form-control labelForErrorTip="Product type">
+                  <app-list-select [isRequired]="true" [list]="productTypes" formControlName="productType"></app-list-select>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label nzRequired>Product category</nz-form-label>
+                <nz-form-control labelForErrorTip="Product category">
+                  <app-select [options]="productCategoryCode" formControlName="productCategoryCode"
+                              placeHolder="product Category" [required]="true"></app-select>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label nzRequired>Product subcategory</nz-form-label>
+                <nz-form-control labelForErrorTip="Product subcategory">
+                  <app-select appDisableControl [disable]="!form.controls.productCategoryCode.value"
+                              [options]="productSubcategoryCode" formControlName="productSubcategoryCode"
+                              placeHolder="product Subcategory" [required]="true"></app-select>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="price-and-vat"
+                     nzTitle="Default Price & VAT">
+              <nz-form-item>
+                <nz-form-label nzRequired>Default Price</nz-form-label>
+                <nz-form-control labelForErrorTip="Default Price">
+                  <nz-input-number nzPlaceHolder="Default Price" formControlName="defaultPrice" [nzMin]="0"
+                                   class="w-100p"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+              <nz-form-item>
+                <nz-form-label nzRequired>VAT</nz-form-label>
+                <nz-form-control labelForErrorTip="VAT">
+                  <app-select [options]="vatCodeSelect" placeHolder="VAT" formControlName="vatCode"></app-select>
+                </nz-form-control>
+              </nz-form-item>
+
+
+              <nz-form-item>
+                <nz-form-label>Cost per item</nz-form-label>
+                <nz-form-control labelForErrorTip="Cost per item">
+                  <nz-input-number nzPlaceHolder="Product Measurement" formControlName="costPrice" [nzMin]="0"
+                                   class="w-100p"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+              <label class="ml-0 mb-0" nz-checkbox formControlName="chargeTax">Charge tax on this product</label>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="deposit"
+                     nzTitle="Deposit"
+            >
+              <label class="ml-sm-0" nz-checkbox [formControl]="deposit">This product has deposit</label>
+              <form formGroupName="deposit" *ngIf="form.get('deposit')?.value">
+                <nz-form-item>
+                  <nz-form-label nzRequired>Item Vat</nz-form-label>
+                  <nz-form-control labelForErrorTip="Item Vat">
+                    <app-select [options]="vatCodeSelect" placeHolder="item Vat Code" formControlName="itemVatCode"
+                                [required]="true"></app-select>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label nzRequired>Item Deposit Value Gross</nz-form-label>
+                  <nz-form-control labelForErrorTip="Item Deposit Value Gross">
+                    <nz-input-number nzPlaceHolder="item Deposit Value Gross" formControlName="itemDepositValueGross"
+                                     [nzMin]="0" class="w-100p"></nz-input-number>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                  <nz-form-label nzRequired>Box Vat</nz-form-label>
+                  <nz-form-control labelForErrorTip="Box Vat">
+                    <app-select [options]="vatCodeSelect" placeHolder="box Vat Code" formControlName="boxVatCode"
+                                [required]="true"></app-select>
+                  </nz-form-control>
+                </nz-form-item>
+                <nz-form-item class="mb-0">
+                  <nz-form-label nzRequired>Box Deposit Value Gross</nz-form-label>
+                  <nz-form-control labelForErrorTip="Box Deposit Value Gross">
+                    <nz-input-number nzPlaceHolder="box Deposit Value Gross" formControlName="boxDepositValueGross"
+                                     [nzMin]="0" class="w-100p"></nz-input-number>
+                  </nz-form-control>
+                </nz-form-item>
+              </form>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="images"
+                     nzTitle="Product images"
+            >
+              <nz-form-item class="mb-0">
+                <nz-form-control labelForErrorTip="Please load picture">
+                  <app-file-upload [multiple]="true" formControlName="imageUrls" [path]="'product'"></app-file-upload>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="product-measurements"
+                     nzTitle="Product measurements"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired>Total weight in gramm</nz-form-label>
+                <nz-form-control labelForErrorTip="Total weight in gramm">
+                  <nz-input-number nzPlaceHolder="Product Measurement" formControlName="weight" [nzMin]="0"
+                                   class="w-100p"></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+              <div class="row">
+                <div class="col">
+                  <nz-form-label class="col" nzRequired>Total Product Measurement</nz-form-label>
+                </div>
+                <div class="col">
+                  <nz-form-label class="col" nzRequired>Base measure</nz-form-label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="d-flex">
+                    <nz-form-item>
+                      <nz-form-control labelForErrorTip="Please enter Total Product Measurement">
+                        <nz-input-number nzPlaceHolder="Product Measurement" formControlName="productMeasurement" [nzMin]="0"
+                                         class="w-100p"></nz-input-number>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <nz-form-control labelForErrorTip="Please choose product Unit">
+                        <app-list-select formControlName="productUnitCode" [list]="productUnitCode"></app-list-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="d-flex">
+                    <nz-form-item>
+                      <nz-form-control labelForErrorTip="Please enter Base measure">
+                        <nz-input-number nzPlaceHolder="Product Base Measurement" formControlName="baseMeasurement"
+                                         [nzMin]="0" class="w-100p"></nz-input-number>
+                      </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                      <nz-form-control labelForErrorTip="Please choose base Unit">
+                        <app-list-select formControlName="baseUnitCode"
+                                         [list]="(baseUnitCode | async) || []"></app-list-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+              </div>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="inventory"
+                     nzTitle="Inventory"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired>Bringoo Product Code</nz-form-label>
+                <nz-form-control labelForErrorTip="Bringoo Product Code">
+                  <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label nzRequired>URL and handle</nz-form-label>
+                <nz-form-control labelForErrorTip="URL and handle">
+                  <input nz-input appSlugInput formControlName="slug" type="slug" placeholder="Slug"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label nzRequired>SKU</nz-form-label>
+                <nz-form-control labelForErrorTip="SKU">
+                  <input nz-input appCodeInput formControlName="sku" placeholder="sku"/>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label nzRequired>Gtin</nz-form-label>
+                <nz-form-control labelForErrorTip="Gtin">
+                  <input nz-input appCodeInput formControlName="gtin" placeholder="gtin"/>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="barcode"
+                     nzTitle="Barcode"
+            >
+              <nz-form-item>
+                <nz-form-label nzRequired>EAN number</nz-form-label>
+                <nz-form-control labelForErrorTip="EAN number">
+                  <input nz-input appCodeInput formControlName="ean" placeholder="ean" type="number" [min]="0"/>
+                </nz-form-control>
+              </nz-form-item>
+              <ngx-barcode6 [bc-value]="form.value?.ean" [bc-display-value]="true"></ngx-barcode6>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="shipment-type"
+                     nzTitle="Shipment Type"
+            >
+              <p>This product can be shipped with below options:</p>
+              <label class="ml-sm-0" nz-checkbox formControlName="isPickup">Pickup</label><br/>
+              <label class="ml-sm-0" nz-checkbox formControlName="isPickAndDrive">Pick & Drive</label><br/>
+              <label class="ml-sm-0" nz-checkbox formControlName="isOnlineShipment">Online Shipment</label>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="publication"
+                     nzTitle="Publication"
+            >
+              <nz-form-item class="mb-0">
+                <nz-form-label nzFor="isActive">Status</nz-form-label>
+                <nz-form-control labelForErrorTip="Status">
+                  <app-status-switch formControlName="isActive"></app-status-switch>
+                </nz-form-control>
+              </nz-form-item>
+              <label class="ml-sm-0" nz-checkbox formControlName="isApproved">Approved</label><br/>
+              <label class="ml-sm-0" nz-checkbox formControlName="isPublic">Public</label>
+              <nz-form-item class="mb-0">
+                <nz-form-label nzRequired>Public Date Time</nz-form-label>
+                <nz-form-control labelForErrorTip="Public Date Time">
+                  <nz-date-picker [nzShowTime]="{ nzFormat: 'HH:mm' }" nzFormat="yyyy-MM-dd HH:mm"
+                                  formControlName="isPublicDateTime" nzPlaceHolder="Public date time"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="product-options"
+                     nzTitle="Product options"
+            >
+              <app-filter-product-legal-select formControlName="productLegalCode"></app-filter-product-legal-select>
+
+              <label class="ml-0" nz-checkbox formControlName="isFairTrade">Fair Trade</label><br/>
+              <label class="ml-0" nz-checkbox formControlName="isConsultationRecommended">Consultation Recommended</label><br/>
+              <label class="ml-0" nz-checkbox formControlName="isCustomAgeRestriction">Custom Age Restriction</label>
+              <nz-form-item>
+                <nz-form-label [nzRequired]="form.get('isCustomAgeRestriction')?.valueChanges|async">Age Restriction</nz-form-label>
+                <nz-form-control labelForErrorTip="Age Restriction">
+                  <nz-input-number
+                    appDisableControl
+                    [disable]="!(form.get('isCustomAgeRestriction')?.valueChanges|async)"
+                    [nzStep]="1"
+                    [nzMin]="1"
+                    formControlName="ageRestriction"
+                  ></nz-input-number>
+                </nz-form-control>
+              </nz-form-item>
+
+
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="tags"
+                     nzTitle="Tags"
+            >
+              <nz-form-control>
+                <app-lang-controller [paddingLess]="true" [borderLess]="true">
+                  <app-multi-lang-v2-input
+                    label="Product tags for search"
+                    type="tags"
+                    formControlName="tags_i18n">
+                  </app-multi-lang-v2-input>
+                </app-lang-controller>
+              </nz-form-control>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="product-brand"
+                     nzTitle="Product Brand"
+            >
+              <nz-form-control labelForErrorTip="Please enter product Brand">
+                <app-select [isRequired]="true" [options]="productBrandCode" formControlName="productBrandCode" placeHolder="product Brand"></app-select>
+              </nz-form-control>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="manufacturer"
+                     nzTitle="Manufacturer"
+            >
+              <nz-form-item>
+                <nz-form-control>
+                  <app-lang-controller [borderLess]="true" [paddingLess]="true">
+                    <app-multi-lang-v2-input label="Manufacturer" type="textarea"
+                                             formControlName="manufacturer_i18n"></app-multi-lang-v2-input>
+                  </app-lang-controller>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="special-notes"
+                     nzTitle="Special notes"
+            >
+              <nz-form-item>
+                <nz-form-control>
+                  <app-lang-controller [borderLess]="true" [paddingLess]="true">
+                    <app-multi-lang-v2-input label="Special notes" type="textarea"
+                                             formControlName="special_notes_i18n"></app-multi-lang-v2-input>
+                  </app-lang-controller>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+            <nz-card class="mb-4 border-round-sm"
+                     id="meta-data"
+                     nzTitle="Meta Data"
+            >
+              <nz-form-item>
+                <nz-form-control>
+                  <app-jsonb-one-to-many-input
+                    [keysList]="productMetaDataList"
+                    formControlName="metaData">
+                  </app-jsonb-one-to-many-input>
+                </nz-form-control>
+              </nz-form-item>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+
+      <nz-anchor
+        *ngIf="isReady$|async"
+        style="position: absolute; top: 14px; right: 28px;"
+        [nzAffix]="true"
+        [nzShowInkInFixed]="true"
+        nzContainer="#product-core-form"
+      >
+        <nz-link nzHref="#name-and-description" nzTitle="Name and description"></nz-link>
+        <nz-link nzHref="#groups" nzTitle="Groups"></nz-link>
+        <nz-link nzHref="#price-and-vat" nzTitle="Default Price & VAT"></nz-link>
+        <nz-link nzHref="#deposit" nzTitle="Deposit"></nz-link>
+        <nz-link nzHref="#images" nzTitle="Product images"></nz-link>
+        <nz-link nzHref="#product-measurements" nzTitle="Product measurements"></nz-link>
+        <nz-link nzHref="#inventory" nzTitle="Inventory"></nz-link>
+        <nz-link nzHref="#barcode" nzTitle="Barcode"></nz-link>
+        <nz-link nzHref="#shipment-type" nzTitle="Shipment Type"></nz-link>
+        <nz-link nzHref="#publication" nzTitle="Publication"></nz-link>
+        <nz-link nzHref="#product-options" nzTitle="Product options"></nz-link>
+        <nz-link nzHref="#tags" nzTitle="Tags"></nz-link>
+        <nz-link nzHref="#product-brand" nzTitle="Product brand"></nz-link>
+        <nz-link nzHref="#manufacturer" nzTitle="Manufacturer"></nz-link>
+        <nz-link nzHref="#special-notes" nzTitle="Special notes"></nz-link>
+        <nz-link nzHref="#meta-data" nzTitle="Meta data"></nz-link>
+      </nz-anchor>
+    </nz-tab>
+    <nz-tab [nzTitle]="titleTemplate"
+            [nzForceRender]="true"
+    >
+      <ng-container [ngSwitch]="form.get('productType')?.value">
+        <app-products-attributes-grocery-update-form
+          *ngSwitchCase="productTypeEnum.GROCERY"
+          formControlName="productAttributes"
+        ></app-products-attributes-grocery-update-form>
+
+        <app-products-attributes-hardware-update-form
+          *ngSwitchCase="productTypeEnum.HARDWARE_STORE"
+          formControlName="productAttributes"
+        ></app-products-attributes-hardware-update-form>
+
+        <app-products-attributes-bookstore-update-form
+          *ngSwitchCase="productTypeEnum.BOOKSTORE"
+          formControlName="productAttributes"
+        ></app-products-attributes-bookstore-update-form>
+
+        <app-products-attributes-pharma-update-form
+          *ngSwitchCase="productTypeEnum.PHARMA"
+          formControlName="productAttributes"
+        ></app-products-attributes-pharma-update-form>
+      </ng-container>
+
+      <ng-template #titleTemplate let-visible="visible">{{form.get('productType')?.value + ' attributes'}} <span *ngIf="!form.get('productAttributes')?.valid" class="color-danger">*</span></ng-template>
+    </nz-tab>
+    <nz-tab
+      nzTitle="Product Disclaimer"
+    >
+      <app-product-disclaimer
+        *ngIf="productId"
+        [productId]="productId"
+      ></app-product-disclaimer>
+    </nz-tab>
+    <nz-tab nzTitle="Logs">
+      Product logs will be here, soon.
+      {{form.getRawValue() | json}}
+    </nz-tab>
+  </nz-tabset>
+</form>

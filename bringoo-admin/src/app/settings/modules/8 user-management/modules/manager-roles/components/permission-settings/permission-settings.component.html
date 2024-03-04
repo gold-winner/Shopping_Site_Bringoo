@@ -1,0 +1,41 @@
+<ng-container
+  *ngIf="node$|async as node"
+>
+  <nz-drawer
+    [nzVisible]="this.openPanel"
+    nzTitle="{{roleCode}} role permission settings"
+    (nzOnClose)="onClose()"
+    [nzFooter]="carouselFooter"
+    [nzWidth]="'70%'"
+  >
+    <ng-container *nzDrawerContent>
+      <div>
+        <input
+          class="mb-4"
+          nz-input
+          [formControl]="searchControl"
+          placeholder="Search"
+        />
+        <nz-spin [nzSpinning]="isLoading$|async"></nz-spin>
+        <nz-tree
+          #nzTreeComponent
+          nzCheckable
+          [nzData]="node"
+          [nzSearchValue]="(search$|async) || ''"
+        ></nz-tree>
+      </div>
+    </ng-container>
+  </nz-drawer>
+  <ng-template #carouselFooter>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+        </div>
+        <div class="col-12">
+          <button nzBlock nz-button nzType="link" (click)='onClose()'>Cancel</button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

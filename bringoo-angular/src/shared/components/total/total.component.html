@@ -1,0 +1,37 @@
+<div class="ui-total" [ngClass]="{'bg-beige-20' : hasBackground}">
+  <div class="d-flex justify-content-between px-4">
+    <span class="text-lightblue text-medium">Subtotal</span>
+    <span class="text-bold">{{subTotal}}</span>
+  </div>
+  <div class="d-flex justify-content-between py-2 px-4">
+    <span class="text-lightblue text-medium">Bottle Deposit</span>
+    <span class="text-bold">{{totalDeposit}}</span>
+  </div>
+  <div class="d-flex justify-content-between px-4" *ngFor="let vat of vatTotal">
+    <span class="text-lightblue text-medium">{{vat.vat}}</span>
+    <span class="text-bold">{{vat.value}}</span>
+  </div>
+  <div class="d-flex justify-content-between py-2 px-4 border">
+    <span class="text-lightblue text-medium">Delivery</span>
+    <span *ngIf="!deliveryFee" class="text-green text-bold">Free</span>
+    <span *ngIf="deliveryFee" class="text-green text-bold">{{deliveryFee}}</span>
+  </div>
+  <div class="d-flex flex-column py-4 px-4 border text-medium" *ngIf="hasVoucher">
+    <span class="text-bold">Voucher</span>
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex flex-column">
+        <span class="text-bold">4502-345-XS</span>
+        <span class="text-lightblue text-small">Get 10% off to first buy</span>
+      </div>
+      <span class="text-red text-large text-bold">- 1,10 €</span>
+    </div>    
+  </div>
+  <div class="d-flex justify-content-between align-items-center py-4 px-4 border" *ngIf="!hasVoucher">
+    <span class="text-medium text-bold">Add Voucher</span>
+    <ui-button width="square" (onClick)="onAddVoucherClick.emit($event)"><icon name="plus" class="text-large"></icon></ui-button>
+  </div>
+  <div class="d-flex justify-content-between align-items-center pt-4 px-4">
+    <span class="text-bold">Total</span>
+    <span class="f-8 text-bold">{{totalPrice}}</span>
+  </div>
+</div>

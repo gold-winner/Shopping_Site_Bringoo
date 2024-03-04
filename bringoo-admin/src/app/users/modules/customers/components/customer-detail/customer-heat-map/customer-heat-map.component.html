@@ -1,0 +1,10 @@
+<ng-container
+  *ngIf="ordersHistory$|async as history"
+>
+  <app-heat-map-chart
+    [label]="'Orders: '+history.count"
+    *ngIf="history.data.length > 0"
+    [calendarData]="history.data"
+    [count]="history.count"
+  ></app-heat-map-chart>
+</ng-container>

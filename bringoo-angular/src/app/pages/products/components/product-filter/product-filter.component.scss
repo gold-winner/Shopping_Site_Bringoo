@@ -1,0 +1,16 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.filter-item {
+  @extend .d-flex;
+  @extend .justify-content-between;
+  @extend .my-3;
+  @extend .text-semi-bold;
+  @extend .cursor-pointer;
+}
+
+.opacity-4 {
+  opacity: 0.4;
+}

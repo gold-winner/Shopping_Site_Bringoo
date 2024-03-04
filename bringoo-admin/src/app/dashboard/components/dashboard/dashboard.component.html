@@ -1,0 +1,165 @@
+<div class="container-fluid px-4 pb-4" *ngIf="dashBoard$|async as dashboard">
+  <div class="row pl-4">
+    <div class="col mt-4 pl-0">
+      <nz-card
+        class="border-round-sm h-100p"
+        [nzBordered]="false"
+      >
+        <span>Notifications</span>
+        <ng-container *ngIf='unreadNotifications$ | async as unreadNotifications'>
+          <h5>
+            <a [ngClass]="{'color-danger': unreadNotifications.length > 0}" routerLink="/notifications/all/my-unread">
+              {{unreadNotifications.length}}
+            </a>
+          </h5>
+        </ng-container>
+      </nz-card>
+    </div>
+    <div class="col mt-4 pl-0">
+      <nz-card
+        class="border-round-sm h-100p"
+        [nzBordered]="false"
+      >
+        <span>Sales</span>
+        <h5>{{dashboard.sales|formatPrice}}</h5>
+        <span>Sales AOV</span>
+        <h5>{{dashboard.averageSales|formatPrice}}</h5>
+      </nz-card>
+    </div>
+    <div class="col mt-4 pl-0">
+      <nz-card
+        class="border-round-sm h-100p"
+        [nzBordered]="false"
+      >
+        <span>Orders count (Transactions)</span>
+        <h5>{{dashboard.ordersCount}} ({{dashboard.transactionsCount}})</h5>
+        <span>Orders value</span>
+        <h5>{{dashboard.ordersValue|formatPrice}}</h5>
+      </nz-card>
+    </div>
+    <div class="col mt-4 pl-0">
+      <nz-card
+        class="border-round-sm h-100p "
+        [nzBordered]="false"
+        style="min-width:268px;"
+      >
+        <span>Abandoned Carts count</span>
+        <h5>{{dashboard.abandonedCartsCount}}</h5>
+        <span>Abandoned Carts AOV</span>
+        <h5>{{dashboard.abandonedCartsValue|formatPrice}}</h5>
+      </nz-card>
+    </div>
+    <div class="col mt-4 pl-0">
+      <nz-card
+        class="border-round-sm h-100p "
+        [nzBordered]="false"
+      >
+        <span>Customer</span>
+        <h5>{{dashboard.newCustomers}}</h5>
+        <span>Guest</span>
+        <h5>{{dashboard.newGuest}}</h5>
+      </nz-card>
+    </div>
+    <div class="col mt-4 pl-0">
+      <nz-card
+        class="border-round-sm h-100p"
+        [nzBordered]="false"
+      >
+        <span>Today's Cancel</span>
+        <h5>{{dashboard.ordersCanceled}}</h5>
+      </nz-card>
+    </div>
+    <div class="col mt-4 pl-0">
+      <nz-card
+        class="border-round-sm h-100p"
+        [nzBordered]="false"
+      >
+        <a routerLink="/analytics/dashboard" >Live Map</a>
+      </nz-card>
+    </div>
+  </div>
+
+  <div
+    class="chart-area mt-4"
+  >
+    <nz-card
+      *ngIf="orderForecast$|async as orderForecast"
+      class="chart-1 border-round-sm"
+      [nzBordered]="false"
+    >
+      <h4>Order Forecast</h4>
+      <p>Forecast gives an overview for the next 7 days including today. The count of orders include instant and pre-booked (delivery slots) orders.</p>
+      <div class="w-100p">
+        <app-order-forecast
+          [currentWeekOrderCounters]="orderForecast.currentWeekCounters"
+          [previousWeekOrderCounters]="orderForecast.previousWeekCounters"
+          [redirectOnClick]="true"
+        ></app-order-forecast>
+      </div>
+    </nz-card>
+
+    <nz-card
+      *ngIf="orderByHours$|async as orderByHours"
+      class="chart-2 border-round-sm"
+      [nzBordered]="false"
+    >
+      <h4>Orders today by hour</h4>
+      <div class="w-100p">
+        <app-orders-by-hour
+          [orderCounters]="orderByHours.ordersByHours"
+        ></app-orders-by-hour>
+      </div>
+    </nz-card>
+
+    <nz-card
+      class="chart-3 border-round-sm"
+      [nzBordered]="false"
+    >
+      <div class="manager-tasks h-100p">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4>Open tasks</h4> <a routerLink="/inspection/tasks/opened" target="_blank">More</a>
+        </div>
+        <app-manager-tasks
+          class="w-100p scroll-y"
+          height="480px"
+          width="100%"
+        ></app-manager-tasks>
+      </div>
+    </nz-card>
+
+    <nz-card
+      class="chart-4 border-round-sm"
+      [nzBordered]="false"
+    >
+      <app-popular-search
+        class="d-flex flex-column h-100p scroll-hidden"
+        [useDateLimits]="true"
+        [daysLimit]="2"
+      ></app-popular-search>
+    </nz-card>
+  </div>
+</div>
+
+<nz-card nzBorderless class="border-round-sm mx-4 mb-4">
+  <nz-card-meta
+    [nzTitle]="orders_title"
+    [nzDescription]="orders_description"
+  ></nz-card-meta>
+  <ng-template #orders_title>
+    <h4>List of orders today</h4>
+    <p class="mb-0">This list include all orders for today and can be filtered by status, store and region.</p>
+  </ng-template>
+  <ng-template #orders_description>
+    <app-crud
+      [config]="config"
+      [topMargin]="false"
+      [horizontalPadding]="0"
+      [showTitle]="false"
+      [service]="service"
+      [filterForm]="filterForm"
+      [columns]="columns"
+      [fields]="fields"
+      [join]="join"
+    ></app-crud>
+  </ng-template>
+</nz-card>

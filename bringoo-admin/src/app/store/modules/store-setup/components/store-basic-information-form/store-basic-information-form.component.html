@@ -1,0 +1,190 @@
+<form nz-form [formGroup]="form" nzLayout="vertical" class="ml-sm-4 form scroll-y">
+  <div class="container-fluid">
+    <h4 class="mt-4 mb-2">Basic information</h4>
+    <app-lang-controller>
+      <app-multi-lang-v2-input required label="Legal Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+      <div class="row">
+        <div class="col">
+          <app-multi-lang-v2-input required label="Name public short"
+                                   formControlName="name_public_short_i18n"></app-multi-lang-v2-input>
+          <app-multi-lang-v2-input required label="Name public long"
+                                   formControlName="name_public_long_i18n"></app-multi-lang-v2-input>
+        </div>
+        <app-multi-lang-v2-input class="col" label="Description" type="textarea" formControlName="description_i18n"
+                                 [rows]="5"></app-multi-lang-v2-input>
+      </div>
+    </app-lang-controller>
+    <div class="row mt-4">
+      <div class="col">
+        <nz-form-item>
+          <nz-form-control labelForErrorTip="Please load logo">
+            <app-file-upload
+              [multiple]="false"
+              formControlName="logoUrl"
+              path="store"
+              [isRequired]="true"
+              [title]="(storeName$ | async) || ''"
+              [subTitle]="'Current logo'"
+            ></app-file-upload>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div class="col flex-column">
+        <nz-form-item>
+          <nz-form-label nzRequired>Code</nz-form-label>
+          <nz-form-control labelForErrorTip="Code">
+            <input nz-input appCodeInput formControlName="code" placeholder="Code" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label
+            nz-tooltip="This code is meant to be used to share data between bringoo and partner."
+            nzTooltipPlacement="topLeft"
+          >External Code</nz-form-label>
+          <nz-form-control labelForErrorTip="Please input code">
+            <input nz-input appCodeInput formControlName="externalCode" placeholder="External Code" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="isActive">Status</nz-form-label>
+          <nz-form-control labelForErrorTip="Status">
+            <app-status-switch formControlName="isActive" falseValue="Close" trueValue="Open"></app-status-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <h4>Store Type</h4>
+    <div class="row">
+      <nz-form-item class="col">
+        <nz-form-label nzRequired>Vendor Type</nz-form-label>
+        <nz-form-control labelForErrorTip="Vendor Type">
+          <app-select [options]="vendorTypes" formControlName="vendorTypeCode" placeHolder="Vendor Type"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="col">
+        <nz-form-label nzRequired>Vendor Category</nz-form-label>
+        <nz-form-control labelForErrorTip="Vendor Category">
+          <app-select [options]="vendorCategory" formControlName="vendorCategoryCode" placeHolder="Vendor Category"
+                      [required]="true"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <h4>Default Store Currency</h4>
+    <div class="row">
+      <nz-form-item class="col-12">
+        <nz-form-label nzRequired>Currency</nz-form-label>
+        <nz-form-control labelForErrorTip="Currency">
+          <app-select [options]="currencyCodes" formControlName="currencyCode" placeHolder="Currency"
+                      [required]="true"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <h4 class="mt-4">Corporate & Brand</h4>
+    <div class="row">
+      <nz-form-item class="col">
+        <nz-form-label>Store Corporate</nz-form-label>
+        <nz-form-control labelForErrorTip="Store Corporate">
+          <app-select [options]="corporateSelect" formControlName="corporateCode" placeHolder="Corporate"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class="col">
+        <nz-form-label>Store Brand</nz-form-label>
+        <nz-form-control labelForErrorTip="Store Brand">
+          <app-select [options]="storeBrandSelect" formControlName="storeBrandCode"
+                      placeHolder="Store Brand"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <h4>Shipment Option</h4>
+    <div class="row">
+      <app-vat-select
+        class="col-12"
+        formControlName="deliveryFeeVatCode"
+        [required]="true"
+        placeHolder="Delivery Fee Vat"
+        label="Delivery Fee Vat"
+      ></app-vat-select>
+    </div>
+    <div class="row">
+      <div class="col flex-column">
+        <nz-form-item>
+          <nz-form-control labelForErrorTip="Please pickup status">
+            <label nz-checkbox formControlName="isPickup">Pickup</label>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control labelForErrorTip="Please set Delivery status">
+            <label nz-checkbox formControlName="isDelivery">Delivery</label>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control labelForErrorTip="Please set Online Shipment status">
+            <label nz-checkbox formControlName="isOnlineShipment">Online Shipment</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col">
+        <nz-form-item>
+          <nz-form-label nzRequired>Store Region</nz-form-label>
+          <nz-form-control labelForErrorTip="Store Region">
+            <app-select [options]="storeRegion" formControlName="storeRegionCode" placeHolder="Store Region"></app-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Product Out of Stock Time, hours</nz-form-label>
+          <nz-form-control labelForErrorTip="Product Out of Stock Time, hours">
+            <input nz-input type="number" min="0" formControlName="productOutOfStockTime"
+                   placeholder="Product Out Of Stock Time">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h4>Order Fulfillment Option</h4>
+        <nz-form-item>
+          <nz-form-control>
+            <label nz-checkbox formControlName="isStartPickJobWithoutDriverAllowed">Pick job can start without driver job assignment</label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+  </div>
+</form>
+<div class="p-4 d-flex justify-content-between">
+  <div>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onSubmit()"
+      [nzType]="'primary'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Update
+    </button>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onCancel()"
+      [nzType]="'link'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Cancel
+    </button>
+  </div>
+
+  <button
+    [nzType]="'link'"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+    routerLink="/analytics/reports/store-performance"
+    [queryParams]="{ storeId }"
+  >Store Performance</button>
+</div>

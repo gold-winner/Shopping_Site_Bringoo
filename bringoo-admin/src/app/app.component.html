@@ -1,0 +1,4 @@
+<ng-container *ngIf="layout|async as layout">
+  <app-layout-default *ngIf="layout === 'default'"></app-layout-default>
+  <app-layout-auth *ngIf="layout === 'auth'"></app-layout-auth>
+</ng-container>

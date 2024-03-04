@@ -1,0 +1,33 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="800"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Update receipt number"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+>
+  <ng-template nzDrawerContent>
+    <form nz-form nzLayout='vertical' [formGroup]='form'>
+      <nz-form-item>
+        <nz-form-label nzRequired>Receipt Number</nz-form-label>
+        <nz-form-control labelForErrorTip="Receipt Number">
+          <input nz-input formControlName="receiptNumber">
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='onSubmit()'>Apply</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)='onCloseDrawer()'>Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

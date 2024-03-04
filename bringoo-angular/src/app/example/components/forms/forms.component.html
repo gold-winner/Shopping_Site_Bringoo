@@ -1,0 +1,48 @@
+<h1>Forms</h1>
+
+<div class="ml-8">
+  <div style="width: 300px;">
+    <ui-input
+      placeholder="Search Brand Name"
+      label="Delivery to"
+    ></ui-input>
+  </div>
+  <div style="margin-top: 30px; width: 300px;">
+    <ui-input
+      placeholder="Search Brand Name"
+      icon="search"
+      [leftIcon]="true"
+    ></ui-input>
+  </div>
+  <div style="margin-top: 30px; width: 500px;">
+    <ui-input
+      placeholder="Search Brand Name"
+      icon="edit"
+      label="Name"
+      [leftIcon]="false"
+    ></ui-input>
+  </div>
+  <div style="margin-top: 30px; width: 200px;">
+    <ui-quantity-input [border]="true"></ui-quantity-input>
+  </div>
+  <div style="margin-top: 30px; width: 500px;">
+    <ui-link
+      path="/example"
+      label="Your market"
+      pirmaryIcon="shopping-bag"
+      secondaryIcon="chevron-right"
+      value={{location}}
+    ></ui-link>
+  </div>
+  <div style="display: flex;">
+    <div style="margin-top: 30px; width: 420px; margin-right: 30px;">
+      <ui-dropdown label="Dropdown" [items]="defaultDropdownData"></ui-dropdown>
+    </div>
+    <div style="margin-top: 30px; width: 420px; margin-right: 30px;">
+      <ui-dropdown label="Delivery Date" [items]="deliveryDateDropdownData"></ui-dropdown>
+    </div>
+    <div style="margin-top: 30px; width: 420px;">
+      <ui-dropdown label="Delivery Time" [items]="deliveryTimeDropdownData"></ui-dropdown>
+    </div>
+  </div>
+</div>

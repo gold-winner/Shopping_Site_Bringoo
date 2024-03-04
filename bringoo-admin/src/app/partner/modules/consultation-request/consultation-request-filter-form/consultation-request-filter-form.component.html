@@ -1,0 +1,52 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-56">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input
+          nz-input
+          formControlName="search"
+          placeholder="Search"
+          nzTooltipPlacement="topLeft"
+          nz-tooltip="Search by Customer and Product"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-store-select
+    formControlName="storeId"
+    label="Store Filter"
+    placeHolder="Store Filter"
+  ></app-filter-store-select>
+
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Submit Date">
+      <nz-form-label nzRequired>Submit Date</nz-form-label>
+      <app-date-control
+        formControlName="submitDate"
+        placeHolder="Submit Date"
+        [hideLabel]="true"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Callback request">
+      <label class="mt-9" nz-checkbox formControlName="isCallbackRequest">Callback request</label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="form.value?.isCallbackRequest">
+    <nz-form-control labelForErrorTip="Callback date and time">
+      <nz-form-label>Callback date and time</nz-form-label>
+      <app-date-control
+        formControlName="CallbackRequestDate"
+        placeHolder="Callback date and time"
+        [dateFormat]="dateTimeFormat"
+        [showTime]="true"
+        [utcOutput]="true"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+</form>

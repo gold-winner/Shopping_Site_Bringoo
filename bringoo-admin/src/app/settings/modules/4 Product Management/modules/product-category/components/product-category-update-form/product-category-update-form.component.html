@@ -1,0 +1,39 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input required label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input label="Description" type="textarea" formControlName="description_i18n"></app-multi-lang-v2-input>
+  </app-lang-controller>
+
+  <nz-form-item class="mt-4">
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-store-vendor-category-select
+          class="w-32 mt-4"
+          placeHolder="Vendor Category"
+          formControlName="vendorCategoryCode"
+          label="Vendor Category"
+  ></app-filter-store-vendor-category-select>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Category picture</nz-form-label>
+    <nz-form-control labelForErrorTip="Category picture">
+      <app-file-upload [multiple]='false' formControlName='imageUrl' path='category'></app-file-upload>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="isActive">Status</nz-form-label>
+    <app-status-switch formControlName='isActive'></app-status-switch>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Category Slug</nz-form-label>
+    <nz-form-control labelForErrorTip="Category Slug">
+      <input nz-input formControlName="slug" placeholder="Category Slug">
+    </nz-form-control>
+  </nz-form-item>
+</form>

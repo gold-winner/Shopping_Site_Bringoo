@@ -1,0 +1,10 @@
+<div class="controls d-flex">
+  <button
+    *ngIf="closeButtonPath"
+    class="color-disabled ml-auto"
+    nz-button
+    nzType="link"
+    [routerLink]="closeButtonPath"
+  ><i nz-icon nzType="close" nzTheme="outline"></i></button>
+</div>
+<h4 class="text-center mt-9">{{title}}</h4>

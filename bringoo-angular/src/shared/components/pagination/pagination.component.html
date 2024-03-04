@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between">
+  <div class="d-flex align-items-center">
+    <div class="text-tiny">
+      <span class="text-green text-bold text-small">{{start}}-{{end}} </span> <span class="text-semi-bold text-small"> of {{total}} items</span>
+    </div>
+    <div class="d-flex align-items-center">
+      <icon name="chevron-left" class="left-chevron" (click)="pageChangeClick(-1)"></icon>
+      <div *ngFor="let page of pages" 
+        class="page-item" 
+        [ngClass]="{'page-item--selected': currentPage == page}"
+        (click)="pageItemClick(page)"
+        >
+        {{page}} 
+      </div>
+      <icon name="chevron-right" class="right-chevron" (click)="pageChangeClick(1)"></icon>
+    </div>
+  </div>
+  <div class="dropdown">
+    <ui-dropdown
+      [items]="pageSizeData"
+      [selectedItem]="selectedPageSize"
+      [hasBorder]="true"
+      (onSelect)="onChangePageSize($event)"
+    >
+    </ui-dropdown>
+  </div>
+</div>

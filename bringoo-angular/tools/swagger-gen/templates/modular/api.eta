@@ -1,0 +1,24 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { ApiDefaultService } from '../services/api-default.service';
+
+<%
+const { utils, route, config, modelTypes } = it;
+const { _, classNameCase, require } = utils;
+const apiClassName = classNameCase(route.moduleName);
+const routes = route.routes;
+const dataContracts = _.map(modelTypes, 'name');
+%>
+<% if (dataContracts.length) { %>
+import { <%~ dataContracts.join(', ') %> } from './<%~ config.fileNames.dataContracts %>'
+<% } %>
+
+@Injectable({
+  providedIn: 'root',
+})
+export class <%= apiClassName %> extends ApiDefaultService {
+    <% routes.forEach((route) => { %>
+        <%~ includeFile('./procedure-call.eta', { route, utils, config }) %>
+    <% }) %>
+}

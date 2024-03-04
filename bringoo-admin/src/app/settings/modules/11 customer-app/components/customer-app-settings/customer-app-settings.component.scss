@@ -1,0 +1,9 @@
+:host{
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  overflow-y: auto;
+  &>div:last-child{
+    border-top: 1px solid #f0f0f0;
+  }
+}

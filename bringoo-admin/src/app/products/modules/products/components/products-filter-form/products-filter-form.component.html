@@ -1,0 +1,119 @@
+<form nz-form [formGroup]='form' class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group
+          [nzPrefixIcon]="'search'"
+          nzTooltipPlacement="topLeft"
+          nz-tooltip="Search by Name, Product Brand, GTIN, SKU, EAN and Category"
+        >
+          <input
+            nz-input
+            formControlName="search"
+            placeholder="Search"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Images</nz-form-label>
+        <nz-select formControlName="onlyWithImages">
+          <nz-option *ngFor="let status of imagesStatuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-category-select
+      class="col"
+      formControlName="category"
+    ></app-filter-category-select>
+
+    <app-filter-subcategory-select
+      class="col"
+      formControlName="subCategory"
+      [categoryCode]="form.controls.category.value"
+    ></app-filter-subcategory-select>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Weight</nz-form-label>
+        <nz-input-group nzSuffix="gr" [nzAddOnBefore]="weightOrdered">
+          <input nz-input type="number" formControlName="weight" placeholder="Weight in gram">
+        </nz-input-group>
+      </nz-form-control>
+      <ng-template #weightOrdered>
+        <nz-select formControlName='orderBy' nzShowSearch>
+          <nz-option nzValue="$eq" nzLabel="="></nz-option>
+          <nz-option nzValue="$ne" nzLabel="!="></nz-option>
+          <nz-option nzValue="$gt" nzLabel=">"></nz-option>
+          <nz-option nzValue="$lt" nzLabel="<"></nz-option>
+          <nz-option nzValue="$gte" nzLabel=">="></nz-option>
+          <nz-option nzValue="$lte" nzLabel="<="></nz-option>
+        </nz-select>
+      </ng-template>
+    </nz-form-item>
+
+    <app-filter-brand-select
+      class="col"
+      formControlName="brand"
+    ></app-filter-brand-select>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Deposit</nz-form-label>
+        <app-list-select
+          class="d-block"
+          formControlName="isDeposit"
+          [list]="depositFilter"
+        ></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Product Type</nz-form-label>
+        <app-list-select
+          class="d-block"
+          formControlName="productType"
+          placeHolder="Product Type"
+          [isRequired]="false"
+          [list]="productTypes"
+        ></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Tags</nz-form-label>
+        <nz-select
+          nzPlaceHolder="Tags"
+          nzMode="tags"
+          [nzDropdownStyle]="{ display: 'none' }"
+          formControlName="tags"
+        ></nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Status</nz-form-label>
+        <nz-select formControlName="isActive" nzAllowClear nzPlaceHolder="Status">
+          <nz-option [nzLabel]="'Active'" [nzValue]="'Show Active'" style="color: green" [nzCustomContent]="true">
+            <nz-content>
+              <app-status [value]="true" [trueText]="'Show Active'"></app-status>
+            </nz-content>
+          </nz-option>
+          <nz-option [nzLabel]="'Inactive'" [nzValue]="'Show Inactive'" [nzCustomContent]="true">
+            <nz-content>
+              <app-status [value]="false" [falseText]="'Show Inactive'"></app-status>
+            </nz-content>
+          </nz-option>
+          <nz-option [nzLabel]="'Show ALL'" [nzValue]="'Show ALL'"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

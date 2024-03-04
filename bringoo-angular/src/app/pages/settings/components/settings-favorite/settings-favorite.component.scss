@@ -1,0 +1,45 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.products {
+  @extend .d-flex;
+  @extend .justify-content-between;
+  @extend .flex-wrap;
+  @extend .px-8;
+  @extend .mb-12;
+  margin-top: -48px;
+
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  &__card {
+    @extend .mt-13;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-top: 20px;
+    }
+  }
+}
+
+.border {
+  border: 1px solid rgba($color_beige, 0.2);
+}
+
+.card {
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
+    padding: 20px 14px 166px 14px;
+    border-radius: 10px;
+    margin-right: 19.2px;
+  }
+
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
+    &:hover {
+      box-shadow: 0px 0px 10px 0px rgb(180, 178, 178);
+      transition: all 0.3s ease-out;
+    }
+  }
+}

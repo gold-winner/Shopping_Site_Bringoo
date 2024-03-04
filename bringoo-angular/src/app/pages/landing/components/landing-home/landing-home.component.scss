@@ -1,0 +1,221 @@
+@import "src/scss/colors";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+@import "src/scss/borders";
+@import "src/scss/grid";
+@import "src/scss/layout";
+
+.content {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .container;
+
+  .landing-location {
+    border-radius: 20px;
+    width: -webkit-fill-available;
+    background-image: url("/assets/img/landing/landing-location.svg");
+    background-repeat: no-repeat;
+    height: 464px;
+  }
+}
+
+.landing-mobile {
+  background-image: url("/assets/img/landing/landing-mobile.svg");
+  height: 415px;
+  background-repeat: no-repeat;
+
+  .mobile {
+    margin-top: 200px;
+    margin-left: 485px;
+    @media (max-width: 1024px) {
+      margin-top: 90px;
+      margin-left: 300px;
+    }
+
+    @media (max-width: 768px) {
+      margin-top: 90px;
+      margin-left: 230px;
+    }
+
+    .app-store {
+      width: 200px;
+      height: 60px;
+      @media (max-width: 1024px) {
+        width: 164px;
+        height: 55px;
+      }
+    }
+
+    .google-store {
+      width: 200px;
+      height: 60px;
+      @media (max-width: 1024px) {
+        width: 164px;
+        height: 55px;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    background-image: url("/assets/img/landing/landing-mobile1.svg");
+    height: 267px;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.life-cart {
+  @extend .d-flex;
+  @extend .mt-8;
+  @extend .mb-20;
+  @extend .flex-wrap;
+  @extend .justify-content-center;
+  @extend .align-items-center;
+  @media (max-width: 1400px) {
+    flex-direction: column;
+  }
+}
+
+.opening-hours {
+  @extend .container;
+  @extend .d-flex;
+  @extend .justify-content-between;
+  @extend .py-20;
+}
+
+.border {
+  border-bottom: 1px solid $color_beige;
+}
+
+.subtitle {
+  @extend .cursor-pointer;
+
+  &:hover {
+    color: rgb(31, 182, 31);
+  }
+}
+
+.card {
+  @extend .ml-8;
+  @media (max-width: 1280px) {
+    margin-left: 4px;
+  }
+}
+
+.social:hover,
+.card1:hover,
+.card:hover {
+  @extend .cursor-pointer;
+  color: rgb(31, 182, 31);
+}
+
+.location-input {
+  width: 400px;
+  border: 2px solid white;
+  height: 50px;
+  margin-top: 270px;
+  margin-left: 70px;
+  border-radius: 10px;
+  padding-left: 50px;
+
+  &:focus-visible {
+    border: 2px solid white;
+  }
+}
+
+.border-red {
+  border-color: red;
+}
+
+.border-black {
+  border-color: #111010d6;
+}
+
+.location-btn {
+  display: flex;
+  width: 400px;
+  margin-left: 70px;
+  margin-top: 20px;
+  background: #244875;
+  padding-left: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.map {
+  bottom: 16px;
+  left: 85px;
+}
+
+.pointer {
+  left: 85px;
+  bottom: 16px;
+}
+
+.Zahlungsarten {
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    margin-top: 30px;
+  }
+}
+
+.text-semi-bold > a,
+.social-icons > a {
+  color: $color_darkgrey;
+  &:hover {
+    color: $color_green;
+  }
+}
+
+.arrow-down {
+  @media (min-width: 1401px) {
+    display: none;
+  }
+}
+
+.arrow-right {
+  @media (max-width: 1400px) {
+    display: none;
+  }
+}
+
+.store-list {
+  @extend .d-flex;
+  @extend .flex-row;
+  @extend .mt-5;
+  @extend .flex-wrap;
+  @extend .justify-content-between;
+  @extend .align-items-center;
+  @media (max-width: 1430px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.a-app-store {
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+.a-google-store {
+  margin-right: 0px !important;
+}
+
+.content-faqs {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .container;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.side-logo {
+  @extend .only-mobile;
+  @extend .position-absolute;
+  top: 130px;
+  right: 0px;
+}

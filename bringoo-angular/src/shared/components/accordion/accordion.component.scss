@@ -1,0 +1,42 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-accordion {
+  @extend .d-flex;
+  @extend .flex-column;
+ 
+
+  &__title {
+    @extend .d-flex;
+    @extend .justify-content-between;
+    @extend .align-items-center;
+    @extend .text-medium;
+    @extend .py-4;
+    @extend .cursor-pointer;
+  }
+
+  &__body {
+    max-height: 0;
+    transition: max-height 0.5s ease-out;
+    overflow: hidden;
+
+    &--opened {
+      max-height: 500px !important;
+      transition: max-height 0.6s ease-in;
+    }
+  }
+
+  .border {
+    border-bottom: 1px solid rgba($color_lightblue, 0.2);
+  }
+
+  .light {
+    opacity: 0.4;
+  }
+
+  .transition-none {
+    transition: none;
+  }
+}

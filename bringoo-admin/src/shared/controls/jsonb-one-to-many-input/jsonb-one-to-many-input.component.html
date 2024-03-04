@@ -1,0 +1,26 @@
+<div class='p-3 border-round-md'>
+  <form nz-form nzLayout="vertical" [formGroup]='form'>
+    <nz-tabset nzSize="small" nzType="line" (nzSelectedIndexChange)='onIndexChange($event)'>
+      <nz-tab *ngFor="let key of _keysList; let i = index" [nzTitle]="tabTitle" >
+        <ng-template #tabTitle>
+          {{key}}
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+    <div>
+      <ng-container *ngFor='let key of _keysList'>
+        <nz-form-item class='w-100p h-100p' *ngIf='key === currentKey'>
+          <nz-form-label [nzRequired]="false">Values list:</nz-form-label>
+          <nz-form-control labelForErrorTip="Values list:">
+            <nz-select
+              nzPlaceHolder="{{key}}"
+              nzMode="tags"
+              [nzDropdownStyle]="{ display: 'none' }"
+              [formControlName]="key"
+            ></nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+    </div>
+  </form>
+</div>

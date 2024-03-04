@@ -1,0 +1,33 @@
+<h3>{{title}}</h3>
+<p>{{subTitle}}</p>
+<h5>{{label}}</h5>
+<h4>{{value}}</h4>
+<hr>
+<h5>Reports</h5>
+<nz-list nzSize="small">
+  <nz-list-item *ngFor="let reports of (status ? filters : filters|slice :0 :3)">
+    <ng-container
+      *ngIf="filtersPath.includes(reports.path || '')"
+    >
+      <a *ngIf="reports.query" [routerLink]="['.', reports.path]" [queryParams]="reports.query">{{reports.label}}</a>
+      <a *ngIf="!reports.query" [routerLink]="['.', reports.path]">{{reports.label}}</a>
+    </ng-container>
+
+    <ng-container
+      *ngIf="!filtersPath.includes(reports.path || '')"
+    >
+      <p class="mb-0">{{reports.label}}</p>
+    </ng-container>
+  </nz-list-item>
+</nz-list>
+<div class="d-flex justify-content-center" *ngIf="filters.length > 3">
+  <button nz-button nzType="text" (click)="onShowMore()">
+    Show
+    <ng-container *ngIf="status">
+      less <i nz-icon nzType="up" nzTheme="outline"></i>
+    </ng-container>
+    <ng-container *ngIf="!status">
+      more <i nz-icon nzType="down" nzTheme="outline"></i>
+    </ng-container>
+  </button>
+</div>

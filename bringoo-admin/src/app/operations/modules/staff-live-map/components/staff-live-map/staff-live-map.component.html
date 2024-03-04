@@ -1,0 +1,42 @@
+<div class="map-container">
+  <div class="map-info p-4">
+    <div class="d-flex align-items-center p-4 border-round-sm">
+      <label class="payment text-bold col-auto pl-0" nz-radio [ngModel]="true">Picker</label>
+      <label class="complete text-bold col-auto pl-0" nz-radio [ngModel]="true">Driver</label>
+      <label class="in-progress text-bold col-auto pl-0 mr-0" nz-radio [ngModel]="true">Driver & Driver</label>
+      <app-select
+        class="col px-0 pb-0"
+        [placeHolder]="'Search staff'"
+        [options]="selectOptions"
+        [formControl]="searchStaff"
+        [required]="false"
+        [softDelete]="false"
+      ></app-select>
+    </div>
+  </div>
+  <google-map #googleMap *ngIf="($isLoaded|async) && mapOptions" [options]="mapOptions" [width]="'100%'" [height]="'100%'"></google-map>
+</div>
+
+<nz-modal
+  [nzVisible]="isMoreThenOneLocation|async"
+  nzTitle="The Staff you are looking for have more than one location"
+  (nzOnCancel)="closeChooseLocation()"
+  (nzOnOk)="setMapCenter()"
+>
+  <div *nzModalContent>
+    <ng-container *ngIf="staffLocations|async as locations">
+      <nz-radio-group [(ngModel)]="searchedStaffLocation">
+        <ng-container *ngFor="let location of locations; let index = index">
+          <label
+            class="mt-4"
+            nz-radio
+            [nzValue]="location"
+          >
+            <div>Device ID: <b>{{location.deviceId}}</b></div>
+            <div>Last Update: <b>{{location.updateTime|date :dateTimeFormat}}</b></div>
+          </label><br/>
+        </ng-container>
+      </nz-radio-group>
+    </ng-container>
+  </div>
+</nz-modal>

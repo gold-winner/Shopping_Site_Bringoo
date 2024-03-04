@@ -1,0 +1,36 @@
+<div class="ui-dropdown" tabindex="1" (blur)="isDropdownOpened=false" [ngClass]="{'ui-dropdown--border': hasBorder}">
+  <div class="ui-dropdown__label">{{label}}</div>
+  <div class="ui-dropdown__input" (click)="onClick()" [ngClass]="{'ui-dropdown__input--border': hasBorder}">
+    <span class="ml-2">{{selectedItem && selectedItem.value}}</span>
+    <icon *ngIf="isDropdownOpened" name="chevron-up"></icon>
+    <icon *ngIf="!isDropdownOpened" name="chevron-down"></icon>
+  </div>
+  <ul [hidden]="!isDropdownOpened">
+    <li 
+      *ngFor="let item of items" 
+      (click)="onSelectItem(item.id)"
+      class="ui-dropdown__item"
+      [ngClass]="{'ui-dropdown__item--selected': selectedItem && selectedItem.id === item.id}"
+    >
+        <div class="ml-3" *ngIf="!item.rowItem else rowItems">{{item.value}}</div>
+        <ng-template #rowItems>
+          <div class="ui-dropdown__item--row">
+            <div 
+              *ngFor="let cell of item.rowItem | keyvalue: unsorted; index as i" 
+              [ngClass]="{'text-green': i === 1 && item.color === 'green', 'text-red': i === 1 && item.color === 'red'}"
+            >
+                {{cell.value}}<small *ngIf="item.other && i === 1" class="text-darkgrey ml-1">{{item.other}}</small>
+            </div>
+            <div>
+              <div class="circle-icon circle-icon--checked" *ngIf="selectedItem && selectedItem.id === item.id else unSelectedCircle">
+                <icon name="check"></icon>
+              </div>
+              <ng-template #unSelectedCircle>
+                <div class="circle-icon" else></div>
+              </ng-template>
+            </div>
+            </div>
+        </ng-template>
+    </li>
+  </ul>
+</div>

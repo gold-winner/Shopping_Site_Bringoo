@@ -1,0 +1,17 @@
+<nz-input-group [nzPrefixIcon]="'search'">
+  <input type="text" nz-input placeholder="Filter products" />
+</nz-input-group>
+<div class="filters d-flex ml-sm-4">
+  <nz-select ngModel="name">
+    <nz-option nzValue="name" nzLabel="Name"></nz-option>
+    <nz-option nzValue="status" nzLabel="Status"></nz-option>
+  </nz-select>
+  <nz-select ngModel="status">
+    <nz-option nzValue="status" nzLabel="Status"></nz-option>
+  </nz-select>
+  <nz-select ngModel="sort by">
+    <nz-option nzValue="sort by" nzLabel="Sort by"></nz-option>
+  </nz-select>
+  <button nz-button nzType="text" class="text-semi-bold"><i nz-icon nzType="plus"></i>More filters</button>
+</div>
+<button nz-button nzType="text" class="text-semi-bold"><i nz-icon nzType="star"></i>Saved</button>

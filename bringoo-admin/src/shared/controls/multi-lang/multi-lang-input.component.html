@@ -1,0 +1,29 @@
+<form nzLayout="vertical" nz-form [formGroup]='form' class='w-100p'>
+  <nz-form-item class='w-100p h-100p'>
+    <nz-tabset nzSize="small" nzType="line">
+      <nz-tab *ngFor="let lang of langList; let i = index" [nzTitle]="tabTitle">
+        <ng-template #tabTitle>
+          {{lang}}<i *ngIf='isRequired && i === 0 && !form.get(lang)?.valid' class="color-danger">*</i>
+        </ng-template>
+        <nz-form-label [nzRequired]="isRequired && i === 0">{{label}} ({{lang}})</nz-form-label>
+        <nz-form-control labelForErrorTip="{{label}} ({{lang}})">
+          <nz-input-group>
+            <input
+              *ngIf="type === 'text'"
+              [formControlName]="lang"
+              nz-input
+              placeholder="{{label}} ({{lang}})"
+            />
+            <textarea
+              *ngIf="type === 'textarea'"
+              [formControlName]="lang"
+              [rows]='rows'
+              nz-input
+              placeholder="{{label}} ({{lang}})"
+            ></textarea>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-tab>
+    </nz-tabset>
+  </nz-form-item>
+</form>

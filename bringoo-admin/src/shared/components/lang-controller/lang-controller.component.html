@@ -1,0 +1,12 @@
+<div class='border-round-md' [class.container-border]="!borderLess" [class.p-3]="!paddingLess" *ngIf="!(service.isLoading|async)">
+  <nz-tabset nzSize="small" nzType="line" (nzSelectedIndexChange)='onIndexChange($event)'>
+    <nz-tab *ngFor="let lang of languages; let i = index" [nzTitle]="tabTitle">
+      <ng-template #tabTitle>
+        {{lang}} <span *ngIf="isRequired" class="color-danger">*</span>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+  <div>
+    <ng-content></ng-content>
+  </div>
+</div>

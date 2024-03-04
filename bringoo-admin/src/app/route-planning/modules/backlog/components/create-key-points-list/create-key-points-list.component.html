@@ -1,0 +1,130 @@
+<nz-list
+  cdkDropList
+  [id]="containerId"
+  [cdkDropListConnectedTo]="connectTo"
+  [nzLoading]="isLading$|async"
+  [cdkDropListData]="list"
+  (cdkDropListDropped)="listDropped($event)"
+  class="orders-list"
+  nzBordered
+  nzSize="small"
+>
+  <div class="empty" *ngIf="list.length === 0; else list_template">
+    <span>Drag some orders into this route to get started.</span>
+  </div>
+
+  <ng-template #list_template>
+    <nz-list-item
+      *ngFor="let item of list; let index=index"
+      cdkDrag
+      cdkDragPreviewClass="backlog-preview"
+      (cdkDragDropped)="dragDropped($event)"
+      [cdkDragData]="item"
+      [nzExtra]="extra"
+    >
+      <div class="order-item d-flex justify-content-center">
+        <ng-container *ngIf="item|orderWithStaffInfo as item">
+          <div class="order-icon DROP_OFF">
+            <span
+              nz-icon
+              nzType="car"
+              nz-tooltip="Drop_off"
+            ></span>
+          </div>
+          <a routerLink="/orders/all/detail/{{item.orderId}}">{{item.orderNumber}}</a>
+          <h5>
+            {{item.startTime}}-{{item.endTime}}
+          </h5>
+          <span>{{item.customerName}}</span>
+          <ng-container *ngIf="item.tags as tags">
+            <nz-tag *ngFor="let tag of tags" nzColor="blue">{{tag}}</nz-tag>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="item|keyPointInput as item">
+          <div class="order-icon {{item.pointType}}">
+            <span
+              nz-icon
+              [nzType]="item.pointType|keyPointTypeIcon"
+            ></span>
+          </div>
+          <h5>{{item.pointType|titlecase}}</h5>
+          <span *ngIf="item.storeId">{{(item.storeId|storeName)|async}}</span>
+        </ng-container>
+      </div>
+
+      <ng-template #extra>
+        <div class="extra d-flex justify-content-center">
+          <ng-container *ngIf="item|orderWithStaffInfo as item">
+            <div class="story-point">
+              <span class="story-point">{{index + 1}}</span>
+            </div>
+            <icon
+              *ngIf="item.orderPriority|orderPriority as priorityData"
+              [name]="priorityData.icon"
+              [style]="{color: priorityData.color}"
+
+              class="cursor-pointer"
+              [nz-tooltip]="item.orderPriority"
+              [nzTooltipPlacement]="'bottom'"
+            ></icon>
+            <img class="logo" [src]="item.store.logoUrl|imageMiniature" alt="store logo"/>
+            <nz-tag [nzColor]="item.orderStatus|orderTagStatus">{{item.orderStatus|titlecase}}</nz-tag>
+            <nz-avatar-group>
+              <ng-container *ngIf="item.picker as picker; else picker_empty">
+                <nz-avatar
+                  nzSize="small"
+                  class="bg-primary-blue cursor-pointer picker-avatar"
+                  [nzSrc]="picker.photoUrl"
+                  nzText="{{picker.firstName[0]}}{{item.picker.lastName[0]}}"
+                  nz-tooltip="Picker Assigned: {{picker.firstName}} {{picker.lastName}}"
+                  [nzTooltipPlacement]="'bottom'"
+                ></nz-avatar>
+              </ng-container>
+              <ng-template #picker_empty>
+                <nz-avatar
+                  class="cursor-pointer avatar-empty"
+                  nzSize="small"
+                  nzText="P"
+                  nz-tooltip="Picker not assigned"
+                  [nzTooltipPlacement]="'bottom'"
+                ></nz-avatar>
+              </ng-template>
+
+              <ng-container *ngIf="item.driver as driver; else driver_empty">
+                <nz-avatar
+                  nzSize="small"
+                  class="cursor-pointer bg-primary-green"
+                  [nzSrc]="driver.photoUrl"
+                  nzText="{{driver.firstName[0]}}{{driver.lastName[0]}}"
+                  nz-tooltip="Driver Assigned: {{driver.firstName}} {{driver.lastName}}"
+                  [nzTooltipPlacement]="'bottom'"
+                ></nz-avatar>
+              </ng-container>
+              <ng-template #driver_empty>
+                <nz-avatar
+                  class="cursor-pointer avatar-empty"
+                  nzSize="small"
+                  nzText="D"
+                  nz-tooltip="Driver not assigned"
+                  [nzTooltipPlacement]="'bottom'"
+                ></nz-avatar>
+              </ng-template>
+            </nz-avatar-group>
+          </ng-container>
+
+          <ng-container *ngIf="item|keyPointInput as item"></ng-container>
+
+          <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzSize="small" nzType="default">...</button>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzMode="inline">
+              <li
+                nz-menu-item
+                (click)="removeFormRouteAction(index, item)"
+              >Remove From Route</li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+      </ng-template>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

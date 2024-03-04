@@ -1,0 +1,17 @@
+<div class="ui-order" [ngClass]="selected ? 'bg-blue' : 'bg-beige-20'" (click)="onSelect.emit($event)">
+  <div class="d-flex">
+    <icon name="maps-route" class="text-green" *ngIf="status==='pending'"></icon>
+    <icon name="circle-check" [ngClass]="selected ? 'text-white' : 'text-blue'" *ngIf="status==='delivered'"></icon>
+    <icon name="circle-pause" class="text-red" *ngIf="status==='not_submit'"></icon>
+    <div class="d-flex flex-column ml-4">
+      <span class="text-tiny text-bold ui-order__title" [ngClass]="selected && status==='delivered' ? 'text-white' : titleColor">
+        {{title}} · BF-12046
+      </span>
+      <span class="text-medium text-bold my-2" [ngClass]="{'text-white': selected}">Bringoo Fresh</span>
+      <span class="text-tiny" [ngClass]="selected ? 'text-white' : 'text-blue'">09 Nov ∙ 19:09</span>
+    </div>
+  </div>
+  <div>
+    <span class="text-bold" [ngClass]="{'text-white': selected}">39,70 €</span>
+  </div>
+</div>

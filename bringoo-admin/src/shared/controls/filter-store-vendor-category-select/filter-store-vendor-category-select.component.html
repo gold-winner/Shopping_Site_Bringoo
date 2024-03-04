@@ -1,0 +1,12 @@
+<nz-form-item class="mr-0">
+  <nz-form-control>
+    <nz-form-label [nzRequired]="required">{{label}}</nz-form-label>
+    <app-select
+      [placeHolder]="placeHolder"
+      [options]="storeSelect"
+      [type]="type"
+      [formControl]="control"
+      [required]="required"
+    ></app-select>
+  </nz-form-control>
+</nz-form-item>

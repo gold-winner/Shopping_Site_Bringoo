@@ -1,0 +1,46 @@
+<form nzLayout="vertical" nz-form [formGroup]="form" class="p-4 w-100p h-100p overflow-auto position-relative" id="product-hardware-form">
+  <div class="row">
+    <div
+      *ngVar="isShowAnchor$|async as isShowAnchor"
+      [class.col-18]="isShowAnchor"
+      [class.col]="!isShowAnchor"
+      [class.px-0]="!isShowAnchor"
+    >
+      <nz-card id="sizes" nzTitle="Sizes" class="mb-4">
+        <nz-form-item class="mb-4">
+          <nz-form-label [nzRequired]="true">Width</nz-form-label>
+          <nz-form-control labelForErrorTip="Width">
+            <nz-input-number class="w-100p"
+                             nzPlaceHolder="Width" formControlName="width" [nzMin]="0"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label [nzRequired]="true">Height</nz-form-label>
+          <nz-form-control labelForErrorTip="Height">
+            <nz-input-number class="w-100p"
+                             nzPlaceHolder="Height" formControlName="height" [nzMin]="0"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label [nzRequired]="true">Length</nz-form-label>
+          <nz-form-control labelForErrorTip="Length">
+            <nz-input-number class="w-100p"
+                             nzPlaceHolder="Length" formControlName="length" [nzMin]="0"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+
+    </div>
+  </div>
+</form>
+
+<nz-anchor
+  style="position: absolute; top: 14px; right: 28px;"
+  [nzAffix]="false"
+  [nzShowInkInFixed]="true"
+  *ngIf="isShowAnchor$|async"
+  nzContainer="#product-hardware-form">
+  <nz-link nzHref="#sizes" nzTitle="Sizes"></nz-link>
+</nz-anchor>

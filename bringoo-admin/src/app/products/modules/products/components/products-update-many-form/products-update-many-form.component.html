@@ -1,0 +1,343 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzFor="isActive">Status</nz-form-label>
+    <nz-form-control>
+      <nz-select
+        class='w-100p'
+        [nzPlaceHolder] = "productIsActiveSelect[0]?.label"
+        formControlName='isActive'>
+        <nz-option
+          *ngFor="let option of productIsActiveSelect"
+          [nzValue]="option.value"
+          [nzLabel]="option.label">
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Product type</nz-form-label>
+    <nz-form-control labelForErrorTip="Product Type">
+      <app-list-select [isRequired]="false" [list]="productTypes" formControlName="productType" placeHolder="Don't change"></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <ng-container *ngIf="form.get('productType')?.value === productTypeEnum.GROCERY || form.get('productType')?.value === productTypeEnum.HARDWARE_STORE">
+    {{form.get('productType')?.value + ' Attributes'}}
+    <span *ngIf="!form.get('productAttributes')?.valid" class="color-danger">*</span>
+  </ng-container>
+
+  <app-products-attributes-grocery-create-form
+    *ngIf="form.get('productType')?.value === productTypeEnum.GROCERY"
+    class="mx--4"
+    [isShowAnchor]="false"
+    formControlName="productAttributes"
+  ></app-products-attributes-grocery-create-form>
+
+  <app-products-attributes-hardware-create-form
+    *ngIf="form.get('productType')?.value === productTypeEnum.HARDWARE_STORE"
+    [isShowAnchor]="false"
+    formControlName="productAttributes"
+  ></app-products-attributes-hardware-create-form>
+
+  <app-products-attributes-bookstore-create-form
+    *ngIf="form.get('productType')?.value === productTypeEnum.BOOKSTORE"
+    [isShowAnchor]="false"
+    formControlName="productAttributes"
+  ></app-products-attributes-bookstore-create-form>
+
+  <nz-form-item>
+    <nz-form-label>Product category</nz-form-label>
+    <nz-form-control labelForErrorTip="Product category">
+      <app-select [options]='productCategoryCode' formControlName='productCategoryCode' placeHolder='Select Category'></app-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+  <nz-form-label nzRequired='{{!!(isProductCategoryCodeSelected$ | async)}}'>Product subcategory {{!!(isProductCategoryCodeSelected$ | async)}}</nz-form-label>
+  <nz-form-control labelForErrorTip="Product subcategory {{!!(isProductCategoryCodeSelected$ | async)}}">
+    <app-select
+      appDisableControl [disable]="!form.controls.productCategoryCode.value"
+      [options]='productSubcategoryCode'
+      [required]='(isProductCategoryCodeSelected$ | async) || false'
+      formControlName='productSubcategoryCode'
+      placeHolder='Select Subcategory'>
+    </app-select>
+  </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Product Brand</nz-form-label>
+    <nz-form-control labelForErrorTip="Product Brand">
+      <app-select [options]='productBrandCode' formControlName='productBrandCode' placeHolder='Select Brand'></app-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Default Price</nz-form-label>
+    <nz-form-control labelForErrorTip="Default Price">
+      <nz-input-number class='w-100p' nzPlaceHolder='Default Price' formControlName="defaultPrice" [nzMin]="0"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isAlcohol')"
+    (change) = "checkboxClick('isAlcohol')"
+    [nzIndeterminate]="!checkboxesClicked.isAlcohol"
+    formControlName='isAlcohol'>
+    Alcohol
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isCustomAgeRestriction')"
+    (change) = "checkboxClick('isCustomAgeRestriction')"
+    [nzIndeterminate]="!checkboxesClicked.isCustomAgeRestriction"
+    formControlName='isCustomAgeRestriction'>
+    Custom Age Restriction
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isPublic')"
+    (change) = "checkboxClick('isPublic')"
+    [nzIndeterminate]="!checkboxesClicked.isPublic"
+    formControlName='isPublic'>
+    Public
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isBio')"
+    (change) = "checkboxClick('isBio')"
+    [nzIndeterminate]="!checkboxesClicked.isBio"
+    formControlName='isBio'>
+    Bio
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isFrozen')"
+    (change) = "checkboxClick('isFrozen')"
+    [nzIndeterminate]="!checkboxesClicked.isFrozen"
+    formControlName='isFrozen'>
+    Frozen
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isTobacco')"
+    (change) = "checkboxClick('isTobacco')"
+    [nzIndeterminate]="!checkboxesClicked.isTobacco"
+    formControlName='isTobacco'>
+    Tobacco
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isVegan')"
+    (change) = "checkboxClick('isVegan')"
+    [nzIndeterminate]="!checkboxesClicked.isVegan"
+    formControlName='isVegan'>
+    Vegan
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isVegetarian')"
+    (change) = "checkboxClick('isVegetarian')"
+    [nzIndeterminate]="!checkboxesClicked.isVegetarian"
+    formControlName='isVegetarian'>
+    Vegetarian
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isGlutenFree')"
+    (change) = "checkboxClick('isGlutenFree')"
+    [nzIndeterminate]="!checkboxesClicked.isGlutenFree"
+    formControlName='isGlutenFree'>
+    Gluten Free
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isLactoseFree')"
+    (change) = "checkboxClick('isLactoseFree')"
+    [nzIndeterminate]="!checkboxesClicked.isLactoseFree"
+    formControlName='isLactoseFree'>
+    Lactose Free
+  </label><br/>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('isFairTrade')"
+    (change) = "checkboxClick('isFairTrade')"
+    [nzIndeterminate]="!checkboxesClicked.isFairTrade"
+    formControlName='isFairTrade'>
+    Fair Trade
+  </label><br/>
+  <label
+    class="ml-0"
+    nz-checkbox
+    (click) = "checkboxClick('isConsultationRecommended')"
+    (change) = "checkboxClick('isConsultationRecommended')"
+    [nzIndeterminate]="!checkboxesClicked.isConsultationRecommended"
+  >Consultation Recommended</label><br/>
+
+  <app-filter-product-legal-select formControlName="productLegalCode"></app-filter-product-legal-select>
+
+  <div class='container mt-sm-10'>
+    <nz-form-item>
+      <nz-form-label>Update Tags</nz-form-label>
+      <nz-form-control>
+        <app-lang-controller>
+          <app-multi-lang-v2-input type='tags' label="tags" formControlName='tags_i18n'></app-multi-lang-v2-input>
+        </app-lang-controller>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div class='container mt-sm-10'>
+    <nz-form-item>
+      <nz-form-label>Add Tags</nz-form-label>
+      <nz-form-control>
+        <app-lang-controller>
+          <app-multi-lang-v2-input type='tags' label="tags" formControlName='tags_i18n_add'></app-multi-lang-v2-input>
+        </app-lang-controller>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <nz-form-item>
+    <nz-form-label>VAT</nz-form-label>
+    <nz-form-control labelForErrorTip="VAT">
+      <app-select [options]='vatCodeSelect' placeHolder='VAT' formControlName='vatCode'></app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class='container'>
+    <nz-form-label>Total Product Measurement</nz-form-label>
+      <div class="row" >
+        <nz-form-item class="col">
+          <nz-form-control labelForErrorTip="Please enter Total Product Measurement">
+            <nz-input-number class='w-100p' nzPlaceHolder='Product Measurement' formControlName="productMeasurement" [nzMin]="0"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col">
+          <nz-form-control labelForErrorTip="Please choose product Unit">
+            <app-list-select formControlName='productUnitCode' placeHolder='Select Unit Code' [list]='productUnitCode'></app-list-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+  </div>
+
+  <div class='container'>
+    <nz-form-label class='col'>Base measure</nz-form-label>
+    <div class='row'>
+      <nz-form-item class='col'>
+        <nz-form-control labelForErrorTip="Please enter Base measure">
+          <nz-input-number class='w-100p' nzPlaceHolder='Product Base Measurement' formControlName="baseMeasurement" [nzMin]="0"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item class='col'>
+        <nz-form-control labelForErrorTip="Please choose base Unit">
+          <app-list-select formControlName='baseUnitCode' placeHolder='Unit Code' [list]='(baseUnitCode | async) || []'></app-list-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <nz-form-item>
+    <nz-form-label>Total weight in gramm</nz-form-label>
+    <nz-form-control labelForErrorTip="Total weight in gramm">
+      <nz-input-number class='w-100p' nzPlaceHolder='Total weight in gramm' formControlName="weight" [nzMin]="0"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Cost per item</nz-form-label>
+    <nz-form-control labelForErrorTip="Cost per item">
+      <nz-input-number class='w-100p' nzPlaceHolder='Cost per item' formControlName="costPrice" [nzMin]="0"></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <label
+    class='ml-sm-0'
+    nz-checkbox
+    (click) = "checkboxClick('chargeTax')"
+    (change) = "checkboxClick('chargeTax')"
+    [nzIndeterminate]="!checkboxesClicked.chargeTax"
+    formControlName='chargeTax'>
+    Charge tax on this product
+  </label>
+  <div class='container mt-sm-10'>
+    <h3 class='mb-sm-1'>Deposit</h3>
+    <nz-form-item>
+      <nz-form-control>
+        <nz-select
+          class='w-100p'
+          (ngModelChange)="productDepositOnChange($event)"
+          [nzPlaceHolder] = "productDepositSelect[0]?.label"
+          [formControl]='deposit'>
+          <nz-option
+            *ngFor="let option of productDepositSelect"
+            [nzValue]="option.value"
+            [nzLabel]="option.label">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <form formGroupName='deposit' *ngIf="deposit.value === 'change'">
+      <nz-form-item>
+        <nz-form-label>Deposit VAT Code</nz-form-label>
+        <nz-form-control labelForErrorTip="Deposit VAT Code">
+          <app-select [options]='vatCodeSelect' placeHolder='Deposit VAT Code' formControlName='itemVatCode' [required]='true'></app-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Deposit Value Gross</nz-form-label>
+        <nz-form-control labelForErrorTip="Deposit Value Gross">
+          <nz-input-number nzPlaceHolder='item Deposit Value Gross' formControlName="itemDepositValueGross" [nzMin]="0" class='w-100p'></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Box Vat Code</nz-form-label>
+        <nz-form-control labelForErrorTip="Box Vat Code">
+          <app-select [options]='vatCodeSelect' placeHolder='Box Vat Code' formControlName='boxVatCode' [required]='true'></app-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Box Deposit Value Gross</nz-form-label>
+        <nz-form-control labelForErrorTip="Box Deposit Value Gross">
+          <nz-input-number nzPlaceHolder='Box Deposit Value Gross' formControlName="boxDepositValueGross" [nzMin]="0" class='w-100p'></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <div class='container mt-sm-10'>
+    <nz-form-label>Shipment type</nz-form-label><br/>
+    <label
+      class='ml-sm-0'
+      nz-checkbox
+      (click) = "checkboxClick('isPickup')"
+      (change) = "checkboxClick('isPickup')"
+      [nzIndeterminate]="!checkboxesClicked.isPickup"
+      formControlName='isPickup'>
+      Pickup
+    </label><br/>
+    <label
+      class='ml-sm-0'
+      nz-checkbox
+      (click) = "checkboxClick('isPickAndDrive')"
+      (change) = "checkboxClick('isPickAndDrive')"
+      [nzIndeterminate]="!checkboxesClicked.isPickAndDrive"
+      formControlName='isPickAndDrive'>
+      Pick & Drive
+    </label><br/>
+    <label
+      class='ml-sm-0'
+      nz-checkbox
+      (click) = "checkboxClick('isOnlineShipment')"
+      (change) = "checkboxClick('isOnlineShipment')"
+      [nzIndeterminate]="!checkboxesClicked.isOnlineShipment"
+      formControlName='isOnlineShipment'>
+      Online Shipment
+    </label>
+  </div>
+</form>

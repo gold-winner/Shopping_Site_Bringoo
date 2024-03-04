@@ -1,0 +1,135 @@
+<div class="d-flex justify-content-between">
+  <span></span>
+  <span>
+    <button nz-button class="border-round-lg" nzType="primary" (click)="update()">Update</button>
+    &nbsp;
+    <button nz-button class="border-round-lg" nzType="primary" (click)="onChangePanelStatus(true)">Add Product Recommendations</button>
+  </span>
+</div>
+
+<form nz-form [formGroup]="form" class="container px-4 mt-4" nzLayout="vertical" >
+  <div class="row">
+    <nz-card class="col p-0 border-round-md" nzBorderless>
+      <app-filter-store-select
+        formControlName="storeId"
+        appDisableControl
+        label="Store"
+        [required]="true"
+      ></app-filter-store-select>
+      <app-lang-controller class="w-100p mb--4" [borderLess]="true" [paddingLess]="true">
+        <app-multi-lang-v2-input
+          required label="Name"
+          formControlName="name_i18n"
+        ></app-multi-lang-v2-input>
+        <div class="row">
+          <app-multi-lang-v2-input
+            class="col-sm-24 col-md"
+            label="Description"
+            type="textarea"
+            formControlName="description_i18n"
+            [rows]="5"
+          ></app-multi-lang-v2-input>
+          <app-multi-lang-v2-input
+            class="col-sm-24 col-md"
+            label="Intro text"
+            type="textarea"
+            formControlName="intro_i18n"
+            [rows]="5"
+          ></app-multi-lang-v2-input>
+        </div>
+      </app-lang-controller>
+      <nz-form-item class="mb-0">
+        <nz-form-label nzFor="isActive">Status</nz-form-label>
+        <nz-form-control labelForErrorTip="Status">
+          <app-status-switch formControlName="isActive" falseValue="Close" trueValue="Open"></app-status-switch>
+        </nz-form-control>
+      </nz-form-item>
+
+      <hr class="reset-hr bg-vanilla bg-darkvanilla my-2">
+
+      <div class="row">
+        <nz-form-item class="col mb-0">
+          <nz-form-label>Start date</nz-form-label>
+          <nz-form-control labelForErrorTip="Start date">
+            <nz-date-picker
+              formControlName="dateStart"
+              nzPlaceHolder="Date start"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="col pl-0 mb-0">
+          <nz-form-label>End date</nz-form-label>
+          <nz-form-control labelForErrorTip="End date">
+            <nz-date-picker
+              formControlName="dateEnd"
+              nzPlaceHolder="Date end"
+            ></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </nz-card>
+  </div>
+
+  <div class="row mt-4">
+    <nz-card class="col p-0 border-round-md" nzBorderless>
+      <div *ngIf="!form.get('storeId')?.value" class="d-flex justify-content-between">
+        <div>
+          <h4>Products</h4>
+          <p class="text-red mb-0"><i nz-icon nzType="warning" nzTheme="outline"></i> You need to choose a Store</p>
+        </div>
+      </div>
+      <app-crud
+        *ngIf="form.get('storeId')?.value"
+        [config]="config"
+        [service]="crudStoreProductRecommendationItemService"
+        [filterForm]="filterForm"
+        [defaultFilters]="filterForItems"
+        [columns]="columns"
+        [fields]="fields"
+        [join]="join"
+        [horizontalPadding]="0"
+        [limit]="10"
+        (checkboxes)="linksSelected($event)"
+        [cleatSelectedItems]="clearSelections"
+        [reloadData]="reloadPage"
+      ></app-crud>
+    </nz-card>
+  </div>
+  <div class="row mt-4">
+    <nz-card class="col p-0 border-round-md" nzBorderless>
+      <h5>Main Images</h5>
+      <app-file-upload
+        formControlName="mainImageUrls"
+        class="mt-4"
+        title="Main image"
+        [multiple]="true"
+        [path]="'productRecommendation'"
+      ></app-file-upload>
+
+      <h5 class="mt-4">Header Images</h5>
+      <app-file-upload
+        formControlName="headerImageUrls"
+        class="mt-4"
+        title="Header Image"
+        [multiple]="true"
+        [path]="'productRecommendation'"
+      ></app-file-upload>
+
+      <h5 class="mt-4">Preview Images</h5>
+      <app-file-upload
+        formControlName="previewImageUrls"
+        class="mt-4"
+        title="Preview image"
+        [multiple]="true"
+        [path]="'productRecommendation'"
+      ></app-file-upload>
+    </nz-card>
+  </div>
+</form>
+
+<app-product-recommendation-item-create-form
+  *ngIf="this.form.get('id')?.value"
+  (onChangePanelStatus)="onChangePanelStatus($event)"
+  [openPanel]="openPanel"
+  [storeProductRecommendationId]="this.form.get('id')?.value"
+></app-product-recommendation-item-create-form>

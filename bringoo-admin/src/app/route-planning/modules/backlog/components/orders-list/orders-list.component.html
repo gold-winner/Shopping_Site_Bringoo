@@ -1,0 +1,106 @@
+<nz-list
+  cdkDropList
+  [id]="containerId"
+  [cdkDropListConnectedTo]="connectTo"
+  [cdkDropListSortingDisabled]="true"
+  [nzLoading]="isLoading$|async"
+  [cdkDropListData]="list"
+  class="orders-list"
+  nzBordered
+  nzSize="small"
+>
+  <div class="empty" *ngIf="list.length === 0; else list_template">
+    <span>Empty. Not found orders for to day.</span>
+  </div>
+
+  <ng-template #list_template>
+    <nz-list-item
+      *ngFor="let item of list"
+      cdkDrag
+      cdkDragPreviewClass="backlog-drag-preview"
+      [cdkDragData]="item"
+      [nzExtra]="extra"
+    >
+      <div class="order-item d-flex flex-wrap">
+        <div class="title">
+          <div class="order-icon" [style]="{ background: item.orderStatus|orderTagStatus :true }">
+          <span
+            nz-icon
+            [nzType]="item.orderStatus|orderStatusIcon"
+            [nz-tooltip]="item.orderStatus|titlecase"
+            style="color: white"
+          ></span>
+          </div>
+          <a routerLink="/orders/all/detail/{{item.orderId}}">{{item.orderNumber}}</a>
+        </div>
+        <h5>{{item.startTime}}-{{item.endTime}}</h5>
+        <span>{{item.customerName}}</span>
+        <ng-container *ngIf="item.tags as tags">
+          <div class="tags">
+            <nz-tag *ngFor="let tag of tags" nzColor="blue">{{tag}}</nz-tag>
+          </div>
+        </ng-container>
+      </div>
+      <ng-template #extra>
+        <div class="extra d-flex justify-content-center">
+          <icon
+            *ngIf="item.orderPriority|orderPriority as priorityData"
+            [name]="priorityData.icon"
+            [style]="{color: priorityData.color}"
+
+            class="cursor-pointer"
+            [nz-tooltip]="item.orderPriority"
+            [nzTooltipPlacement]="'bottom'"
+          ></icon>
+          <img class="logo" [src]="item.store.logoUrl|imageMiniature" alt="store logo"/>
+          <div>
+            <nz-tag class="mr-0" [nzColor]="item.orderStatus|orderTagStatus">{{item.orderStatus|titlecase}}</nz-tag>
+          </div>
+          <nz-avatar-group>
+            <ng-container *ngIf="item.picker as picker; else picker_empty">
+              <nz-avatar
+                nzSize="small"
+                class="bg-primary-blue cursor-pointer"
+                [nzSrc]="picker.photoUrl"
+                nzText="{{picker.firstName[0]}}{{picker.lastName[0]}}"
+                nz-tooltip="Picker Assigned: {{picker.firstName}} {{picker.lastName}}"
+                [nzTooltipPlacement]="'bottom'"
+              ></nz-avatar>
+            </ng-container>
+            <ng-template #picker_empty>
+              <nz-avatar
+                nzSize="small"
+                style="background-color: #808080FF"
+                nzText="P"
+                class="cursor-pointer"
+                nz-tooltip="Picker not assigned"
+                [nzTooltipPlacement]="'bottom'"
+              ></nz-avatar>
+            </ng-template>
+
+            <ng-container *ngIf="item.driver as driver; else driver_empty">
+              <nz-avatar
+                nzSize="small"
+                class="bg-primary-green cursor-pointer"
+                [nzSrc]="driver.photoUrl"
+                nzText="{{driver.firstName[0]}}{{driver.lastName[0]}}"
+                nz-tooltip="Driver Assigned: {{driver.firstName}} {{driver.lastName}}"
+                [nzTooltipPlacement]="'bottom'"
+              ></nz-avatar>
+            </ng-container>
+            <ng-template #driver_empty>
+              <nz-avatar
+                nzSize="small"
+                style="background-color: #808080FF"
+                nzText="D"
+                class="cursor-pointer"
+                nz-tooltip="Driver not assigned"
+                [nzTooltipPlacement]="'bottom'"
+              ></nz-avatar>
+            </ng-template>
+          </nz-avatar-group>
+        </div>
+      </ng-template>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

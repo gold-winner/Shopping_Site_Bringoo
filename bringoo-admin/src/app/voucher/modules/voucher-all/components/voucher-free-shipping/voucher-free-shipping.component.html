@@ -1,0 +1,44 @@
+<div class="bg-component border-round-sm mt-4" [formGroup]="form">
+  <div class="p-4">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label nzRequired>Countries</nz-form-label>
+        <nz-select 
+          formControlName="countryEligibility"
+          placeHolder="Countries select"
+          ><nz-option
+            *ngFor="let countryEligibilityItem of countryEligibilityList"
+            [nzLabel]="countryEligibilityItem.label"
+            [nzValue]="countryEligibilityItem.value"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <ng-container *ngIf="form.get('countryEligibility')?.value === 'SELECTED'">
+      <app-select
+        [options]="countriesList"
+        [required]="false"
+        type="tags"
+        placeHolder="Select products"
+        formControlName="countryIds"
+      ></app-select>
+    </ng-container>
+  </div>
+  <hr>
+  <div class="p-4">
+    <h5>SHIPPING RATES</h5>
+    <label
+      nz-checkbox
+      formControlName="isMaxShippingRate">
+      Is max shipping rate for the voucher apply
+    </label>
+    <br/>
+    <input
+      *ngIf="form.get('isMaxShippingRate')?.value"
+      nz-input
+      type="number"
+      formControlName="maxShippingRate"
+      placeholder="Max Shipping Rate"
+    />
+  </div>
+</div>

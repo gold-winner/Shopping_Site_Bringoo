@@ -1,0 +1,39 @@
+.more-users {
+  background-color: #fde3cf;
+  color: #f56a00;
+  &:hover {
+    background: #a89282;
+  }
+}
+
+.avatar {
+  border-width: 2px;
+  transition: .5s;
+}
+
+.avatar.selected {
+  border-color: red;
+}
+
+.preview-avatar:hover {
+  z-index: 4;
+}
+
+.popover-staffs {
+  margin-block: -8px;
+  margin-inline: -12px;
+
+
+}
+
+.popover-staff > * {
+  margin-inline: 4px;
+}
+
+::ng-deep html.dark .popover-staff:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::ng-deep html.light .popover-staff:hover {
+  background: rgba(124, 124, 124, 0.2);
+}

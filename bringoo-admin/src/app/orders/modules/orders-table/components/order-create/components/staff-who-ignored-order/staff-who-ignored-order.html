@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-between mb-4">
+
+  <nz-input-group
+    class="col-6"
+    nzPrefixIcon="search"
+  >
+    <input
+      nz-input
+      [formControl]="search"
+      placeholder="Search"
+    >
+  </nz-input-group>
+  <button
+    nz-button
+    [disabled]="setOfChecked.size === 0"
+    nzDanger
+    nzType="text"
+    (click)="deleteFromIgnoreList()"
+  ><i nz-icon nzType="delete" nzTheme="outline"></i>Remove</button>
+</div>
+<nz-table
+  nzShowPagination
+  *ngIf="page$|async as page"
+  [nzData]="items"
+  [nzPageSize]='limit'
+  [nzFrontPagination]="false"
+  [nzLoading]="isLoading$|async"
+  [nzTotal]="page.total"
+  [nzPageIndex]="findInput.page || 1"
+  (nzPageIndexChange)="checkedPage = false"
+  [nzShowTotal]="rangeTemplate"
+  (nzQueryParams)="onQueryParamsChange($event)"
+  [nzSize]="'small'"
+  [nzScroll]="{ x: '250px' }"
+>
+  <thead>
+  <tr>
+    <th nzShowCheckbox [(nzChecked)]="checkedPage" (nzCheckedChange)='onAllChecked($event)' [nzWidth]="'50px'"></th>
+    <th>Staff Number</th>
+    <th>Name</th>
+    <th>Role</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of page.items; let ind = index">
+    <td nzShowCheckbox [nzChecked]="setOfChecked.has(item.id)" (nzCheckedChange)="onItemChecked(item.id, $event)"></td>
+    <td class="text-bold">
+      <a routerLink="/users/staff/details/{{item.id}}">{{item.settings?.staffNumber}}</a>
+    </td>
+    <td class="text-bold">
+      <a routerLink="/users/staff/details/{{item.id}}">{{item.settings?.firstName}} {{item.settings?.lastName}}</a>
+    </td>
+    <td class="text-bold">{{item.role}}</td>
+  </tr>
+  </tbody>
+</nz-table>
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  <div *ngIf='setOfChecked.size'>Selected {{setOfChecked.size}}</div>
+</ng-template>

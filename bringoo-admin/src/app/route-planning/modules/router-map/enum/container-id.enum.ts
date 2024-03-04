@@ -1,0 +1,5 @@
+export enum ContainerIdEnum {
+  ROUTES = 'DROP_LIST_ROUTES',
+  KEY_POINTS = 'DROP_LIST_KEY_POINTS',
+  ORDERS = 'DROP_LIST_ORDERS',
+}

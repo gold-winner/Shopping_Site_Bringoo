@@ -1,0 +1,58 @@
+<form nz-form [formGroup]='form' nzLayout="inline">
+  <div class="d-flex mt-4">
+    <nz-form-item class="w-32 mr-0">
+      <nz-form-control labelForErrorTip="Start date">
+        <nz-form-label>Start date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateStart"
+          placeHolder="Date start"
+          [isRequired]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="w-32">
+      <nz-form-control labelForErrorTip="End date">
+        <nz-form-label>End date</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateFormat"
+          formControlName="dateEnd"
+          placeHolder="Date end"
+          [disableBefore]="form.controls.dateStart.value"
+          [isRequired]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item class="w-32 mt-4">
+    <nz-form-control>
+      <nz-form-label>Group by</nz-form-label>
+      <nz-select formControlName="groupBy">
+        <nz-option *ngFor="let item of ordered" [nzValue]="item" nzLabel="{{item}}"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-list-select
+    class="w-32 mt-4"
+    [label]="'Role filter'"
+    placeHolder="Role"
+    [items]="roles"
+    formControlName="role"
+  ></app-filter-list-select>
+
+  <app-customer-tags-select
+    class="mt-4"
+    label="Tags filter"
+    formControlName="tags"
+  ></app-customer-tags-select>
+
+  <app-language-select
+    class="w-32 mt-4"
+    [label]="'Language Filter'"
+    placeHolder="Language"
+    formControlName="languageCode"
+  ></app-language-select>
+</form>

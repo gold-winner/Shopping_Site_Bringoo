@@ -1,0 +1,35 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input
+      required
+      label="Title"
+      formControlName="title_i18n">
+    </app-multi-lang-v2-input>
+    <app-multi-lang-v2-input
+      label="Body"
+      type="textarea"
+      formControlName="body_i18n">
+    </app-multi-lang-v2-input>
+  </app-lang-controller>
+
+  <nz-form-item>
+    <nz-form-label nzFor="userGroup" nzRequired>User Group</nz-form-label>
+    <nz-form-control labelForErrorTip="User Group">
+      <app-list-select [list]='userGroupList' formControlName='userGroup'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="notificationGroup" nzRequired>Notification Group</nz-form-label>
+    <nz-form-control labelForErrorTip="Notification Group">
+      <app-list-select [list]='notificationGroupList' formControlName='notificationGroup'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+  
+  <nz-form-item>
+    <nz-form-label nzFor="notificationCode" nzRequired>Notification Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Notification Code">
+      <app-list-select [list]='notificationCodeList' formControlName='notificationCode'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,0 +1,129 @@
+<div>
+  <div class="header">
+    <div class="header-body">
+      <div class="header-logo">
+        <a routerLink="/login" class="cursor-pointer"><img src="/assets/img/logo.svg"></a>
+      </div>
+      <div class="header-main">
+        <div class="d-flex flex-column align-items-end">
+          <span class="phone">+7 800 222-11-00</span>
+          <span class="clock">Around the clock</span>
+        </div>
+        <ui-button (click)="SignIn()" class="ml-6" color="primary" width="full" radius="md" size="md">
+          Log in
+        </ui-button>
+        <ui-button (click)="SignUp()" class="ml-3" color="secondary" width="full" radius="md" size="md">
+          Sign up
+        </ui-button>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="d-flex">
+      <div class="pt-10">
+        <span class="title">Impressum</span>
+        <div class="d-flex justify-content-between">
+          <div class="contact d-flex flex-column mt-5">
+            <span>Bringoo GmbH</span>
+            <span>Jenfelder Str.2</span>
+            <span>22045 Hamburg</span>
+          </div>
+          <div class="d-flex flex-column">
+            <div>
+              <span class="contact-title">Telefon:</span>
+              <span class="contact-content ml-2"><a class="text-tiny-bold"
+                  href="tel:+49-40-66858700">+49-40-668587010</a></span>
+            </div>
+            <div>
+              <span class="contact-title">E-Mail:</span>
+              <span class="contact-content ml-2"><a class="text-tiny-bold"
+                  href="mailto:support@bringoo.de">support@bringoo.de</a></span>
+            </div>
+            <div>
+              <span class="contact-title">Webseite:</span>
+              <span class="contact-content ml-2"><a class="text-tiny-bold"
+                  href="https://www.bringoo.de">https://www.bringoo.de</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="contact mt-5">Handelsregisternummer: HRB 160460 (Hamburg)</div>
+        <div class="contact">USt.-ID-Nr. DE331229128</div>
+        <div class="contact-description mt-5">Gesetzlich vertreten durch den Geschäftsführer Hasib Khan</div>
+        <div class="contact-description mt-5">Die Europäische Kommission stellt unter http://ec.europa.eu/consumers/odr
+          eine Plattform zur Online-Streitbeilegung (OS) bereit. Die Bringoo GmbH ist weder bereit noch verpflichtet, an
+          einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</div>
+        <div class="contact-description mt-5">Alle Rechte vorbehalten. Die Inhalte dieser Website sind urheberrechtlich
+          geschützt. Jede Vervielfältigung, Vorführung, Sendung, Vermietung und/oder Leihe der Website oder einzelner
+          Inhalte ist ohne Einwilligung des Rechteinhabers untersagt und zieht straf- oder zivilrechtliche Folgen nach
+          sich. Insbesondere dürfen Nachdruck, Aufnahme in Online-Dienste, Internet und Vervielfältigung auf Datenträger
+          nur nach vorheriger schriftlicher Zustimmung durch die Bringoo GmbH erfolgen.</div>
+        <div class="contact-description mt-5">Für Inhalte externer Links und fremde Inhalte übernimmt die Bringoo GmbH
+          keine Verantwortung. Trotz höchster Sorgfalt kann nicht für die Richtigkeit der wiedergegebenen Informationen
+          oder die permanente technische Erreichbarkeit garantiert werden.</div>
+      </div>
+      <div class="ml-20 mr-50 pt-10">
+        <img src="assets/img/bringoo-vertical.svg" />
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container pt-20 pb-10">
+      <div class="d-flex flex-wrap justify-content-between">
+        <div class="d-flex flex-column">
+          <div class="text-bold mb-8">
+            Rechtliches
+          </div>
+          <div class="f-4 text-semi-bold"><a href="/impressum"><span class="subtitle">Impressum</span></a></div>
+          <div class="f-4 text-semi-bold"><a href="/datenschutz"><span class="subtitle">Datenschutz</span></a></div>
+          <div class="f-4 text-semi-bold"><a href="#"><span class="subtitle">AGB's</span></a></div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="text-bold mb-8">
+            Kontakt
+          </div>
+          <div class="f-4 text-semi-bold"><a href="mailto:support@bringoo.de"><span
+                class="subtitle">support@bringoo.de</span></a></div>
+          <div class="f-4 text-semi-bold"><a href="#"><span class="subtitle">Presse</span></a></div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="text-bold mb-8">
+            Folge uns
+          </div>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/bringoo.de/">
+              <icon name="instagram" class="social"></icon>
+            </a>
+            <a href="https://www.facebook.com/bringoo.de/">
+              <icon name="facebook" class="social ml-8"></icon>
+            </a>
+            <a href="https://www.linkedin.com/company/bringoo/">
+              <icon name="linkedin" class="social ml-8"></icon>
+            </a>
+            <icon name="xing" class="social ml-8"></icon>
+          </div>
+        </div>
+        <div class="d-flex flex-column">
+          <div class="Zahlungsarten text-bold mb-8">
+            Zahlungsarten
+          </div>
+          <div class="d-flex align-items-center">
+            <a href="#"><img class="card1" src="/assets/img/cards/visa.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/mastercard-color.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/amex.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/sofort.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/klama.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/giro-pay.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/paypal.svg"></a>
+            <a href="#"><img class="card ml-1" src="/assets/img/cards/apple-pay.svg"></a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-15 f-4 text-tiny-bold">
+        © {{year}} bringoo.de. All rights reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<ui-sign-modal [opened]="signModal" (onClose)="onSignModalClose()">
+  <ui-auth [modal]="true" [pageStatus]="pageStatus"></ui-auth>
+</ui-sign-modal>

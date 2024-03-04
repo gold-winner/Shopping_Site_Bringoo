@@ -1,0 +1,231 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form class='mx-8 mt-8' [formGroup]="form">
+  <div class="row mx-0 mb-8">
+    <div class="col border-round-sm p-0 mr-8">
+      <div class="bg-component border-round-sm p-4">
+        <div class="d-flex justify-content-between"><h4>Voucher code</h4>
+          <button nz-button nzType="link" (click)="onGenerateVoucherCode()">Generate code</button>
+        </div>
+        <input
+        nz-input
+        appCodeInput
+        type="text"
+        formControlName="code"
+        placeHolder="Input manually or generate or leave empty"
+        [maxLength]="codeMaxLength"/>
+      </div>
+
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <app-filter-category-select
+          [type]="'multiple'"
+          label="Exclude product categories"
+          formControlName="excludeProductCategories">
+        </app-filter-category-select>
+      </div>
+
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label>Voucher Type</nz-form-label>
+            <nz-select 
+              formControlName="voucherType"
+              placeHolder="Voucher Type select"
+              ><nz-option
+                *ngFor="let voucherType of voucherTypes"
+                [nzLabel]="voucherType.label"
+                [nzValue]="voucherType.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <ng-container *ngIf="form.get('voucherType')?.value === 'FREE_SHIPPING'">
+        <app-voucher-free-shipping
+          formControlName="freeShipping"
+        ></app-voucher-free-shipping>
+      </ng-container>
+
+      <ng-container *ngIf="['DISCOUNT_FIXED','DISCOUNT_PERCENTAGE'].includes(form.get('voucherType')?.value)">
+        <app-voucher-discount
+          formControlName="discount"
+          [voucherType]="form.get('voucherType')?.value"
+        ></app-voucher-discount>
+      </ng-container>
+
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzRequired>Customer eligibility</nz-form-label>
+            <nz-select 
+              formControlName="customerEligibility"
+              placeHolder="Customer eligibility select"
+              ><nz-option
+                *ngFor="let customerEligibilityType of customerEligibilityTypes"
+                [nzLabel]="customerEligibilityType.label"
+                [nzValue]="customerEligibilityType.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <ng-container
+          *ngIf="form.get('customerEligibility')?.value === 'SELECTED'">
+          <app-select
+            [options]="customersList"
+            [required]="false"
+            formControlName="customerIds"
+            type="multiple"
+            placeHolder="Select customers">
+          </app-select>
+        </ng-container>
+        <ng-container *ngIf="form.get('customerEligibility')?.value === 'TAGS'">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-select
+                nzPlaceHolder="Customer Tags"
+                nzMode="tags"
+                [nzDropdownStyle]="{ display: 'none' }"
+                formControlName="customerTags"
+              ></nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </ng-container>
+      </div>
+
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzRequired>Store eligibility</nz-form-label>
+            <nz-select 
+              formControlName="storeEligibility"
+              placeHolder="Store eligibility select"
+              ><nz-option
+                *ngFor="let storeEligibilityType of storeEligibilityTypes"
+                [nzLabel]="storeEligibilityType.label"
+                [nzValue]="storeEligibilityType.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <ng-container
+          *ngIf="form.get('storeEligibility')?.value === 'SELECTED'">
+          <app-select
+            [options]="storeCorporateList"
+            [required]="false"
+            formControlName="storeCorporateCodes"
+            type="tags"
+            placeHolder="Select store corporates">
+          </app-select>
+        </ng-container>
+        <ng-container
+          *ngIf="form.get('storeCorporateCodes')?.value?.length > 0">
+          <app-select
+            [options]="storeBrandList"
+            [required]="false"
+            formControlName="storeBrandCodes"
+            type="tags"
+            placeHolder="Select store brands">
+          </app-select>
+        </ng-container>
+        <ng-container
+          *ngIf="form.get('storeBrandCodes')?.value?.length > 0">
+          <app-select
+            [options]="storesList"
+            [required]="false"
+            formControlName="storeIds"
+            type="tags"
+            placeHolder="Select stores">
+          </app-select>
+        </ng-container>
+      </div>
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label nzRequired>Requirements</nz-form-label>
+            <nz-select 
+              formControlName="requirements"
+              placeHolder="Requirements select"
+              ><nz-option
+                *ngFor="let requirementItem of requirementsList"
+                [nzLabel]="requirementItem.label"
+                [nzValue]="requirementItem.value"
+              ></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <input
+          *ngIf="form.get('requirements')?.value === 'MIN_COST_AMOUNT'"
+          nz-input
+          type="number"
+          formControlName="minCostAmount"
+          placeholder="Min overall price"
+        />
+        <input
+          *ngIf="form.get('requirements')?.value === 'MIN_ITEMS_AMOUNT'"
+          nz-input
+          type="number"
+          formControlName="minItemAmount"
+          placeholder="Min items amount"
+        />
+      </div>
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <h4>Usage limits</h4>
+        <label
+          nz-checkbox
+          formControlName="isLimitUsageTotal">
+          Limit number of times this voucher can be used in total
+        </label>
+        <br/>
+        <input
+          *ngIf="form.get('isLimitUsageTotal')?.value"
+          nz-input
+          type="number"
+          formControlName="limitUsageTotal"
+          placeholder="Quantity limit"
+        />
+        <label
+          nz-checkbox
+          class="ml-0"
+          formControlName="isLimitUsagePerCustomer">
+          Limit number of times this voucher can be used per customer
+        </label>
+        <br/>
+        <input
+          *ngIf="form.get('isLimitUsagePerCustomer')?.value"
+          nz-input
+          min="1"
+          type="number"
+          formControlName="limitUsagePerCustomer"
+          placeholder="Customer can use limit"
+        />
+        <br/>
+        <label
+          nz-checkbox
+          formControlName="isForNewCustomerOnly">
+          Is for new customer only
+        </label>
+      </div>
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon nzFor="dateStart">Start date</nz-form-label>
+          <nz-form-control labelForErrorTip="Start date">
+            <nz-date-picker formControlName='dateStart'></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      
+        <nz-form-item>
+          <nz-form-label nzRequired nzNoColon nzFor="dateEnd">End date</nz-form-label>
+          <nz-form-control labelForErrorTip="End date">
+            <nz-date-picker formControlName='dateEnd'></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div class="col-7 border-round-sm p-0">
+      <app-voucher-summary [voucher]="form.value"></app-voucher-summary>
+      <div class="bg-component border-round-sm mt-4 p-4">
+        <h5>CAN'T COMBINE WITH OTHER AUTOMATIC DISCOUNTS</h5>
+        <p>Customers won't be able to enter a code if an automatic discount is already applied at checkout.</p>
+      </div>
+    </div>
+  </div>
+</form>

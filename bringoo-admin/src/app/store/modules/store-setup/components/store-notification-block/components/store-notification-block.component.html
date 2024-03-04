@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <h4 class="mt-4 mb-2">Store Notifications Blocks</h4>
+  <div class="row mt-4">
+    <div class="col">
+      <ng-container *ngIf="blocksRequest$ | async as blocksRequest" >
+        <nz-table 
+          [nzData]="notificationCodes"
+          [nzShowPagination]="false"
+          [nzScroll]="{ y: '800px' }">
+          <thead>
+            <tr>
+              <th nzWidth="60%">Code</th>
+              <th nzWidth="20%">Instant Delivery</th>
+              <th nzWidth="20%">Scheduled Delivery</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let code of notificationCodes">
+              <td nzWidth="60%">
+                {{ code }}
+              </td>
+              <td nzWidth="20%">
+                <nz-switch
+                  [(ngModel)]="notificationCodeStates[code + '_instant']"
+                  (ngModelChange)="toggleBlock($event, code, true)"
+                ></nz-switch>
+              </td>
+              <td nzWidth="20%">
+                <nz-switch
+                  [(ngModel)]="notificationCodeStates[code + '_prescheduled']"
+                  (ngModelChange)="toggleBlock($event, code, false)"
+                ></nz-switch>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </ng-container>
+    </div>
+  </div>
+</div>
+

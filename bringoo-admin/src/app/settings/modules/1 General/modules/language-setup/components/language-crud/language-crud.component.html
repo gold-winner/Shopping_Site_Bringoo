@@ -1,0 +1,25 @@
+<app-crud
+  [config]="config"
+  [service]="service"
+  [createForm]="createForm"
+  [updateForm]="updateForm"
+  [filterForm]='filterForm'
+  [columns]="columns"
+  [fields]='fields'
+  [reloadData]="reloadData"
+  [horizontalPadding]="0"
+  (onAction)="reloadingActions.includes($event) && reloadLanguages()"
+></app-crud>
+
+<nz-modal
+  [(nzVisible)]="setPrimaryLanguage"
+  nzTitle="Change Primary Language"
+  nzOkText="Save"
+  nzCancelText="Cancel"
+  (nzOnOk)="onChangeLanguage()"
+  (nzOnCancel)="onClosePanel()"
+>
+  <ng-container *nzModalContent>
+    <app-language-select [formControl]="languageController" placeHolder="Language" label="Language"></app-language-select>
+  </ng-container>
+</nz-modal>

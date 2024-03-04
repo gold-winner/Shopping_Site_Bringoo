@@ -1,0 +1,37 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input required label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input label="Description" type="textarea" formControlName="description_i18n"></app-multi-lang-v2-input>
+  </app-lang-controller>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Image</nz-form-label>
+    <nz-form-control labelForErrorTip="Image">
+      <app-file-upload formControlName="imageUrl" [multiple]="false" [path]="'storeBrand'" [isRequired]='false'></app-file-upload>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="isActive">Status</nz-form-label>
+    <nz-form-control labelForErrorTip="Status">
+      <app-status-switch formControlName='isActive'></app-status-switch>
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Brand code</nz-form-label>
+    <nz-form-control labelForErrorTip="Brand code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Brand code"/>
+    </nz-form-control>
+
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label>Corporate</nz-form-label>
+    <nz-form-control>
+      <app-select [options]='corporateSelect' placeHolder='Corporate' formControlName='corporateCode'></app-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,0 +1,12 @@
+<div class="">
+  <div class="d-flex flex-wrap py-5 pr-2" *ngFor="let subcategory of subcategories" (mouseover)="onsubCategoryOver(subcategory.code)" (click)="onsubCategoryClick(subcategory.categoryCode + ':' + subcategory.code)" [ngClass]="{'item-over': subcategory.code===selected_subCategory}">
+    <a *ngIf="!url" class="d-flex" [routerLink]=categoryUrl [queryParams]="{ category: subcategory.categoryCode.toLowerCase() }" [state]="{ subcategory: subcategory.code }">
+      <img src="{{subcategory.imageUrl}}" class="w-11 ml-5">
+      <span class="text-small text-semi-bold ml-5 mt-3">{{subcategory.name_i18n}}</span>
+    </a>
+    <a *ngIf="url" class="d-flex" [routerLink]=categoryUrl [queryParams]="{ category: subcategory.categoryCode.toLowerCase() }" [state]="{ subcategory: subcategory.code }">
+      <img src="{{subcategory.imageUrl}}" class="w-11 ml-5">
+      <span class="text-small text-semi-bold ml-5 mt-3">{{subcategory.name_i18n}}</span>
+    </a>
+  </div>
+</div>

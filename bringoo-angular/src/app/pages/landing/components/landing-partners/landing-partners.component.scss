@@ -1,0 +1,103 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/grid';
+@import 'src/scss/shadows';
+.header {
+  box-shadow: 0px 4px 11px rgba($color_grey, 0.3);
+
+  &-body {
+    @extend .container;
+    @extend .d-flex;
+    @extend .py-5;
+    @extend .align-items-center;
+    @extend .justify-content-between;
+
+    .btn-login {
+      @extend .border-radius-md;
+      @extend .text-darkgrey;
+      @extend .text-medium;
+      @extend .text-bold;
+      @extend .px-2;
+      @extend .py-1;
+      border: 1px solid rgba($color_grey, 0.3);
+    }
+  }
+}
+
+.content {
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .container;
+
+  .carousel {
+    height: 600px !important;
+    z-index: 0 !important;
+  
+    ::ng-deep .carousel-container {
+      border-radius: 16px !important;
+    }
+  
+    ::ng-deep .carousel-arrows {
+  
+      .carousel-arrow {
+        top: unset;
+        bottom: 12px;
+        background-color: transparent;
+        background-size: 24px;
+        box-shadow: unset;
+      }
+  
+      .carousel-arrow-prev {
+        left: 36px;
+        right: unset;
+        background-image: url('/assets/icons/arrow-left.svg');
+      }
+  
+      .carousel-arrow-next {
+        left: 80px;
+        right: unset;
+        background-image: url('/assets/icons/arrow-right.svg');
+      }
+    }
+  }
+
+  .partner {
+    @extend .d-flex;
+    @extend .shadow-light;
+    @extend .align-items-center;
+    @extend .border-radius-md;
+    @extend .p-5;
+    @extend .w-96;
+    margin: 10px;
+    img {
+      @extend .w-20;
+      @extend .h-20;
+    }
+  }
+
+  .card {
+    @extend .position-relative;
+    @extend .d-flex;
+    @extend .flex-column;
+    @extend .align-items-center;
+    @extend .p-4;
+  
+    img {
+      @extend .h-60;
+      z-index: 0;
+    }
+  
+    &-number {
+      @extend .f-50;
+      @extend .text-beige;
+      @extend .text-bold;
+      @extend .position-absolute;
+      opacity: 0.2;
+      top: -80px;
+      left: -20px;
+      z-index: -1;
+    }
+  }
+}

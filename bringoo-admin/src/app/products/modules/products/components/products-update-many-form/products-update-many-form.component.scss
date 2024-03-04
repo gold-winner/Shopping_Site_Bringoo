@@ -1,0 +1,14 @@
+@import "./../../../../../../scss/colors";
+:host{
+  .container{
+    padding: 0 !important;
+  }
+  .grid-container{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+  }
+  nz-input-number{
+    width: 100%;
+  }
+}

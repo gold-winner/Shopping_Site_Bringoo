@@ -1,0 +1,36 @@
+<div class="detail-container">
+  <div class="d-flex">
+    <img src="{{'assets/img/tomato.svg'}}" class="w-20">
+    <div class="d-flex flex-column ml-3 mt-2">
+      <span class="text-bold text-lg">Barilla Pesto Rosso 200g</span>
+      <span class="text-tiny-bold text-small text-lightblue">200g (100 g = 1,47 €)</span>
+    </div>
+  </div>
+  <div class="detail-item">
+    <span class="detail-item-price">Quantity ordered</span>
+    <span class="detail-item-price">2</span>
+  </div>
+  <div class="detail-item">
+    <span class="detail-item-price">Quantity found</span>
+    <span class="detail-item-price">0</span>
+  </div>
+  <div class="detail-item">
+    <span class="detail-item-price">Unit Price</span>
+    <span class="detail-item-price">2,93 €</span>
+  </div>
+  <div class="border"></div>
+  <div class="detail-item" [ngClass]="{'mb-2': option=='replacement'}">
+    <span class="detail-item-total">Total price</span>
+    <span class="detail-item-total">5,86 €</span>
+  </div>
+  <ui-button width="full" size="md" radius="md" color="secondary" *ngIf="category=='change' && option=='replacement'">Change</ui-button>
+  <ui-button width="full" size="md" radius="md" color="secondary" *ngIf="category=='removed' && option=='replacement'">Undo</ui-button>
+  <div class="d-flex justify-content-around" *ngIf="option=='replacement' && category=='done' || category=='review'">
+    <div class="w-50p mr-2">
+      <ui-button width="full" size="md" radius="md" color="red">Remove</ui-button>
+    </div>
+    <div class="w-50p ml-2">
+      <ui-button width="full" size="md" radius="md" color="secondary">Select</ui-button>
+    </div>
+  </div>
+</div>

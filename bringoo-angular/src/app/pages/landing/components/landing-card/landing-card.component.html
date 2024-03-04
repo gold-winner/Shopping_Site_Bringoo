@@ -1,0 +1,13 @@
+<div class="landing-card">
+  <div class="landing-card__media">
+    <ng-content></ng-content>
+  </div>
+  <div class="landing-card__description">
+    <div [innerHTML]="data.title" class="landing-card__description--title"></div>
+    <p class="mt-6 f-5">
+      {{data.content}}
+    </p>
+    <div class="text-green" [innerHTML]="data.footer">
+    </div>
+  </div>
+</div>

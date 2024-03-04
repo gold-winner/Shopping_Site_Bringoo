@@ -1,0 +1,14 @@
+<div class="ui-card-small" [ngStyle]="{backgroundImage: 'url(assets/img/cards/' + imgUrl + ')'}">
+  <div class="ui-card-small__title">
+    <span>{{title1}}</span>
+    <span>{{title2}}</span>
+  </div>
+  <div 
+    class="ui-card-small__btn" 
+    [ngClass]="'ui-card-small__btn--' + color"
+    (onClick)="onShowAllClick.emit($event)">
+    <span class="font-style text-semi-bold">
+      {{btnLabel}}
+    </span> <icon class="ml-1" name="chevron-right"></icon>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+:host{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  hr{
+    width: 100%;
+  }
+  nz-tree{
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+}

@@ -1,0 +1,49 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/typography';
+
+.border {
+  @extend .w-40p;
+  border-bottom: 1px solid rgba($color_lightblue, 0.5);
+}
+
+.sign-btn {
+  @extend .w-100p;
+  @extend .d-flex;
+  @extend .justify-content-center;
+  @extend .align-items-center;
+  @extend .border-radius-md;
+  @extend .py-3;
+  @extend .cursor-pointer;
+  color: black;
+  border: 1px solid grey;
+
+  &:hover {
+    border: 1px solid black;
+  }
+}
+
+.font-or {
+  font-family: monospace;
+}
+
+#loading{
+  position: absolute;
+  left: 45%;
+  bottom: 14px;
+  z-index: 1;
+  margin: auto;
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid #3498db;
+  width: 46px;
+  height: 46px;
+  animation: spin 2s linear infinite;
+}
+  
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

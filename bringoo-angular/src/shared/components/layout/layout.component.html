@@ -1,0 +1,76 @@
+<ng-sidebar-container>
+  <div ng-sidebar-content [ngClass]="!enableStore? 'store' : 'product'" style="height: 100%;">
+    <div class="h-100p d-flex flex-column" #content  style="z-index: 2; overflow: hidden; overflow-y: scroll;" (scroll)="handleOnScroll()">
+      <div class="back_top" [ngClass]="scroll=='block'? 'd-block' : 'd-none'">
+        <ui-button radius="xlg" size="md" width="square" class="scroll-up" (click)="onScrollTopClick()">
+          <icon name="chevron-up" class="f-5"></icon>
+        </ui-button>
+      </div>
+      <ui-topbar-header
+        (onAddressClick)="addressClick($event)"
+        [addInfo]="addInfo"
+      >
+      </ui-topbar-header>
+      <ui-navbar-header 
+        [shopCount]="shopCount"
+        [addData]="addData"
+        (onAddressClick)="addressClick($event)"
+      >
+      </ui-navbar-header>
+      <ui-action-header 
+        (onAddressClick)="addressClick($event)"
+        (onStoresClick)="storesClick()"
+        (onShoppingCartClick)="openCartSidebar($event)"
+        (onSidebarClick)="categorySidebar()"
+        [cartData]="cartData"
+        [addedProduct]="addedProduct"
+        [newItem]="newItem"
+        [addData]="addData"
+        class="action-header"
+      >
+      </ui-action-header>
+      <div class="d-flex flex-column flex-grow-1">
+        <ng-content></ng-content>
+      </div>
+      <ui-footer (onScrollTopClick)="onScrollTopClick()"></ui-footer>
+    </div>
+  </div>
+  <ng-sidebar #sidebar
+    [opened]="sidebarOpened"
+    [position]="sidebarPosition" 
+    [animate]="sidbarAnimate"
+    [sidebarClass]="sidebarClass"
+    [showBackdrop]="true"
+    [closeOnClickOutside]="true"
+    [closeOnClickBackdrop]="true"
+    (onOpened)="scrollTop()">
+      <ui-cart-sidebar (onCloseSidebar)="closeCartSidebar()" (onCartDetail)="onChangeCart($event)" [cartDetailInfo]="cartDetailInfo"></ui-cart-sidebar>
+  </ng-sidebar>
+  <ng-sidebar #category
+    [opened]="sidebarCategory"
+    [position]="sidebarCategoryPosition" 
+    [animate]="categorySidebarAnimate"
+    [sidebarClass]="sidebarCategoryClass"
+    [showBackdrop]="true"
+    [closeOnClickBackdrop]="true">
+    <ui-category-sidebar (onCloseCategorySidebar)="categorySidebar()" (onCategorySelect)="SubCategorySidebar($event)" (onCategoryUnselect)="closeSubCategorySidebar()"></ui-category-sidebar>
+  </ng-sidebar>
+  <ng-sidebar #subcategory
+    [opened]="sidebarsubCategory"
+    [animate]="subCategorySidebarAnimate"
+    [showBackdrop]="true"
+    [closeOnClickBackdrop]="true">
+    <ui-subcategory-sidebar 
+      class="subcategory"
+      (clickSubCategory)="onSubCategory($event)"
+      [code]="categoryCode"
+      [cateUrl]="cateUrl">
+    </ui-subcategory-sidebar>
+  </ng-sidebar>
+</ng-sidebar-container>
+<ui-modal [opened]="addressModal" (onClose)="onAddressModalClose()">
+  <ui-delivery-address #address [selectedMode]="selectedMode" [mapLoaded]="mapLoaded" (onChangeDelivery)="onChangeDelivery($event)" (onChangeAddress)="onChangeAddress($event)"></ui-delivery-address>
+</ui-modal>
+<ui-modal [opened]="storesModal" (onClose)="onStoresModalClose()">
+  <ui-stores-list></ui-stores-list>
+</ui-modal>

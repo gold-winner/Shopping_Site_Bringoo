@@ -1,0 +1,58 @@
+<form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-2">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group nzSuffixIcon="user">
+        <input
+          [type]="'text'"
+          nz-input
+          placeholder="Name"
+          formControlName="firstName"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group nzSuffixIcon="user">
+        <input
+          [type]="'text'"
+          nz-input
+          placeholder="Last Name"
+          formControlName="lastName"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="mb-4">
+    <nz-form-control>
+      <nz-input-group nzSuffixIcon="user">
+        <input
+          [type]="'email'"
+          nz-input
+          placeholder="Email"
+          formControlName="email"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <button
+    nz-button
+    nzBlock
+    nzType="primary"
+  >Continue</button>
+  <p class="f-3 mt-7">
+    Solltest du nach deiner Registrierung einen unserer
+    Services nutzen, verwenden wir deine E-Mail-Adresse
+    um dich über aktuelle Angebote und Updates zu
+    benachrichtigen. Du kannst dieser Verwendung natürlich
+    jederzeit per E-Mail oder auf unserer Website
+    widersprechen. Mit deiner Registrierung erklärst du dich
+    mit den „<a>Nutzungsbedingungen – Bringoo
+    Kundenkonto</a>“ einverstanden. Nähere Informationen zur
+    Verarbeitung deiner Daten entnimmst du bitte unseren
+    <a>Datenschutzhinweisen</a>.
+  </p>
+  <div class="mt-5 f-3">
+    <a class="mr-4">AGB</a>|<a class="ml-4 mr-4">Nutzungsrichtlinien</a>|<a class="ml-4">Datenschutzhinweise</a>
+  </div>
+</form>

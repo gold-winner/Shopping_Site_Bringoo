@@ -1,0 +1,14 @@
+<nz-breadcrumb *ngIf='breadCrumbs$ | async as crumbs' class='d-flex align-items-center'>
+  <nz-breadcrumb-item *ngFor='let crumb of crumbs; let index=index'>
+    <a
+      *ngIf="index !== crumbs.length - 1"
+      routerLink="{{crumb.path}}"
+      [queryParams]="crumb.query || null"
+      class="breadcrumb-item"
+    >{{crumb.title}}</a>
+    <a
+      *ngIf="index === crumbs.length - 1"
+      class="breadcrumb-item"
+    >{{crumb.title}}</a>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>

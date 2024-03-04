@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input required label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input label="Description" type="textarea" formControlName="description_i18n"></app-multi-lang-v2-input>
+  </app-lang-controller>
+
+  <nz-form-item>
+    <nz-form-label>Image</nz-form-label>
+    <nz-form-control labelForErrorTip="Image">
+      <app-file-upload formControlName="imageUrl" [multiple]="false" [path]="'productBrand'"></app-file-upload>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Watermark Image</nz-form-label>
+    <nz-form-control labelForErrorTip="Watermark Image">
+      <app-file-upload formControlName="watermarkImageUrl" [multiple]="false" [path]="'productBrand'"></app-file-upload>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="d-flex justify-content-between">
+    <nz-form-label>Status</nz-form-label>
+    <nz-form-control>
+      <div class="row">
+        <div class="col-12">
+          <app-status [value]="form.get('isActive')?.value"></app-status>
+        </div>
+        <div class="col-12 text-align-right">
+          <nz-switch formControlName='isActive'></nz-switch>
+        </div>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>

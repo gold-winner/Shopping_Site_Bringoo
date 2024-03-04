@@ -1,0 +1,118 @@
+<form nz-form [formGroup]="form" nzLayout="inline" class="bg-component p-4">
+  <app-filter-store-select
+    class="w-40 mr-4"
+    label="Store Filter"
+    placeHolder="Store Filter"
+    formControlName="storeId"
+  ></app-filter-store-select>
+
+  <app-filter-store-region-select
+    class="w-40 mr-4"
+    label="Store Region Filter"
+    placeHolder="Store Region Filter"
+    formControlName="storeRegionCode"
+  ></app-filter-store-region-select>
+
+  <nz-form-item class="w-40">
+    <nz-form-control labelForErrorTip="Start date">
+      <nz-form-label nzRequired>Start date</nz-form-label>
+      <app-date-control
+        formControlName="dateStart"
+        placeHolder="Date start"
+        [isRequired]="true"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item class="w-40">
+    <nz-form-control labelForErrorTip="End date">
+      <nz-form-label nzRequired>End date</nz-form-label>
+      <app-date-control
+        formControlName="dateEnd"
+        placeHolder="Date end"
+        [isRequired]="true"
+        [disableBefore]="form.value.dateStart || ''"
+      ></app-date-control>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+
+<div class="map-container">
+  <div class="map-info p-4">
+    <div class="p-4 border-round-sm">
+      <label class="carts text-bold" nz-radio [ngModel]="true">Abandoned Shopping Cart</label>
+      Orders:
+      <label class="in-progress text-bold" nz-radio [ngModel]="true">In progress</label>
+      <label class="complete text-bold" nz-radio [ngModel]="true">Complete</label>
+      <label class="payment text-bold" nz-radio [ngModel]="true">Payment</label>
+      <label class="cancelled text-bold" nz-radio [ngModel]="true">Cancelled</label>
+    </div>
+  </div>
+  <google-map *ngIf="($isLoaded|async) && mapOptions" [options]="mapOptions" [width]="'100%'" [height]="'100%'">
+    <map-marker-clusterer
+      *ngIf="cart$|async as carts"
+      [imagePath]="markerClustererImagePath"
+      title="Carts"
+      [maxZoom]="12"
+    >
+      <ng-container *ngFor="let cart of carts">
+        <map-marker
+          *ngIf="cart?.customer?.addresses?.pop()?.location |location as location"
+          [visible]="true"
+          [options]="location|getMarkerOption"
+          #marker="mapMarker"
+          (mapClick)="openInfoWindow(marker, infoWindow)"
+        >
+          <map-info-window #infoWindow="mapInfoWindow">
+            <p class="text-black mb-1">Customer:
+              <a routerLink="/orders/abandoned-shopping-cart/{{cart.id}}">
+                {{ cart.customer?.settings?.firstName }} {{cart.customer?.settings?.lastName}}
+              </a>
+            </p>
+            <p class="mb-0 text-black">Cart Code:
+              <a routerLink="/users/customers/details/{{cart.customerId}}">
+                {{ cart.cartCode }}
+              </a>
+            </p>
+            <p class="mb-0 text-black"> Store Name:
+              <a routerLink="/store/stores/{{cart.storeId}}/basic-information">{{cart?.store?.name_i18n}}</a>
+            </p>
+          </map-info-window>
+        </map-marker>
+      </ng-container>
+    </map-marker-clusterer>
+
+    <map-marker-clusterer
+      *ngIf="orders$ | async as orders"
+      [imagePath]="markerClustererImagePath"
+      title="Orders"
+      [maxZoom]="15"
+    >
+      <ng-container *ngFor="let order of orders">
+        <map-marker
+          *ngIf="order?.orderBillingAddress?.location|location as location"
+          #marker="mapMarker"
+          [visible]="true"
+          [options]="location|getMarkerOption :(
+          orderCompleteStatuses.has(order.orderStatus!) ? '../../../../../../assets/img/map-markers/green-marker.svg' :
+          orderCanceledStatuses.has(order.orderStatus!) ? '../../../../../../assets/img/map-markers/red-marker.svg' :
+          ordersPayment.has(order.orderStatus!) ? '../../../../../../assets/img/map-markers/blue-marker.svg' :
+          '../../../../../../assets/img/map-markers/yellow-marker.svg'
+        )"
+          (mapClick)="openInfoWindow(marker, infoWindow)"
+        >
+          <map-info-window #infoWindow="mapInfoWindow">
+            <div class="d-flex">
+              <img class="store-logo" src="{{order.store?.logoUrl || './../../../assets/img/avatars/noAvatar.svg'}}" alt="Store">
+              <div class="text-black f-4 ml-4">
+                <div>Order Id: <a routerLink="/orders/all/detail/{{order.id}}">{{order.orderNumber}}</a></div>
+                <div>Order Date: <a>{{order.deliveryDate}}</a></div>
+                <div>Store Name: <a routerLink="/store/stores/{{order.storeId}}/basic-information">{{order?.store?.name_i18n}}</a></div>
+              </div>
+            </div>
+          </map-info-window>
+        </map-marker>
+      </ng-container>
+    </map-marker-clusterer>
+  </google-map>
+</div>

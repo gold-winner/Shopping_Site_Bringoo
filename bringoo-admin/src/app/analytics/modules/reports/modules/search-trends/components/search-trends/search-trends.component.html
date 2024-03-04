@@ -1,0 +1,77 @@
+<div class="mx-8 mt-8 mb-8">
+  <div class="d-flex justify-content-between mb-4">
+    <a class="d-flex align-items-center" routerLink='../'><i nz-icon nzType="left" nzTheme="outline"></i><h3 class='mb-0'>Trends</h3></a>
+  </div>
+  <nz-card nzBorderless class="border-round-sm">
+    <form nz-form [formGroup]="form" nzLayout="horizontal">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group nzPrefixIcon="search">
+            <input formControlName="term" nz-input placeholder="Filter terms"/>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <div class="row pl-4">
+        <app-filter-country-select formControlName="countryCode" class="col pl-0" placeHolder="Country" label="Country"></app-filter-country-select>
+        <app-filter-store-select formControlName="storeId" class="col pl-0" placeHolder="Store" label="Store"></app-filter-store-select>
+      </div>
+    </form>
+    <nz-table
+      *ngIf="items$|async as data"
+      nzShowSizeChanger
+      nzShowPagination
+      [nzData]="data"
+      [nzFrontPagination]="false"
+      [nzLoading]="false"
+      [nzTotal]="total"
+      [nzPageIndex]="page"
+      [nzPageSize]="10"
+      [nzSize]="'small'"
+      [nzPageSizeOptions]="nzPageSizeOptions"
+      (nzQueryParams)="onQueryParamsChange($event)"
+    >
+      <thead>
+      <tr>
+        <th nzWidth="50px" class="text-align-center">№</th>
+        <th [nzColumnKey]="'term'">Term</th>
+        <th [nzColumnKey]="'searchRate'">Search rate</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of data; let index = index">
+        <td class="text-align-center">{{index|tableItemIndex :page :limit}}</td>
+        <td> <a [routerLink]="['./products/' + item?.term]"> {{ item?.term }} </a> </td>
+        <td>{{ item?.count }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+
+    <div class="row-sm d-md-flex mt-4">
+      <div class="col border-round-sm border-1 border-darkvanilla pt-4 pb-3">
+        <app-line-chart
+          [dataLabel]="'Product'"
+          [data]="data"
+          [labels]="labels"
+          title="Interest over time"
+          gridBorderColor="#2CC84D"
+          [showLegend]="false"
+          [displayXGrid]="false"
+        ></app-line-chart>
+      </div>
+
+      <span class="w-4"></span>
+
+      <div class="col border-round-sm border-1 border-darkvanilla pt-4 pb-3">
+        <app-line-chart
+          [dataLabel]="'Product'"
+          [data]="data"
+          [labels]="labels"
+          title="Interest over time"
+          gridBorderColor="#2CC84D"
+          [showLegend]="false"
+          [displayXGrid]="false"
+        ></app-line-chart>
+      </div>
+    </div>
+  </nz-card>
+</div>

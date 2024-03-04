@@ -1,0 +1,19 @@
+<ng-container *ngIf="showAll">
+  <nz-tag class='mb-2' *ngFor="let tag of tags" nzColor="success">{{tag}}</nz-tag>
+  <button
+    nz-button
+    nzType="primary"
+    nzSize="small"
+    *ngIf="tags.length > 7"
+    (click)="showAll = false"
+  >Less</button>
+</ng-container>
+<ng-container *ngIf="!showAll">
+  <nz-tag class='mb-2' *ngFor="let tag of tags.slice(0, 6)" nzColor="success">{{tag}}</nz-tag>
+  <button
+    nz-button
+    nzType="primary"
+    nzSize="small"
+    (click)="showAll = true"
+  >All</button>
+</ng-container>

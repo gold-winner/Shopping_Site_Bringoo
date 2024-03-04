@@ -1,0 +1,9 @@
+<div>
+  <icon name="chevron-left" class="text-header__back cursor-pointer"></icon>
+  <span class="text-header__title" *ngIf="option=='alternative'">Select alternative</span>
+  <span class="text-header__title" *ngIf="option=='replacement'">Select replacement</span>
+  <div class="mt-7">
+    <p class="text-content" *ngIf="option=='alternative'">Below is the item which is not availbe. Please select any alternative the same subcategory or category.</p>
+    <p class="text-content" *ngIf="option=='replacement'">The below list shows all products of your order. Some of your ordered items are not available. Start the request and select any alternative as replacement.</p>
+  </div>
+</div>

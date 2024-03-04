@@ -1,0 +1,84 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Contact type</nz-form-label>
+    <nz-form-control labelForErrorTip="Contact type">
+      <app-list-select formControlName='contactType' [list]='contactTypeList' placeHolder='Contact type'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Name</nz-form-label>
+    <nz-form-control labelForErrorTip="Name">
+      <input nz-input formControlName='firstName' placeholder='Name'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Last name</nz-form-label>
+    <nz-form-control labelForErrorTip="Last name">
+      <input nz-input formControlName='lastName' placeholder='Last name'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="phoneNumber">Phone number</nz-form-label>
+    <nz-form-control labelForErrorTip="Phone number">
+      <nz-input-group nzCompact>
+        <nz-select formControlName='phoneCountryCode' required nzPlaceHolder='Country code' nzShowSearch  style="width:30%;">
+          <nz-option *ngFor='let phoneCode of countryCode' [nzLabel]="phoneCode[0] +' +'+ phoneCode[1]" [nzValue]="phoneCode[1]"></nz-option>
+        </nz-select>
+        <input nz-input appDisableControl required [disable]="!form.controls.phoneCountryCode" formControlName='phoneNumber' style="width:70%;" placeholder='Enter number'/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Street name</nz-form-label>
+    <nz-form-control labelForErrorTip="Street name">
+      <input formControlName='streetName' nz-input placeholder="Street name">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Street number</nz-form-label>
+    <nz-form-control labelForErrorTip="Street number">
+      <input formControlName='streetNumber' nz-input placeholder="Street number">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Email</nz-form-label>
+    <nz-form-control labelForErrorTip="Email">
+      <input nz-input formControlName='email' placeholder='Email'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Country</nz-form-label>
+    <nz-form-control labelForErrorTip="Country">
+      <app-select [options]='countryCodeSelect' formControlName='countryCode' placeHolder='Country' [required]='true'></app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>City</nz-form-label>
+    <nz-form-control labelForErrorTip="City">
+      <input nz-input formControlName='city' placeholder="city">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Zip</nz-form-label>
+    <nz-form-control labelForErrorTip="Zip">
+      <input nz-input appCodeInput formControlName='zipCode' placeholder="city">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Description</nz-form-label>
+    <nz-form-control labelForErrorTip="Description">
+      <textarea nz-input formControlName='description' placeholder="Description"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

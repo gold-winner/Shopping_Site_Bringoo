@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Email domain</nz-form-label>
+    <nz-form-control labelForErrorTip="Email domain">
+      <input nz-input type='text' formControlName='emailDomain' placeholder='Input phone email domain'>
+    </nz-form-control>
+  </nz-form-item>
+</form>

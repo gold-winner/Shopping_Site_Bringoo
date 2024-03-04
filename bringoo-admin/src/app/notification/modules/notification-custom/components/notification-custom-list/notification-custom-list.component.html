@@ -1,0 +1,51 @@
+<div class="px-8 pt-8">
+  <div nz-row nzJustify="space-between">
+    <div nz-col>
+      <button nz-button nzType="primary" nzSize="large" (click)="onShowCustomerForm()">
+        Notification to customers
+      </button>
+      &nbsp;
+      <button nz-button nzType="primary" nzSize="large" (click)="onShowStaffForm()">
+        Notification to staff
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="flex-grow-1">
+  <app-notification-custom-crud [reloadPage]="reloadPage"></app-notification-custom-crud>
+</div>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="500"
+  [(nzVisible)]="customerFormVisible"
+  nzTitle="Send notification to customers"
+  nzPlacement="right"
+  (nzOnClose)="onCloseCustomerDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <app-notification-custom-customer-form
+      *ngIf="customerFormVisible"
+      (send)="onCustomerNotification($event)"
+    >
+    </app-notification-custom-customer-form>
+  </ng-template>
+</nz-drawer>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="500"
+  [(nzVisible)]="staffFormVisible"
+  nzTitle="Send notification to staff"
+  nzPlacement="right"
+  (nzOnClose)="onCloseStaffDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <app-notification-custom-staff-form
+      *ngIf="staffFormVisible"
+      (send)="onStaffNotification($event)"
+    >
+    </app-notification-custom-staff-form>
+  </ng-template>
+</nz-drawer>

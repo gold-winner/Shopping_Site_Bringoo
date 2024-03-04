@@ -1,0 +1,41 @@
+<table class="text-center f-4 mt-4">
+  <thead>
+    <tr>
+      <td>New Users per month</td>
+      <td></td>
+      <ng-container *ngIf="gridType === 'ORDERS_COUNT'">
+        <td *ngFor="let value of totalOrdersCount">{{value}}</td>
+      </ng-container>
+      <ng-container *ngIf="gridType === 'TOTAL_SALES'">
+        <td *ngFor="let value of totalOrdersMoney">{{value|formatPrice}}</td>
+      </ng-container>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Month</td>
+      <td *ngFor="let month of monthsLabels" width="80" class="bg-default-text-color-10">{{month}}</td>
+      <td class="text-align-right bg-beige-20" width="100">
+        <ng-container *ngIf="gridType === 'ORDERS_COUNT'">{{totalOrders}}</ng-container>
+        <ng-container *ngIf="gridType === 'TOTAL_SALES'">{{totalMoney|formatPrice}}</ng-container>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let month of monthsLabels; let rowMonthIndex=index">
+      <td class="text-align-right pr-4 bg-beige-20">{{newCustomersPerMonth[rowMonthIndex]}}</td>
+      <td class="bg-default-text-color-10">{{month}}</td>
+      <td
+        [class.bg-primary-10]="colMonthIndex >= rowMonthIndex"
+        *ngFor="let month of monthsInterval;
+        let colMonthIndex=index"
+      >
+        <ng-container *ngIf="gridType === 'ORDERS_COUNT'">{{grid[rowMonthIndex][colMonthIndex]?.totalOrders ?? getEmptyValue(rowMonthIndex, colMonthIndex)}}</ng-container>
+        <ng-container *ngIf="gridType === 'TOTAL_SALES'">{{grid[rowMonthIndex][colMonthIndex]?.sumGrandTotal ?? getEmptyValue(rowMonthIndex, colMonthIndex)}}</ng-container>
+      </td>
+      <td class="text-align-right bg-beige-20">
+        <ng-container *ngIf="gridType === 'ORDERS_COUNT'">{{totalOrdersPerMonth[rowMonthIndex]}}</ng-container>
+        <ng-container *ngIf="gridType === 'TOTAL_SALES'">{{totalMoneyPerMonth[rowMonthIndex].toFixed(2)}}</ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

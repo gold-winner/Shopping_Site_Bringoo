@@ -1,0 +1,52 @@
+<div class="d-flex flex-column align-items-center px-15">
+  <span class="text-bold f-6 mb-8">Add new address</span>
+  <ui-input
+    label="Name of the address"
+    placeholder="i.e. Home, Parents, Office, etc."
+    class="w-100p"
+    [error]="error_address"
+    [value]="address"
+    (valueChange)="address=$event"
+    (keyup)="onEnter($event)"
+  >
+  </ui-input>
+  <ui-input
+    label="Street"
+    class="w-100p my-8"
+    [error]="error_street"
+    [value]="street"
+    (valueChange)="street=$event"
+    (keyup)="onEnter($event)"
+  >
+  </ui-input>
+  <ui-input
+    label="PLZ"
+    class="w-100p"
+    [error]="error_plz"
+    [value]="plz"
+    (valueChange)="plz=$event"
+    (keyup)="onEnter($event)"
+  >
+  </ui-input>
+  <ui-input
+    label="City"
+    class="w-100p my-8"
+    [error]="error_city"
+    [value]="city"
+    (valueChange)="city=$event"
+    (keyup)="onEnter($event)"
+  >
+  </ui-input>
+  <div class="w-100p">
+    <ui-button *ngIf="!addressInfo && !loading" width="full" size="lg" (onClick)="onSaveClick('C')">Save</ui-button>
+    <ui-button *ngIf="!addressInfo && loading" width="full" size="lg" class="position-relative">
+      <span style="color: transparent;">Delete</span>
+      <span id="loading"></span>
+    </ui-button>
+    <ui-button *ngIf="addressInfo && !loading" width="full" size="lg" (onClick)="onSaveClick(addressInfo.id)">Save</ui-button>
+    <ui-button *ngIf="addressInfo && loading" width="full" size="lg" class="position-relative">
+      <span style="color: transparent;">Delete</span>
+      <span id="loading"></span>
+    </ui-button>
+  </div>
+</div>

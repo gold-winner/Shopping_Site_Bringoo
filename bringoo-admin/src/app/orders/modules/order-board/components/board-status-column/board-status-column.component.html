@@ -1,0 +1,7 @@
+<div *ngIf="observer|async as newOrders" class="bg-component-50 mx-4 pt-4 pb-2 px-2 mt-4 f-4 border-round-sm" style="width: 256px">
+  <h5 class="color-text-2">{{statusType}}({{ newOrders?.total ? newOrders?.count+'/'+newOrders?.total : 0}})</h5>
+  <app-board-card
+    *ngFor="let order of (newOrders?.items ?? [])"
+    [order]="order"
+  ></app-board-card>
+</div>

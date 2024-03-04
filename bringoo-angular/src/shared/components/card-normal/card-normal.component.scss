@@ -1,0 +1,51 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/shadows';
+
+.ui-card-normal {
+  @extend .p-6;
+  @extend .d-flex;
+  @extend .justify-content-center;
+  @extend .bg-white;
+  height: 160px;
+  border-radius: 8px;
+  
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  &:hover {
+    box-shadow: 0px 0px 10px 0px rgb(180, 178, 178);
+    transition: all 0.4s ease-out;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  &__content {
+    @extend .w-50;
+    @extend .ml-9;
+  }
+
+  &__header {
+    @extend .text-bold;
+    @extend .mb-0;
+    line-height: 20px;
+  }
+
+  &__footer {
+    @extend .d-flex;
+    @extend .justify-content-between;
+    @extend .position-absolute;
+    bottom: 15px; 
+    left: 186px;
+  }
+}
+
+.favorite {
+  @extend .position-absolute;
+  right: 10px;
+  top: 15px;
+  z-index: 1;
+}

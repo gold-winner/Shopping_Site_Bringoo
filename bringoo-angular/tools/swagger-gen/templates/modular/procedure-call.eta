@@ -1,0 +1,100 @@
+<%
+const { utils, route, config } = it;
+const { _, getInlineParseContent, getParseContent, parseSchema, getComponentByRef, require } = utils;
+const { parameters, path, method, payload, params, query, formData, security, requestParams } = route.request;
+const { type, errorType, contentTypes } = route.response;
+const routeDocs = includeFile("./route-docs", { config, route, utils });
+const queryName = (query && query.name) || "query";
+const pathParams = _.values(parameters);
+const argToTmpl = ({ name, optional, type }) => `${name}${optional ? '?' : ''}: ${type}`;
+
+const rawWrapperArgs = config.extractRequestParams ?
+    _.compact([
+        requestParams && {
+          name: pathParams.length ? `{ ${_.join(_.map(pathParams, "name"), ", ")}, ...${queryName} }` : queryName,
+          optional: false,
+          type: getInlineParseContent(requestParams),
+        },
+        ...(!requestParams ? pathParams : []),
+        payload,
+    ]) :
+    _.compact([
+        ...pathParams,
+        query,
+        payload,
+    ])
+
+const wrapperArgs = _
+    // Sort by optionality
+    .sortBy(rawWrapperArgs, [function(o) { return o.optional }])
+    .map(argToTmpl)
+    .join(', ')
+
+const bodyModeTmpl = formData
+    ? 'BodyType.FormData'
+    : security
+        ? 'BodyType.Json'
+        : null
+const securityTmpl = security ? 'true' : null;
+const pathTmpl = '`' + path + '`';
+
+
+
+let methodName = '';
+if(route.raw.tags && route.raw.tags.length>1){
+  methodName=route.raw.tags[route.raw.tags.length-1];
+}
+
+if(methodName===''){
+  if(/^deleteOneBase/.test(route.raw.operationId)){
+    methodName = 'delete';
+  }
+
+  if(/^updateOneBase/.test(route.raw.operationId)){
+    methodName = 'update';
+  }
+
+  if(/^getManyBase/.test(route.raw.operationId)){
+    methodName = 'find';
+  }
+
+  if(/^createOneBase/.test(route.raw.operationId)){
+    methodName = 'create';
+  }
+
+  if(/^createManyBase/.test(route.raw.operationId)){
+    methodName = 'createMany';
+  }
+
+}
+if(methodName === ''){
+  const routeParts = route.raw.operationId.split('_');
+  methodName = routeParts[routeParts.length-1];
+}
+
+if(methodName === ''){
+  console.error(route);
+}
+
+const queryParams = query != null? query.name: null;
+const payloadType = payload !=null? payload.type : 'any';
+const requestArgs = [pathTmpl, `'${_.upperCase(method)}'`, _.get(payload, "name"), queryParams]
+    .reverse()
+    .reduce((args, arg) => {
+        if (args.length === 0 && !arg) return args
+        args.push(arg ? arg : 'null')
+        return args
+    }, [])
+    .reverse()
+    .join(', ')
+%>
+/**
+<%~ routeDocs.description %>
+
+ * <% /* Here you can add some other JSDoc tags */ %>
+
+<%~ routeDocs.lines %>
+
+ */
+<%~ methodName %> = (<%~ wrapperArgs %>):Observable<<%~ type %>> =>
+    this.request<<%~ type %>, <%~ payloadType %>>(<%~ requestArgs %>)

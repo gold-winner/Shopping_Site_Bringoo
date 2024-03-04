@@ -1,0 +1,28 @@
+
+  <nz-table
+    *ngIf="smsTemplates$ | async as smsTemplates"
+    nzShowSizeChanger
+    nzShowPagination
+    [nzData]="smsTemplates.items"
+    [nzFrontPagination]="false"
+    [nzLoading]="isLoading$|async"
+    [nzTotal]="smsTemplates.total"
+    [nzPageIndex]="smsTemplates.page"
+    [nzSize]="'small'"
+  >
+      <thead>
+      <tr>
+        <th [nzSortFn]="true" [nzColumnKey]="'customerNumber'">Code</th>
+        <th [nzSortFn]="true" [nzColumnKey]="'customerName'">Is Voice</th>
+        <th [nzSortFn]="true" [nzColumnKey]="'storeName'">Message</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of smsTemplates.items; let index = index">
+        <td>{{item.code}}</td>
+        <td>{{item.isVoice}}</td>
+        <td [innerHtml]="item.body"></td>
+      </tr>
+      </tbody>
+  </nz-table>
+

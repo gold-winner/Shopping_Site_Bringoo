@@ -1,0 +1,13 @@
+<canvas
+  #canvas
+  baseChart
+  *ngIf="barConfig"
+  [height]="barConfig.height"
+  [legend]="barChartLegend"
+  [options]="barConfig.options"
+  [datasets]="barConfig.dataSet"
+  [labels]="barConfig.labels"
+  [plugins]="plugins"
+>
+</canvas>
+<div *ngIf="data.labels.length === 0" class="text-center">-No Data-</div>

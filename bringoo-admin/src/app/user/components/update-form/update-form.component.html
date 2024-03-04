@@ -1,0 +1,67 @@
+<form
+  [formGroup]="form!"
+  [bringooDisableGroup]="(isLoading$ | async)!"
+  (ngSubmit)="onSubmit()"
+>
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="24" nzFor="firstName" nzRequired>Имя</nz-form-label>
+    <nz-form-control [nzSm]="15" [nzXs]="24" labelForErrorTip="Введите имя!">
+      <input formControlName="firstName" id="firstName" nz-input type="text"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="24" nzFor="lastName" nzRequired>Фамилия</nz-form-label>
+    <nz-form-control [nzSm]="15" [nzXs]="24" labelForErrorTip="Введите фамилию!">
+      <input formControlName="lastName" id="lastName" nz-input type="text"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="24" nzFor="email" nzRequired>Email</nz-form-label>
+    <nz-form-control [nzSm]="15" [nzXs]="24" labelForErrorTip="emailErrorTpl">
+      <input formControlName="email" id="email" nz-input type="email"/>
+    </nz-form-control>
+    <ng-template #emailErrorTpl let-control>
+      <ng-container *ngIf="control.hasError('email')">
+        Вы ввели неправильный E-mail!
+      </ng-container>
+      <ng-container *ngIf="control.hasError('required')">
+        Введите E-mail!
+      </ng-container>
+    </ng-template>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="24" nzFor="password" nzRequired>Пароль</nz-form-label>
+    <nz-form-control [nzSm]="15" [nzXs]="24" labelForErrorTip="Пожалуйста введите пароль!">
+      <input formControlName="password" id="password" nz-input type="password"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="24" nzFor="checkPassword" nzRequired>Подтверждение<br>пароля</nz-form-label>
+    <nz-form-control [nzSm]="15" [nzXs]="24" labelForErrorTip="errorTpl">
+      <input formControlName="checkPassword" id="checkPassword" nz-input type="password"/>
+      <ng-template #errorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Подтвердите пароль!
+        </ng-container>
+        <ng-container *ngIf="control.hasError('confirm')">
+          Пароли не совпадают!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="9" [nzXs]="24" nzFor="isActive">Активен</nz-form-label>
+    <nz-form-control [nzSm]="15" [nzXs]="24" labelForErrorTip="errorTpl">
+      <label nz-checkbox formControlName="isActive"></label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <br><br>
+  <div nz-row>
+    <div nz-col [nzSpan]="15" [nzPush]="9">
+      <button type="submit" [disabled]="form?.invalid" nz-button nzBlock nzType="primary">Обновить</button>
+    </div>
+  </div>
+
+
+</form>

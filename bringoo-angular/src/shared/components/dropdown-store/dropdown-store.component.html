@@ -1,0 +1,20 @@
+<div class="ui-dropdown-store" tabindex="1" (blur)="opened=false">
+  <div *ngIf="selectedItem" class="ui-dropdown-store__body" style="background-image: url({{selectedItem.url}})"
+    (click)="onToggle()" #togglestore>
+    <icon *ngIf="opened" name="chevron-up" class="text-large position-absolute" style="top: 6px; right: 10px;"></icon>
+    <icon *ngIf="!opened" name="chevron-down" class="text-large position-absolute" style="top: 6px; right: 10px;">
+    </icon>
+  </div>
+  <div *ngIf="isDefault && !selectedItem" class="ui-dropdown-store__body"
+    style="background-image: url({{defaultValue}})" (click)="onToggle()" #togglestore>
+    <icon *ngIf="opened" name="chevron-up" class="text-large position-absolute" style="top: 6px; right: 10px;"></icon>
+    <icon *ngIf="!opened" name="chevron-down" class="text-large position-absolute" style="top: 6px; right: 10px;">
+    </icon>
+  </div>
+  <div class="ui-dropdown-store__list" *ngIf="opened" #menu>
+    <div *ngFor="let item of items" class="ui-dropdown-store__list--item"
+      [ngClass]="{'text-green' : selectedItem?.id === item.id}" (click)="onSelect(item.id)">
+      <div class="ui-dropdown-store__body" style="background-image: url({{item.url}})"></div>
+    </div>
+  </div>
+</div>

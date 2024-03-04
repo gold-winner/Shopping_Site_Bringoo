@@ -1,0 +1,69 @@
+<div class="ui-product-cart" [ngClass]="{'ui-product-cart-sidebar': sidebar}">
+  <icon name="delete" class="delete ui-product-cart__delete" *ngIf="!sidebar" (click)="onDelete(product.linkId)"></icon>
+  <div class="ui-product-cart__image w-16p mr-1">
+    <picture>
+      <source srcset="{{product.imageUrl.replace('original', '100')}}" class="image_size">
+      <img src="{{product.imageUrl.replace('original', '100')}}" alt="" class="image_size"/>
+    </picture>
+  </div>
+  <div class="ui-product-cart__detail d-flex flex-column ml-4" [ngClass]="sidebar ? 'w-50p' : 'w-33p'">
+    <div class="d-flex justify-content-center flex-column">
+      <div class="d-flex flex-column" [ngClass]="{'ml-8': sidebar}">
+        <span class="text-bold text-medium">{{product.name_i18n}}</span>
+        <span class="text-small text-lightblue text-semi-bold">{{product.basePrice}}</span>
+      </div>
+    </div>
+    <div *ngIf="sidebar" class="d-flex justify-content-between align-items-center">
+      <div class="d-flex flex-column mt-1" *ngIf="sidebar">
+        <span *ngIf="product.salePrice" class="text-bold text-large text-red">{{product.regularPrice}}</span>
+        <span *ngIf="!product.salePrice" class="text-bold text-large">{{product.regularPrice}}</span>
+        <span class="text-tiny text-lightblue text-semi-bold">incl. 16%</span>
+      </div>
+      <ui-quantity-input *ngIf="sidebar" [border]="false" [ngClass]="sidebar ? 'ui-product-cart__quantity--sidebar w-12p mr-6 mt-6' : 'ui-product-cart__quantity w-12p'" class="w-12p" [itemCount]="product.inCart" [productId]="product.linkId" (onChangeCart)="changeCart($event)"></ui-quantity-input>
+    </div>
+  </div>
+  <ui-quantity-input *ngIf="!sidebar" [border]="false" [ngClass]="sidebar ? 'ui-product-cart__quantity--sidebar w-12p mr-6 mt-6' : 'ui-product-cart__quantity w-12p'" class="w-12p" [itemCount]="product.inCart" [productId]="product.linkId" (onChangeCart)="changeCart($event)"></ui-quantity-input>
+  <div class="ui-product-cart__price d-flex flex-column w-20p offset-1" *ngIf="!sidebar">
+    <span *ngIf="product.salePrice" class="salePrice text-red">{{product.regularPrice}}</span>
+    <span *ngIf="!product.salePrice" class="salePrice">{{product.regularPrice}}</span>
+    <span class="text-tiny text-lightblue text-semi-bold">incl. 16%</span>
+  </div>
+  <div *ngIf="sidebar" class="ui-product-cart__action ui-product-cart__exchange w-4p" [ngClass]="sidebar ? 'ui-product-cart__sidebar': 'offset-2'">
+    <div 
+      class="repeat-checkbox"
+      (click)="checked=!checked"
+      [ngClass]="{'bg-green': checked, 'check-box': sidebar}"
+    >
+    <icon name="repeat" class="repeat"></icon>
+    </div>
+    <div class="mt-10">
+      <icon name="delete" class="delete" *ngIf="sidebar" (click)="onDelete(product.linkId)"></icon>
+    </div>
+  </div>
+  <div *ngIf="!sidebar" class="ui-product-cart__action ui-product-cart__exchange w-4p" [ngClass]="sidebar ? 'ui-product-cart__sidebar': 'offset-2'">
+    <div 
+      class="repeat-checkbox mt-5"
+      (click)="checked=!checked"
+      [ngClass]="{'bg-green': checked}"
+    >
+    <icon name="repeat" class="repeat"></icon>
+    </div>
+    <div class="mt-10">
+      <icon name="delete" class="delete" *ngIf="sidebar" (click)="onDelete(product.linkId)"></icon>
+    </div>
+  </div>
+  <ui-modal [opened]="deleteItemModal" [smallSize]="true" (onClose)="deleteItemModal=false">
+    <div class="d-flex flex-column align-items-center px-15">
+      <span class="text-bold f-6">Delete product</span>
+      <div class="text-medium my-6">Are you sure delete this item?</div>
+      <div class="w-100p d-flex justify-content-between align-items-center">
+        <ui-button *ngIf="!loading" color="red" (onClick)="onDeleteItem()">Delete</ui-button>
+        <ui-button *ngIf="loading" color="red" class="position-relative">
+          <span style="color: transparent;">Delete</span>
+          <span id="loading"></span>
+        </ui-button>
+        <div class="text-medium text-red text-bold cursor-pointer" (click)="deleteItemModal=false">Cancel</div>
+      </div>
+    </div>
+  </ui-modal>
+</div>

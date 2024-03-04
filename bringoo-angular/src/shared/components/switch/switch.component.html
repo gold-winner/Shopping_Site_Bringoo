@@ -1,0 +1,4 @@
+<div class="ui-switch" [ngClass]="color!=='grey'? 'ui-switch__green' : 'ui-switch__grey'">
+  <div class="ui-switch__btn" (click)="onChangeState()" [ngClass]="selected==='first'? color!=='grey'? 'ui-switch__primary' : 'ui-switch__primary ui-switch__darkgrey' : color!=='grey'? 'ui-switch__secondary' : 'ui-switch__secondary ui-switch__lightgrey' ">{{ primaryLabel }}</div>
+  <div class="ui-switch__btn" (click)="onChangeState()" [ngClass]="selected==='first'? color!=='grey'? 'ui-switch__secondary' : 'ui-switch__secondary ui-switch__lightgrey' : color!=='grey'? 'ui-switch__primary' : 'ui-switch__primary ui-switch__darkgrey'">{{ secondaryLabel }}</div>
+</div>

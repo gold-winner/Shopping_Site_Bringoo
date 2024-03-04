@@ -1,0 +1,24 @@
+<div class="ui-dropdown-button" tabindex="1" (blur)="opened=false">
+  <div 
+    class="ui-dropdown-button__body" 
+    [ngClass]="[
+      isDefault ? 'ui-dropdown-button__body--primary' : 'ui-dropdown-button__body--secondary', 
+      radius ? '' : 'border-radius-left', 
+      background? '' : 'ui-dropdown-button__body--primary-white' ]"
+    (click)="onToggle()"
+    #toggleButton>
+    <span *ngIf="selectedItem">{{selectedItem.text}}</span>
+    <span *ngIf="isDefault && !selectedItem">{{defaultValue}}</span>
+    <img *ngIf="!isDefault && !selectedItem" src="{{'/assets/img/cards/' + defaultValue}}">
+    <icon *ngIf="opened" name="chevron-up" class="text-large ml-3"></icon>
+    <icon *ngIf="!opened" name="chevron-down" class="text-large ml-3"></icon>
+  </div>
+  <div class="ui-dropdown-button__list" *ngIf="opened" #menu >
+    <div *ngFor="let item of items" 
+      class="ui-dropdown-button__list--item"
+      [ngClass]="{'text-green' : selectedItem?.id === item.id}" 
+      (click)="onSelect(item.id)">
+      {{item.text}}
+    </div>
+  </div>
+</div>

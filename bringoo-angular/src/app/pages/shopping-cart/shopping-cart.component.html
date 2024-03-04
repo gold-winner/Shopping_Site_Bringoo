@@ -1,0 +1,103 @@
+<ui-layout [cartChangedData]="cartChangedData" [deletedCartId]="deletedCartId" (onChangeCartDetail)="onChangeCartDetail($event)">
+  <div *ngIf="cartDetailInfo" class="bg-beige-20 h-100p">
+    <div class="container">
+      <div class="text-medium my-7"> 
+        <a routerLink='/{{storeUrl}}'>Categories</a> / Shopping Cart
+      </div>
+      <span class="text-bold">Shopping cart</span>
+      <div class="d-flex text-medium mt-7">
+        <span class="text-green">{{cartDetailInfo.cartCode}}</span>
+        <div class="d-flex align-items-center mx-3">
+          <span class="text-lightblue">Share</span>
+          <icon name="share" class="text-green text-large ml-1 cursor-pointer"></icon>
+        </div>
+        <div class="d-flex align-items-center">
+          <span class="text-lightblue">Copy to clipboard</span>
+          <icon name="copy" class="text-green text-large ml-1 cursor-pointer" (click)="onCopyCode(cartDetailInfo.cartCode)"></icon>
+        </div>
+      </div>
+      <div class="row px-3 my-7">
+        <div class="p-5 bg-white border-radius-md col-md-15 col-sm-24">
+          <div class="d-flex justify-content-between text-small">
+            <div class="d-flex">
+              <span class="item-count">{{cartDetailInfo.productsCount}} items</span>
+              <p class="pl-2 text-small text-bold">{{cartDetailInfo.weight}}</p>
+            </div>
+            <a class="d-flex align-items-center cursor-pointer" (click)="onSelectOption()">
+              <span>Select options for Replacement</span>
+              <icon name="repeat" class="ml-1"></icon>
+            </a>
+          </div>
+          <div *ngIf="cartDetailInfo" class="my-4">
+            <ui-product-cart *ngFor="let item of cartDetailInfo.items" 
+              [product]="item" 
+              [sidebar]="false" 
+              (onCartInfo)="onChangeCart($event)"
+            ></ui-product-cart>
+          </div>
+          <ui-total [hasBackground]="false" [subTotal]="cartDetailInfo.subtotal" [totalDeposit]="cartDetailInfo.totalDeposit" [vatTotal]="cartDetailInfo.vatTotal" [totalPrice]="cartDetailInfo.totalPrice" [deliveryFee]="cartDetailInfo.store.deliveryFee" (onAddVoucherClick)="onAddVoucherClick()"></ui-total>
+          <div class="d-flex align-items-center justify-content-between mt-4">
+            <a class="text-medium cursor-pointer" (click)="onDeleteItemsClick()">Delete items</a>
+            <ui-button size="lg" (onClick)="onProcessCheckout()">Process to Check out</ui-button>
+          </div>
+        </div>
+        <div class="replace-product">
+          <div class="d-flex justify-content-between align-items-center text-lightblue">
+            <span >Replacement Products</span>
+            <icon name="help" class="text-large cursor-pointer"></icon>
+          </div>
+          <p class="text-medium text-lightblue mt-4 mb-7">
+            A replacement product is assigned when the current item becomes temporarily or permanently unavailable. 
+          </p>
+
+          <ui-switch
+                  primaryLabel="Call me"
+                  secondaryLabel="Remove"
+                  color="green"
+          ></ui-switch>
+          <div class="mt-7">
+            <div class="d-flex">
+              <ui-button-group primaryIcon="arrow-up" secondaryIcon="repeat"></ui-button-group>
+              <span class="replace-product__option">Replace with product other brand +/- 10%</span>
+            </div>
+            <div class="d-flex my-3">
+              <ui-button-group primaryIcon="arrow-down" secondaryIcon="repeat"></ui-button-group>
+              <span class="replace-product__option">Replace with product with any brand cheaper price</span>
+            </div>
+            <div class="d-flex">
+              <ui-button-group primaryIcon="chat" secondaryIcon="repeat"></ui-button-group>
+              <span class="replace-product__option">Contact me for instructions</span>
+            </div>
+            <div class="d-flex mt-3">
+              <ui-button-group primaryIcon="close-x" secondaryIcon="repeat"></ui-button-group>
+              <span class="replace-product__option">Remove if not available</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ui-modal [opened]="voucherModal" [smallSize]="true" (onClose)="onVoucherModalClose()">
+    <div class="ui-voucher-modal">
+      <span class="f-6 text-bold">Insert voucher code</span>
+      <ui-input class="w-100p"></ui-input>
+      <div class="mt-6">
+        <ui-button width="full" size="lg" radius="lg">Apply</ui-button>
+      </div>
+    </div>
+  </ui-modal>
+  <ui-modal [opened]="deleteModal" [smallSize]="true" (onClose)="onDeleteModalClose()">
+    <div class="d-flex flex-column align-items-center px-15">
+      <span class="text-bold f-6">Delete Items</span>
+      <div class="text-medium my-6">Are you sure delete these items?</div>
+      <div class="w-100p d-flex justify-content-between align-items-center">
+        <ui-button *ngIf="!loading" color="red" (onClick)="onDeleteItem()">Delete</ui-button>
+        <ui-button *ngIf="loading" color="red" class="position-relative">
+          <span style="color: transparent;">Delete</span>
+          <span id="loading"></span>
+        </ui-button>
+        <div class="text-medium text-red text-bold cursor-pointer" (click)="onDeleteModalClose()">Cancel</div>
+      </div>
+    </div>
+  </ui-modal>
+</ui-layout>

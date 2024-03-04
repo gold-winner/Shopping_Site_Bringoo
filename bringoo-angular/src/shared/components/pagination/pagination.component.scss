@@ -1,0 +1,47 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.page-item {
+  @extend .d-flex;
+  @extend .justify-content-center;
+  @extend .align-items-center;
+  @extend .text-small;
+  @extend .text-bold;
+  @extend .ml-4;
+  @extend .cursor-pointer;
+  @extend .w-6;
+  @extend .h-6; 
+
+  &--selected {
+    @extend .bg-green;
+    @extend .text-white;
+    @extend .border-radius-md;
+    @extend .p-1;
+  }
+}
+
+.dropdown {
+  @extend .w-50;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    width: 90px;
+    margin-top: 5px;
+  }
+}
+
+.left-chevron {
+  @extend .cursor-pointer;
+  @extend .ml-3;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    margin-left: 3px;
+  }
+}
+
+.right-chevron {
+  @extend .ml-4;
+  @extend .cursor-pointer;
+  @media (max-width: map-get($grid-breakpoints, 'md')) {
+    margin-right: 8px;
+  }
+}

@@ -1,0 +1,59 @@
+<nz-avatar
+  nz-comment-avatar
+  nzIcon="user"
+  [nzSrc]="isCurrentUserMessage ? '/assets/img/avatars/adminAvatar.svg' : ''"
+></nz-avatar>
+<ng-container *ngIf="isEdited|async; else view_template">
+  <form [formGroup]="form">
+    <nz-form-item class="mb-0">
+      <nz-form-control labelForErrorTip="message">
+        <app-markdown-editor
+          [showButtons]="true"
+          [isOpen]="true"
+          formControlName="message"
+          imageUrlPath="order-manager-comments"
+          [addToolbarItems]="addToolbarItems"
+          (cancel)="onCancel()"
+          (save)="onSave()"
+        ></app-markdown-editor>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-container>
+
+<ng-template #view_template>
+  <div>
+    <div class="f-4 d-flex justify-content-between">
+      <div class="d-flex align-items-center">
+        <a *ngIf="!isCurrentUserMessage" class="mr-2" routerLink="/users/managers/details/{{messageEntity.managerId}}">
+          {{messageEntity.manager?.settings?.firstName}} {{messageEntity.manager?.settings?.lastName}}
+        </a>
+        <span>
+          <strong *ngIf="isCurrentUserMessage">{{messageEntity.manager?.settings?.firstName}} {{messageEntity.manager?.settings?.lastName}}</strong> {{(messageEntity.create_date ?? '')|dateLocal :tz :dateTimeFormat}}
+        </span>
+        <nz-tag
+          class="border-round-lg ml-2"
+          [nzColor]="messageEntity.isHideForStaff ? 'red' : 'green'"
+          nzTooltipPlacement="topLeft"
+          [nz-tooltip]="messageEntity.isHideForStaff ? isHiddenForStaffTooltipText : isShowedForStaffTooltipText"
+        >
+          <i nz-icon [nzType]="messageEntity.isHideForStaff ? 'eye-invisible' : 'eye'" nzTheme="outline"></i>
+        </nz-tag>
+        <nz-tag
+          *ngIf="messageEntity.create_date !== messageEntity.update_date"
+          class="border-round-lg"
+          nzColor="gold"
+          [nz-tooltip]="(messageEntity.update_date ?? '')|dateLocal :tz :dateTimeFormat"
+          nzTooltipPlacement="topLeft"
+        >edited</nz-tag>
+      </div>
+      <div>
+        <button nz-button nzType="link" nzSize="small" nzDanger><i nz-icon nzType="delete" (click)="onDelete()"></i></button>
+        <button *ngIf="isCurrentUserMessage" nz-button nzType="link" nzSize="small" (click)="onEdit()"><i nz-icon nzType="edit"></i></button>
+      </div>
+    </div>
+    <app-markdown-viewer
+      [mdString]="messageEntity.message ?? ''"
+    ></app-markdown-viewer>
+  </div>
+</ng-template>

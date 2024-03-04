@@ -1,0 +1,22 @@
+<form nz-form [formGroup]='form' nzLayout="inline">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input nz-input formControlName="search" placeholder="Search"
+               nz-tooltip="Search by Name and Code"
+               nzTooltipPlacement="topLeft"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label>Status</nz-form-label>
+      <nz-select formControlName="status">
+        <nz-option *ngFor="let status of statuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

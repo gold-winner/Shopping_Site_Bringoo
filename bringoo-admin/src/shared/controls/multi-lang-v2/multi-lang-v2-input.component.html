@@ -1,0 +1,32 @@
+<form nz-form nzLayout="vertical" [formGroup]='form' *ngIf="!(service.isLoading|async)">
+  <ng-container *ngFor='let lang of langList'>
+    <nz-form-item class='w-100p h-100p' [class.d-none]="lang !== language">
+      <nz-form-label [nzRequired]="isRequired">{{label}} ({{lang}})
+      </nz-form-label>
+      <nz-form-control>
+        <input
+          *ngIf="type === 'text'"
+          [formControlName]="lang"
+          nz-input
+          placeholder="{{label}} ({{lang}})"
+          [readOnly]="isReadOnly"
+        />
+        <textarea
+          *ngIf="type === 'textarea'"
+          [formControlName]="lang"
+          [rows]='rows'
+          nz-input
+          placeholder="{{label}} ({{lang}})"
+          [readOnly]="isReadOnly"
+        ></textarea>
+        <nz-select
+          *ngIf="type === 'tags'"
+          nzPlaceHolder="{{label}} ({{lang}})"
+          nzMode="tags"
+          [nzDropdownStyle]="{ display: 'none' }"
+          [formControlName]="lang"
+        ></nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-container>
+</form>

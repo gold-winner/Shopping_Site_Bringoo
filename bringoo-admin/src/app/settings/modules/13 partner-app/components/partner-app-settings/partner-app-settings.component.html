@@ -1,0 +1,72 @@
+<h5 class='pt-5 pl-5'>Partner App Settings</h5>
+
+<form nz-form nzLayout="vertical" class="px-5 scroll-y" [formGroup]="form">
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Global default commission fee for all products, percent</nz-form-label>
+    <nz-form-control labelForErrorTip="Global default commission fee for all products, percent">
+      <input
+        nz-input
+        type="number"
+        min="0"
+        step="0.01"
+        [pattern]="decimalCommaPattern"
+        formControlName='commissionFeePercent'
+        placeholder='input number'
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Global default commission fee for all products, min</nz-form-label>
+    <nz-form-control labelForErrorTip="Global default commission fee for all products, min">
+      <input
+        nz-input
+        type="number"
+        min="0"
+        step="0.01"
+        [pattern]="decimalCommaPattern"
+        formControlName='commissionFeeMin'
+        placeholder='input number'
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class='pb-4'>
+    <nz-form-label>Global default commission fee for all products, max</nz-form-label>
+    <nz-form-control labelForErrorTip="Global default commission fee for all products, max">
+      <input
+        nz-input
+        type="number"
+        min="0"
+        step="0.01"
+        [pattern]="decimalCommaPattern"
+        formControlName='commissionFeeMax'
+        placeholder='input number'
+      >
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<div class="p-4 d-flex justify-content-between">
+  <div>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onSubmit()"
+      [nzType]="'primary'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Update
+    </button>
+    <button
+      [nzLoading]="isLoading$ | async"
+      (click)="onCancel()"
+      [nzType]="'link'"
+      nz-button
+      nzSize="large"
+      nzShape="round"
+    >Cancel
+    </button>
+  </div>
+</div>

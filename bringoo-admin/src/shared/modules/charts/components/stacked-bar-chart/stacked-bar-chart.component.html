@@ -1,0 +1,14 @@
+<ngx-charts-bar-horizontal-stacked
+  #chart
+  *ngIf="data.length > 0"
+  [view]="[width, 32]"
+  [scheme]="colorScheme"
+  [results]="data"
+  [gradient]="false"
+  [xAxis]="false"
+  [yAxis]="false"
+  [legend]="false"
+  [showXAxisLabel]="false"
+  [showYAxisLabel]="false"
+></ngx-charts-bar-horizontal-stacked>
+<div *ngIf="data.length === 0" class="text-center">-No Data-</div>

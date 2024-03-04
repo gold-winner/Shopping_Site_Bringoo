@@ -1,0 +1,132 @@
+<form nzLayout="vertical" nz-form [formGroup]="form" class="p-4 w-100p h-100p overflow-auto position-relative" id="product-hardware-form">
+  <div class="row">
+    <div
+      *ngVar="isShowAnchor$|async as isShowAnchor"
+      [class.col-18]="isShowAnchor"
+      [class.col]="!isShowAnchor"
+      [class.px-0]="!isShowAnchor"
+    >
+      <nz-card id="book-information" nzTitle="Book Information" class="mb-4">
+        <nz-form-item class="mb-4">
+          <nz-form-label>Author</nz-form-label>
+          <nz-form-control labelForErrorTip="Author">
+            <input formControlName='bookAuthor' nz-input placeholder="Book Author">
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4 mt-4">
+          <nz-form-label>Publisher</nz-form-label>
+          <nz-form-control labelForErrorTip="Publisher">
+            <input formControlName='bookPublisher' nz-input placeholder="Book Publisher">
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4 mt-4">
+          <nz-form-label>Language</nz-form-label>
+          <nz-form-control labelForErrorTip="Language">
+            <app-list-select
+              placeHolder='Language'
+              formControlName='bookLanguage'
+              [list]='languages'
+            ></app-list-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4 mt-4">
+          <nz-form-label>Cover Type</nz-form-label>
+          <nz-form-control labelForErrorTip="Cover Type">
+            <app-list-select
+              placeHolder='Cover Type'
+              formControlName='bookCoverType'
+              [list]='coverTypes'
+            ></app-list-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label>Total Pages</nz-form-label>
+          <nz-form-control labelForErrorTip="Total Pages">
+            <input formControlName='bookTotalPages' integerNumber positiveNumber nz-input placeholder="Total Pages" type='number'>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label>ISBN-10</nz-form-label>
+          <nz-form-control labelForErrorTip="ISBN-10">
+            <input formControlName='bookISBN_10' nz-input placeholder="ISBN-10" type='text'>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label>ISBN-13</nz-form-label>
+          <nz-form-control labelForErrorTip="ISBN-13">
+            <input formControlName='bookISBN_13' nz-input placeholder="ISBN-13" type='text'>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label>Reading Age</nz-form-label>
+          <nz-form-control labelForErrorTip="Reading Age">
+            <input
+              nz-input
+              integerNumber
+              positiveNumber
+              formControlName='bookReadingAge'
+              placeholder="Reading Age"
+              type='number'
+            >
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label>Gradle Level</nz-form-label>
+          <nz-form-control labelForErrorTip="Gradle Level">
+            <input
+              nz-input
+              integerNumber
+              positiveNumber
+              formControlName='bookGradleLevel'
+              placeholder="Gradle Level"
+              type='number'
+            >
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+
+      <nz-card id="sizes" nzTitle="Sizes" class="mb-4">
+        <nz-form-item class="mb-4">
+          <nz-form-label>Book Width</nz-form-label>
+          <nz-form-control labelForErrorTip="Book Width">
+            <input formControlName='width' positiveNumber nz-input placeholder="Book Width" type='number'>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item class="mb-4">
+          <nz-form-label>Book Height</nz-form-label>
+          <nz-form-control labelForErrorTip="Book Height">
+            <input formControlName='height' positiveNumber nz-input placeholder="Book Height" type='number'>
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item class="mb-4">
+          <nz-form-label>Book Length</nz-form-label>
+          <nz-form-control labelForErrorTip="Book Thickness">
+            <input formControlName='length' positiveNumber nz-input placeholder="Book Length" type='number'>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-card>
+
+    </div>
+  </div>
+</form>
+
+<nz-anchor
+  style="position: absolute; top: 14px; right: 28px;"
+  [nzAffix]="false"
+  [nzShowInkInFixed]="true"
+  *ngIf="isShowAnchor$|async"
+  nzContainer="#product-hardware-form">
+  <nz-link nzHref="#book-information" nzTitle="Book Information"></nz-link>
+  <nz-link nzHref="#sizes" nzTitle="Sizes"></nz-link>
+</nz-anchor>

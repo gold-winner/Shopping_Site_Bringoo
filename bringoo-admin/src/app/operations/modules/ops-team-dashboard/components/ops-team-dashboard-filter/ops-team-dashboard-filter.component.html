@@ -1,0 +1,57 @@
+<form nz-form [formGroup]="form" class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input nz-input formControlName="search" placeholder="Search"/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <app-filter-store-select
+      class="col"
+      formControlName="storeId"
+    ></app-filter-store-select>
+
+    <app-filter-store-region-select
+      class="col"
+      formControlName="storeRegionCode"
+    ></app-filter-store-region-select>
+
+    <nz-form-item class="col">
+      <nz-form-control labelForErrorTip="Picker Job">
+        <nz-form-label>Picker Job</nz-form-label>
+        <app-list-select [isRequired]="false" [list]='jobStatuses' formControlName='pickerJob' placeHolder='Picker Job'></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control labelForErrorTip="Driver Job">
+        <nz-form-label>Driver Job</nz-form-label>
+        <app-list-select [isRequired]="false" [list]='jobStatuses' formControlName='driverJob' placeHolder='Driver Job'></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control labelForErrorTip="Order Status">
+        <nz-form-label>Order Status</nz-form-label>
+        <app-list-select [isRequired]="false" [list]='orderStatuses' formControlName='orderStatuses' placeHolder='Order Status' type="multiple"></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control labelForErrorTip="Order Status">
+        <nz-form-label>Job Assigned</nz-form-label>
+        <app-list-select [isRequired]="false" [list]='jobTypes' formControlName='jobsAssigment' placeHolder='Job Assigned' type="multiple"></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col">
+      <nz-form-control labelForErrorTip="Order Type">
+        <nz-form-label>Order Type</nz-form-label>
+        <app-list-select [isRequired]="false" [list]='orderType' formControlName='orderType' placeHolder='Order Type'></app-list-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

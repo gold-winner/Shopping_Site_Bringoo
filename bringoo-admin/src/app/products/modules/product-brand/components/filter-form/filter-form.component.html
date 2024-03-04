@@ -1,0 +1,34 @@
+<form nz-form [formGroup]='form' class="filter-form container-fluid">
+  <div class="row">
+    <nz-form-item class="col search">
+      <nz-form-control>
+        <nz-form-label>Search</nz-form-label>
+        <nz-input-group [nzPrefixIcon]="'search'">
+          <input
+            nz-input
+            formControlName="search"
+            placeholder="Search"
+            nz-tooltip="Search by Name and Code"
+            nzTooltipPlacement="topLeft"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Images</nz-form-label>
+        <nz-select formControlName="image">
+          <nz-option *ngFor="let status of imagesStatuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col">
+      <nz-form-control>
+        <nz-form-label>Watermark</nz-form-label>
+        <nz-select formControlName="watermark">
+          <nz-option *ngFor="let status of imagesStatuses" [nzValue]="status" [nzLabel]="status"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

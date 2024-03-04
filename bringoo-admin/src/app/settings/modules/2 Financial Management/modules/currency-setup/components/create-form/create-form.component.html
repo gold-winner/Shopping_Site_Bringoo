@@ -1,0 +1,24 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <app-lang-controller>
+    <app-multi-lang-v2-input required label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input label="Description" type="textarea" formControlName="description_i18n"></app-multi-lang-v2-input>
+  </app-lang-controller>
+  <nz-form-item>
+    <nz-form-label nzFor="isActive">Status</nz-form-label>
+    <nz-form-control labelForErrorTip="Status">
+      <app-status-switch formControlName='isActive'></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="code" nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <app-list-select [list]='codeList' formControlName='code'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="firstName" nzRequired>Symbol</nz-form-label>
+    <nz-form-control labelForErrorTip="Symbol">
+      <input formControlName="symbol" placeholder='Symbol' nz-input type="text"/>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,0 +1,18 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+
+.close {
+  @extend .ml-7;
+  @extend .w-5;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.item-over {
+  background: #eae9e9;
+  color: #2cc84d;
+  cursor: pointer;
+}

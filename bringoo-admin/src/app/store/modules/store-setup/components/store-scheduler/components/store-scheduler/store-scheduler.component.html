@@ -1,0 +1,100 @@
+<div class="p-5 position-relative h-100p delivery-scheduler-form">
+  <div class="d-flex justify-content-between flex-wrap">
+    <div class="d-flex flex-wrap align-items-end pb-4 pl-4">
+      <button class="mr-6" nz-button (click)="onPrev()" nzType="default">Prev week</button>
+      <div class="mr-6">
+        <nz-date-picker
+          [nzAllowClear]="false"
+          required nzFormat="yyyy-MM-dd"
+          [formControl]="control"
+        ></nz-date-picker>
+      </div>
+      <button nz-button (click)="onNext()" nzType="default">Next week</button>
+    </div>
+    <div>
+      <nz-tag [nzColor]="'#e2d3c5'">Regular<br>slot</nz-tag>
+      <nz-tag [nzColor]="'#FA7C34'">Custom<br>slot</nz-tag>
+      <nz-tag [nzColor]="'#7f7f7f'">Disabled<br>slot</nz-tag>
+    </div>
+  </div>
+  <div class="w-100 h-100p scroll-xy">
+    <div
+      *ngIf="(scheduler|async) as data"
+      class="delivery-scheduler f-4"
+      [style]="gridStyles"
+    >
+      <div
+        class="delivery-scheduler-col-header bg-component h-100p w-100p d-flex justify-content-center"
+      ><i nz-icon nzType="clock-circle" nzTheme="outline"></i></div>
+
+      <div *ngFor="let day of data.days" class="delivery-scheduler-col-header bg-component">
+        {{day.weekDay}}<br>
+        {{day.date}}
+      </div>
+
+      <ng-container *ngFor="let label of data.labels">
+        <div>{{label}}</div>
+        <ng-container *ngFor="let day of data.days">
+          <div
+            *ngIf="day.slots|arrayFind:'time':label as slot; else empty"
+            class="slot bg-component border-body-background-darken border-width-2 f-4"
+            nz-popover
+            (click)="onShowSlotDetails(slot)"
+            [nzPopoverTitle]="slot!.dateTimeStart*1000|dateLocal:slot!.tz:'shortTime'"
+            [nzPopoverContent]="slot.duration +  ' min'"
+            [class.custom]="slot.isCustom"
+            [class.disabled]="!slot.isActive"
+          >
+            <span class="text">{{slot.booked}}/{{slot.total}}</span>
+            <nz-progress
+              class="progress"
+              nzStrokeLinecap="round"
+              nzStrokeColor="red"
+              nzStrokeWidth="10"
+              [nzShowInfo]="false"
+              [nzPercent]="slot.bookedPercent"
+            ></nz-progress>
+          </div>
+          <ng-template #empty>
+            <div class="empty-slot disabled"></div>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+</div>
+
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="'80%'"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="{{selectedSlot && selectedSlot.dateString}}"
+  [nzFooter]="createPanelFooter"
+  (nzOnClose)="onCloseDrawer()"
+>
+  <ng-template nzDrawerContent>
+    <ng-template
+      [ngComponentOutlet]="customSlotForm"
+      [ndcDynamicInputs]="customSlotFormInputs"
+      [ndcDynamicOutputs]="createFormOutputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #createPanelFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button (click)="onCloseDrawer()" nzBlock nz-button nzType="link">Cancel</button>
+      </div>
+      <div class="col-12">
+        <button [nzLoading]="isLoading$ | async" (click)="onSaveButtonClick()" nzBlock nz-button nzType="primary">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

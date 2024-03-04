@@ -1,0 +1,42 @@
+<div class="chart-title w-100p">
+  <div class="d-flex justify-content-between">
+    <h4>
+      Popular search
+    </h4>
+    <nz-pagination
+      class="mt-1"
+      nzSimple
+      [nzPageIndex]="page|async"
+      [nzTotal]="total"
+      [nzPageSize]="10"
+      [nzSize]="'small'"
+      (nzPageIndexChange)="changePage($event)"
+    ></nz-pagination>
+  </div>
+  <span>
+    These are the most popular search terms
+    <ng-container *ngIf="useDateLimits"> within the last {{daysLimit * 24}} hours inside </ng-container>
+    for product search.
+    <ng-container *ngIf="!storeId"> It considers searches from all stores.</ng-container>
+  </span>
+</div>
+<div class="scroll-y mt-4">
+  <nz-table
+    *ngIf="productSearchTerm$|async as productSearchTerm"
+    [nzData]="productSearchTerm.items"
+    [nzShowPagination]="false"
+  >
+    <thead>
+      <tr class="fixed-header">
+        <th>Term</th>
+        <th class="text-align-right">Count</th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of productSearchTerm.items">
+      <td><a routerLink="/analytics/reports/search-trends/products/{{data.term}}">{{data.term}}</a></td>
+      <td class="text-align-right">{{data.count}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>

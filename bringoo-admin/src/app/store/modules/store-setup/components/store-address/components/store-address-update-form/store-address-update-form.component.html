@@ -1,0 +1,128 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form' class="container-fluid">
+
+  <div class="row">
+    <div class="col">
+      <ng-container *ngIf="$isLoaded|async">
+        <google-map
+            #googleMap
+            *ngIf="mapCenterSubject|async as location"
+            (mapClick)="onMapClick($event)"
+            [options]="mapOptions"
+            [center]="location"
+            height="500"
+            width="100%"
+        >
+          <map-marker
+            *ngIf="markerLocationSubject|async as markerLocation"
+            [options]="markerLocation|getMarkerOption"
+          ></map-marker>
+          <input
+            nz-input
+            google-search-input
+            [googleMapComponent]="googleMap"
+            [initLocation]="initLocation"
+            (location)="onInputUpdateLocation($event)"
+            (addressResult)="onInputUpdateAddressInformation($event)"
+            id="pac-input"
+            class="controls w-56 mt-4 ml-4 border-round-sm bg-component"
+            type="text"
+            style="position: absolute; top: 0"
+            placeholder="Search Address"
+          />
+        </google-map>
+      </ng-container>
+      <p *ngIf="showError|async"><span class="color-danger">ERROR</span> Can't find location for this place.</p>
+    </div>
+    <div class="col">
+      <nz-form-item>
+        <nz-form-label nzRequired>Address type</nz-form-label>
+        <nz-form-control labelForErrorTip="Address type">
+          <app-list-select [list]='storeAddressTypeList' formControlName='addressType' placeHolder='Address type'></app-list-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Country</nz-form-label>
+        <nz-form-control labelForErrorTip="Country">
+          <app-select [options]='countryCodeSelect' formControlName='countryCode' placeHolder='Country'></app-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>City</nz-form-label>
+        <nz-form-control labelForErrorTip="City">
+          <input formControlName='city' nz-input placeholder="City">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Zip code</nz-form-label>
+        <nz-form-control labelForErrorTip="Zip code">
+          <input formControlName='zipCode' nz-input placeholder="Zip code">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Global Location Number</nz-form-label>
+        <nz-form-control labelForErrorTip="Global Location Number">
+          <input formControlName='gln' nz-input placeholder="Global Location Number">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Street name</nz-form-label>
+        <nz-form-control labelForErrorTip="Street name">
+          <input formControlName='streetName' nz-input placeholder="Street name">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Street number</nz-form-label>
+        <nz-form-control labelForErrorTip="Street number">
+          <input formControlName='streetNumber' nz-input placeholder="Street number">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Store</nz-form-label>
+        <nz-form-control labelForErrorTip="Store">
+          <app-select [options]='storeIdList' formControlName='storeId' placeHolder="Store"></app-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Floor number</nz-form-label>
+        <nz-form-control labelForErrorTip="Floor number">
+          <input formControlName='floorNumber' nz-input placeholder="Floor number">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>Apartment number</nz-form-label>
+        <nz-form-control labelForErrorTip="Apartment number">
+          <input formControlName='apartmentNumber' nz-input placeholder="Apartment number">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>State</nz-form-label>
+        <nz-form-control labelForErrorTip="State">
+          <input formControlName='state' nz-input placeholder="State">
+        </nz-form-control>
+      </nz-form-item>
+
+      <form nzLayout="vertical" nz-form formGroupName='location'>
+        <nz-form-item>
+          <nz-form-label nzRequired>Lat</nz-form-label>
+          <nz-form-control labelForErrorTip="Lat">
+            <input formControlName='lat' nz-input placeholder="Lat" type='number'>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>Lng</nz-form-label>
+          <nz-form-control labelForErrorTip="Lng">
+            <input formControlName='lng' nz-input placeholder="Lng" type='number'>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+</form>

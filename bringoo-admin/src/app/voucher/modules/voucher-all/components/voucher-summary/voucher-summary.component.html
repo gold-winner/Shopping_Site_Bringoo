@@ -1,0 +1,71 @@
+<div class="bg-component border-round-sm">
+  <div class="p-4">
+    <h4>Summary</h4>
+    <div class="d-flex justify-content-between align-items-center mt-1 mb-1">
+      <span *ngIf="!voucher?.isActive" class="bg-danger-10 border-round-md p-1 color-danger">Inactive</span>
+      <span *ngIf="voucher?.isActive" class="bg-primary-10 border-round-md p-1 color-primary">Active</span>
+    </div>
+    <div class="align-items-center mt-2 mb-2">
+        <span>Code: </span>
+        <span><input type="text" nz-input disabled="true" [value]="getField('code')" /></span>
+    </div>
+    <ng-container *ngIf="voucher.voucherType === 'FREE_SHIPPING'">
+      <div>
+        <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+        For {{voucher.countryEligibility === 'ALL' ? getField('countryEligibility').toLowerCase() : getField('countryIds')?.length}} countries
+      </div>
+      <div *ngIf="getField('value')">
+        <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+        Shipping discount {{getField('value')|formatPrice}}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="voucher.voucherType === 'DISCOUNT_PERCENTAGE' || voucher.voucherType === 'DISCOUNT_FIXED'">
+      <div *ngIf="getField('value')">
+        <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+        {{getField('value')}} {{voucher.voucherType === 'DISCOUNT_PERCENTAGE' ? '%' : defaultCurrency}}
+        off {{getField('productEligibility') !== 'ALL' ? getField('productEligibility').toLowerCase() : getField('productIds')?.length}} products
+      </div>
+      <div *ngIf="getField('requirements')?.value && getField('requirements') !== 'NONE'">
+        <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+        Requirements more {{getField('requirements')}}
+      </div>
+    </ng-container>
+    <div>
+      <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+      For {{voucher.customerEligibility === 'ALL' ? getField('customerEligibility').toLowerCase() : getField('customerIds')?.length}} customers
+    </div>
+    <div *ngIf="voucher.isLimitUsageTotal">
+      <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+      Quantity limit {{voucher.limitUsageTotal}}
+    </div>
+    <div *ngIf="voucher.isLimitUsagePerCustomer">
+      <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+      Limit for one customer {{voucher.limitUsagePerCustomer}}
+    </div>
+    <div *ngIf="voucher.dateStart">
+      <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+      <ng-container *ngIf="activeToday">
+        Active <b>today,</b>
+        <b *ngIf="voucher.dateStart"> {{voucher.dateStart | date}}</b>
+      </ng-container>
+      <ng-container *ngIf="!activeToday">
+        Active from
+        <b> {{voucher.dateStart | date}},</b>
+      </ng-container>
+    </div>
+    <div *ngIf="!voucher.dateStart" class="color-danger">
+      <i nz-icon nzType="close" nzTheme="outline" class="mr-2"></i>
+      Start date
+    </div>
+    <div *ngIf="voucher.dateEnd">
+      <i nz-icon nzType="check" nzTheme="outline" class="color-primary mr-2"></i>
+      Active to
+      <b> {{voucher.dateEnd | date}},</b>
+    </div>
+  </div>
+  <hr>
+  <div class="p-4">
+    <h5>PERFORMANCE </h5>
+    <p>Voucher is not active yet.</p>
+  </div>
+</div>

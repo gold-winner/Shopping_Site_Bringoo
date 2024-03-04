@@ -1,0 +1,29 @@
+<form nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="email">Email</nz-form-label>
+    <nz-form-control labelForErrorTip="Email">
+      <ng-template #emailErrors>
+        <div *ngIf="form.get('email')?.errors?.email">
+          Wrong email address
+        </div>
+        <div *ngIf="!form.get('email')?.errors?.email">
+          Please input email
+        </div>
+      </ng-template>
+      <input formControlName='email' nz-input name="email" placeholder="Email">
+    </nz-form-control>
+  </nz-form-item>
+  <form formGroupName='settings'>
+    <nz-form-item>
+      <nz-form-label nzNoColon nzFor="phoneNumber">Phone number</nz-form-label>
+      <nz-form-control labelForErrorTip="Phone number">
+        <nz-input-group nzCompact>
+          <nz-select formControlName='phoneCountryCode' style="width:30%;" nzPlaceHolder='Country code' nzShowSearch>
+            <nz-option *ngFor='let phoneCode of countryCode' [nzLabel]="phoneCode[0] +' +'+ phoneCode[1]" [nzValue]="phoneCode[1]"></nz-option>
+          </nz-select>
+          <input nz-input appDisableControl [disable]="!form.controls.settings.value.phoneCountryCode" formControlName='phoneNumber' style="width:70%;" placeholder='Enter number'/>
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</form>

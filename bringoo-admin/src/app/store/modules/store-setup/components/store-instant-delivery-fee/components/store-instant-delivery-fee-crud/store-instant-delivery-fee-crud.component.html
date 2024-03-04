@@ -1,0 +1,12 @@
+<app-crud
+  *ngIf="(storeDetailsService.store$|async) as store"
+  [customImportParams]="{storeId:store.id}"
+  [exportFileName]="'store-instant-delivery-fee-export-'+store.code"
+  [config]="config"
+  [service]="service"
+  [createForm]="createForm"
+  [updateForm]="updateForm"
+  [filterForm]='filterForm'
+  [columns]="columns"
+  [fields]='fields'
+></app-crud>

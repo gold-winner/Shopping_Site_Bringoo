@@ -1,0 +1,34 @@
+<div class="ui-header__topbar">
+  <div *ngIf="!enableStore">
+    <span class="text-bold">
+      Guten Abend
+    </span>, Christian Christopher Hoffmann
+  </div>
+  <div *ngIf="enableStore" class="d-flex justify-content-around flex-grow-1 ui-header__topbar--container">
+    <div class="d-flex">
+      <ui-switch
+        class="switch"
+        primaryLabel="Delivery"
+        secondaryLabel="Pick up"
+        color="grey"
+      ></ui-switch>
+      <img class="header-logo" src="assets/img/delivery-header.svg">
+      <img class="header-right ml-5" src="assets/img/right-header.svg">
+      <div class="d-flex ml-6" (click)="onAddressClick.emit('Delivery')">
+        <a class="ui-header__topbar--info">
+          {{ location }} 
+          <icon name="edit" class="text-tiny ml-2"></icon>
+        </a>
+      </div>
+    </div>
+    <div class="delivery">
+      <span class="text-semi-bold">Delivery</span>
+      <span class="ml-2 text-yellow text-semi-bold">soon today</span>
+      <span class="ml-2 text-yellow text-semi-bold text-small" style="margin-top: 2px;">14:30 - 15:30</span>
+    </div>
+    <div class="phone">
+      <span class="text-semi-bold text-medium">+ 7 800 222-11-00</span>
+      <span class="text-tiny-bold text-small ml-2">Around the clock</span>
+    </div>
+  </div>
+</div>

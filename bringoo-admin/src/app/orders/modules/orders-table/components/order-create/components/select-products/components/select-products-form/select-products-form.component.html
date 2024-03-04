@@ -1,0 +1,38 @@
+<nz-table
+  nzShowSizeChanger
+  nzShowPagination
+  [nzData]="items"
+  [nzPageSize]='limit'
+  [nzFrontPagination]="false"
+  [nzLoading]="isLoading$|async"
+  [nzTotal]="total"
+  [nzPageIndex]="page"
+  (nzPageIndexChange)="checked = false"
+  [nzShowTotal]="rangeTemplate"
+  [nzPageSizeOptions]="nzPageSizeOptions"
+  (nzQueryParams)="onQueryParamsChange($event)"
+  [nzSize]="'small'"
+>
+  <thead>
+  <tr>
+    <th nzShowCheckbox [(nzChecked)]="checked" (nzCheckedChange)='onAllChecked($event)'></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody [formGroup]='form'>
+  <tr *ngFor="let item of items; let ind = index">
+    <td nzShowCheckbox *ngIf='item.linkId' [nzChecked]="setOfChecked.has(item.linkId)" (nzCheckedChange)="onItemChecked(item.linkId, $event, ind)"></td>
+    <td>{{item?.name_i18n}}</td>
+    <td class='d-flex' formArrayName='quantities'>
+      {{item?.price|formatPrice}} ✕
+      <input nz-input [ngClass]="item.linkId && setOfChecked.has(item.linkId) ? 'checked' : 'unchecked'" type='number' formControlName='{{ind}}'/>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  <div *ngIf='setOfChecked.size'>Selected {{setOfChecked.size}}</div>
+</ng-template>

@@ -1,0 +1,21 @@
+<form nzLayout="vertical" nz-form [formGroup]='form'>
+  <div formArrayName='items'>
+    <ng-container *ngFor='let item of items.controls; let i = index'>
+      <ng-container *ngIf='i === 0'>
+        <input class="mb-sm-1" type="text" formControlName="{{i}}" nz-input [placeholder]='placeHolder'
+               appDisableControl [disable]='disabled' />
+      </ng-container>
+      <ng-container *ngIf='i !== 0'>
+        <nz-input-group class="mb-sm-1" nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" formControlName="{{i}}" nz-input [placeholder]='placeHolder' appDisableControl
+                 [disable]='disabled' />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" nzSearch nzDanger (click)='onDeleteItem(i)' [disabled]='disabled'><i
+            nz-icon nzType="minus-square"></i></button>
+        </ng-template>
+      </ng-container>
+    </ng-container>
+    <button nz-button [nzSize]="'small'" nzType="primary" (click)='onAddItem()' [disabled]='disabled'>Add</button>
+  </div>
+</form>

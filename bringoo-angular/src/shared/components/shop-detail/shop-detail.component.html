@@ -1,0 +1,27 @@
+<div *ngIf="shopDetail" class="ui-shop-detail">
+  <div class="ui-shop-detail__header">
+    <img src="{{shopDetail.logoUrl}}" class="ui-shop-detail__header--logo">
+    <div class="ui-shop-detail__header--title ml-6">
+      <span class="text-small text-lightblue">Opening hours</span>
+      <span *ngIf="shopDetail.openingTime" class="text-medium text-semi-bold">{{shopDetail.openingTime}}</span>
+      <span *ngIf="!shopDetail.openingTime" class="text-medium text-semi-bold"> - </span>
+    </div>
+    <div class="ui-shop-detail__header--title ml-6">
+      <span class="text-small text-lightblue">Expected delivery time</span>
+      <span *ngIf="shopDetail.deliveryTimeInMinutes" class="text-medium text-semi-bold">{{shopDetail.deliveryTimeInMinutes}}</span>
+      <span *ngIf="!shopDetail.deliveryTimeInMinutes" class="text-medium text-semi-bold"> - </span>
+    </div>
+  </div>
+  <div class="ui-shop-detail__body">
+    <span class="text-blue text-medium">{{shopDetail.vendorType.name_i18n}}</span>
+    <div class="d-flex justify-content-between">
+      <span *ngIf="shopDetail.address" class="text-darkgrey">{{shopDetail.address}}</span>
+      <span *ngIf="!shopDetail.address" class="text-darkgrey"> - </span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <span *ngIf="shopDetail.distance" class="text-green text-medium mt-3">{{location}} · {{shopDetail.distance}}</span>
+      <span *ngIf="!shopDetail.distance" class="text-green text-medium mt-3">{{location}} - </span>
+      <span class="text-small text-tiny-bold text-lightblue mt-3">includes VAT and delivery</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+@import "src/scss/colors";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+@import "src/scss/borders";
+@import "src/scss/grid";
+@import "src/scss/shadows";
+@import "src/scss/layout";
+
+.small-cards {
+  @extend .d-flex;
+  &__item {
+    flex: 1;
+  }
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    display: none;
+  }
+}
+
+.products {
+  @extend .d-flex;
+  @extend .flex-wrap;
+  @extend .mt-6;
+
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    justify-content: center;
+  }
+}
+
+.title {
+  @extend .text-bold;
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    margin-left: 15px;
+  }
+}
+
+.divider {
+  @extend .mt-15;
+  @extend .pb-10;
+  border-bottom: 1px solid #e2d3c5;
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    margin-top: 8px;
+  }
+}
+
+.card {
+  @media (min-width: map-get($grid-breakpoints, "md")) {
+    padding: 20px 14px 166px 14px;
+    border-radius: 10px;
+    margin-right: 19.2px;
+  }
+
+  @media (min-width: map-get($grid-breakpoints, "md")) {
+    &:hover {
+      box-shadow: 0px 0px 10px 0px rgb(180, 178, 178);
+      transition: all 0.3s ease-out;
+    }
+  }
+}
+
+.sub_category {
+  @extend .d-flex;
+  @extend .mt-3;
+  justify-content: start;
+  @media (max-width: map-get($grid-breakpoints, "md")) {
+    margin-left: 15px;
+  }
+}
+
+.popular_view {
+  @media (min-width: map-get($grid-breakpoints, "md")) {
+    display: none;
+  }
+}
+
+.show-all {
+  @extend .text-green;
+  @extend .text-medium;
+  &:hover {
+    color: #2dd350;
+  }
+}

@@ -1,0 +1,16 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Message</nz-form-label>
+    <nz-form-control labelForErrorTip="Message">
+      <input nz-input type='text' formControlName='message' placeholder='Add message'>
+    </nz-form-control>
+
+  </nz-form-item>
+
+  <nz-form-item class="d-flex justify-content-between">
+    <nz-form-label nzRequired>Is Voiced</nz-form-label>
+      <nz-form-control>
+        <nz-switch formControlName='isVoice'></nz-switch>
+      </nz-form-control>
+  </nz-form-item>
+</form>

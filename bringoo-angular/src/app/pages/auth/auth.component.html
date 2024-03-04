@@ -1,0 +1,15 @@
+<div class="ui-auth" [ngClass]="modal ? '' : 'ui-auth-background'">
+  <div class="content" [ngClass]="{'content-large': pageStatus!='forgot-pwd' && pageStatus!=='reset-pwd' && !modal, 'content-medium': modal, 'py-9': modal, 'py-24': !modal}">
+    <div class="f-6 text-bold px-24" *ngIf="pageStatus!='forgot-pwd' && pageStatus!=='reset-pwd'">Welcome to Bringoo</div>
+    <div class="content-menu" *ngIf="pageStatus!='forgot-pwd' && pageStatus!=='reset-pwd'">
+      <div class="content-menu__item" (click)="pageStatus='login'" [ngClass]="{'content-menu__item--selected': pageStatus==='login'}">Login</div>
+      <div class="content-menu__item" (click)="pageStatus='signup'" [ngClass]="{'content-menu__item--selected': pageStatus==='signup'}">Sign up</div>
+    </div>
+    <div class="content-body" [ngClass]="{'mt-12': pageStatus!=='reset-pwd'}">
+      <ui-auth-login *ngIf="pageStatus==='login'" (onForgotPwdClick)="pageStatus='forgot-pwd'"></ui-auth-login>
+      <ui-auth-signup *ngIf="pageStatus==='signup'"></ui-auth-signup>
+      <ui-auth-forgot-pwd *ngIf="pageStatus==='forgot-pwd'" (onResetPwdClick)="pageStatus='reset-pwd'"></ui-auth-forgot-pwd>
+      <ui-auth-reset-pwd *ngIf="pageStatus==='reset-pwd'" (onConfirmClick)="pageStatus='login'"></ui-auth-reset-pwd>
+    </div>
+  </div>
+</div>

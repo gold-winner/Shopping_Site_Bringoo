@@ -1,0 +1,189 @@
+
+<ng-container *ngIf="productRequest$ | async as productRequest" >
+<ng-container *ngIf="productData$ | async as product">
+<form nzLayout="vertical" nz-form [formGroup]="form">
+<div class="p-8">
+  <div class='d-flex justify-content-between'>
+    <a class='d-flex align-items-center mb-4' routerLink='../..'>
+      <i nz-icon nzType="left" nzTheme="outline"></i>
+      <h3 class='mb-0'>Product Request list</h3>
+    </a>
+    <div class="d-flex justify-content-end" *ngIf="productRequest.status === 'PENDING'">
+      <button
+        nz-button
+        nzType="primary"
+        class="ml-auto mr-2"
+        [disabled]="isLoading$ | async"
+        (click)="approveRequest()">
+        Approve
+      </button>
+      <button
+        nz-button
+        nzDanger
+        nzType="primary"
+        class="ml-auto mr-2"
+        [disabled]="isLoading$ | async"
+        (click)="rejectRequest()">
+        Reject
+      </button>
+    </div>
+  </div>
+
+  <div class='container f-4'>
+    <div class='row bg-component border-round-sm p-4'>
+      <h4 class='f-6 pb-4'>Details</h4>
+      <div class='w-100p summary'>
+        <div class='d-flex justify-content-between'>
+          <span>Request code</span>
+          <span> {{productRequest.requestCode}} </span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Status</span>
+          <span> {{productRequest.status}} </span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="productRequest.staff">
+          <span>Staff creator</span>
+          <span>
+            <a routerLink="../../../../users/staff/details/{{productRequest.staffId}}">
+              {{productRequest?.staff?.settings?.firstName}} {{productRequest?.staff?.settings?.lastName}}
+            </a>
+          </span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="productRequest.create_date">
+          <span>Staff request create date</span>
+          <span>{{productRequest.create_date|date:dateTimeFormat}}</span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="productRequest.staffNote">
+          <span>Staff's note</span>
+          <span>
+              {{productRequest?.staffNote}}
+          </span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="productRequest.manager">
+          <span>Manager approver</span>
+          <span>
+            <a routerLink="../../../../users/managers/details/{{productRequest.managerId}}">
+              {{productRequest?.manager?.settings?.firstName}} {{productRequest?.manager?.settings?.lastName}}
+            </a>
+          </span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="productRequest.managerNote">
+          <span>Manager's note</span>
+          <span>
+              {{productRequest?.managerNote}}
+          </span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="productRequest.requestDecisionTime">
+          <span>Manager decision date</span>
+          <span>{{productRequest.requestDecisionTime|date:dateTimeFormat}}</span>
+        </div>
+        <div class='d-flex justify-content-between' *ngIf="productRequest.requestDecisionTime">
+          <span>Process (Create / Update)</span>
+          <span>{{product.ean ? 'Update' : 'Create'}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class='row bg-component border-round-sm p-4' *ngIf="productRequest.status === 'PENDING'">
+      <div class="container grid-container">
+        <div class="row">
+          <h4 class='col-3'>Edit</h4>
+          <div class="col-15"></div>
+          <div class="col-6">
+            <app-filter-product-select
+              label="Product for update:"
+              (change)="loadProduct()"
+              class="w-80"
+              formControlName="productId">
+            </app-filter-product-select>
+          </div>
+        </div>
+      </div>
+
+      <nz-table 
+        [nzData]="productFieldsConfig"
+        [nzShowPagination]="false"
+        [nzScroll]="{ y: '800px' }">
+        <thead>
+          <tr>
+            <th nzWidth="10%">
+              <nz-switch
+              (ngModelChange)="applyChangesAllTopple()"
+              [ngModel]="applyChangesAll"
+              [ngModelOptions]="{standalone: true}">
+            </nz-switch>
+            </th>
+            <th nzWidth="15%">Property</th>
+            <th nzWidth="45%">New value</th>
+            <th nzWidth="30%">Current value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let productField of productFieldsConfig">
+            <td nzWidth="10%">
+              <nz-switch
+                [(ngModel)]="applyChanges[productField.key]"
+                [ngModelOptions]="{standalone: true}">
+              </nz-switch>
+            </td>
+            <td nzWidth="15%">
+              {{productField.label}}
+            </td>
+            <td nzWidth="45%">
+              <app-product-request-property-edit
+                [productField]="productField"
+                [form]="form">
+              </app-product-request-property-edit>
+            </td>
+            <td nzWidth="30%">
+              <ng-container *ngIf="getProductValueByKey(product, productField.key)">
+                <ng-container *ngIf="!productField.areImages">
+                  {{getProductValueByKey(product, productField.key)}}
+                </ng-container>
+                <ng-container *ngIf="productField.areImages">
+                  <img src="{{getProductValueByKey(product, productField.key)}}" alt='img' width='34' height='34'>
+                </ng-container>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+
+    <div class='row bg-component border-round-sm p-4' *ngIf="productRequest.status !== 'PENDING'">
+
+      <nz-table 
+        [nzData]="productFieldsConfig"
+        [nzShowPagination]="false"
+        [nzScroll]="{ y: '800px' }">
+        <thead>
+          <tr>
+            <th nzWidth="50%">Property</th>
+            <th nzWidth="50%">Requested value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let productField of productFieldsConfig">
+          <tr *ngIf="getProductValueByKey(productRequest, productField.key)">
+            <td nzWidth="50%">
+              {{productField.label }}
+            </td>
+            <td nzWidth="50%">
+              <ng-container *ngIf="!productField.areImages">
+                {{getProductValueByKey(productRequest, productField.key)}}
+              </ng-container>
+              <ng-container *ngIf="productField.areImages">
+                <img src="{{getProductValueByKey(productRequest, productField.key)}}" alt='img' width='34' height='34'>
+              </ng-container>
+            </td>
+          </tr>
+          </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+
+</div>
+</form>
+</ng-container>
+</ng-container>

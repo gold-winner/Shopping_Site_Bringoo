@@ -1,0 +1,189 @@
+:host ::ng-deep, ::ng-deep.backlog-drag-preview {
+  .story-point {
+    margin-top: 2px;
+
+    span {
+      display: inline-block;
+      min-width: 1px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: normal;
+      line-height: 1;
+      text-align: center;
+      background: #7D7D7D;
+      color: white;
+    }
+  }
+
+  .point-breaks span {
+    background: #D87A16;
+  }
+
+  .point-drop span {
+    background: #1890ff;
+  }
+
+  .point-pick-up span {
+    background: #52c41a;
+  }
+
+  .point-refuel span {
+    background: #eb2f96;
+  }
+
+  .order-icon.DROP_OFF {
+    background: #1890ff;
+  }
+
+  .order-icon.PICK_UP {
+    background: #52c41a;
+  }
+
+  .order-icon.BREAK_POINT {
+    background: #D87A16;
+  }
+
+  .order-icon.MOBILITY_REFUEL {
+    background: #eb2f96;
+  }
+
+  .logo {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid;
+  }
+
+  .order-icon {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 3px;
+
+    > * {
+      margin-top: 3px;
+    }
+  }
+  .order-icon span {
+    color: white;
+  }
+
+  .avatar-empty {
+    background-color: #808080FF;
+  }
+
+  .empty {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 48px;
+    border-radius: 2px;
+  }
+
+  .ant-list-item {
+    flex-wrap: nowrap !important;
+  }
+
+  .flagged {
+    background: rgba(234, 56, 1, 0.1);
+  }
+
+  .orders-list {
+    min-height: 30px;
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  .flagged:hover {
+    background: rgba(255, 61, 0, 0.3) !important;
+  }
+
+  .flag-icon {
+    color: #ff5630;
+  }
+
+  .extra > *, .order-item > * {
+    margin-right: 4px;
+  }
+
+  .order-item > h5 {
+    margin-right: 12px;
+  }
+
+  .order-item > .title {
+    width: 120px;
+    display: flex;
+    margin-right: 8px;
+    .order-icon {
+      margin-right: 4px;
+    }
+  }
+
+  .extra icon {
+    width: auto;
+    height: auto;
+  }
+
+  .ant-list-item .extra [nz-dropdown] {
+    margin-right: -8px;
+    opacity: 0;
+  }
+
+  .ant-list-item:hover .extra [nz-dropdown] {
+    opacity: 1;
+  }
+
+  .ant-list-item {
+    padding-right: 12px;
+  }
+
+  .cdk-drag-placeholder {
+    background: rgba(124, 124, 124, 0.5);
+  }
+  .backlog-collapse {
+    background-color: transparent;
+  }
+}
+
+::ng-deep .backlog-drag-preview {
+  padding-inline: 16px;
+  font-size: 14px;
+  line-height: 1.5715;
+}
+
+
+::ng-deep html.light {
+  & app-backlog-page .ant-list-item:hover {
+    background: rgba(124, 124, 124, 0.2);
+  }
+
+  .empty {
+    border: 1px dashed #e2d3c5;
+    background: #F9F6F3;
+  }
+
+  .create-route:has(.cdk-drag-placeholder) .empty {
+    background: #fae6df;
+  }
+}
+
+::ng-deep html.dark {
+  & app-backlog-page .ant-list-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .empty {
+    border: 1px dashed #434343;
+    background: rgb(22, 22, 22);
+  }
+
+  .create-route:has(.cdk-drag-placeholder) .empty {
+    background: #0e0e0e;
+  }
+}

@@ -1,0 +1,69 @@
+<app-breadcrumbs *ngIf="showCrumbs|async"></app-breadcrumbs>
+<ng-container *ngIf="user$|async as user; else unauthorized">
+  <div class="ml-auto">
+    <button nz-button class="mr-4" (click)="openMyNotReadedHistoryPage()">
+      <i nz-icon nzType="notification" nzTheme="outline"></i>
+      <ng-container *ngIf='notReadedNotifications$ | async as notReadedNotifications'>
+        <span [ngClass]="{'not-readed-notifications': notReadedNotifications.length > 0}">{{notReadedNotifications.length}}</span>
+      </ng-container>
+    </button>
+    <ng-container [ngTemplateOutlet]="theme_selector"></ng-container>
+    <button
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzPlacement]="'bottomCenter'"
+    >
+      <i nz-icon nzType="user" nzTheme="outline"></i>
+      {{user?.firstName}} {{user?.lastName?.charAt(0)}}
+    </button>
+    <ng-container [ngTemplateOutlet]="lang_selector"></ng-container>
+  </div>
+</ng-container>
+<ng-template #unauthorized>
+  <div>
+    <ng-container [ngTemplateOutlet]="theme_selector"></ng-container>
+    <button
+      nz-button
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzPlacement]="'bottomCenter'"
+    >
+      Unauthorized
+    </button>
+    <ng-container [ngTemplateOutlet]="lang_selector"></ng-container>
+  </div>
+</ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item class="text-center"><a routerLink="/dashboard/profile">Profile</a></li>
+    <li nz-menu-item class="text-center"><a (click)="onSignOut()">Sign out</a></li>
+  </ul>
+</nz-dropdown-menu>
+<ng-template #lang_selector>
+  <nz-radio-group class="ml-4" [formControl]="language" *ngIf="languageList$|async as languageList">
+    <label nz-radio-button nzValue="{{lang}}" *ngFor="let lang of languageList">{{lang}}</label>
+  </nz-radio-group>
+</ng-template>
+<ng-template #theme_selector>
+  <button
+    class="mr-4"
+    nz-button
+    nz-dropdown
+    [nzDropdownMenu]="themes"
+    [nzPlacement]="'bottomCenter'"
+  >
+    Theme
+  </button>
+  <nz-dropdown-menu #themes="nzDropdownMenu">
+    <ul nz-menu>
+      <li
+        *ngFor="let theme of themeNames"
+        nz-menu-item
+        class="text-center"
+        (click)="toggleTheme(theme)"
+      ><a>{{theme}}</a></li>
+    </ul>
+  </nz-dropdown-menu>
+</ng-template>

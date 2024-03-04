@@ -1,0 +1,45 @@
+<div class="ui-card" [ngClass]="{'ui-card--disabled': disabled}">
+  <div class="ui-card__img" (click)="onClickProduct(product.linkId)">
+    <picture>
+      <source media="(min-width:800px)" srcset="{{product.imageUrl.replace('original', '200')}}" class="image_size">
+      <img src="{{product.imageUrl.replace('original', '200')}}" alt="" class="image_size" />
+    </picture>
+    <div class="ui-card__img--badge" [ngClass]="{'bg-blue': productType==='new', 'bg-red': productType==='sale'}"
+      [hidden]="!productType">
+      <span *ngIf="productType==='new'">New</span>
+      <span *ngIf="productType==='sale'">{{product.discount}} off</span>
+    </div>
+  </div>
+  <div class="ui-card__body">
+    <span class="category">{{product.subcategoryName}}</span>
+    <span class="name" style="font-size: 15px; line-height: 25px;">{{product.name_i18n}}</span>
+    <span class="amount">{{product.productSize}} ({{product.baseSize}} = {{product.basePrice}})</span>
+    <div class="ui-card__body--bottom">
+      <span class="price" [ngClass]="{'text-red': productType==='sale'}"
+        style="font-size: 17px;">{{product.regularPrice}}</span>
+      <ui-button *ngIf="count==0 && !product.outOfStock" color="blue" width="full" (mouseenter)="hovered=true"
+        (mouseleave)="hovered=false" [disabled]=false class="cart" (click)="changeCartInit()">
+        <icon name="cart"></icon>
+      </ui-button>
+      <ui-button *ngIf="count!=0 && !product.outOfStock" color="cart" width="full" (mouseenter)="hovered=true"
+        (mouseleave)="hovered=false" [disabled]=false class="cart">
+        <ui-quantity-input *ngIf="!disabled" class="w-100p" [itemCount]="count" [type]="type" page="product"
+          [productId]="product.linkId" (onChangeCart)="changeCart($event)"></ui-quantity-input>
+      </ui-button>
+      <ui-button *ngIf="count==0 && product.outOfStock" color="blue" width="full" (mouseenter)="hovered=true"
+        (mouseleave)="hovered=false" [disabled]=true class="cart">
+        <icon name="cart"></icon>
+      </ui-button>
+      <ui-button *ngIf="count!=0 && product.outOfStock" color="cart" width="full" (mouseenter)="hovered=true"
+        (mouseleave)="hovered=false" [disabled]=true class="cart">
+        <ui-quantity-input *ngIf="disabled" class="w-100p" [itemCount]="count" [type]="type" page="product"
+          [productId]="product.linkId"></ui-quantity-input>
+      </ui-button>
+    </div>
+  </div>
+  <div class="ui-card__bookmark" [ngClass]="{'text-green': bookmarked}" [ngSwitch]="bookmarked"
+    (click)="onBookmarkClick()">
+    <icon name="bookmark-checked" *ngSwitchCase="true"></icon>
+    <icon name="bookmark" *ngSwitchCase="false"></icon>
+  </div>
+</div>

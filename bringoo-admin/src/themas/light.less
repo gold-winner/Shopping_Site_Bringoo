@@ -1,0 +1,112 @@
+@import '../../node_modules/ng-zorro-antd/ng-zorro-antd';
+@import "themes/light";
+
+@body-background: @color_darkvanilla;
+
+
+//override colors
+@component-background: @color_white;
+@body-background: @color_vanilla;
+@layout-body-background: @body-background;
+@drawer-bg: @body-background;
+@layout-header-background: white;
+@menu-inline-submenu-bg: none;
+
+.main-menu {
+  .ant-menu-submenu {
+    color: white !important;
+  }
+
+  .ant-menu-item::after{
+    left: 0 !important;
+    right: auto;
+  }
+
+  .ant-menu-submenu-arrow {
+    color: white;
+  }
+  .ant-menu-root.ant-menu-inline {
+    border-right: none;
+  }
+
+  .bg-component .ant-menu-submenu-arrow, [ant-menu-item]{
+    color: #677798;
+  }
+
+  .ant-btn {
+    text-overflow: ellipsis;
+  }
+
+  [nz-menu-item] {
+    background: none !important;
+    color: white;
+    a {
+      color: white;
+    }
+  }
+  .ant-menu {
+    background-color: transparent;
+  }
+}
+
+.map-info {
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  >div{
+    background: rgba(255, 255, 255, 0.8);
+  }
+  [nz-radio][class^="carts"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: #4FBA5D !important;
+    }
+    .ant-radio-inner::after{
+      background-color: #4FBA5D !important;
+    }
+  }
+
+
+  [nz-radio][class^="in-progress"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: yellow !important;
+    }
+    .ant-radio-inner::after{
+      background-color: yellow !important;
+    }
+  }
+
+  [nz-radio][class^="complete"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: #4FBA5D !important;
+    }
+    .ant-radio-inner::after{
+      background-color: #4FBA5D !important;
+    }
+  }
+
+  [nz-radio][class^="payment"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: #244875 !important;
+    }
+    .ant-radio-inner::after{
+      background-color: #244875 !important;
+    }
+  }
+
+  [nz-radio][class^="cancelled"] {
+    .ant-radio-checked .ant-radio-inner {
+      border-color: red !important;
+    }
+    .ant-radio-inner::after{
+      background-color: red !important;
+    }
+  }
+}
+
+.markdown-editor-toolbar-custom-icon {
+  color: black !important;
+}
+
+nz-layout .layout-sidebar {
+  background-color: @color_darkgrey;
+}

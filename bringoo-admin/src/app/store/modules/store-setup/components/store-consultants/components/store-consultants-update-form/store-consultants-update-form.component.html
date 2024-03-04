@@ -1,0 +1,104 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Email</nz-form-label>
+    <nz-form-control labelForErrorTip="Email">
+      <input nz-input type="email" placeholder="Email" formControlName="email">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>First name</nz-form-label>
+    <nz-form-control labelForErrorTip="First name">
+      <input formControlName='firstName' nz-input placeholder="First Name" type="firstName">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired>Last name</nz-form-label>
+    <nz-form-control labelForErrorTip="Last name">
+      <input formControlName='lastName' nz-input placeholder="Last Name" type="lastName">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzNoColon nzFor="firstName">Phone number</nz-form-label>
+    <nz-form-control labelForErrorTip="Phone number">
+      <nz-input-group nzCompact>
+        <nz-select formControlName='phoneCountryCode' style="width:30%;" nzPlaceHolder='Country code' nzShowSearch>
+          <nz-option *ngFor='let phoneCode of countryCode' [nzLabel]="phoneCode[0] +' +'+ phoneCode[1]" [nzValue]="phoneCode[1]"></nz-option>
+        </nz-select>
+        <input nz-input appDisableControl [disable]="!form.controls.phoneCountryCode?.value" formControlName='phoneNumber' style="width:70%;"
+               placeholder='Enter number'/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzNoColon>Product Types</nz-form-label>
+    <nz-form-control>
+      <nz-select
+        formControlName='productTypes'
+        nzPlaceHolder='Product Types'
+        nzShowSearch
+        nzMode="tags"
+      >
+        <nz-option
+          *ngFor='let productType of productTypes'
+          [nzLabel]="productType|titlecase"
+          [nzValue]="productType"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label nzRequired>Start date</nz-form-label>
+      <nz-form-control labelForErrorTip="Start date">
+        <app-date-control
+          formControlName="dateStart"
+          placeHolder="Date start"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col pl-0">
+      <nz-form-label nzRequired>End date</nz-form-label>
+      <nz-form-control labelForErrorTip="End date">
+        <app-date-control
+          formControlName="dateEnd"
+          placeHolder="Date end"
+          [disableBefore]="form.controls.dateStart?.value"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="row">
+    <nz-form-item class="col">
+      <nz-form-label nzRequired>Time start</nz-form-label>
+      <nz-form-control labelForErrorTip="Time start">
+        <app-time-control [minuteStep]="10" formControlName="timeStart"></app-time-control>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item class="col">
+      <nz-form-label nzRequired>Time end</nz-form-label>
+      <nz-form-control labelForErrorTip="Time end">
+        <app-time-control [minuteStep]="10" formControlName="timeEnd"></app-time-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Days of Week</nz-form-label>
+    <nz-form-control labelForErrorTip="Days of Week">
+      <app-checkbox-group [items]="daysOfWeek" formControlName="daysOfWeek"></app-checkbox-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon>Description</nz-form-label>
+    <nz-form-control>
+      <textarea nz-input rows="2" formControlName="description"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

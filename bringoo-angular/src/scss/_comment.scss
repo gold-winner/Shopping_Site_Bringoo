@@ -1,0 +1,14 @@
+.comment{
+  @extend .bg-green;
+  @extend .text-white;
+  @extend .text-bold;
+  padding: 8px 13px 8px 20px;
+  border-radius: 0 28px 28px 28px;
+  display: inline-flex;
+  font-size: 16px;
+  line-height: 20px;
+  @media (min-width: 576px) {
+    padding: 16px 26px 16px 40px;
+    border-radius: 0 56px 56px 56px;
+  }
+}

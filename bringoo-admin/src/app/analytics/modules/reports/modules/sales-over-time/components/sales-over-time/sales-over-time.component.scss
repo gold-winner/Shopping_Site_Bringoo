@@ -1,0 +1,9 @@
+.total {
+  padding: 8px;
+  &:hover{
+    background: rgba(56, 114, 189, 0.1);
+  }
+}
+.total + .total {
+  margin-left: 16px;
+}

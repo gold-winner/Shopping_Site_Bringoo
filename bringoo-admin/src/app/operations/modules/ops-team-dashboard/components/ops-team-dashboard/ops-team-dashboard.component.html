@@ -1,0 +1,105 @@
+<div class="p-4 bg-component h-100p" #container>
+  <h5 #title class="mb-4">Todays Open Jobs</h5>
+  <div #filters>
+    <app-ops-team-dashboard-filter (filters)="onFiltersUpdate($event)"></app-ops-team-dashboard-filter>
+  </div>
+  <nz-table
+    nzShowSizeChanger
+    nzShowPagination
+    [nzData]="items"
+    [nzLoading]="isLoading$|async"
+    [nzTotal]="total"
+    [nzPageIndex]="page"
+    [nzShowTotal]="rangeTemplate"
+    (nzQueryParams)="onQueryParamsChange($event)"
+    [nzSize]="'small'"
+    [nzPageSize]="limit"
+    [nzScroll]="(nzScroll | async) || { x: '250px' }"
+  >
+    <thead>
+    <tr>
+      <th nzLeft class="text-align-left">Order Number</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.CustomerName">Customer</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.StoreName">Store</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.DistanceStoreToCustomer">Distance to Customer</th>
+      <th class="text-align-left">Delivery Date</th>
+      <th class="text-align-left">Picker Job</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.Picker">Picker</th>
+      <th class="text-align-left">Driver Job</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.Driver">Driver</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.OrderStatus">Order Status</th>
+      <th class="text-align-left">Zip Code</th>
+      <th class="text-align-left">Order Type</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.DeliveryStart">Delivery Start</th>
+      <th class="text-align-left" [nzSortFn]="true" [nzColumnKey]="opsTeamDashboardOrderFieldEnum.DeliveryEnd">Delivery End</th>
+      <th class="text-align-left">Actual Delivery Time</th>
+      <th class="text-align-left">Status In Minutes</th>
+      <th class="text-align-right">Replacement Counter</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of items">
+      <td nzLeft>
+        <a routerLink="/orders/all/detail/{{row.orderId}}">{{row.orderNumber}}</a>
+      </td>
+      <td>
+        <a routerLink="/users/customers/details/{{row.customerId}}">{{row.customerName}}</a>
+      </td>
+      <td>
+        <a routerLink="/store/stores/{{row.storeId}}/basic-information">{{row.storeName}}</a>
+      </td>
+      <td>
+        {{row.distanceStoreToCustomer}}
+      </td>
+      <td>
+        {{row.deliveryDate}}
+      </td>
+      <td>
+        {{row.pickerJob}}
+      </td>
+      <td>
+        <a routerLink="/users/staff/details/{{row.pickerId}}">{{row.picker}}</a>
+      </td>
+      <td>
+        {{row.driverJob}}
+      </td>
+      <td>
+        <a routerLink="/users/staff/details/{{row.driverId}}">{{row.driver}}</a>
+      </td>
+      <td>
+        {{row.orderStatus}}
+      </td>
+      <td>
+        {{row.orderZipCode}}
+      </td>
+      <td>
+        {{row.orderType}}
+      </td>
+      <td>
+        {{row.deliveryStart}}
+      </td>
+      <td>
+        {{row.deliveryEnd}}
+      </td>
+      <td>
+        {{row.actualDeliveryTime|formatDelayTime}}
+      </td>
+      <td>
+        <div
+          [class.bg-primary-10]="row.delayedStatusInMinutes|include :'Good'"
+          [class.bg-info-10]="row.delayedStatusInMinutes|include :'Critical'"
+          [class.bg-danger-10]="row.delayedStatusInMinutes|include :'Delayed'"
+          [class.bg-primary-blue-40]="row.delayedStatusInMinutes|include :'Pending'"
+          class="text-center"
+        >{{row.delayedStatusInMinutes}}</div>
+      </td>
+      <td class="text-align-right">
+        {{row.replacementCounter}}
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</div>
+<ng-template #rangeTemplate let-range="range" let-total>
+  {{ range[0] }}-{{ range[1] }} of {{ total }} items
+</ng-template>

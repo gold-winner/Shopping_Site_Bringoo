@@ -1,0 +1,41 @@
+<div class="ui-card-product" [ngClass]="{'ui-card-product--disabled': disabled}">
+  <div class="ui-card-product__img" (click)="onClick.emit('a')">
+    <img src="/assets/img/tomato.svg" />
+    <div 
+      class="ui-card-product__img--badge" 
+      [ngClass]="{'bg-blue': productType==='new', 'bg-red': productType==='sale'}"
+      [hidden]="!productType"
+      >
+      <span *ngIf="productType==='new'">New</span>
+      <span *ngIf="productType==='sale'">0,57 € off</span>
+    </div>
+  </div>
+  <div class="ui-card-product__body">
+    <span class="text-bold text-blue text-tiny">Pasta Sauses</span>
+    <span class="text-bold text-small">Barilla Pesto Rosso</span>
+    <span class="text-bold text-medium">200g</span>
+    <div class="d-flex">
+      <ui-button size="sm" color="primary" class="mr-1">Bio</ui-button>
+      <ui-button size="sm" color="primary" fill="outline">inkl. Pfand</ui-button>
+    </div>
+    <div class="ui-card-product__body--bottom">
+      <div class="d-flex">
+        <div class="price-new" [ngClass]="{'text-red': productType==='sale'}">2,93 €</div>
+        <div class="price-old" [ngClass]="{'text-red': productType==='sale'}">3,50 €</div>
+      </div>
+      <ui-button color="secondary" width="full" (mouseenter)="hovered=true" (mouseleave)="hovered=false" [disabled]="disabled" class="cart">
+        <icon name="cart" *ngIf="disabled || !hovered"></icon>
+        <ui-quantity-input *ngIf="!disabled && hovered" class="w-100p"></ui-quantity-input>
+      </ui-button>
+    </div>
+  </div>
+  <div 
+    class="ui-card-product__bookmark" 
+    [ngClass]="{'text-green': bookmarked}"
+    [ngSwitch]="bookmarked" 
+    (click)="onBookmarkClick()"
+  >
+    <icon name="bookmark-checked" *ngSwitchCase="true"></icon>
+    <icon name="bookmark" *ngSwitchCase="false"></icon>
+  </div>
+</div>

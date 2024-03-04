@@ -1,0 +1,39 @@
+<ui-settings>
+  <div class="px-8 py-4">
+    <span class="f-8 text-bold">My Orders</span>
+  </div>
+  <div class="border"></div>
+  <div class="d-flex my-8 px-8">
+    <ui-option *ngFor="let option of options; index as i" 
+      [option]="option"
+      [selected]="selectedOption===option.id"
+      class="mr-4"
+      (optionSelect)="onChangeOption(option.id)">
+    </ui-option>
+  </div>
+  <div class="order">
+    <div class="order-list" [ngClass]="{'order-list--hidden': selectedOrder}">
+      <ui-order *ngFor="let order of orders"
+        [id]="order.id"
+        [status]="order.status"
+        [selected]="selectedOrder==order.id" 
+        (onSelect)="onSelectOrder(order.id)"
+        class="mb-6">
+      </ui-order>
+    </div>
+    <div class="order-content">
+      <div *ngIf="!selectedOrder" class="text-lightblue text-medium text-align-center">
+        Please select Order from the list to show details.
+      </div>
+      <ui-settings-order-details *ngIf="selectedOrder && !productsSelected && !orderStatus" 
+        [id]="selectedOrder"
+        (onProductsSelect)="onProductSelect(selectedOrder)"
+        (onOrderStatusClick)="onOrderStatusClick(selectedOrder)">
+      </ui-settings-order-details>
+      <ui-settings-order-products *ngIf="selectedOrder && productsSelected"
+        (backToDetails)="productsSelected=''">
+      </ui-settings-order-products>
+      <ui-settings-order-status *ngIf="selectedOrder && orderStatus"></ui-settings-order-status>
+    </div>
+  </div>
+</ui-settings>

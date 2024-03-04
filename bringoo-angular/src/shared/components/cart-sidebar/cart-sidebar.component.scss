@@ -1,0 +1,27 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+.ui-cart-sidebar {
+  .sidebar-header {
+    @extend .h-15;
+    @extend .bg-green; 
+    @extend .text-white;
+    @extend .d-flex;
+    @extend .justify-content-between ;
+    @extend .align-items-center;
+    @extend .px-5;
+
+    .cart-link {
+      @extend .d-flex;
+      @extend .text-white;
+      outline: none;
+    }
+  }
+}
+
+.ui-voucher-modal {
+  @extend .w-65p;
+  @extend .align-items-center;
+  @extend .text-align-center;
+  margin: auto;
+}

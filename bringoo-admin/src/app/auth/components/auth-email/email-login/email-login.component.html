@@ -1,0 +1,38 @@
+<form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-2">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group nzSuffixIcon="user">
+        <input
+          [type]="'email'"
+          nz-input
+          placeholder="Email"
+          formControlName="email"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group [nzSuffix]="suffixTemplate">
+        <input
+          [type]="passwordVisible ? 'text' : 'password'"
+          nz-input
+          placeholder="Password"
+          formControlName="password"
+        />
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="d-flex justify-content-between mb-6">
+    <label nz-checkbox>Remember me</label>
+    <a class="color-disabled">Forgot Password?</a>
+  </div>
+  <button
+    nz-button
+    nzBlock
+    nzType="primary"
+  >Login</button>
+</form>

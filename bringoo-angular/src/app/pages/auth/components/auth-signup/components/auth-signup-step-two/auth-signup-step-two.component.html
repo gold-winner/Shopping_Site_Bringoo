@@ -1,0 +1,53 @@
+<div class="text-medium my-7 text-tiny-bold">
+  We sent code for verify your email address to
+</div>
+<div class="text-bold mb-3"> {{ myEmail }} </div>
+<div class="d-flex align-items-center text-green text-tiny text-bold cursor-pointer" (click)="onResend()">
+  <icon name="repeat" class="text-medium text-bold mr-1"></icon>Resend email
+</div>
+<div class="text-tiny text-bold my-7">
+  Enter your 4-digit code
+</div>
+<div class="d-flex justify-content-between mb-6">
+  <input 
+    [value]="digitCode[0]"
+    (keyup)="onEnter($event, 0)"
+    class="ui-input__text"
+    [ngClass]="errors[2]? 'ui-input--error' : ''"
+    [attr.maxlength]="1"
+  />
+  <input 
+    [value]="digitCode[1]"
+    (keyup)="onEnter($event, 1)"
+    class="ui-input__text ml-3"
+    [ngClass]="errors[2]? 'ui-input--error' : ''"
+    [attr.maxlength]="1"
+  />
+  <input 
+    [value]="digitCode[2]"
+    (keyup)="onEnter($event, 2)"
+    class="ui-input__text ml-3"
+    [ngClass]="errors[2]? 'ui-input--error' : ''"
+    [attr.maxlength]="1"
+  />
+  <input 
+    [value]="digitCode[3]"
+    (keyup)="onEnter($event, 3)"
+    class="ui-input__text ml-3"
+    [ngClass]="errors[2]? 'ui-input--error' : ''"
+    [attr.maxlength]="1"
+  />
+</div>
+<div *ngIf="notValidated" class="text-small text-red">Please check code and try again.</div>
+<div class="text-medium">
+  <span class="text-tiny-bold">Didn't receive your code? </span>
+  <span class="text-green text-bold cursor-pointer">See our help</span>
+</div>
+<div class="mt-10 d-flex justify-content-between align-items-center">
+  <ui-button fill='transparent' label='Back' size='lg' (onClick)='onBackClick.emit($event)'></ui-button>
+  <ui-button *ngIf="!loading" size="lg" radius="md" (onClick)="verify($event)">Verify Email</ui-button>
+  <ui-button *ngIf="loading" size="lg" radius="md" class="position-relative">
+    <span class="text-trans">Verify Email</span>
+    <span id="loading"></span>
+  </ui-button>
+</div>

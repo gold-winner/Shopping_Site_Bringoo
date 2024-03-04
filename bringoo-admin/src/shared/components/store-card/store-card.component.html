@@ -1,0 +1,42 @@
+<ng-container *ngIf='store?.id'>
+  <div class='d-flex justify-content-between f-4 header pb-4'>{{label}}: <a *ngIf='isEdited' (click)='onEdit()'>Edit <i nz-icon nzType="right" nzTheme="outline"></i></a></div>
+  <div class='border-bottom d-flex b-white-grey customer-info pb-4 f-4'>
+    <img class='mr-sm-4' src="{{store?.logoUrl || './../../../assets/img/avatars/noAvatar.svg'}}" alt="Store">
+    <div>
+      <div class='f-3 color-text-2'>Opening hours</div>
+      <ng-container
+        *ngIf="!store?.deleted_date; else storeDeleted"
+      >
+        <ng-container *ngIf="store?.openingHours|actualStoreOpeningHour as actual; else actualOpeningHoursNotFind">
+          <div>{{actual.timeStart}}-{{actual.timeEnd}}</div>
+        </ng-container>
+        <ng-template #actualOpeningHoursNotFind><div>--</div></ng-template>
+      </ng-container>
+      <ng-template #storeDeleted>
+        <div class="color-danger">Store Deleted</div>
+      </ng-template>
+    </div>
+<!--    todo add Expected delivery time-->
+<!--    <div class='pl-4' *ngIf="expectedTime">-->
+<!--      <div class='f-3 color-text-2'>Expected delivery time</div>-->
+<!--      <div>-->
+<!--        {{expectedTime}} min-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+  <div class='d-flex flex-column'>
+    <div>{{store?.vendorType?.name_i18n}}</div>
+    <div><i class='color-text-2'></i><a routerLink="/store/stores/{{store?.id}}/basic-information">{{store?.name_i18n}}</a></div>
+  </div>
+</ng-container>
+<ng-container *ngIf='!store?.id'>
+  <div class='d-flex justify-content-between f-4 header pb-4'>Store details: <a *ngIf='isEdited' (click)='onEdit()'>Assign <i nz-icon nzType="right" nzTheme="outline"></i></a></div>
+  <div class='border-bottom d-flex b-white-grey customer-info pb-4 f-4'>
+    <img class='mr-sm-4' src="./../../../assets/img/avatars/noAvatar.svg" alt='avatar'>
+    Store
+  </div>
+  <div class='d-flex flex-column pl-4'>
+    <div>{{store?.vendorType?.name_i18n}}</div>
+    <div><i class='color-text-2'></i>{{store?.name_i18n}}</div>
+  </div>
+</ng-container>

@@ -1,0 +1,31 @@
+<nz-drawer
+  [nzClosable]="true"
+  [nzWidth]="1000"
+  [nzVisible]="openPanel"
+  nzPlacement="right"
+  nzTitle="Product details"
+  [nzFooter]="carouselFooter"
+  (nzOnClose)='onCloseDrawer()'
+  [nzBodyStyle]="{ position: 'relative' }"
+>
+  <ng-template nzDrawerContent>
+    <ng-template
+      [ngComponentOutlet]="updateProductForm.form"
+      [ndcDynamicInputs]="updateProductForm.formInputs"
+      [ndcDynamicOutputs]="updateProductForm.formOutputs"
+    ></ng-template>
+  </ng-template>
+</nz-drawer>
+
+<ng-template #carouselFooter>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button nzBlock nz-button nzType="primary" (click)='getFormValue()'>Save</button>
+      </div>
+      <div class="col-12">
+        <button nzBlock nz-button nzType="link" (click)="onCloseDrawer()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

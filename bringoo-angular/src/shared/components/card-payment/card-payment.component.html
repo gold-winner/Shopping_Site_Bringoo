@@ -1,0 +1,41 @@
+<div class="ui-card-payment" [ngClass]="selected ? 'bg-blue text-white' : 'bg-beige-20 text-darkgrey'" (click)="onSelect.emit(paymentMethod.cardNo)">
+  <div class="d-flex align-items-center justify-content-between h-8">
+    <img src="{{'assets/img/cards/' + paymentMethod.logoUrl}}">
+    <icon *ngIf="!small" name="delete" class="text-red cursor-pointer" (click)="onDelete.emit(paymentMethod.cardNo)"></icon>
+    <icon *ngIf="small && selected" name="circle-check" class="text-green"></icon>
+  </div>
+  <div class="ui-card-payment__content">
+    <div class="row align-items-center">
+      <div class="col-6 ui-card-payment__content--dot" *ngFor="let i of [1,2,3]">
+        <icon name="four-dot"></icon>
+      </div>
+      <div class="col-6">
+        <span>{{paymentMethod.cardNo}}</span>
+      </div>
+    </div>
+    <div *ngIf="!small" class="row text-tiny opacity-6">
+      <div class="col-18">
+        Card Holder
+      </div>
+      <div class="col-6">
+        Expires
+      </div>
+    </div>
+    <div *ngIf="!small" class="row text-medium">
+      <div class="col-18">
+        {{paymentMethod.cardHolder}}
+      </div>
+      <div class="col-6">
+        {{paymentMethod.expires}}
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!small" class="d-flex align-items-center justify-content-between mt-5">
+    <span class="text-tiny text-bold">
+      <icon *ngIf="selected" name="circle-check" class="check-icon text-green"></icon>
+      <icon *ngIf="!selected" name="circle-empty" class="check-icon"></icon>
+      Use as the default
+    </span>
+    <icon name="edit" class="text-tiny opacity-6"></icon>
+  </div>
+</div>

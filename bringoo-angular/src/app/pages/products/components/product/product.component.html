@@ -1,0 +1,321 @@
+<div>
+  <div *ngIf="detail" class="ui-product">
+    <div class="ui-product--item" [ngClass]="{'disabled-item': detail.outOfStock}">
+      <div class="ui-product--item__cover">
+        <div class="img-cover">
+          <carousel *ngIf="detail.imageUrls.length > 1" [dots]="true" [height]="300" [width]="310" [cellWidth]="310">
+            <div class="carousel-cell ml-3" *ngFor="let img of detail.imageUrls">
+              <img src="{{img.replace('original', '200')}}" alt="" class="imgSize" />
+            </div>
+          </carousel>
+          <div *ngIf="detail.imageUrls.length === 1" class="carousel-cell ml-3">
+            <img *ngFor="let img of detail.imageUrls" src="{{img.replace('original', '200')}}" alt="" class="imgSize" />
+          </div>
+        </div>
+      </div>
+      <div class="ui-product--item__content ml-8">
+        <span class="item-category">{{detail.subcategoryName}}</span>
+        <div *ngIf="productType==='sale'" class="item-name">{{detail.name_i18n}}
+          <div class="badge-sale bg-red">1,00 € off</div>
+        </div>
+        <div *ngIf="productType==='new'" class="item-name">{{detail.name_i18n}}
+          <div class="badge-new bg-blue">New</div>
+        </div>
+        <div class="item_prop">
+          <span class="text-blue" style="font-size: 14px;">{{detail.productSize}} ( {{detail.baseSize}} =
+            {{detail.basePrice}} )</span>
+          <div class="text-tiny text-green text-bold d-flex align-items-center ml-3" *ngIf="!detail.outOfStock">
+            <icon name="check"></icon>
+            <span class="ml-1">In stock</span>
+          </div>
+        </div>
+        <div class="item-no">
+          <span class="text-blue text-medium">Item No. {{detail.sku}}</span>
+        </div>
+        <div class="item-price">
+          <div class="d-flex flex-column">
+            <div *ngIf="productType==='sale'" class="d-flex flex-column">
+              <span class="f-8 text-bold text-medium text-middle-line text-lightblue">{{detail.price}}</span>
+              <span class="f-8 text-bold text-red">{{detail.salePrice}}</span>
+            </div>
+            <span *ngIf="productType==='new'" class="f-8 text-bold">{{detail.regularPrice}}</span>
+            <span class="text-tiny">inkl. gesetzl. MwSt. {{detail.vatPercent}}%</span>
+          </div>
+          <div>
+            <ui-button *ngIf="detail.deposit && !detail.outOfStock" width="full" size="sm" fill="outline"
+              color="secondary">zzlg. Pfand</ui-button>
+            <ui-button *ngIf="detail.deposit && detail.outOfStock" [disabled]=true width="full" size="sm" fill="outline"
+              color="secondary">zzlg. Pfand</ui-button>
+          </div>
+        </div>
+        <div *ngIf="detail.nutriScore!=='UNKNOWN'" [ngClass]="productType==='sale'? 'item-nutri-sale' : 'item-nutri-new'">
+          <span class="text-small text-semi-bold text-lightblue ml-4">NUTRI-SCORE</span>
+          <div class="nutri-cover">
+            <div class="nutri-score text-white text-semi-bold nutriA"
+              [ngClass]="detail.nutriScore==='A'? 'selected_score' : ''">A</div>
+            <div class="nutri-score text-white text-semi-bold" style="background: #2CC84D;"
+              [ngClass]="detail.nutriScore==='B'? 'selected_score' : ''">B</div>
+            <div class="nutri-score text-white text-semi-bold" style="background: #FFE70D;"
+              [ngClass]="detail.nutriScore==='C'? 'selected_score' : ''">C</div>
+            <div class="nutri-score text-white text-semi-bold" style="background: #F9A000;"
+              [ngClass]="detail.nutriScore==='D'? 'selected_score' : ''">D</div>
+            <div class="nutri-score text-white text-semi-bold nutriE"
+              [ngClass]="detail.nutriScore==='E'? 'selected_score' : ''">E</div>
+          </div>
+        </div>
+        <div
+          [ngClass]="detail.nutriScore==='UNKNOWN'? 'item-pay-unknown' : productType==='sale'? 'item-pay-sale' : 'item-pay-new'">
+          <img src="/assets/img/payback.svg" style="width: 100px;">
+          <span class="text-large text-blue text-semi-bold mt-1 ml-3">1 °P</span>
+          <span class="text-medium text-lightblue text-tiny-bold mt-2 ml-2">pro 2 Euro Warenwert</span>
+        </div>
+        <div class="d-flex" [ngClass]="productType==='sale'? 'item-quantity-sale' : 'item-quantity-new'">
+          <div class="flex-grow-1">
+            <ui-button *ngIf="value==0 && !detail.outOfStock" color="blue" width="full" (mouseenter)="hovered=true"
+              (mouseleave)="hovered=false" (click)="changeCartInit()">
+              <icon name="cart"></icon>
+            </ui-button>
+            <ui-button *ngIf="value!=0 && !detail.outOfStock" color="cart" width="full" (mouseenter)="hovered=true"
+              (mouseleave)="hovered=false">
+              <ui-quantity-input class="w-100p" [productId]="detail.linkId" [itemCount]="value" type="trash"
+                page="product" (onChangeCart)="changeCart($event)"></ui-quantity-input>
+            </ui-button>
+            <ui-button *ngIf="value==0 && detail.outOfStock" [disabled]=true color="blue" width="full"
+              (mouseenter)="hovered=true" (mouseleave)="hovered=false">
+              <icon name="cart"></icon>
+            </ui-button>
+            <ui-button *ngIf="value!=0 && detail.outOfStock" [disabled]=true color="cart" width="full"
+              (mouseenter)="hovered=true" (mouseleave)="hovered=false">
+              <ui-quantity-input class="w-100p" [productId]="detail.linkId" [itemCount]="value" type="trash"
+                page="product" (onChangeCart)="changeCart($event)"></ui-quantity-input>
+            </ui-button>
+          </div>
+          <div class="bookmark" [ngClass]="{'text-green': bookmarked, 'disabled_bookmark': detail.outOfStock}"
+            [ngSwitch]="bookmarked" (click)="onBookmarkClick()">
+            <icon name="bookmark-checked" *ngSwitchCase="true"></icon>
+            <icon name="bookmark" *ngSwitchCase="false"></icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item-description mt-7">
+      <ui-accordion title="About" [ngClass]="{'disabled-item': detail.outOfStock}">
+        <span class="text-medium">
+          {{detail.description_i18n}}
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Brand" [ngClass]="{'disabled-item': detail.outOfStock}">
+        <span class="text-medium">
+          {{detail.productBrandName_i18n}}
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Manufacturer" [ngClass]="{'disabled-item': detail.outOfStock}">
+        <span class="text-medium">
+          {{detail.manufacturer_i18n}}
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Ingredients" [ngClass]="{'disabled-item': detail.outOfStock}">
+        <span class="text-medium">
+          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
+          Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
+        </span>
+      </ui-accordion>
+      <ui-accordion title="Nutritional values" [ngClass]="{'disabled-item': detail.outOfStock}">
+        <div>
+          <ui-table header="Nährwertinformation pro 100 g" [data]="tableData"></ui-table>
+        </div>
+      </ui-accordion>
+      <ui-accordion title="Preparation and storage" [ngClass]="{'disabled-item': detail.outOfStock}">
+      </ui-accordion>
+      <div class="text-border mt-4" [ngClass]="{'disabled-item': detail.outOfStock}">
+        Für die vorstehenden Angaben wird keine Haftung übernommen.
+        Bitte prüfe im Einzelfall die Angaben auf der jeweiligen Produktverpackung, diese kommen vom Hersteller und nur
+        diese sind verbindlich.
+      </div>
+    </div>
+    <div class="text-align-center my-8" [ngClass]="{'disabled-item': detail.outOfStock}">
+      <img src="{{'assets/img/logo-grey.svg'}}" class="w-35">
+    </div>
+  </div>
+  <div *ngIf="!detail" class="ui-product">
+    <div class="ui-product--item">
+      <div class="ui-product--item__cover">
+        <div class="img-cover">
+          <ngx-skeleton-loader 
+            count="1" 
+            appearance="line" 
+            animation="progress" 
+            [theme]="{
+              'background-color': '#AAAAAA',
+              height: '300px',
+              width: '300px',
+              'border-radius': '12px'
+            }"
+          >
+          </ngx-skeleton-loader>
+        </div>
+      </div>
+      <div class="ui-product--item__content ml-8">
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '20px',
+            width: '148px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '64px',
+            width: '345px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <div class="item_prop">
+          <!-- <div class="text-tiny text-green text-bold d-flex align-items-center ml-3" *ngIf="!detail.outOfStock">
+            <icon name="check"></icon>
+            <span class="ml-1">In stock</span>
+          </div> -->
+        </div>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '22px',
+            width: '344px',
+            'margin-top': '30px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '88px',
+            width: '344px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '78px',
+            width: '345px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '32px',
+            width: '344px'
+          }"
+        >
+        </ngx-skeleton-loader>
+        <ngx-skeleton-loader 
+          count="1" 
+          appearance="line" 
+          animation="progress" 
+          [theme]="{
+            'background-color': '#AAAAAA',
+            height: '60px',
+            width: '345px'
+          }"
+        >
+        </ngx-skeleton-loader>
+      </div>
+    </div>
+    <div class="item-description mt-7">
+      <ngx-skeleton-loader 
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '55px',
+          width: '710px',
+          'margin-bottom': '20px'
+        }"
+      >
+      </ngx-skeleton-loader>
+      <ngx-skeleton-loader 
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '55px',
+          width: '710px',
+          'margin-bottom': '20px'
+        }"
+      >
+      </ngx-skeleton-loader>
+      <ngx-skeleton-loader 
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '55px',
+          width: '710px',
+          'margin-bottom': '20px'
+        }"
+      >
+      </ngx-skeleton-loader>
+      <ngx-skeleton-loader 
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '55px',
+          width: '710px',
+          'margin-bottom': '20px'
+        }"
+      >
+      </ngx-skeleton-loader>
+      <ngx-skeleton-loader 
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '55px',
+          width: '710px',
+          'margin-bottom': '20px'
+        }"
+      >
+      </ngx-skeleton-loader>
+    </div>
+    <div class="text-align-center my-8">
+      <ngx-skeleton-loader 
+        count="1" 
+        appearance="line" 
+        animation="progress" 
+        [theme]="{
+          'background-color': '#AAAAAA',
+          height: '32px',
+          width: '144px'
+        }"
+      >
+      </ngx-skeleton-loader>
+    </div>
+  </div>
+</div>

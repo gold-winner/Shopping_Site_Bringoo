@@ -1,0 +1,13 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+
+.ui-total {
+  @extend .border-radius-md;
+  @extend .py-5;
+
+  .border {
+    border-bottom: 1px solid rgba($color_beige, 20);
+  }
+}

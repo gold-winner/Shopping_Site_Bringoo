@@ -1,0 +1,47 @@
+@import 'src/scss/colors';
+@import 'src/scss/sizes';
+@import 'src/scss/typography';
+@import 'src/scss/borders';
+@import 'src/scss/shadows';
+.settings {
+  @extend .d-flex;
+  &-container {
+    @extend .py-4;
+    @extend .bg-white;
+    @extend .shadow-beigebackground;
+    @extend .border-radius-md;
+
+    &__item {
+      @extend .d-flex;
+      @extend .align-items-center;
+      @extend .text-medium;
+      @extend .text-bold;
+      @extend .my-4;
+      @extend .cursor-pointer;
+
+      &--unselected {
+        @extend .text-darkgrey;
+      }
+    }
+  }
+
+  .menu-list {
+    @extend .d-table;
+    @extend .w-25p; 
+    @extend .px-10;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      display: none;
+    }
+  }
+
+  .content {
+    @extend .w-75p; 
+    @extend .ml-5;
+
+    @media (max-width: map-get($grid-breakpoints, 'md')) {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+}

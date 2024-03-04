@@ -1,0 +1,25 @@
+<form nz-form [formGroup]='form'>
+  <div class="container-fluid">
+    <div class="row px-4">
+      <nz-form-item class="w-60">
+        <nz-form-control>
+          <nz-form-label>Search</nz-form-label>
+          <nz-input-group [nzPrefixIcon]="'search'">
+            <input nz-input formControlName="search" placeholder="Search"
+                   nzTooltipTitle="Search by Name and Code"
+                   nzTooltipPlacement="topLeft"
+                   nz-tooltip
+            />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <app-filter-store-vendor-category-select
+              class="col pr-0"
+              placeHolder="Vendor Category"
+              formControlName="vendorCategoryCode"
+              label="Vendor Category"
+              [type]="'multiple'"
+      ></app-filter-store-vendor-category-select>
+    </div>
+  </div>
+</form>

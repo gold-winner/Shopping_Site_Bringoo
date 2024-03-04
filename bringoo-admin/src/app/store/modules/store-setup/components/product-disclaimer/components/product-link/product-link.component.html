@@ -1,0 +1,27 @@
+<p>
+  Products
+  <button
+    *ngIf="isUseChangeVisibleMode"
+    nz-button
+    nzType="link"
+    [disabled]="checkedIds.length === 0"
+    (click)="onShowModeChange()"
+  >Show {{isShowSelected ? 'All' : 'Selected'}}</button>
+</p>
+<app-crud
+  *ngIf="customFilters|async as customF"
+  [customImportParams]="customImportParams"
+  [config]="config"
+  [filterForm]='filterForm'
+  [service]="service"
+  [columns]="columns"
+  [fields]="fields"
+  [join]="join"
+  (checkboxes)="onCheckProduct($event)"
+  [horizontalPadding]="0"
+  [showTitle]="false"
+  [topMargin]="false"
+  [showCheckboxes]="showCheckboxes"
+  [customFilters]="customF"
+  [defaultCheckedIds]="defaultCheckedIds"
+></app-crud>

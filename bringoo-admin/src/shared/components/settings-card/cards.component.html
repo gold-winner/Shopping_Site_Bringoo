@@ -1,0 +1,19 @@
+<ng-container *ngFor="let card of cards | cardsFilter: searches">
+  <nz-card [nzTitle]="Title" [nzExtra]="Extra">
+    <ng-container *ngFor="let link of card.links">
+      <p
+        *ngIf="link.title|markText :searches as text"
+        class="f-3 mb-sm-1 cursor-pointer"
+        [routerLink]="[card.path, link.path]"
+      >
+        <span *ngIf="text.prefix" class="color-disabled">{{text.prefix}}</span>{{text.marked}}<span *ngIf="text.suffix" class="color-disabled">{{text.suffix}}</span>
+      </p>
+    </ng-container>
+  </nz-card>
+  <ng-template #Title>
+    <a routerLink="{{card.path}}">{{card.title}}</a>
+  </ng-template>
+  <ng-template #Extra>
+    <i class="color-primary" nz-icon [nzType]="card.icon" nzTheme="outline"></i>
+  </ng-template>
+</ng-container>

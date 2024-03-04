@@ -1,0 +1,20 @@
+<img
+  class="col-auto pl-0"
+  src="/assets/img/avatars/adminAvatar.svg"
+  [height]="52"
+  [width]="52"
+  alt="avatar"
+>
+<form [formGroup]="form" class="editor-form">
+  <nz-form-item class="mb-0">
+    <nz-form-control labelForErrorTip="message">
+      <app-markdown-editor
+        formControlName="message"
+        (save)="onSave()"
+        [showButtons]="true"
+        [addToolbarItems]="addToolbarItems"
+        imageUrlPath="order-manager-comments"
+      ></app-markdown-editor>
+    </nz-form-control>
+  </nz-form-item>
+</form>

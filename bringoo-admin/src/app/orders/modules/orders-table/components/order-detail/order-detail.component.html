@@ -1,0 +1,648 @@
+<div class="p-8" *ngIf="order$ | async as order">
+  <div class='d-flex justify-content-between'>
+    <a class='d-flex align-items-center' routerLink='../..'>
+      <i nz-icon nzType="left" nzTheme="outline"></i>
+      <h3 class='mb-0'>Show order</h3>
+    </a>
+    <div class="d-flex justify-content-end">
+      <ng-container *ngIf="orderDetails$ | async as details">
+        <button
+          *ngIf="details.canBeReordered"
+          nz-button
+          nzType="primary"
+          class="ml-auto mr-2"
+          [disabled]="isLoading$ | async"
+          (click)="orderToCart(order.id, order.customerId)">
+          Order to Cart
+        </button>
+      </ng-container>
+      <button
+        nz-button
+        nzDanger
+        nzType="primary"
+        class="ml-auto mr-2"
+        [disabled]="order.orderStatus && disableCancelButtonStatuses.has(order.orderStatus)"
+        (click)="openPanel = 'cancelOption'">
+        Cancel Order
+      </button>
+    </div>
+  </div>
+  <app-cancel-option
+    [label]="'Order cancel option'"
+    (submit)="onClosePanel($event)"
+    [openPanel]="openPanel === 'cancelOption'"
+  ></app-cancel-option>
+  <div class='container f-4' *ngIf="orderDetails$ | async as details">
+    <div class='summary mt-4'>
+      <nz-card nzBorderless class="border-round-sm">
+        <nz-card-meta
+          [nzTitle]="summary_title"
+          [nzDescription]="summary_description"
+        ></nz-card-meta>
+        <ng-template #summary_title>
+          <h4>Summary</h4>
+        </ng-template>
+        <ng-template #summary_description>
+          <div class='w-100p text-default f-4' id="summary">
+            <div class='d-flex justify-content-between'><span>Order number</span><span
+              id="orderNumber">{{order.orderNumber}}</span></div>
+            <div class='d-flex justify-content-between'><span>Created</span><span
+              id="create_date">{{order.create_date | date : dateTimeFormat}}</span></div>
+            <div class='d-flex justify-content-between'><span>Order Date Delivery</span><span
+              id="order_date_delivery">{{order.deliveryDate}}</span></div>
+            <div class='d-flex justify-content-between'><span>Payment Date Time</span><span
+              id="payment_date_time">{{order.payDate ? (order?.payDate|date:dateTimeFormat) : '---'}}</span></div>
+            <div class='d-flex justify-content-between'><span>Expected Delivery Start</span><span
+              id="expected_delivery_time_start">{{order?.deliveryDateTimeFrom| date : dateTimeFormat}}</span></div>
+            <div class='d-flex justify-content-between'><span>Expected Delivery End</span><span
+              id="expected_delivery_time_endt">{{order?.deliveryDateTimeTo| date : dateTimeFormat}}</span></div>
+
+            <div
+              class='d-flex justify-content-between'
+              *ngIf="order.actualDeliveryTime"
+            >
+              <span>Actual Delivery Time</span>
+              <span id="actualDeliveryTime">{{order.actualDeliveryTime|date:dateTimeFormat}}</span>
+            </div>
+
+            <ng-container
+              *ngIf="(order?.jobs|findJobType : driverJobType) as driverJob"
+            >
+              <ng-container
+                *ngIf="driverJob.completeDateTime as completeDateTime"
+              >
+                <div
+                  *ngIf="(order.deliveryDateTimeTo|delayTime:completeDateTime) as delayTime"
+                  class='d-flex justify-content-between'
+                >
+              <span>
+                Delivery delay
+              </span>
+                  <span id="deliveryDelay">
+                <nz-tag [nzColor]="delayTime > 0 ? 'red' : 'green'">
+                  {{(delayTime|abs)|date :timeFormat :'+0000' }}
+                </nz-tag>
+              </span>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <div class='d-flex justify-content-between'><span>Order Status</span>
+              <span id="orderStatus">
+            {{order.orderStatus}}
+                <nz-tag *ngIf="details.hasReplacement" [nzColor]="'yellow'">Replacement</nz-tag>
+            <nz-tag *ngIf="details.hasActiveReplacement" [nzColor]="'orange'">Active Replacement</nz-tag>
+          </span></div>
+            <div class='d-flex justify-content-between'>
+              <span>Subtotal</span>
+              <span id="subTotal">{{details.subTotal}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Discount items</span><span>{{details.itemsDiscount}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Discount Delivery fee</span><span>{{details.deliveryFeeDiscount}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Discount Total</span><span>{{details.allDiscount}}</span>
+            </div>
+            <div class='d-flex justify-content-between'>
+              <span>Amount captured</span>
+              <span id="grandTotal">{{details.grandTotal}}</span>
+            </div>
+            <div class='d-flex justify-content-between'>
+              <span>Amount refunded</span>
+              <span id="totalRefund">{{details.totalRefund || '0'}}</span>
+            </div>
+            <div class='d-flex justify-content-between'>
+              <span>Customer</span>
+              <span>
+                <a routerLink="/users/customers/details/{{order.customerId}}"
+                  id="customerName">{{details.customerName}}</a>
+              </span>
+            </div>
+            <div class='d-flex justify-content-between'>
+              <span>Customer phone</span>
+              <span id="phoneNumber">
+                {{ order?.phoneNumber ? '+' + order?.phoneCountryCode + ' ' + order?.phoneNumber : '---'}}
+                    <app-verification-status class="f-3"
+                                             [isVerified]="order?.customer?.isPhoneNumberVerified|bool"></app-verification-status>
+              </span>
+            </div>
+            <div class='d-flex justify-content-between'><span>Metadata</span><span id="metadata">{{'---'}}</span></div>
+            <div class='d-flex justify-content-between'>
+              <span>
+                Store receipt amount <button nz-button nzSize="small" nzType="link" (click)="openPanel = 'updateTotalShopAmount'">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+                <app-total-shop-amount-update
+                  [openPanel]="openPanel === 'updateTotalShopAmount'"
+                  [orderId]="order.id"
+                  [totalShopAmount]="order?.totalShopAmount"
+                  (submit)="onClosePanel($event)"
+                ></app-total-shop-amount-update>
+              </span>
+              <span id="totalShopAmount" nz-typography>{{(order?.totalShopAmount ?? 0)|formatPrice}}</span>
+            </div>
+            <div class='d-flex justify-content-between'>
+
+              <span>Store receipt number<button nz-button nzSize="small" nzType="link" (click)="openPanel = 'updateReceiptNumber'">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+                <app-receipt-number-update
+                  [openPanel]="openPanel === 'updateReceiptNumber'"
+                  [orderId]="order.id"
+                  [receiptNumber]="order?.receiptNumber"
+                  (submit)="onClosePanel($event)"
+                ></app-receipt-number-update></span>
+              <span id="receiptNumber">{{order?.receiptNumber || '---'}}</span>
+            </div>
+            <div class='d-flex justify-content-between'>
+              <span>Invoice</span>
+              <span>
+                <ng-container *ngIf="order?.invoiceNumber">
+                  <a routerLink="./../../../../orders/invoices/detail/{{order.id}}"
+                     id="invoiceNumber">{{order?.invoiceNumber}}</a>
+                </ng-container>
+                <ng-container *ngIf="!order?.invoiceNumber">---</ng-container>
+              </span>
+            </div>
+            <div class='d-flex justify-content-between'>
+              <span>Weight</span>
+              <span>
+                <span nz-tooltip="Initial / Actual weight">{{order.initialOrderWeight|gramsToKg}}
+                  / {{order.actualOrderWeight|gramsToKg}}</span>
+              </span>
+            </div>
+            <div class='d-flex justify-content-between align-items-center'>
+              <span>Store receipt images</span>
+              <span>
+                <ng-container *ngIf="order.receiptUrls && order.receiptUrls!.length > 0">
+                  <a *ngFor='let src of order.receiptUrls' [href]="src" target="_blank">
+                    <img
+                      class='mr-2'
+                      [src]="src|imageMiniature :200"
+                      alt
+                      width='50'
+                      height='50'
+                    >
+                  </a>
+                </ng-container>
+                <button nz-button [nzType]="'primary'" [nzSize]="'small'" (click)="openPanel = 'updateReceiptsImages'">Update</button>
+                <app-load-receipt
+                  [openPanel]="openPanel === 'updateReceiptsImages'"
+                  [orderId]="order.id"
+                  (submit)="onClosePanel($event)"
+                  [images]="order.receiptUrls ?? []"
+                ></app-load-receipt>
+              </span>
+            </div>
+            <div class='d-flex justify-content-between align-items-center'>
+              <span>Store VAT receipt images</span>
+              <span>
+                <ng-container *ngIf="order.receiptVatUrls && order.receiptVatUrls!.length > 0">
+                  <a *ngFor='let src of order.receiptVatUrls' [href]="src" target="_blank">
+                    <img
+                      class='mr-2'
+                      [src]="src|imageMiniature :200"
+                      alt
+                      width='50'
+                      height='50'
+                    >
+                  </a>
+                </ng-container>
+                <button nz-button [nzType]="'primary'" [nzSize]="'small'" (click)="openPanel = 'updateVATReceiptsImages'">Update</button>
+                <app-load-receipt
+                  [openPanel]="openPanel === 'updateVATReceiptsImages'"
+                  receiptType="VAT_RECEIPT"
+                  [orderId]="order.id"
+                  (submit)="onClosePanel($event)"
+                  [images]="order.receiptVatUrls ?? []"
+                ></app-load-receipt>
+              </span>
+            </div>
+            <div class='d-flex justify-content-between align-items-center'>
+              <span>
+                Order Tags <button nz-button nzSize="small" nzType="link" (click)="openPanel = 'updateTags'">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+              </span>
+              <span>
+                <nz-tag *ngFor="let tag of order.tags">{{tag}}</nz-tag>
+              </span>
+            </div>
+            <app-tags-update
+              [orderId]="order.id"
+              [openPanel]="openPanel === 'updateTags'"
+              [tags]="order.tags"
+              (submit)="onClosePanel($event)"
+            ></app-tags-update>
+          </div>
+        </ng-template>
+      </nz-card>
+
+      <nz-card nzBorderless class="border-round-sm">
+        <app-payments-doughnut
+          [transactions]="details?.orderTransactions ?? []"
+          [currency]="order?.store?.currency?.symbol"
+          [orderTotalOfDeliveryFee]="details.deliveryPrice"
+          [orderTotalOfDeposit]="details.totalDeposit ?? ''"
+          [orderSubTotal]="details.subTotal"
+          [orderTotalOfRefund]="details.totalRefund"
+          [orderPaidAmount]="details.paidAmount"
+        ></app-payments-doughnut>
+      </nz-card>
+    </div>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="push_notification_history_title"
+        [nzDescription]="push_notification_history_description"
+      ></nz-card-meta>
+      <ng-template #push_notification_history_title>
+        <h4>Push Notification History</h4>
+      </ng-template>
+      <ng-template #push_notification_history_description>
+        <app-initial-notifications></app-initial-notifications>
+      </ng-template>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="order_temperature_title"
+        [nzDescription]="order_temperature_description"
+      ></nz-card-meta>
+      <ng-template #order_temperature_title>
+        <h4>Order temperature checks</h4>
+      </ng-template>
+      <ng-template #order_temperature_description>
+        <app-order-temperature-check-crud></app-order-temperature-check-crud>
+      </ng-template>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="order_comments_title"
+        [nzDescription]="order_comments_description"
+      ></nz-card-meta>
+      <ng-template #order_comments_title>
+        <h4>Order Comments</h4>
+      </ng-template>
+      <ng-template #order_comments_description>
+        <div class="row ml-0 mr-0 p-md-0 ml-md--4 mr-md-0">
+          <div class="col-24 col-md pt-3 pb-2 ml-md-4 border-1 border-round-sm border-darkvanilla">
+            <div class="d-flex justify-content-between">
+              <p>Message for the Delivery</p>
+              <a (click)="openPanel = 'deliveryComment'">Edit <i nz-icon nzType="right" nzTheme="outline"></i></a>
+            </div>
+            <textarea
+              id="deliveryComment"
+              class="w-100p"
+              [readOnly]="true"
+              placeholder="No message for the Delivery"
+            >{{order?.deliveryComment}}</textarea>
+            <app-message-update
+              [orderId]="order.id"
+              label="Message for the Delivery"
+              [openPanel]="openPanel === 'deliveryComment'"
+              placeHolder="No message for the Delivery"
+              (submit)="onClosePanel($event)"
+              [messageFor]="'deliveryComment'"
+              [message]="order?.deliveryComment ?? ''"
+            ></app-message-update>
+          </div>
+          <div class="col-24 mt-4 col-md mt-md-0 pt-3 pb-2 ml-md-4 border-1 border-round-sm border-darkvanilla">
+            <div class="d-flex justify-content-between">
+              <p>Message for the Shopper</p>
+              <a (click)="openPanel = 'messageForShopper'">Edit <i nz-icon nzType="right" nzTheme="outline"></i></a>
+            </div>
+            <textarea
+              id="messageForShopper"
+              class="w-100p"
+              [readOnly]="true"
+              placeholder="No message for the Shopper"
+            >{{order?.messageForShopper}}</textarea>
+            <app-message-update
+              [orderId]="order.id"
+              label="Message for the Shopper"
+              [openPanel]="openPanel === 'messageForShopper'"
+              placeHolder="No message for the Shopper"
+              (submit)="onClosePanel($event)"
+              [messageFor]="'messageForShopper'"
+              [message]="order?.messageForShopper ?? ''"
+            ></app-message-update>
+          </div>
+        </div>
+      </ng-template>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="customer_title"
+        [nzDescription]="customer_description"
+      ></nz-card-meta>
+      <ng-template #customer_title>
+        <h4>Customer</h4>
+      </ng-template>
+      <ng-template #customer_description>
+        <div class='row ml-0 mr-0 p-md-0 ml-md--4 mr-md-0 mt--4'>
+          <app-customer-card
+            id="customer"
+            class='col-24 col-md ml-md-4 mt-4'
+            [isEdited]='false'
+            [customer]='customer'
+          ></app-customer-card>
+          <app-address-card
+            id="orderDeliveryAddress"
+            class='col-24 col-md ml-md-4 mt-4'
+            [isEdited]='true'
+            [address]='order?.orderDeliveryAddress'
+            label="Delivery address"
+            (edit)="openPanel = 'orderDeliveryAddress'"
+          ></app-address-card>
+          <app-select-customer-address
+            field="orderDeliveryAddressId"
+            *ngIf="order.customerId"
+            [orderId]="order.id"
+            [customerId]="order.customerId"
+            (submit)="onClosePanel($event)"
+            [openPanel]="openPanel === 'orderDeliveryAddress'"
+          ></app-select-customer-address>
+
+          <app-address-card
+            id="orderBillingAddress"
+            class='col-24 col-md ml-md-4 mt-4'
+            [isEdited]='true'
+            [address]='order?.orderBillingAddress'
+            label="Billing address"
+            (edit)="openPanel = 'orderBillingAddress'"
+          ></app-address-card>
+          <app-select-customer-address
+            field="orderBillingAddressId"
+            *ngIf="order.customerId"
+            [orderId]="order.id"
+            [customerId]="order.customerId"
+            (submit)="onClosePanel($event)"
+            [openPanel]="openPanel === 'orderBillingAddress'"
+          ></app-select-customer-address>
+        </div>
+      </ng-template>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="store_title"
+        [nzDescription]="store_description"
+      ></nz-card-meta>
+      <ng-template #store_title>
+        <h4>Store</h4>
+      </ng-template>
+      <ng-template #store_description>
+        <div class='row ml-0 mr-0 p-md-0 ml-md--4 mr-md-0'>
+          <app-store-card
+            *ngIf="store$|async as store"
+            id="store_detail"
+            class='col-24 mt-4 col-md mt-md-0 ml-md-4'
+            [isEdited]='false'
+            [store]='store'
+          ></app-store-card>
+          <app-address-card
+            id="store_address"
+            *ngIf="storeAddress"
+            class='col-24 mt-4 col-md mt-md-0 ml-md-4'
+            [isEdited]='false'
+            [address]='storeAddress'
+            label="Store Address"
+            [gMapRoute]="order.orderDeliveryAddress"
+          ></app-address-card>
+        </div>
+      </ng-template>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <ng-container *ngIf="orderId">
+        <app-order-voucher [orderId]="orderId"></app-order-voucher>
+      </ng-container>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <app-order-basket-table
+        [transactions]="details.orderTransactions"
+        [hasActiveReplacement]="details.hasActiveReplacement"
+        [deliveryPrice]="details.deliveryPriceDiscounted"
+        [grandTotal]="details.grandTotalDiscounted"
+        [totalRefund]="details.totalRefundDiscounted"
+        [orderId]="details.id"
+        [orderStatus]="details.orderStatus"
+        [subTotal]="details.subTotalDiscounted"
+        [totalDeposit]="details.totalDeposit ?? ''"
+        [vatTotal]="details.vatTotal"
+        [useRefundFunctions]="true"
+        [deliveryVatRate]="details.deliveryVatRate"
+        [deliveryVatAmount]="details.deliveryVatAmountDiscounted"
+        [itemsDiscount]="details.itemsDiscount"
+        [deliveryFeeDiscount]="details.deliveryFeeDiscount"
+        [allDiscount]="details.allDiscount"
+        [deliveryFee]="order.deliveryPrice"
+        (reloadTable)="reloadPage()"
+      ></app-order-basket-table>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="accounting_title"
+        [nzDescription]="accounting_description"
+      ></nz-card-meta>
+      <ng-template #accounting_title>
+        <h4>Accounting System</h4>
+      </ng-template>
+      <ng-template #accounting_description>
+        <app-order-accounting
+          class="mt-4"
+          [orderId]="details.id"
+        ></app-order-accounting>
+      </ng-template>
+    </nz-card>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <app-order-commission-fee
+        [orderId]="details.id"
+      ></app-order-commission-fee>
+    </nz-card>
+
+    <div class='row p-0 staffs'>
+      <nz-card nzBorderless class="col-24 p-0 col-md border-round-sm mt-4">
+        <app-staff-card
+          id="picker"
+          [staff]="picker$ | async"
+          label='Picker Information'
+          type="picker"
+          [isEdited]="order.orderStatus !== 'COMPLETE' && order.orderStatus !== 'CANCELED'"
+          (edit)="openPanel = 'picker'"
+        ></app-staff-card>
+      </nz-card>
+      <app-select-picker
+        [openPanel]="openPanel === 'picker'"
+        [orderId]="order.id"
+        (submit)="onClosePanel($event)"
+      ></app-select-picker>
+
+      <nz-card nzBorderless class="col-24 p-0 col-md border-round-sm mt-4 ml-md-4">
+        <app-staff-card
+          id="driver"
+          [staff]="driver$ | async"
+          label='Delivery Information'
+          type="driver"
+          [isEdited]="order.orderStatus !== 'COMPLETE' && order.orderStatus !== 'CANCELED'"
+          (edit)="openPanel = 'driver'"
+        ></app-staff-card>
+      </nz-card>
+      <app-select-driver
+        [openPanel]="openPanel === 'driver'"
+        [orderId]="order.id"
+        (submit)="onClosePanel($event)"
+      ></app-select-driver>
+    </div>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="staff_who_ignored_title"
+        [nzDescription]="staff_who_ignored_description"
+      ></nz-card-meta>
+      <ng-template #staff_who_ignored_title>
+        <h4>Staff who Ignored Job</h4>
+      </ng-template>
+      <ng-template #staff_who_ignored_description>
+        <app-staff-who-ignored-order
+          id="Staff_who_Ignored_Job"
+          class="w-100p mt-4"
+          [orderId]="order.id"
+          [ignored]="order.ignoredBy"
+          (reloadPage)="reloadPage()"
+        ></app-staff-who-ignored-order>
+      </ng-template>
+    </nz-card>
+
+    <div class="row p-0">
+      <nz-card nzBorderless class="col-24 p-0 col-md border-round-sm mt-4">
+        <nz-card-meta
+          [nzTitle]="priority_title"
+          [nzDescription]="priority_description"
+        ></nz-card-meta>
+        <ng-template #priority_title>
+          <div class="d-flex align-items-center">
+            <h4 class="mr-auto">Priority</h4>
+            <ng-container *ngIf="orderPriorityFC.dirty">
+              <button nz-button nzSize="small" nzType="link" (click)="onSavePriorityChange()">Save</button>
+              <button nz-button nzSize="small" nzType="link" (click)="onCancelPriorityChange(order.orderPriority!)">Cancel</button>
+            </ng-container>
+          </div>
+        </ng-template>
+        <ng-template #priority_description>
+          <nz-radio-group [formControl]="orderPriorityFC">
+            <ng-container *ngFor="let prior of orderPriorities">
+              <label
+                nz-radio
+                [nzValue]="prior"
+              >{{prior|titlecase}}</label><br/>
+            </ng-container>
+          </nz-radio-group>
+        </ng-template>
+      </nz-card>
+      <nz-card nzBorderless class="col-24 p-0 col-md border-round-sm mt-4 ml-md-4">
+        <nz-card-meta
+          [nzTitle]="order_type_title"
+          [nzDescription]="order_type_description"
+        ></nz-card-meta>
+        <ng-template #order_type_title>
+          <h4>Order Type</h4>
+        </ng-template>
+        <ng-template #order_type_description>
+          <nz-radio-group [ngModel]="order.orderType">
+            <label nz-radio nzValue="DELIVERY" [nzDisabled]="order.orderType !== 'DELIVERY'">Pick & Ride</label><br/>
+            <label nz-radio nzValue="PICKUP" [nzDisabled]="order.orderType !== 'PICKUP'">Pick</label><br/>
+            <label nz-radio nzValue="SHIPPING" [nzDisabled]="order.orderType !== 'SHIPPING'">Shipment</label>
+          </nz-radio-group>
+        </ng-template>
+      </nz-card>
+    </div>
+
+    <nz-card nzBorderless class="mt-4 mx--4 border-round-sm">
+      <nz-card-meta
+        [nzTitle]="manager_comments_title"
+        [nzDescription]="manager_comments_description"
+      ></nz-card-meta>
+      <ng-template #manager_comments_title>
+        <h4>Comments</h4>
+      </ng-template>
+      <ng-template #manager_comments_description>
+        <app-manager-messages
+          [orderId]="order.id"
+          [storeTZ]="order?.store?.timeZone"
+        ></app-manager-messages>
+      </ng-template>
+    </nz-card>
+
+    <div class='row p-0'>
+      <nz-card nzBorderless class="col-24 p-0 col-md border-round-sm mt-4">
+        <h4>Order history</h4>
+        <app-order-history
+          [updateOrderHistory]="orderReload|async"
+          [cancelDescription]="order.cancelDescription || ''"
+        ></app-order-history>
+      </nz-card>
+      <nz-card nzBorderless class="col-24 p-0 col-md border-round-sm mt-4 ml-md-4">
+        <h4>Order Jobs</h4>
+        <ng-container *ngIf="(order?.jobs |findJobType :pickerJobType) as pickerJob">
+          <nz-steps class="mt-4" nzDirection="vertical" nzSize="small" nzProgressDot
+                    *ngIf="(order?.jobs |findJobType :driverJobType) as driverJob">
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'Accepting picking', time: pickerJob?.acceptDateTime }"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'Start picking', time: pickerJob?.startDateTime }"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'End picking', time: pickerJob?.endDateTime }"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'Start in-shop payment', time: pickerJob?.endDateTime }"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'End of shopping', time: pickerJob?.completeDateTime }"></ng-container>
+
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'Start delivery', time: driverJob?.startDateTime }"></ng-container>
+
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'Age Verification', time: order?.ageVerification?.ageVerifiedDateTime, hide: !order.isAlcohol }"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'Verification', time: order?.ageVerification?.idPhotoConfirmDateTime, hide: !order.isAlcohol }"></ng-container>
+
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'End delivery', time: driverJob?.endDateTime }"></ng-container>
+            <ng-container
+              *ngTemplateOutlet="step, context: { title: 'Complete delivery', time: driverJob?.completeDateTime }"></ng-container>
+
+            <ng-template #step let-title="title" let-time="time" let-hide="hide">
+              <nz-step
+                *ngIf="!time && !hide && !orderCompleteStatuses.has(order.orderStatus!)"
+                [nzTitle]='title'
+                [nzStatus]="'wait'"
+              ></nz-step>
+              <nz-step
+                *ngIf="!time && !hide && orderCompleteStatuses.has(order.orderStatus!)"
+                [nzTitle]='title'
+                [nzStatus]="'error'"
+              ></nz-step>
+              <nz-step
+                *ngIf="time && !hide"
+                [nzTitle]='title'
+                [nzDescription]="(time | date:dateTimeFormat) || ''"
+                [nzStatus]="'finish'"
+              ></nz-step>
+            </ng-template>
+          </nz-steps>
+        </ng-container>
+      </nz-card>
+    </div>
+
+  </div>
+
+</div>

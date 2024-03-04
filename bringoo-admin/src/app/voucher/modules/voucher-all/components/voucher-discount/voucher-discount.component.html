@@ -1,0 +1,64 @@
+<div class="bg-component border-round-sm mt-4" [formGroup]="form">
+  <div class="bg-component border-round-sm mt-4">
+    <div class="p-4">
+      <h3>Value</h3>
+      <nz-form-item>
+        <nz-form-label nzNoColon nzRequired nzFor="value">Voucher value</nz-form-label>
+        <nz-form-control labelForErrorTip="Voucher value">
+          <ng-container *ngIf="voucherType === 'DISCOUNT_PERCENTAGE'">
+            <nz-input-group nzSuffixIcon="percentage">
+              <input nz-input type="number" formControlName="value" placeholder="Voucher value">
+            </nz-input-group>
+          </ng-container>
+          <ng-container *ngIf="voucherType === 'DISCOUNT_FIXED'">
+            <input nz-input type="number" formControlName="value" placeholder="Voucher value">
+          </ng-container>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <hr>
+    <div class="p-4">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-form-label nzRequired>Products</nz-form-label>
+          <nz-select 
+            formControlName="productEligibility"
+            placeHolder="Products select"
+            ><nz-option
+              *ngFor="let productEligibilityItem of productEligibilityList"
+              [nzLabel]="productEligibilityItem.label"
+              [nzValue]="productEligibilityItem.value"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <ng-container *ngIf="form.get('productEligibility')?.value === 'TAGS'">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-select
+              nzPlaceHolder="Product Tags"
+              nzMode="tags"
+              [nzDropdownStyle]="{ display: 'none' }"
+              formControlName="productTags"
+            ></nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </ng-container>
+      <ng-container *ngIf="form.get('productEligibility')?.value === 'SELECTED'">
+        <app-select
+          [options]="productList"
+          [required]="false"
+          type="tags"
+          placeHolder="Select products"
+          formControlName="productIds"
+        ></app-select>
+      </ng-container>
+    </div>
+    <div class="p-4">
+      <label
+        nz-checkbox
+        formControlName="isAppliedToDeliveryFee">
+        Include discount to delivery fee
+      </label>
+  </div>
+</div>

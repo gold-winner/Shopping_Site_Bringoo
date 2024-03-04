@@ -1,0 +1,3 @@
+<nz-breadcrumb [nzAutoGenerate]="true">
+  <nz-breadcrumb-item *ngFor='let place of path'><a [routerLink]="['..', place]">{{place}}</a></nz-breadcrumb-item>
+</nz-breadcrumb>

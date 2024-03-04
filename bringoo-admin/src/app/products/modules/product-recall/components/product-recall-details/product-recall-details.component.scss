@@ -1,0 +1,23 @@
+#summary{
+  border: 1px solid #D9D9D9;
+  div{
+    padding-left: 16px;
+  }
+  div + div {
+    border-top: 1px solid #D9D9D9;
+  }
+  div>span:nth-child(2) {
+    width: 50%;
+  }
+}
+app-stores-crud ::ng-deep .crud-container {
+  padding: 0;
+  h5 {
+    font-size: 24px;
+  }
+  .fixed-header {
+    border-radius: 4px 4px 0 0;
+    padding-top: 0;
+    padding-inline: 0;
+  }
+}

@@ -1,0 +1,20 @@
+<nz-radio-group
+  [formControl]="revenueType"
+  nzButtonStyle="solid"
+  class="mb-4"
+>
+  <label *ngFor="let type of revenueTypes" nz-radio-button [nzValue]="type">{{type}}</label>
+</nz-radio-group>
+<div *ngIf="isLoading$|async; else barchart" class="d-flex justify-content-center">
+  <nz-spin nzSimple ></nz-spin>
+</div>
+<ng-template #barchart>
+  <ng-container
+    *ngIf="isLoaded$|async"
+  >
+    <app-bar-chart-percentage
+      *ngIf="barChart|async as data"
+      [chartData]="data"
+    ></app-bar-chart-percentage>
+  </ng-container>
+</ng-template>

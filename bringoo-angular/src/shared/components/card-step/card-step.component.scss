@@ -1,0 +1,25 @@
+@import "src/scss/colors";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+@import "src/scss/borders";
+@import "src/scss/shadows";
+.ui-card-step {
+  @extend .border-radius-md;
+  @extend .h-44;
+  @extend .pl-6;
+  @extend .pt-5;
+  @extend .d-flex;
+  @extend .flex-column;
+  @extend .position-relative;
+  @extend .cursor-pointer;
+  width: 400px;
+  height: 200px;
+  background-color: $color_white;
+  border: 1px solid rgb(226, 221, 221);
+  box-shadow: 0px 1px 11px rgba($color_grey, 0.3);
+
+  &:hover {
+    box-shadow: 0px 0px 10px 0px #fbf6f6;
+    transition: all 0.3s ease-in-out;
+  }
+}

@@ -1,0 +1,7 @@
+<nz-radio-group [formControl]="control">
+  <ng-container *ngIf="managerRoles|async as roles">
+    <ng-container *ngFor="let role of roles">
+      <label nz-radio [nzValue]="role.code">{{role.code}}</label><br />
+    </ng-container>
+  </ng-container>
+</nz-radio-group>

@@ -1,0 +1,193 @@
+<div class="mt-2 px-4 pt-2 pb-2 board-card border-round-sm bg-component" [class.bg-danger-20]="isLateOrder">
+  <div class="row px-2">
+    <div *ngIf="order?.store?.logoUrl" class="mr-2">
+      <img
+        class="img-no-events border-circle"
+        nz-image
+        [src]="order?.store?.logoUrl ?? ''"
+        [nzSrc]="order?.store?.logoUrl ?? ''"
+        alt=""
+      />
+    </div>
+    <div class="d-flex">
+      <div class="col pl-0 pr-0">
+        <h5>Order</h5>
+        <p class="mb-0">ID: {{order.orderNumber}}</p>
+      </div>
+    </div>
+    <ng-container [ngTemplateOutlet]="buttons"></ng-container>
+  </div>
+  <hr class="mx--4"/>
+
+  <ng-container *ngIf="showMoreInfo">
+    <ng-container [ngTemplateOutlet]="spin"></ng-container>
+
+    <div @card *ngIf="orderDetails$|async as details" class="mb--4 mx--4 px-2">
+      <div class="mb-4">
+        <p class="color-text-2 mb-0 f-3">Date Submit</p>
+        <p class="text-semi-bold">{{order.create_date|date:dateFormat}}</p>
+      </div>
+
+      <div class="mb-4">
+        <p class="color-text-2 mb-0 f-3">Delivery time</p>
+        <p class="text-semi-bold">{{order.deliveryDateTimeFrom|deliveryTime :order.deliveryDateTimeTo}} min</p>
+      </div>
+
+      <div class="mb-4">
+        <p class="color-text-2 mb-0 f-3">Customer ID</p>
+        <p class="text-semi-bold">
+          <a
+            routerLink="/users/customers/details/{{order?.customerId}}"
+          >{{details.customerNumber}}</a>
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <p class="color-text-2 mb-0 f-3">Delivery Note</p>
+        <p class="text-semi-bold">{{order.deliveryComment ?? '---'}}</p>
+      </div>
+
+      <div class="mb-4">
+        <p class="color-text-2 mb-0 f-3">Shopper Note</p>
+        <p class="text-semi-bold">{{order.messageForShopper ?? '---'}}</p>
+      </div>
+
+      <ng-container *ngIf="details.jobs|getOrderJobDto :'PICK' as job">
+        <div class="mb-4" *ngIf="job?.staffFirstName">
+          <p class="color-text-2 mb-0 f-3">Picker Assigned</p>
+          <p class="text-semi-bold">{{job?.staffFirstName}} {{job?.staffLastName}}</p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="details.jobs|getOrderJobDto :'DRIVE' as job">
+        <div class="mb-4" *ngIf="job?.staffFirstName">
+          <p class="color-text-2 mb-0 f-3">Rider Assigned</p>
+          <p class="text-semi-bold">{{job?.staffFirstName}} {{job?.staffLastName}}</p>
+        </div>
+      </ng-container>
+
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!showMoreInfo">
+    <div class="row pl-2 pr-2">
+      <div class="col pl-0 pr-2">
+        <h5>ID: {{order.orderNumber}}</h5>
+        <p class="mb-0">{{order?.store?.name_i18n}}</p>
+        <p class="mb-0">{{order?.deliveryDateTimeTo | date:dateTimeFormat}}</p>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+<nz-drawer
+  [nzVisible]="showDetails"
+  (nzOnClose)="onCloseDetails()"
+  [nzWidth]="'50%'"
+  [nzTitle]="'Order Information'"
+>
+  <ng-container *nzDrawerContent>
+    <ng-container [ngTemplateOutlet]="spin"></ng-container>
+    <ng-container
+      *ngIf="showDetails"
+    >
+      <div *ngIf="orderDetails$|async as details" class="f-4">
+        <h5>Order ID</h5>
+        <p><a routerLink="/orders/all/detail/{{details.id}}">{{details.orderNumber}}</a></p>
+
+        <h5>Store Name</h5>
+        <p><a routerLink="/store/stores/{{order?.store?.id}}/basic-information">{{details.store.name_public_long_i18n}}</a>
+        </p>
+
+        <h5>Store Address</h5>
+        <p>{{details.store.address}}</p>
+
+        <h5>Customer info</h5>
+        <p class="mb-0">
+          <a routerLink="/users/customers"
+             [queryParams]="{ search: details.customerName, softDelete: true}"
+          >{{details.customerName}}</a>
+        </p>
+        <p>{{details.deliveryAddressShort}}</p>
+        <p>+{{details.phoneCountryCode}} {{details.phoneNumber}}</p>
+
+        <h5>Customer Note</h5>
+        <p>{{details.deliveryComment}}</p>
+
+        <app-order-basket-table
+          [deliveryPrice]="details.deliveryPriceDiscounted"
+          [grandTotal]="details.grandTotalDiscounted"
+          [totalRefund]="details.totalRefundDiscounted"
+          [orderId]="details.id"
+          [transactions]="details.orderTransactions"
+          [orderStatus]="details.orderStatus"
+          [subTotal]="details.subTotalDiscounted"
+          [totalDeposit]="details.totalDeposit ?? ''"
+          [vatTotal]="details.vatTotal"
+          [deliveryVatRate]="details.deliveryVatRate"
+          [deliveryVatAmount]="details.deliveryVatAmountDiscounted"
+          [useRefundFunctions]="false"
+          [itemsDiscount]="details.itemsDiscount"
+          [deliveryFeeDiscount]="details.deliveryFeeDiscount"
+          [allDiscount]="details.allDiscount"
+        ></app-order-basket-table>
+
+        <h5>Order created date</h5>
+        <p>{{(details.deliveryDate * 1000)|date :dateTimeFormat}}</p>
+
+        <h5>Status</h5>
+        <p>{{details.orderStatus_i18n}}</p>
+
+        <h5>Priority</h5>
+        <p>Medium</p>
+
+        <h5>Expected delivery time</h5>
+        <p>{{order.deliveryDateTimeFrom|deliveryTime :order.deliveryDateTimeTo}} min</p>
+
+        <ng-container *ngIf="isInProgressOrder">
+          <h5>Actual delivery time</h5>
+          <p *ngIf="loadJobs$|async as jobs">
+            {{order.deliveryDateTimeFrom|orderWaitingTime :details.orderStatus :jobs.jobs}}
+          </p>
+        </ng-container>
+
+        <h5>Delivery Expected</h5>
+        <p>{{order.deliveryDateTimeTo | date:dateTimeFormat}}</p>
+
+        <ng-container *ngIf="order.actualDeliveryTime">
+          <h5>Delivery Actual</h5>
+          <p>{{order.actualDeliveryTime | date:dateTimeFormat}}</p>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</nz-drawer>
+
+<ng-template #spin>
+  <div class="d-flex justify-content-center">
+    <nz-spin nzSimple [nzSpinning]="isLoading|async"></nz-spin>
+  </div>
+</ng-template>
+
+<ng-template #buttons>
+  <div class="col-6 px-0 action-buttons ml-auto">
+    <button
+      nz-button
+      nzType="link"
+      nzSize="small"
+      (click)="onOpenDetails()"
+    >
+      <i nz-icon nzType="info-circle" nzTheme="outline"></i>
+    </button>
+    <button
+      nz-button
+      nzType="link"
+      nzSize="small"
+      (click)="showMoreInfo ? onCloseMoreInfo() : onOpenMoreInfo()"
+    >
+      <i class="color-primary cursor-pointer" nz-icon nzType="down" nzTheme="outline" *ngIf="!showMoreInfo"></i>
+      <i class="color-primary cursor-pointer" nz-icon nzType="up" nzTheme="outline" *ngIf="showMoreInfo"></i>
+    </button>
+  </div>
+</ng-template>

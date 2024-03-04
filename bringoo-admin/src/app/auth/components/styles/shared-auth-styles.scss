@@ -1,0 +1,14 @@
+:host {
+  width: 432px;
+  padding: 50px;
+  position: relative;
+}
+
+::ng-deep .ant-tabs-nav-list {
+  width: 100%;
+  & .ant-tabs-tab {
+    flex-grow: 1;
+    justify-content: center;
+    margin: 0;
+  }
+}

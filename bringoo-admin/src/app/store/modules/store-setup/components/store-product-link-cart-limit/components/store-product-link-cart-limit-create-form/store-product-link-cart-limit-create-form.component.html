@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-control labelForErrorTip="Product">
+      <nz-form-label nzRequired>Product</nz-form-label>
+      <nz-select nzShowSearch formControlName='productLinkId' [nzSize]="'small'" nzPlaceHolder="Please select">
+        <nz-option *ngFor="let productLinkInfo of productLinkInfos" [nzLabel]="productLinkInfo.productName" [nzValue]="productLinkInfo.id"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Cart max amount</nz-form-label>
+    <nz-form-control labelForErrorTip="Cart max amount">
+      <input nz-input type="number" min='1' formControlName='cartMaxAmount' placeholder='Cart max amount'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzNoColon nzFor="startDateTime">Start date</nz-form-label>
+    <nz-form-control labelForErrorTip="Start date">
+      <nz-date-picker [nzShowTime]="true" formControlName='startDateTime'></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired nzNoColon nzFor="endDateTime">End date</nz-form-label>
+    <nz-form-control labelForErrorTip="End date">
+      <nz-date-picker [nzShowTime]="true" formControlName='endDateTime'></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+</form>

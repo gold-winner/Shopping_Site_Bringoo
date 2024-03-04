@@ -1,0 +1,43 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Search</nz-form-label>
+      <nz-input-group nzPrefixIcon="search">
+        <input nz-input formControlName="search" placeholder="Search"
+               nz-tooltip="Search by Email, Name and Staff Code"
+               nzTooltipPlacement="topLeft"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Role</nz-form-label>
+      <nz-select formControlName="role" nzPlaceHolder="Role">
+        <nz-option [nzValue]="null" nzLabel="All"></nz-option>
+        <nz-option *ngFor="let role of roleList" [nzValue]="role" [nzLabel]="role"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Employee Type</nz-form-label>
+      <nz-select formControlName="employeeType" nzPlaceHolder="Employee Type">
+        <nz-option *ngFor="let type of employeeTypes" [nzValue]="type" [nzLabel]="type"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="w-40">
+    <nz-form-control>
+      <nz-form-label>Status</nz-form-label>
+      <nz-select formControlName="status">
+        <nz-option [nzValue]="'all'" nzLabel="All"></nz-option>
+        <nz-option [nzValue]="'deleted'" nzLabel="Deleted"></nz-option>
+        <nz-option [nzValue]="'active'" nzLabel="Active, default"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

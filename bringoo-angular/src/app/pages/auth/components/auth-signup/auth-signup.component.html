@@ -1,0 +1,21 @@
+<div class="d-flex align-items-center row px-5">
+  <ui-auth-signup-step-item
+    [step]="1" 
+    [currentStep]="currentStep"
+    (onStepClick)="currentStep=1"></ui-auth-signup-step-item>
+  <div class="border" [ngClass]="{'border-processing': currentStep > 1 }"></div>
+  <ui-auth-signup-step-item 
+    [step]="2"
+    [currentStep]="currentStep"
+    (onStepClick)="currentStep=2"></ui-auth-signup-step-item>
+  <div class="border" [ngClass]="{'border-processing': currentStep == 3 }"></div>
+  <ui-auth-signup-step-item 
+    [step]="3"
+    [currentStep]="currentStep"
+    (onStepClick)="currentStep=3"></ui-auth-signup-step-item>
+</div>
+<div class="d-flex w-100p flex-column mt-6">
+  <ui-auth-signup-step-one *ngIf="currentStep==1" (onContinueClick)="currentStep=2"></ui-auth-signup-step-one>
+  <ui-auth-signup-step-two *ngIf="currentStep==2" (onBackClick)="currentStep=1" (onVerify)="currentStep=3"></ui-auth-signup-step-two>
+  <ui-auth-signup-step-three *ngIf="currentStep==3"></ui-auth-signup-step-three>
+</div>

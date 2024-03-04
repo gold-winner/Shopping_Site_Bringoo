@@ -1,0 +1,38 @@
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { ApiService } from '../../services/api.service';
+import { CrudApiService } from '../../interfaces/crud-api-service';
+
+<%
+const { utils, route, config, modelTypes } = it;
+const { _, classNameCase, require } = utils;
+const apiClassName = classNameCase(route.moduleName)+'Service';
+const routes = route.routes;
+const dataContracts = _.map(modelTypes, 'name');
+let entityModel = '';
+
+if(apiClassName.startsWith('Crud')){
+  const findRoute = routes.find(route=>route.responseBodySchema.status === 200 && route.raw.operationId.split('_').pop() === 'find');
+  if(findRoute){
+    entityModel = findRoute.response.type.replace(/(.*)\(([a-zA-Z]*)\)(.*)/g, '$2');
+  }else{
+    console.error(apiClassName,' Find method not found, check swagger tags');
+  }
+}
+
+%>
+
+<% if (dataContracts.length) { %>
+import { <%~ dataContracts.join(', ') %> } from './<%~ config.fileNames.dataContracts %>'
+<% } %>
+
+@Injectable({
+  providedIn: 'root',
+})
+export class <%= apiClassName %> extends ApiService <%if(entityModel!==''){%> implements CrudApiService<<%=entityModel%>> <%}%> {
+    protected url: string = '<%=it.apiConfig.baseUrl%>';
+    <% routes.forEach((route) => { %>
+        <%~ includeFile('./procedure-call.eta', { route, utils, config }) %>
+    <% }) %>
+}

@@ -1,0 +1,78 @@
+@import "src/scss/colors";
+@import "src/scss/sizes";
+@import "src/scss/typography";
+@import "src/scss/borders";
+
+.ui-dropdown-store {
+  @extend .position-relative;
+  @extend .cursor-pointer;
+  // min-width: 140px;
+
+  &__body {
+    @extend .position-relative;
+    @extend .d-flex;
+    @extend .align-items-center;
+    @extend .justify-content-between;
+    @extend .border-radius-md;
+    @extend .text-white;
+    @extend .text-medium;
+    @extend .text-bold;
+    @extend .h-9;
+    @extend .px-3;
+    @extend .bg-darkblue;
+    @extend .cursor-pointer;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: 1px solid $color_darkblue;
+    img {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (min-width: map-get($grid-breakpoints, "lg")) {
+      width: 224px;
+    }
+
+    @media (max-width: 1280px) {
+      width: 120px;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, "sm")) {
+      margin-left: -14px;
+    }
+
+    @media (max-width: map-get($grid-breakpoints, "sm")) {
+      margin-left: -14px;
+    }
+  }
+
+  &__list {
+    @extend .border-radius-md;
+    @extend .text-small;
+    @extend .text-lightblue;
+    @extend .bg-white;
+    @extend .position-absolute;
+    @extend .w-100p;
+    z-index: 9999;
+    margin-top: 1px;
+
+    &--item {
+      padding-top: 1px;
+
+      &:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+    }
+  }
+
+  .border-radius-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}

@@ -1,0 +1,37 @@
+<ui-settings>
+  <div class="px-8 py-4">
+    <span class="f-8 text-bold">Favorite list</span>
+  </div>
+  <div class="border"></div>
+  <div *ngIf="!isGuest">
+    <div class="d-flex my-8 px-8">
+      <ui-option *ngFor="let option of options" [option]="option" [selected]="selectedOption===option.id" class="mx-2"
+        (optionSelect)="onChangeOption(option.id)">
+      </ui-option>
+    </div>
+    <div *ngIf="favoriteProducts.length !== 0" class="products">
+      <ui-card class="position-relative mt-7 card" *ngFor="let product of favoriteProducts" [product]="product"
+        [disabled]="product.outOfStock? true : false" type="trash" (onClick)="onProductClick($event)" productType="new">
+      </ui-card>
+    </div>
+    <div *ngIf="favoriteProducts.length === 0" class="products">
+      <div *ngFor="let number of [0,1,2,3,4,5]">
+        <ngx-skeleton-loader count="1" appearance="line" animation="progress" [theme]="{
+            'background-color': '#AAAAAA',
+            height: '420px',
+            width: '250px',
+            'margin-right': '25px',
+            'border-radius': '12px',
+            'margin-top': '40px'
+          }">
+        </ngx-skeleton-loader>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isGuest" class="mt-5 ml-5" style="margin-left: 30px;">
+    <span class="text-bold text-large">Guest</span>
+    <span class="text-semi-bold text-medium ml-2">Please Login or Register</span>
+  </div>
+  <ui-modal [isProduct]=true [opened]="productModal" title="Reishunger > Reishunger" (onClose)="onProductModalClose()">
+  </ui-modal>
+</ui-settings>

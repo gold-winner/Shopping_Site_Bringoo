@@ -1,0 +1,11 @@
+<div class="d-flex justify-content-around underline" *ngIf="option==='alternative' || option==='replacement' && category!=='change'">
+  <div class="category" [ngClass]="{'underline-select':category==='review'}" (click)="onCategoryClick.emit('review')">
+    <span class="category-text">Review (3)</span>
+  </div>
+  <div class="category" [ngClass]="{'underline-select':category==='done'}" (click)="onCategoryClick.emit('done')">
+    <span class="category-text">Done (3)</span>
+  </div>
+  <div class="category" [ngClass]="{'underline-select':category==='removed'}" (click)="onCategoryClick.emit('removed')">
+    <span class="category-text">Removed (3)</span>
+  </div>      
+</div>

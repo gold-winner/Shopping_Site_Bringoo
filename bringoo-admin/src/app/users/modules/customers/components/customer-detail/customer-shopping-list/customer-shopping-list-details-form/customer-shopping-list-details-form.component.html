@@ -1,0 +1,28 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <button
+      nz-button
+      nzType="primary"
+      class="ml-auto mr-2"
+      [disabled]="isListToCartButtonDisabled && listId"
+      (click)="listToCart()">
+      Shopping List to Cart
+    </button>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>List Name</nz-form-label>
+    <nz-form-control labelForErrorTip="List Name">
+      <input nz-input type='text' formControlName='name' [readOnly]="true">
+    </nz-form-control>
+  </nz-form-item>
+  <form nzLayout="vertical" nz-form formGroupName='store'>
+    <app-lang-controller>
+      <app-multi-lang-v2-input label="Name" formControlName="name_i18n"></app-multi-lang-v2-input>
+    </app-lang-controller>
+  </form>
+  <app-customer-shopping-list-products
+    *ngIf="customFilters"
+    [customFilters]="customFilters">
+  </app-customer-shopping-list-products>
+</form>

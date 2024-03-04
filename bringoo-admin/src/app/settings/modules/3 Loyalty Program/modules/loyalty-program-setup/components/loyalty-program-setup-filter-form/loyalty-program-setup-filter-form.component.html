@@ -1,0 +1,15 @@
+<form nzLayout="inline" nz-form [formGroup]='form'>
+  <nz-form-item class="w-56">
+    <nz-form-control>
+      <nz-input-group [nzPrefixIcon]="'search'">
+        <input
+          nz-input
+          formControlName="search"
+          placeholder="Search"
+          nz-tooltip="Search by Name and Code"
+          nzTooltipPlacement="topLeft"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</form>

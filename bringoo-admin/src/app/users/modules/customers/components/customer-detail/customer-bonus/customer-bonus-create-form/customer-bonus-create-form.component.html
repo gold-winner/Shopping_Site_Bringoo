@@ -1,0 +1,9 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Bonus Type</nz-form-label>
+    <nz-form-control labelForErrorTip="Bonus Type">
+      <app-list-select [isRequired]="true" [list]="customerBonusTypes" formControlName="customerBonusType">
+      </app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

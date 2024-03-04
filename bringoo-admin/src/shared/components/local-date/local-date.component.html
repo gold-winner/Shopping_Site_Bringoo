@@ -1,0 +1,7 @@
+<span *ngIf="date"
+      nz-tooltip [nzTooltipTitle]="tz"
+      class="text-orange"
+>
+  <i nz-icon nzType="clock-circle" nzTheme="outline"></i> {{date|dateLocal:tz:this.format}}
+</span>
+

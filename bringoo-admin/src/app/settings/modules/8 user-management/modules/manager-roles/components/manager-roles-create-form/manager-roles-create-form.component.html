@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Code"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="description">Description</nz-form-label>
+    <nz-form-control labelForErrorTip="Description">
+      <textarea class="w-100p bg-component" [rows]="4" formControlName="description"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>

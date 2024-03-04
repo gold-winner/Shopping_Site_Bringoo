@@ -1,0 +1,5 @@
+<ng-container *ngIf="value|markText :search as text">
+  <span *ngIf="text.prefix" class="color-disabled">{{text.prefix}}</span>
+  <span [class.bg-danger-10]="search|bool">{{text.marked}}</span>
+  <span *ngIf="text.suffix" class="color-disabled">{{text.suffix}}</span>
+</ng-container>

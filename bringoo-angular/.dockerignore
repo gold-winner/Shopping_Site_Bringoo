@@ -1,0 +1,3 @@
+.git
+docker/Dockerfile
+docker/*.env

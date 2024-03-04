@@ -1,0 +1,14 @@
+<div class="modal" [hidden]="!opened" id="modal">
+  <div class="d-flex h-100p" [ngClass]="isProduct ? '' : 'justify-content-center align-items-center'">
+    <div class="modal-content" [ngClass]="{'small': smallSize}" style="z-index: 9999;">
+      <div class="modal-header">
+        <span class="ml-1 mb-2 text-semi-bold">{{title}}</span>
+        <span class="close" (click)="onClose.emit($event)">&times;</span>
+      </div>
+      <div class="modal-body" [ngClass]="isProduct ? 'modal-info' : ''">
+        <ng-content></ng-content>
+      </div>
+    </div>
+    <div class="outside" (click)="onClose.emit($event)"></div>
+  </div>
+</div>

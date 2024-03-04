@@ -1,0 +1,49 @@
+<h1>Cards</h1>
+<div class="mx-2">
+  <div class="d-flex flex-wrap">
+    <div style="width: 500px;">
+      <ui-card-normal
+        class="d-flex flex-column justify-content-center align-items-center"
+        [store]="storeData"
+      ></ui-card-normal>
+    </div>
+    <div style="width: 468px; margin-left: 30px;">
+      <ui-card-small title="Todays offers"></ui-card-small>
+    </div>
+  </div>
+  <div class="d-flex justify-content-around flex-wrap mt-8">
+    <ui-card class="mt-8"></ui-card>
+    <ui-card productType="new" class="mt-8"></ui-card>
+    <ui-card productType="sale" class="mt-8"></ui-card>
+    <ui-card [disabled]="true" class="mt-8"></ui-card>
+  </div>
+  <div class="d-flex flex-column mt-16">
+    <h3>Product Cart(sidebar)</h3>
+    <ui-product-cart *ngFor="let product of productsData" [product]="product" [sidebar]="true"></ui-product-cart>
+  </div>
+  <div class="d-flex flex-column mt-16">
+    <h3>Product Cart</h3>
+    <ui-product-cart *ngFor="let product of productsData" [product]="product"></ui-product-cart>
+  </div>
+  <!-- Should be fixed for mobile responsive -->
+  <div class="mt-16 bg-beige-20">
+    <ui-recently-view>
+    </ui-recently-view>
+  </div>
+  <div class="d-flex justify-content-center mt-16">
+    <div class="d-flex flex-column bg-beige-20 p-5" style="height: 635px; width: 738px; overflow-y: auto;">
+      <h3>Select Delivery Address</h3>
+      <ui-address 
+        *ngFor="let store of deliveryStoreData" 
+        [store]="store" 
+        [selectedStore]="selectedAddress"
+        (onSelectStore)="onSelectAddress($event)" 
+        class="px-4 py-2" 
+        ></ui-address>
+    </div>
+  </div>
+  <div class="d-flex justify-content-around flex-wrap mt-16">
+    <ui-card-address *ngFor="let address of cardAddressData" [address]="address" class="mb-10"></ui-card-address>
+    <ui-card-payment *ngFor="let paymentMethod of paymentMethodData" [paymentMethod]="paymentMethod" class="mb-20"></ui-card-payment>
+  </div>
+</div>

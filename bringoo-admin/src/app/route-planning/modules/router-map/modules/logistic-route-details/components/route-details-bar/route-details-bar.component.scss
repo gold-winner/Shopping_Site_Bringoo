@@ -1,0 +1,1 @@
+.panel {  display: grid;  grid-template-rows: auto auto auto auto 1fr !important;  ::ng-deep .ant-spin-container {    height: 100%;  }}.bg-lightblue, .bg-danger {  font-weight: 700;}.isOpen, .panel-header, .route-header, .menu{  width: 350px !important;}.route-details-spin ::ng-deep .ant-spin-container {  position: relative;}

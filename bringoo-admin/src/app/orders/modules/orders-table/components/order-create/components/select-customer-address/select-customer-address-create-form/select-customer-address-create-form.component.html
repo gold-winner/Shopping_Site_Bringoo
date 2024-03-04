@@ -1,0 +1,90 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzRequired>Address name</nz-form-label>
+    <nz-form-control labelForErrorTip="Address name">
+      <input nz-input type='text' formControlName='addressName'>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Address type</nz-form-label>
+    <nz-form-control labelForErrorTip="Address type">
+      <app-list-select [list]='addressTypeList' formControlName='addressType' placeHolder='Address type'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Country</nz-form-label>
+    <nz-form-control labelForErrorTip="Country">
+      <app-select [options]='countryCodeSelect' formControlName='countryCode' placeHolder='Country'></app-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>City</nz-form-label>
+    <nz-form-control labelForErrorTip="City">
+      <input formControlName='city' nz-input placeholder="City">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Zip code</nz-form-label>
+    <nz-form-control labelForErrorTip="Zip code">
+      <input formControlName='zipCode' nz-input placeholder="Zip code">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Street name</nz-form-label>
+    <nz-form-control labelForErrorTip="Street name">
+      <input formControlName='streetName' nz-input placeholder="Street name">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Street number</nz-form-label>
+    <nz-form-control labelForErrorTip="Street number">
+      <input formControlName='streetNumber' nz-input placeholder="Street number">
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Floor number</nz-form-label>
+    <nz-form-control labelForErrorTip="Floor number">
+      <input formControlName='floorNumber' nz-input placeholder="Floor number">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>Apartment number</nz-form-label>
+    <nz-form-control labelForErrorTip="Apartment number">
+      <input formControlName='apartmentNumber' nz-input placeholder="Apartment number">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>State</nz-form-label>
+    <nz-form-control labelForErrorTip="State">
+      <input formControlName='state' nz-input placeholder="State">
+    </nz-form-control>
+  </nz-form-item>
+
+  <form nzLayout="vertical" nz-form formGroupName='location'>
+    <nz-form-item>
+      <nz-form-label nzRequired>Lat</nz-form-label>
+      <nz-form-control labelForErrorTip="Lat">
+        <input formControlName='lat' nz-input placeholder="Lat" type='number'>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>Lng</nz-form-label>
+      <nz-form-control labelForErrorTip="Lng">
+        <input formControlName='lng' nz-input placeholder="Lng" type='number'>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <nz-form-item>
+    <nz-form-label nzRequired>Default address</nz-form-label>
+    <nz-form-control labelForErrorTip="Default address">
+      <app-status-switch formControlName='isDefault' trueValue='Yes' falseValue='No'></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>

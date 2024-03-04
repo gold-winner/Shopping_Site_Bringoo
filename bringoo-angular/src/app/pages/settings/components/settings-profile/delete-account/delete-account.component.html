@@ -1,0 +1,19 @@
+<div class="d-flex flex-column align-items-center px-11">
+  <span class="text-bold f-6 mt-5">Delete Account</span>
+  <div class="text-medium text-red text-align-center">
+    <div class="mt-7">Once you delete your account, there is no going back.</div>
+    <div>Please be certain.</div>
+  </div>
+  <div class="text-medium text-align-center my-6">
+    Please type <span class="text-bold">DELETE</span> in order to confirm account deletion.
+  </div>
+  <div class="w-100p">
+    <ui-input
+      placeholder="DELETE"
+      (valueChange)="value=$event"
+    ></ui-input>
+  </div>
+  <div class="w-75p my-15">
+    <ui-button width="full" size="lg" [disabled]="value!=='DELETE'" (onClick)="onConfirm()">Confirm</ui-button>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="mx-8 mt-8 mb-8">
+  <div class="d-flex justify-content-between">
+    <h3 class="cursor-pointer" routerLink="/analytics/dashboard">
+      <i nz-icon nzType="left" nzTheme="outline"></i>
+      Reports
+    </h3>
+    <button nz-button nzType="primary" nzShape="round">Create custom report</button>
+  </div>
+  <nz-input-group [nzPrefixIcon]="'search'" class="border-round-sm">
+    <input nz-input type="text" placeholder="Search reports">
+  </nz-input-group>
+  <div class="row mt-4">
+    <div class="col">
+      <nz-card nzBorderless class="border-round-sm" *ngIf="orders$ | async as ordersPageable">
+        <app-reports-filters
+          [filters]="sales"
+          title="Sales"
+          subTitle="Make business decisions by comparing sales across products, staff, channels, and more."
+          label="Orders last 30 days"
+          [value]="ordersPageable.total"
+        ></app-reports-filters>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 border-round-sm">
+        <app-reports-filters
+          [filters]="profit"
+          title="Profit margin"
+          subTitle="See how products and locations contribute to the gross profit and margin for your business."
+          label="Profit this months to date"
+          [value]="0.00|formatPrice"
+        ></app-reports-filters>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 border-round-sm">
+        <app-reports-filters
+          [filters]="behavior"
+          title="Behavior"
+          subTitle="Improve your store by understanding how visitors move through your site."
+          label="Reached checkout last 30 days"
+          [value]="0.00|formatPrice"
+        ></app-reports-filters>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 border-round-sm">
+        <app-reports-filters
+          [filters]="marketing"
+          title="Marketing"
+          subTitle="Gain insights into where your online store customers are converting from."
+          label="Sales attributed to marketing last 30 days"
+          [value]="0.00|formatPrice"
+        ></app-reports-filters>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 border-round-sm">
+        <h3>Custom reports</h3>
+        <p>Create custom reports that have tailored dimensions and metrics to further understand your store's data.</p>
+        <p class="f-4">You currently have no custom reports. <a>Create a custom report</a></p>
+      </nz-card>
+    </div>
+    <div class="col pl-0">
+      <nz-card nzBorderless class="border-round-sm">
+        <app-reports-filters
+          [filters]="acquisition"
+          title="Acquisition"
+          subTitle="Increase visitor engagement by knowing where your visitors are coming from and measuring the success of your campaigns."
+          label="Sessions last 30 days"
+          [value]="0.00|formatPrice"
+        ></app-reports-filters>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 border-round-sm">
+        <app-reports-filters
+          [filters]="customers"
+          title="Customers"
+          subTitle="Gain insights into who tour customers are and how they interact with your business."
+          label="Customers last 30 days"
+          [value]="0"
+        ></app-reports-filters>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 border-round-sm">
+        <app-reports-filters
+          [filters]="finances"
+          title="Finances"
+          subTitle="View your store` s finances including sales, returns, taxes, payments, and more."
+          label="Total sales this month to date"
+          [value]="0|formatPrice"
+        >
+        </app-reports-filters>
+      </nz-card>
+
+      <nz-card nzBorderless class="mt-4 border-round-sm">
+        <app-reports-filters
+          [filters]="inventory"
+          title="Inventory"
+          subTitle="Track and understand the movement of your product for more efficient inventory management."
+          label=""
+          [value]="0|formatPrice"
+        ></app-reports-filters>
+      </nz-card>
+    </div>
+  </div>
+</div>

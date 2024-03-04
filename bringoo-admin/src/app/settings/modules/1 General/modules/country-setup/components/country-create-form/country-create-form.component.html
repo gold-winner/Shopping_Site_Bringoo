@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit()" nzLayout="vertical" nz-form [formGroup]='form'>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="code">Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <app-list-select placeHolder='Code' [list]='listIso2' formControlName='code'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="iso2">ISO2</nz-form-label>
+    <nz-form-control labelForErrorTip="ISO2">
+      <app-list-select placeHolder='ISO2' [list]='listIso2' formControlName='iso2'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="iso3">ISO3</nz-form-label>
+    <nz-form-control labelForErrorTip="ISO3">
+      <app-list-select placeHolder='ISO3' [list]='listIso3' formControlName='iso3'></app-list-select>
+    </nz-form-control>
+  </nz-form-item>
+  <app-lang-controller>
+    <app-multi-lang-v2-input type='text' required formControlName='name_i18n' label="Name"></app-multi-lang-v2-input>
+    <app-multi-lang-v2-input type='textarea' formControlName='description_i18n' label="Description"></app-multi-lang-v2-input>
+  </app-lang-controller>
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="isActive">Status</nz-form-label>
+    <nz-form-control labelForErrorTip="Status">
+      <app-status-switch trueValue='Active' falseValue='Inactive' formControlName='isActive'></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>

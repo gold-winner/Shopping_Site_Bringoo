@@ -1,0 +1,62 @@
+<form nz-form [formGroup]='form' nzLayout="vertical">
+  <nz-form-item>
+    <nz-form-control>
+      <nz-form-label nzNoColon>Name for the route</nz-form-label>
+      <input nz-input formControlName="name" placeholder="Route Name">
+    </nz-form-control>
+  </nz-form-item>
+
+  <app-filter-staff-select
+    [staffRoles]="staffRoles"
+    [required]="true"
+    formControlName="driverAssignedId"
+  ></app-filter-staff-select>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon nzFor="provideComment">Provide comment</nz-form-label>
+    <nz-form-control>
+      <textarea nz-input rows='3' formControlName='provideComment' placeholder="Provide Comment"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired>Code</nz-form-label>
+    <nz-form-control labelForErrorTip="Code">
+      <input nz-input appCodeInput formControlName="code" placeholder="Route Code"/>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="isActive">Status</nz-form-label>
+    <nz-form-control labelForErrorTip="Status">
+      <app-status-switch formControlName='isActive'></app-status-switch>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="row w-100p mx-0">
+    <nz-form-item class="col mb-0 px-0">
+      <nz-form-control labelForErrorTip="Start date time:">
+        <nz-form-label nzRequired>Start date time:</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateTimeFormat"
+          formControlName="dateTimeStart"
+          placeHolder="Date start"
+          [showTime]="true"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="col pr-0">
+      <nz-form-control labelForErrorTip="End date time:">
+        <nz-form-label nzRequired>End date time:</nz-form-label>
+        <app-date-control
+          [dateFormat]="dateTimeFormat"
+          formControlName="dateTimeEnd"
+          placeHolder="Date end"
+          [showTime]="true"
+          [disableBefore]="form.controls?.dateTimeStart?.value"
+        ></app-date-control>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+</form>

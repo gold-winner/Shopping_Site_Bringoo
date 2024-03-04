@@ -1,0 +1,49 @@
+<div class="p-4" *ngIf="recall$|async as recall">
+  <a class='d-flex align-items-center mb-4' routerLink='../'>
+    <i nz-icon nzType="left" nzTheme="outline"></i>
+    <h3 class='mb-0'>{{recall.product?.name_i18n}} ({{recall.product?.productType}})</h3>
+  </a>
+
+  <nz-card nzBorderless class="mb-4 border-round-sm">
+    <nz-card-meta
+      [nzTitle]="push_notification_history_title"
+      [nzDescription]="push_notification_history_description"
+    ></nz-card-meta>
+    <ng-template #push_notification_history_title>
+      <h4>Recall details</h4>
+    </ng-template>
+    <ng-template #push_notification_history_description>
+      <div class='w-100p text-default f-4' id="summary">
+        <div class='d-flex justify-content-between'>
+          <span>Product Code</span>
+          <span>{{recall.product?.code}}</span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Reason</span>
+          <span>{{recall.reason?.name_i18n}}</span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>Start Date</span>
+          <span>{{recall.startDateTime|date :dateTimeFormat}}</span>
+        </div>
+        <div class='d-flex justify-content-between'>
+          <span>End Date</span>
+          <span>{{recall.endDateTime|date :dateTimeFormat}}</span>
+        </div>
+      </div>
+    </ng-template>
+  </nz-card>
+
+  <nz-card nzBorderless class="mb-4 border-round-sm">
+    <app-stores-crud *ngIf="recall.stores && recall.stores.length > 0"></app-stores-crud>
+  </nz-card>
+
+  <nz-card nzBorderless class="mb-4 border-round-sm" *ngIf="recall.product?.code as productCode">
+    <app-product-recall-report
+      *ngIf="productCode"
+      [filter]="recall"
+      [productCode]="productCode"
+    ></app-product-recall-report>
+  </nz-card>
+
+</div>

@@ -1,0 +1,5 @@
+<nz-input-group [nzPrefixIcon]="'search'">
+  <input type="text" nz-input [formControl]='searchValue' placeholder="Filter products" />
+</nz-input-group>
+<i nz-icon class="mr-sm-4 ml-sm-4" nzType="filter" nzTheme="outline"></i>
+<button (click)="OnInsertNew()" nz-button nzType="primary" nzShape="round">Insert new</button>

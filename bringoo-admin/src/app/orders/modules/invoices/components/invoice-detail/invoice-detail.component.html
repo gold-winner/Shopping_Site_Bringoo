@@ -1,0 +1,107 @@
+<ng-container *ngIf="orderDetails$ | async as details">
+  <div class='border-round-sm mx-8 mt-7' *ngIf="order$|async as order">
+    <div class='d-flex justify-content-between mb-5'>
+      <h3 class='mb-0'>Invoice</h3>
+      <div>
+        <button (click)="onSendInvoice(details.id)" [nzLoading]="isInvoiceGenerating$|async" nz-button
+                nzType="default" nzSize="large" class="mr-8">Send
+          invoice <i nz-icon nzType="mail" nzTheme="outline"></i>
+        </button>
+        <a (click)="onDownloadInvoice(details.id)" [nzLoading]="isInvoiceGenerating$|async" nz-button
+           nzType="default"
+           target="_blank"
+           nzSize="large" class="mr-8">
+          Download pdf <i nz-icon nzType="cloud-download" nzTheme="outline"></i>
+        </a>
+        <button
+          nz-button nz-dropdown nzType="default" nzSize="large" class="mr-8"
+          [nzPlacement]="'bottomCenter'"
+        >Action
+        </button>
+      </div>
+    </div>
+    <div class="bg-component px-8 pt-8 pb-8 mb-8 f-4 border-round-sm">
+      <div class="d-flex justify-content-end"><img class="bringoo-logo" src="assets/img/logo.svg" alt="Bringoo"></div>
+      <div class="mt-4 d-flex justify-content-between">
+        <div class="text-bold">
+          <div>{{details.customerName}}</div>
+          <div *ngIf="details.deliveryAddress?.organizationName">{{details.deliveryAddress?.organizationName}}</div>
+          <div *ngIf="details.deliveryAddress?.organizationTaxId">{{details.deliveryAddress?.organizationTaxId}}</div>
+          <div>{{details.deliveryAddress.streetName}}  {{details.deliveryAddress.streetNumber}}</div>
+          <div>{{details.deliveryAddress.zipCode}} {{details.deliveryAddress.city}}</div>
+        </div>
+        <div class="text-align-right">
+          <div>Bringoo GmbH</div>
+          <div>Jenfelder Str. 2</div>
+          <div>22043 Hamburg</div>
+        </div>
+      </div>
+      <hr>
+      <div class='d-flex justify-content-between mb-6'>
+        <div class='d-flex justify-content-between'>
+          <div>
+            <div><b>Invoice:</b></div>
+            <div><b>Order:</b></div>
+            <div><b>Invoice Date:</b></div>
+            <div><b>Delivery Date Start:</b></div>
+            <div><b>Delivery Date End:</b></div>
+            <div><b>Customer Number:</b></div>
+          </div>
+          <div class="ml-10">
+            <div>{{details.invoiceNumber}}</div>
+            <div>{{details.orderNumber}}</div>
+            <div>{{details.invoiceDate && (fromUnixTime(details.invoiceDate) | date:dateTimeFormat)}}</div>
+            <div>{{details.deliveryTimeFrom}}</div>
+            <div>{{details.deliveryTimeTo}}</div>
+            <div>{{details.customerNumber}}</div>
+          </div>
+        </div>
+      </div>
+
+      <app-order-basket-table
+        [isInvoice]="true"
+        [transactions]="details.orderTransactions"
+        [hasActiveReplacement]="details.hasActiveReplacement"
+        [deliveryPrice]="details.deliveryPriceDiscounted"
+        [grandTotal]="details.grandTotalDiscounted"
+        [totalRefund]="details.totalRefundDiscounted"
+        [orderId]="details.id"
+        [orderStatus]="details.orderStatus"
+        [subTotal]="details.subTotalDiscounted"
+        [totalDeposit]="details.totalDeposit ?? ''"
+        [vatTotal]="details.vatTotal"
+        [useRefundFunctions]="true"
+        [deliveryVatRate]="details.deliveryVatRate"
+        [deliveryVatAmount]="details.deliveryVatAmountDiscounted"
+        [itemsDiscount]="details.itemsDiscount"
+        [deliveryFeeDiscount]="details.deliveryFeeDiscount"
+        [allDiscount]="details.allDiscount"
+      ></app-order-basket-table>
+
+      <p>Thank you very much for your purchase. Refunded products will be automcatically credited back to your account
+        within 24 hours.</p>
+      <hr>
+      <div class='d-flex justify-content-between'>
+        <div>
+          <b>Bank Details:</b><br>
+          Hamburger Sparkasse<br>
+          {{IBAN}}
+        </div>
+        <div>
+          <b>Owner:</b><br>
+          Hasib Khan
+        </div>
+        <div>
+          <b>USt. ID:</b><br>
+          DE 331 291 28
+        </div>
+        <div class='text-right'>
+          <b>Steuernummer:</b><br>
+          447 090 0658<br>
+          HRB 160460<br>
+          Amtsgericht Hamburg<br>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

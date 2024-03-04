@@ -1,0 +1,126 @@
+<form nz-form nzLayout="vertical" [formGroup]="form" class="scroll-y">
+  <div class="color-selection container p-4">
+    <h3>Store Assets</h3>
+    <app-file-upload
+      formControlName="logoUrl"
+      [multiple]="false"
+      [isRequired]="true"
+      path="store"
+      [title]="(storeName$ | async) || ''"
+      [subTitle]="'Current logo'"
+      [isValidateImage]="true"
+      imageValidator="squire"
+    ></app-file-upload>
+    <hr class="border-vanilla mt-4 mb-14">
+
+    <app-file-upload
+      formControlName="rectLogoUrl"
+      [multiple]="false"
+      [isRequired]="true"
+      path="store"
+      [title]="(storeName$ | async) || ''"
+      [subTitle]="'Rect logo'"
+      [isValidateImage]="true"
+      imageValidator="rect"
+    ></app-file-upload>
+    <hr class="border-vanilla mt-4 mb-14">
+
+    <app-file-upload
+      formControlName="heroImgUrl"
+      [multiple]="false"
+      [isRequired]="true"
+      path="store"
+      [title]="(storeName$ | async) || ''"
+      [subTitle]="'Store Hero Image'"
+    ></app-file-upload>
+    <hr class="border-vanilla mt-4 mb-14">
+
+    <app-file-upload
+      formControlName="promoImgUrl"
+      [multiple]="false"
+      [isRequired]="false"
+      path="store"
+      [title]="(storeName$ | async) || ''"
+      [subTitle]="'Store Promo Image'"
+    ></app-file-upload>
+    <hr class="border-vanilla mt-4 mb-14">
+
+    <app-file-upload
+      class="mb-14"
+      formControlName="landingImgUrl"
+      [multiple]="false"
+      [isRequired]="false"
+      path="store"
+      [title]="(storeName$ | async) || ''"
+      [subTitle]="'Store Landing Page Image'"
+    ></app-file-upload>
+
+    <h3>Color selection</h3>
+    <div class="row">
+      <app-color-picker
+        class="col"
+        formControlName="primaryColor"
+        title="Primary Color"
+      ></app-color-picker>
+
+      <app-color-picker
+        class="col"
+        formControlName="secondaryColor"
+        title="Secondary Color"
+      ></app-color-picker>
+    </div>
+    <div class="row mt-4">
+      <app-color-picker
+        class="col"
+        formControlName="navbarColor"
+        title="Navbar Color"
+      ></app-color-picker>
+
+      <div class="col"></div>
+    </div>
+
+    <div class="row mt-6">
+      <div class="col">     
+        <app-status-switch
+          formControlName='isProductCardColorUsed'
+          trueValue="Is used"
+          falseValue="Is not used"
+        ></app-status-switch>
+        <app-color-picker
+          formControlName="productCardColor"
+          title="Product card background color"
+        ></app-color-picker>
+      </div>
+
+      <div class="col">
+        <app-status-switch
+          formControlName='isProductCategoryCardColorUsed'
+          trueValue="Is used"
+          falseValue="Is not used"
+        ></app-status-switch>
+        <app-color-picker
+          formControlName="productCategoryCardColor"
+          title="Product category card background color"
+        ></app-color-picker>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="p-4">
+  <button
+    [disabled]="form.invalid"
+    (click)="onSubmit()"
+    nzType="primary"
+    nz-button
+    nzSize="large"
+    nzShape="round"
+  >Update
+  </button>
+  <button
+    (click)="onCancel()"
+    nzType="link"
+    nz-button
+    nzSize="large"
+  >Cancel
+  </button>
+</div>
